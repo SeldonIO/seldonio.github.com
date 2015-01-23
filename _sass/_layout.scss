@@ -250,10 +250,16 @@
  */
  #primary_nav_wrap
 {
-    margin-top:15px;
     position:absolute;
     bottom:0;
     right:0;
+}
+
+@media all and (max-width: 700px) {
+
+    #primary_nav_wrap {
+        position:relative;
+    }
 }
 
 #primary_nav_wrap ul
