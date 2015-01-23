@@ -3,7 +3,9 @@ layout: default
 title: Seldon APIs
 ---
 
-# Introduction
+# Seldon APIs
+
+## Introduction
 This document provides an overview of how to use the Seldon OAuth REST API and JavaScript API, including the available methods, the inputs required for personalized recommendations and the output specifications. Seldon provides a REST API with JSON for data representation and OAuth 2.0 for authorisation. For further clarification on any section please contact support at seldon dot io.
 
 ## OAuth Authorisation

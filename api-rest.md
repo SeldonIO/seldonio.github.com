@@ -3,6 +3,8 @@ layout: default
 title: REST API
 ---
 
+# Seldon REST API
+
 The Seldon REST API interacts with three main concepts:
 
 * [Items](#items) : Pieces of content, e.g., articles, products, game items.

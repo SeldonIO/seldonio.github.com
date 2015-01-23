@@ -3,6 +3,8 @@ layout: default
 title: JavaScript API
 ---
 
+# Seldon JavaScript API
+
 The Seldon JavaScript API provides the simplest method of integrating Seldon onto web based services. It provides two methods:
 
 * User Action : Called from each web page where a user performs an action, e.g. loads the web page on a news site.
