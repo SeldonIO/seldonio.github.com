@@ -1,0 +1,12 @@
+# Site settings
+title: Seldon
+email: support@seldon.io
+description: > # this means to ignore newlines until "baseurl:"
+        Seldon Open Predictive Platform
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://seldon.io" # the base hostname & protocol for your site
+twitter_username: seldon_io
+github_username:  SeldonIO
+
+# Build settings
+markdown: kramdown
