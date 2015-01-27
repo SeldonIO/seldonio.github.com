@@ -32,13 +32,19 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
         vagrant up
 
-1. Log onto the instance
+1. Start the Seldon services
 
-        vagrant ssh
+        vagrant ssh -c '/home/core/seldon/dist/start-all'
 
-1. From inside the vm, navigate to the seldon startup dir and launch the seldon services.
+1. Use a browser to check that the api has finished initialization and is ready.
 
-        cd ~/seldon/dist
-        ./start-all
+        http://127.0.0.1:8080/
 
+1. Explore the api using Swagger
+
+        http://127.0.0.1:8080/swagger/
+
+1. Try the moivelens-demo
+
+        http://127.0.0.1:8080/movielens-demo/
 
