@@ -19,20 +19,20 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
     Visit the [download page](http://www.vagrantup.com/downloads.html).  
     Download and follow the instructions.
 
-1. Create a directory for the seldon vm vagrant files, and make it the current dir
+1. Create a directory for the seldon vm vagrant files, and make it the current directory.
 
         mkdir seldonvm
         cd seldonvm
 
-1. Dowload the Vagrantfile for the seldon box
+1. Dowload the Vagrantfile for the seldon box.
 
         wget https://s3-eu-west-1.amazonaws.com/...
 
-1. Startup the vagrant instance of the box
+1. Startup the vagrant instance of the box.
 
         vagrant up
 
-1. Start the Seldon services
+1. Start the Seldon services.
 
         vagrant ssh -c '/home/core/seldon/dist/start-all'
 
@@ -40,11 +40,11 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
         http://127.0.0.1:8080/
 
-1. Explore the api using Swagger
+1. Explore the api using Swagger.
 
         http://127.0.0.1:8080/swagger/
 
-1. Try the moivelens-demo
+1. Try the moive demo.
 
         http://127.0.0.1:8080/movielens-demo/
 
