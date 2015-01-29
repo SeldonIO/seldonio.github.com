@@ -40,7 +40,7 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
         http://127.0.0.1:8080/
 
-1. Explore the api using Swagger.
+1. Explore the API using Swagger.
 
         http://127.0.0.1:8080/swagger/
 
