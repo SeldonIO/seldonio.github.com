@@ -44,7 +44,7 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
         http://127.0.0.1:8080/swagger/
 
-1. Try the moive demo.
+1. Try the movie demo.
 
         http://127.0.0.1:8080/movielens-demo/
 
