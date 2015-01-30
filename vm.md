@@ -3,11 +3,7 @@ layout: default
 title: Seldon VM
 ---
 
-# Seldon Virtual Machine
-
-Seldon will shortly be releasing a virtual machine with all services pre-wired for you to test with your service data and MovieLens Demo. To receive this please [sign up for the beta](http://www.seldon.io/open-source)
-
-##Instructions for installing the vm
+# Installing the Seldon Virtual Machine
 
 1. Install **VirtualBox** if not installed already.
 
