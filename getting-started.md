@@ -9,3 +9,6 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
  * [Virtual Machine installation](vm.html)
  * [Movie Recommender Demo](movie-recommender-demo.html)
+ * Creating Recommenders with your own data
+   * Loading your data into Seldon
+   * [Creating Content Recommendation Models](content-recommendation-models.html)
