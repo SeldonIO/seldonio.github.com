@@ -13,6 +13,7 @@ Each type of model has configuration parameters that need to be chosen to create
 # Quick Start
 
  1. Load your data into Seldon as describe [HERE]()
+ 1. Start Seldon as described [HERE]()
  1. Run create_models for the models you want to create
  {% highlight bash %}
     dist/tools/create_models.sh ${CLIENT} ${MODELS}
@@ -24,26 +25,26 @@ Each type of model has configuration parameters that need to be chosen to create
     dist/tools/create_models.sh client1 matrix_factorization
  {% endhighlight %}
 
+# In Depth Discussion
 
-
-# Generic Configuration Options
-The Seldon models are stored in a directory structure that allows easy integration into a production environment where models are created periodically, usually each day. The directory structure if of the form
+## Generic Configuration Options
+The Seldon models are stored in a directory structure that allows easy integration into a production environment where models are created periodically, usually each day. The directory structure is of the form
  {% highlight bash %}
     seldon-models/${CLIENT}/${MODEL}/${DAY}
  {% endhighlight %}
 	
-e.g. for a matrix_factorization model created for client client1 created on 27 Jan 2014 (unix epoch day 16461) would be 
+e.g. for a matrix_factorization model created for client client1 on 27 Jan 2014 (unix epoch day 16461) would be 
 
  {% highlight bash %}
-    seldon-models/client1/matrix_factorization/14232
+    seldon-models/client1/matrix_factorization/16461
  {% endhighlight %}
 
  The configuration for a model captures this information with
  
  * start_day : the start day to use as input and the day which will be used as output of any model created.
  * num_days : the number of days of data to use back in time starting from start_day (inclusive).
- * base_input_folder : the input folder to find the data. Will be expanded as above with client, model and day values.
- * base_output_folder : the output folder to write the model. Will be expanded as above with client, model and day values.
+ * base_input_folder : the input folder to find the data. It will be expanded as above with client, model and day values.
+ * base_output_folder : the output folder to write the model. It will be expanded as above with client, model and day values.
 
 An example:
 
