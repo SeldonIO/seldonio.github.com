@@ -3,11 +3,7 @@ layout: default
 title: Seldon VM
 ---
 
-# Seldon Virtual Machine
-
-Seldon will shortly be releasing a virtual machine with all services pre-wired for you to test with your service data and MovieLens Demo. To receive this please [sign up for the beta](http://www.seldon.io/open-source)
-
-##Instructions for installing the vm
+# Installing the Seldon Virtual Machine
 
 1. Install **VirtualBox** if not installed already.
 
@@ -40,11 +36,11 @@ Seldon will shortly be releasing a virtual machine with all services pre-wired f
 
         http://127.0.0.1:8080/
 
-1. Explore the api using Swagger.
+1. Explore the API using Swagger.
 
         http://127.0.0.1:8080/swagger/
 
-1. Try the moive demo.
+1. Try the movie demo.
 
-        http://127.0.0.1:8080/movielens-demo/
+        http://127.0.0.1:8080/movie-demo/
 
