@@ -4,11 +4,11 @@ title: Content Recommendation Models
 ---
 
 # Content Recommendation Models
-Seldon provides various content recommendation models you can train from your user and item data. We will describe here each type of model, its pros and cons, how its trained and how to deploy it to the live Seldon API server.
+Seldon provides various content recommendation models you can train from your data. We will describe here each type of model, its pros and cons, how its trained and how to deploy it to the Seldon API server.
 
 For the Seldon VM We assume you will be using one of the pre-configured Seldon clients, test1 to test5. In the examples that follow replace ${CLIENT} with the desired client.
 
-Each type of model has configuration parameters that need to be chosen to create a good model. In future releases of Seldon we will provide both offline and online optimization methods to find the best parameters for your data and live activity. For the time being you will need to test various models to find the best settings for your use case.
+Each type of model has configuration parameters that need to be chosen to create a good model. In future releases of Seldon we will provide both offline and online optimization methods to find the best parameters for your data and live activity but for the time being you will need to test various models to find the best settings for your use case.
 
 # Quick Start
 
@@ -21,13 +21,13 @@ cd dist/your_data
  * Run create_models for the models you want to create
 
 {% highlight bash %}
-dist/your_data/create_models.sh ${CLIENT} ${MODEL}
+./create_models.sh ${CLIENT} ${MODEL}
 {% endhighlight %}
 
 e.g.,
 
 {% highlight bash %}
-dist/your_data/create_models.sh test1 matrix_factorization
+./create_models.sh test1 matrix_factorization
 {% endhighlight %}
 
 
@@ -39,8 +39,10 @@ http://127.0.0.1:8080/swagger/
 
 # In Depth Discussion
 
+In the following sections we discuss each model and its particular parameters.
+
 # Matrix Factorization
-An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item viewing data. We use the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.
+An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.
 
 ## Configuration options
 
@@ -70,13 +72,13 @@ docker exec -it spark_offline_server_container \
 {% endhighlight %}	
 
 # Item Similarity
-Item similarity models find correlations in the user actions history to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum). 
+Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum). 
 
 The key settings are:
 
  * sample : limit the actions processed to a random subset of all actions. Value 0.0 to 1.0. Default 1.0 (all actions)
  * limit : return only the top N similarities for each item
- * dimsum_threshold : A value >= 0 and usually < 1.0. Higher the setting the greater the efficiency but less accurate the result.
+ * dimsum_threshold : A value >= 0 and usually < 1.0. Higher the setting the greater the efficiency but less accurate the result. See the [DIMSUM algorithm](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum) for further details.
 
 Example settings:
 
@@ -110,7 +112,7 @@ docker exec consul curl -s -X PUT -d \
 Recommendations are provided at run-time by using the recent history of a user to find items they have not interacted with that of are of high similarity.
 
 # Tag Similarity (Semantic Vectors)
-Tag similarity works purely on the meta data for the items, e.g. tags, to find items with similar meta data. It can be useful for cold-start situations where there is no or little user actions history. We use the [Semantic Vectors](https://code.google.com/p/semanticvectors/) project that provides fast scalable vector space representations.
+Tag similarity works purely on the meta data for the items, e.g. tags, to find items with similar meta data. It can be useful for cold-start situations where there is little or no user actions history. We use the [Semantic Vectors](https://code.google.com/p/semanticvectors/) project that provides fast scalable vector space representations.
 
 The key setting is to specify which attribute or attributes in the database contain the textual meta data to be modelled:
 
@@ -139,7 +141,7 @@ docker run --name="create_semantic_vectors" --rm \
 {% endhighlight %}
 
 # Word2Vec
-Word2vec is a deep learning inspired language technique. See [here](https://code.google.com/p/word2vec/) for background and original code. We utulize the [Spark version](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec). Traditionally, word2vec models are trained on textual corpus data but here we utilize it on the session action data of users, for example the ordered play lists of movies for users on a movie viewing site. We are therefore treating each item (e.g., movie) as a "word" and the "sentences" are the ordered actions (e.g. viewing history of movies).
+Word2vec is a deep learning inspired language technique. See [here](https://code.google.com/p/word2vec/) for background and original code. We utilize the [Apache Spark version](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec). Traditionally, word2vec models are trained on textual corpus data but here we utilize it on the session action data of users, for example the ordered play lists of movies for users on a movie viewing site. We are therefore treating each item (e.g., movie) as a "word" and the "sentences" are the ordered actions (e.g., viewing history of movies).
 
 Word2vec has two settings:
 
@@ -163,7 +165,7 @@ For example:
    "http://localhost:8500/v1/kv/seldon/${CLIENT}/algs/word2vec"
 {% endhighlight %}	
 
- * Create the model by creating a training file of the user sessions, training a word2vec model and converting it to a Seamntic Vectors file format for loading in the Seldon API server.
+ * Create the model by creating a training file of the user sessions, training a word2vec model and converting it to a Semantic Vectors file format for loading in the Seldon API server.
 
 {% highlight bash %}
   docker exec -it spark_offline_server_container bash -c "/spark-jobs/session-items.sh ${CLIENT}"

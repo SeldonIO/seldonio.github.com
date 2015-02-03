@@ -8,20 +8,20 @@ Seldon provides a demonstration of a movie recommender using the [Movielens 10 M
 
 The dataset is of reasonable size so there are certain time and system requirement caveats:
 
- * At least 6G of RAM for recreating all models and running the Seldon containers inside a VM
+ * At least 5G of RAM for recreating all models and running the Seldon containers inside a VM
 
 Most of the model creation is fast except for the item_similarity model. On a ThinkPad T440P with a good network connection the download and model creation take roughly:
 
  * download and data ETL 10 mins
- * matrix_factorization : 5 mins (3G RAM)
+ * matrix_factorization : 5 mins (2G RAM)
  * tag similarity : 2 mins (<1G RAM)
  * item_similarity : 10 mins (running on a random 25% of the full set of actions) (2G RAM)
- * word2vec : 5 mins (3G RAM)
+ * word2vec : 5 mins (2G RAM)
 
 
 ## Quick Start
 
- 1. Download and Start the Seldon VM as describe [here](vm.html)
+ 1. Download and start the Seldon VM as described [here](vm.html)
  1. Run:
   {% highlight bash %}
 cd dist/movie_recommender_demo
@@ -31,7 +31,7 @@ cd dist/movie_recommender_demo
 This will:
 
  1. Download all the required data
- 1. Combine the data and store it in a Seldon database (for movie meta data and existing users) and historical actions file (for the ratings by users of movies)
+ 1. Combine the data and store it in a Seldon database (for movie meta data and existing users) and create a historical actions file (for the ratings by users of movies)
  1. Create the various models
  1. Deploy them to the running Seldon API server
 
@@ -50,7 +50,7 @@ Three data sources are used to create the demo
  1. [Hetrec 2011 dataset](http://grouplens.org/datasets/hetrec-2011/)
  1. Some data sourced from Freebase by Seldon by matching movie names and year release to freebase entries.
 
-The first step is to download the two external datasets and then merge the data to produce csv and JSON files in the correct format for the generic Seldon item and user import scripts. We take the core data from the Movielens dataset and add directors and actors matched via Freebase queries and finally add the IMDB image for movies from the HetRec dataset. The resulting JSON file describing the item attributes is shown below. For top_tags we take the top 3 tags from the Movielens dataset and add actor and directors from freebase. From a small amount of testing this reduced tag set seemed to give best results for the tag similarity model.
+The first step is to download the two external datasets and then merge the data to produce csv and JSON files in the correct format for the generic Seldon item and user import scripts, see [here](data.html) for further details. We take the core data from the Movielens dataset and add directors and actors matched via Freebase queries and finally add the IMDB image for movies from the HetRec dataset. The resulting JSON file describing the item attributes is shown below. For top_tags we take the top 3 tags from the Movielens dataset and add actor and directors from freebase. From a small amount of testing this reduced tag set seemed to give best results for the tag similarity model.
 
   {% highlight json %}
 {"types":[
@@ -66,7 +66,7 @@ The first step is to download the two external datasets and then merge the data 
    "type_name": "movie"}]}
   {% endhighlight %}
 
-The csv file for items contains all the above attributes plus "id" and "name". These two optional attributes are special in that they don't need to be defined in the json and will be used to populate the items table in the Seldon db. The first line from the items csv file created is shown below:
+The csv file for items contains all the above attributes plus "id" and "name". These two attributes are special in that they don't need to be defined in the json and will be used to populate the items table in the Seldon db. The first line from the items csv file created is shown below:
 
   {% highlight bash %}
 id,name,title,img_url,top_tags,movielens_tags_full,actors,directors
@@ -75,7 +75,7 @@ id,name,title,img_url,top_tags,movielens_tags_full,actors,directors
 
 There are no user attributes so the user csv file just has user ids taken from the Movielens dataset.
 
-We can now run the generic scripts provided in the seldon-tools container to populate the database as well as create a historicla actions JSON file from the Movielens ratings we can use in training the  user activity based models.
+We can now run the generic scripts provided in the seldon-tools container to populate the database as well as create a historical actions JSON file from the Movielens ratings we can use in training the  user activity based models.
 
 ### Matrix Factorization Model
 The model uses the actions (ratings history) of the users. We use the following settings which we place within Consul:
@@ -83,8 +83,6 @@ The model uses the actions (ratings history) of the users. We use the following 
 {% highlight json %}
   {"rank":30, "lambda":0.1, "alpha":1, "iterations":5}
 {% endhighlight %}
-
-The model creation process requires at least 3g of RAM.
 
 The resulting model will be found in /seldon-models/movielens/matrix_factorization/1
 
@@ -107,12 +105,12 @@ Tag similarity does not use the user actions but simply the meta-data of the ite
 The model is fast to create and requires very little RAM.
 
 ### Word2vec Model
-This model runs on the session histories of all the users movie ratings and runs the word2vec language model on it to create movie vectors that can be compared fro similrity. The settings are:
+This model runs on the session histories of all the users movie ratings and runs the word2vec language model on it to create movie vectors that can be compared for similarity. The settings are:
 
 {% highlight json %}
 { "min_word_count":50, "vector_size":30 }
 {% endhighlight %}
 
-We ignore movies that have been viewed less than 50 times and create vectors of size 30. The model takes around 2G of memory for this data to run.
+We ignore movies that have been viewed less than 50 times and create vectors of size 30. 
 
 
