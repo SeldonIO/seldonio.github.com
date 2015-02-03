@@ -8,7 +8,7 @@ Seldon provides a demonstration of a movie recommender using the [Movielens 10 M
 
 The dataset is of reasonable size so there are certain time and system requirement caveats:
 
- * At least 5G of RAM for recreating all models and running the Seldon containers inside a VM
+ * At least 4G of RAM for recreating all models and running the Seldon containers inside a VM
 
 Most of the model creation is fast except for the item_similarity model. On a ThinkPad T440P with a good network connection the download and model creation take roughly:
 
@@ -74,6 +74,8 @@ id,name,title,img_url,top_tags,movielens_tags_full,actors,directors
   {% endhighlight %}
 
 There are no user attributes so the user csv file just has user ids taken from the Movielens dataset.
+
+The scripts to create these import data files for Seldon can be found at [https://github.com/SeldonIO/importer-movielens-10m](https://github.com/SeldonIO/importer-movielens-10m).
 
 We can now run the generic scripts provided in the seldon-tools container to populate the database as well as create a historical actions JSON file from the Movielens ratings we can use in training the  user activity based models.
 
