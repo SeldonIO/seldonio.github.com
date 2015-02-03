@@ -4,21 +4,19 @@ title: Movie Recommender Demo
 ---
 
 # Movie Recommender Demo
-Seldon provides a demonstration of a movie recommender using the [Movielens 10 Million dataset](http://grouplens.org/datasets/movielens/) plus some extra data from [Hetrec 2011 dataset](http://grouplens.org/datasets/hetrec-2011/) and some data sourced from Freebase by Seldon. These data sources are used to train four different models that can be used to provide movie recommendations based on a viewing history of a user. The demo can be viewed [online](http://www.seldon.io/movie-demo/). These docs will describe the steps to create the demo fram scratch.
-
-If you are running the Seldon VM, it comes with the demo already pre built. If you run the scripts below it will recreate everything from scratch.
+Seldon provides a demonstration of a movie recommender using the [Movielens 10 Million dataset](http://grouplens.org/datasets/movielens/) plus some extra data from [Hetrec 2011 dataset](http://grouplens.org/datasets/hetrec-2011/) and some data sourced from Freebase by Seldon. These data sources are used to train four different models that can be used to provide movie recommendations based on a viewing history of a user. The demo can be viewed [online](http://www.seldon.io/movie-demo/) and comes prebuilt with the Seldon VM. These docs will describe the steps to create the demo from scratch.
 
 The dataset is of reasonable size so there are certain time and system requirement caveats:
 
- * At least 6GB of RAM
+ * At least 6G of RAM for recreating all models and running the Seldon containers inside a VM
 
 Most of the model creation is fast except for the item_similarity model. On a ThinkPad T440P with a good network connection the download and model creation take roughly:
 
  * download and data ETL 10 mins
- * matrix_factorization : 5 mins
- * tag similarity : 2 mins
- * item_similarity : 10 mins (running on a random 25% of the full set of actions)
- * word2vec : 5 mins
+ * matrix_factorization : 5 mins (3G RAM)
+ * tag similarity : 2 mins (<1G RAM)
+ * item_similarity : 10 mins (running on a random 25% of the full set of actions) (2G RAM)
+ * word2vec : 5 mins (3G RAM)
 
 
 ## Quick Start
@@ -43,7 +41,7 @@ The rebuilt movie demo will again be available at:
 
 
 ## In Depth Steps
-The steps to create the content recommendation models for the Movielens based data are described below. These steps will hopefully help you gain and understanding of how to injest and model a reasonable large and complex dataset.
+The steps to create the content recommendation models for the Movielens based data are described below. These steps will hopefully help you gain an understanding of how to injest and model a reasonable large and complex dataset.
 
 ### Data Download and ETL
 Three data sources are used to create the demo
@@ -75,9 +73,9 @@ id,name,title,img_url,top_tags,movielens_tags_full,actors,directors
 1,Toy Story (1995),Toy Story (1995),"http://ia.media-imdb.com/images/M/MV5BMTMwNDU0NTY2Nl5BMl5BanBnXkFtZTcwOTUxOTM5Mw@@._V1._SX214_CR0,0,214,314_.jpg","pixar,animation,animation,tom_hanks,don_rickles,jim_varney,john_lasseter","pixar,animation,disney,toys,computer_animation,cgi,comedy,tim_allen,time_travel,animated,cartoon,adventure,children,toy,tom_hanks,classic,family,avi,disney_animated_feature,want_to_see_again,imdb_top_250,the_boys,toys_come_to_life,kids_movie,unlikely_friendships,action_figures,buzz_lightyear,light,action_figure,first_cgi_film,lots_of_heart,almost_favorite,tumey's_to_see_again,warm,national_film_registry,villian_hurts_toys,cg_animation,pixar_animation,clever,fun,rated-g,daring_rescues,witty,3d,rousing,erlend's_dvds,usa,buy,john_lasseter,funny,heroic_mission,ya_boy,woody,want,very_good,fanciful,bright,fantasy,engaging,tumey's_vhs,humorous,buddy_movie,","tom_hanks,don_rickles,jim_varney",john_lasseter
   {% endhighlight %}
 
-There are no user attributes so the create csv file just has user ids taken from the Movielens dataset.
+There are no user attributes so the user csv file just has user ids taken from the Movielens dataset.
 
-We can now run the generic scripts provided in the seldon-tools container to populate the MySql database with item ids and pre-existing user-ids as well as create a historicla actions JSON file from the Movielens ratings we can use in training models.
+We can now run the generic scripts provided in the seldon-tools container to populate the database as well as create a historicla actions JSON file from the Movielens ratings we can use in training the  user activity based models.
 
 ### Matrix Factorization Model
 The model uses the actions (ratings history) of the users. We use the following settings which we place within Consul:
