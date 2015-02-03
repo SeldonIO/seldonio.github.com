@@ -12,7 +12,7 @@ To receive the Seldon VM Closed Alpha and be the first to hear about further rel
  * [Virtual Machine installation](vm.html)
  * [Movie Recommender Demo](movie-recommender-demo.html)
  * Creating Recommenders with your own data
-   * Loading your data into Seldon
+   * [Loading your data into Seldon](load.html)
    * [Creating Content Recommendation Models](content-recommendation-models.html)
 
 
