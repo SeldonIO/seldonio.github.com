@@ -44,3 +44,17 @@ title: Seldon VM
 
         http://127.0.0.1:8080/movie-demo/
 
+1. For larger datasets you can customize the memory size of the vm.
+
+    In the Vagrantfile change the memory in the following section
+
+        config.vm.provider "virtualbox" do |vb|
+            # Use VBoxManage to customize the VM. For example to change memory:
+            vb.customize ["modifyvm", :id, "--memory", "4000"]
+        end
+
+    Destroy the current instance of the vm and then re-start
+
+        vagrant destroy
+        vagrant up
+
