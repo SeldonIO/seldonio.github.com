@@ -40,10 +40,6 @@ title: Seldon VM
 
         http://127.0.0.1:8080/swagger/
 
-1. Try the movie demo.
-
-        http://127.0.0.1:8080/movie-demo/
-
 1. For larger datasets you can customize the memory size of the vm.
 
     In the Vagrantfile change the memory in the following section
@@ -57,4 +53,6 @@ title: Seldon VM
 
         vagrant destroy
         vagrant up
+
+1. Next Steps - try the [Movie Recommender Demo](movie-recommender-demo.html)
 
