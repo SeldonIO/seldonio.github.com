@@ -37,7 +37,7 @@ This will:
 
 The rebuilt movie demo will again be available at:
 
-        http://127.0.0.1:8080/movie-demo/
+        http://localhost:8080/movie-demo/
 
 
 ## In Depth Steps
