@@ -9,7 +9,9 @@ Seldon has created a virtual machine with all services pre-wired for you to test
 
 To receive the Seldon VM Closed Alpha and be the first to hear about further releases [sign up for the beta program](http://www.seldon.io/open-source)
 
- * [Virtual Machine installation](vm.html)
+ * Ways to get the VM :
+   * [Vagrant Virtual Machine installation](vm.html)
+   * [AWS AMI](aws-ami.html)
  * [Movie Recommender Demo](movie-recommender-demo.html)
  * Creating Recommenders with your own data
    * [Loading your data into Seldon](data.html)

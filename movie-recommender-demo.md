@@ -24,7 +24,7 @@ Most of the model creation is fast except for the item_similarity model. On a Th
  1. Download and start the Seldon VM as described [here](vm.html)
  1. Run:
   {% highlight bash %}
-cd dist/movie_recommender_demo
+cd ~/seldon/dist/movie_recommender_demo
 ./create_recommender_demo.sh 
   {% endhighlight %}
 
