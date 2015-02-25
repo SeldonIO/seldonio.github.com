@@ -54,5 +54,5 @@ title: Seldon VM
         vagrant destroy
         vagrant up
 
-1. Next Steps - try the [Movie Recommender Demo](movie-recommender-demo.html)
+1. Next Steps - create a [Movie Recommender Demo](movie-recommender-demo.html)
 
