@@ -20,9 +20,9 @@ title: Seldon VM
         mkdir seldonvm
         cd seldonvm
 
-1. Download the Vagrantfile for the seldon box. (To obtain the link to the Vagrantfile please sign up to the beta at [http://www.seldon.io/open-source/](http://www.seldon.io/open-source/))
+1. Download the Vagrantfile for the seldon box.
 
-        wget https://s3-eu-west-1.amazonaws.com/...
+        wget http://static.seldon.io/seldonvm/Vagrantfile
 
 1. Startup the vagrant instance of the box.
 
