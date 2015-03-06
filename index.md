@@ -17,6 +17,13 @@ Other examples of use include:
 * e-commerce where the recommendations are again based on items that the user has viewed as well as the items that they have bought.
 * general personalisation of any website or app.
 
+## Join the seldon-users group
+In March 2015 we created a public [seldon-users group](https://groups.google.com/forum/#!forum/seldon-users) powered by Google Groups, and now the Seldon VM and AMI have been released we encourage you to leave feedback and ask questions in this group. [Click here to join the seldon-users group](https://groups.google.com/forum/#!forum/seldon-users).
+
+To post to the group, send an email to [seldon-users@googlegroups.com](seldon-users@googlegroups.com)
+
+## Sign up to the beta list
+To be among the first to hear the latest news and receive Seldon releases, [join the Seldon beta list](http://eepurl.com/6X6n1).
 
 ## Technology
 
