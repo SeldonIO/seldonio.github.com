@@ -4,13 +4,13 @@ title: Seldon Server
 ---
 
 # Introduction
-
+ 
 The Seldon Server component is responsible for serving recommendations via a REST API. It consumes models produced by the Spark jobs.
 
 # Concepts
 
 ## Algorithm
-
+ 
 Algorithms recommend content/items according to the following specification.
 
 {% highlight java %}
@@ -27,7 +27,7 @@ A couple of things to focus on here are
 All algorithms must conform to the ItemRecommendationAlgorithm interface and be defined spring components. This is to allow easy discovery of all algorithms when the server starts. 
  
 ## Includer
-
+ 
 Provides a set of items for the algorithm to recommend against. You can have multiple of these in which case the union of the set of items are recommended against, or combine them with excluders. An example would be the RecentItemsIncluder which includes items that have recently been added to the DB.
 
 ## Excluder
@@ -38,19 +38,39 @@ Opposite of Includer
 
 A combiner takes the output of multiple algorithms and combines them into one set of recommendations. An example would be the FirstSuccessfulCombiner which takes the output of whichever algorithm
 provides the requisite number of recs first and outputs those. Combiners have the power to stop other algorithms being run if they find that there is already enough recs.
-
+ 
 ## Strategy
 
 Describes how to map the client/user pair to a set of Alg/Context pairs. Usually this is a simple mapping -- all users get the same alg/context pair. However, when a test is set up, a user may be
 given different pair based on the hash of his username.
-
+ 
 ## RecommendationContext
 
-Store for algorithm options. One option that is common to all algorithms is the **MODE**. The possible values are **INCLUSION**, **EXCLUSION** or **NONE**. **INCLUSION** means that the set of items
-stored in the context are to be recommended from, **EXCLUSION** means that they are excluded from any recs and **NONE** means that the context has no opinion on the item set to be recommended from --
-the alg is free to choose any item.
-
+Store for algorithm options. One option that is common to all algorithms is the **MODE**. The possible values are **INCLUSION**, **EXCLUSION** or **NONE**. **INCLUSION** means that the set of items stored in the context are to be recommended from, **EXCLUSION** means that they are excluded from any recs and **NONE** means that the context has no opinion on the item set to be recommended from -- the alg is free to choose any item.
+ 
 ## ClientAlgorithmStore
 
 Store for which of the above concepts to use for each client, also controls testing.
+
+# Set Up
+
+## Prerequisites
+
+To run the Seldon Server, we need a number of things present on the machine it is running on
+
+* Java (v >= 7)
+* Tomcat (v >= 7)
+* Maven (v >=3)
+
+There also needs to be a ZooKeeper server running along with Memcached and a MySQL server. It's up to you where you place these, but they should be accessible from the server on which you are running Seldon Server.
+
+## Config project
+
+The project Seldon [seldon-server-config-template](https://github.com/SeldonIO/seldon-server-config-template) provides a template for the configuration required in the Seldon Server. Clone it and edit `server.properties`, filling in the properties to match your set up. Run `./rewrite_properties.sh` to propagate the properties from `server.properties` into other property files. Then you are ready to build the config set. Run `mvn clean install` to install the config for use by the Seldon Server
+
+## The main project
+
+Clone the project [seldon-server](https://github.com/SeldonIO/seldon-server) and run `mvn clean package`. This will create a war file in the target directory. Deploy this to an Apache Tomcat instance (we recommend that you deploy it at ROOT). You should now have a running Seldon Server instance!
+
+
 
