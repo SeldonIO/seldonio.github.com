@@ -39,6 +39,25 @@ The rebuilt movie demo will again be available at:
 
         http://localhost:8080/movie-demo/
 
+IMPORTANT: If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown.  
+To display the images there are two options:
+
+        option 1: Use an Embedly key.
+            Sign up at "http://embed.ly/", obtain the key and re-start using the following:
+
+            cd ~/seldon/dist
+            export EMBEDLY_KEY=<your-key>
+            ./start-all
+
+        option 2: Use a ssh tunnel to obtain "localhost" url.
+            Use the following in a terminal to formard port 8080 from your remote host to your localhost:
+
+            ssh -i <path-to-your-pem-file> -L 8080:localhost:8080 ubuntu@<your-remote-host>
+
+            Leave that open and use the following in a browser:
+
+            http://localhost:8080/movie-demo/
+
 
 ## In Depth Steps
 The steps to create the content recommendation models for the Movielens based data are described below. These steps will hopefully help you gain an understanding of how to injest and model a reasonable large and complex dataset.
