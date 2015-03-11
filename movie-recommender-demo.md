@@ -50,7 +50,8 @@ To display the images there are two options:
             ./start-all
 
         option 2: Use a ssh tunnel to obtain "localhost" url.
-            Use the following in a terminal to formard port 8080 from your remote host to your localhost:
+            Use the following in a terminal to formard port 8080 from
+            your remote host to your localhost:
 
             ssh -i <path-to-your-pem-file> -L 8080:localhost:8080 ubuntu@<your-remote-host>
 
