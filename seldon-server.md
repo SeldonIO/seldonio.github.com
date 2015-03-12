@@ -68,6 +68,7 @@ There also needs to be a ZooKeeper server running along with Memcached and a MyS
 ## Config project
 
 The project Seldon [seldon-server-config-template](https://github.com/SeldonIO/seldon-server-config-template) provides a template for the configuration required in the Seldon Server. Clone it and edit `server.properties`, filling in the properties to match your set up. Here is what the properties mean:
+
 * **CLIENT_NAME** - in this initial setup doc we only allow one client. This name should be without spaces and without special characters. It is the name you will use in the REST API etc from now on.
 * **ZK_HOST** - the host name of the server that contains the zookeeper instance. This will most likely be localhost.
 * **MEMCACHED_HOST** - the host name of the server that contains the Memcached instance. This will most likely be localhost.
