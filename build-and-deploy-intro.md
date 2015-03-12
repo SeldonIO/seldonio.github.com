@@ -5,8 +5,6 @@ title: Introduction
 
 
 
-# Intro here
-
 # Open Source Projects
 The open source projects that comprise Seldon can be seen in the image below grouped into logical sections. The diagram also illustrate the extension points that can be used to add custom algorithms (offline model creation and real time prediction scoring) to easily extend Seldon.
 
