@@ -28,7 +28,15 @@ To use Seldon Spark, the following need to be installed:
 
 # Run spark jobs
 
-An example of running the actions job
+An example of running the actions job.  
+The options to the job are as follows:  
+
+* **--aws-access-key-id** - This should be set to an empty string unless using AWS S3.
+* **--aws-secret-access-key** - This should be set to an empty string unless using AWS S3.
+* **--input-path-pattern** - This reflects the source of the actions and how td-agent was setup to store them. The the pattern is based on the path to the location, %y for year, %m for month, %d for day.  
+* **--input-date-string** - This is the day that will be processed in unix time.
+* **--output-path-dir** - This should be the place that Seldon Server uses for the model data.
+* **--gzip-output** - Use this option to compress the output data.
 
         cd ~/seldon-spark
 
