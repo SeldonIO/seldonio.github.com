@@ -35,7 +35,7 @@ The options to the job are as follows:
 
 * **--aws-access-key-id** - This should be set to an empty string unless using AWS S3.
 * **--aws-secret-access-key** - This should be set to an empty string unless using AWS S3.
-* **--input-path-pattern** - This reflects the source of the actions and how Seldon Server was setup to store them using the **TD_LOGS_DIR**. The the pattern is based on the path to the location, %y for year, %m for month, %d for day.  
+* **--input-path-pattern** - This reflects the source of the actions and how Seldon Server was setup to store them using the **TD_LOGS_DIR**. The pattern is based on the path to the location, %y for year, %m for month, %d for day.  
 * **--input-date-string** - This is the day that will be processed in unix time.
 * **--output-path-dir** - This should be the place the other jobs will use as input for their processing.
 * **--gzip-output** - Use this option to compress the output data.
