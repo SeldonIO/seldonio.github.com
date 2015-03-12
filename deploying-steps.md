@@ -9,7 +9,7 @@ Steps involved in setting up Seldon from source to serve recommendations:
 
 * [Start with an understanding of Seldon concepts](/concepts.html)
 * [Setup the Database](/db-build-and-deploy.html)
-* Configure you data attributes (coming soon)
+* Configure your data attributes (coming soon)
 * [Setup Seldon Server](/seldon-server-build-and-deploy.html)
 * [Setup Seldon Spark](/seldon-spark.html)
 * Provide activity data, either static or realtime (coming soon)
