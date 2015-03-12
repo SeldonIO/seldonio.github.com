@@ -7,6 +7,20 @@ title: Concepts
 
 On each Seldon deployment, it is possible to provide recommendations for several totally different data sets (for example, two websites). These data sets are divided by using different clients. Each call to the API has client as one of the attributes. The instructions we've provided so far only allow one client to be set up, but watch these docs for updates on how to extend this.
 
+## User
+
+A user of the Seldon Server is any entity that interacts with items and requires recommendations. For example, a person on a news website that is viewing a story and need recommendations on the next story to read.
+
+## Item
+
+Items are the things that are to be recommended from. For example, a web link that shows a news story.
+
+## Action
+
+Actions are any time when a user interacts with an item (viewing it, buying it, adding it to a cart).
+
+*User, Item and Action can be enriched with arbitrary attributes depending on the use case. For example, a newspaper article might have a subtitle and a category.  When the Seldon Server makes its recommendations for a user, it takes the history of items that he/she has interacted with and their attributes into account.*
+
 ## Algorithm
  
 Algorithms recommend content/items according to the following specification.
