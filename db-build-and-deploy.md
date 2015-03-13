@@ -3,7 +3,7 @@ layout: default
 title: Introduction
 ---
 
-Start with a fresh MySQL installation. Clone the [seldon-server]() project. In it there are the schemas to add that you need. **NOTE** when referring to 'databases' below it means that MySQL concept of databases rather than a database server.
+Start with a fresh MySQL installation. Clone the [seldon-server](https://github.com/SeldonIO/seldon-server) project. In it there are the schemas to add that you need. **NOTE** when referring to 'databases' below it means that MySQL concept of databases rather than a database server.
 
 * Create a database called 'api'.
 * Run the api.sql file in that database.
