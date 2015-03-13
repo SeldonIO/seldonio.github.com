@@ -2,12 +2,13 @@
 
   <div class="wrapper">
 
-  <a href="http://www.seldon.io">
-  <img src="/img/seldon-logo.png" title="Seldon" alt="Seldon" class="logo" /></a>
+      <div class="brand"><a href="http://www.seldon.io">
+        <img src="/img/seldon-logo.png" title="Seldon" alt="Seldon" class="logo" /></a>
+      </div>
 <!-- <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a> -->
 
     <nav id="primary_nav_wrap">
-<ul>
+<ul class="nav">
   <!-- <li class="current-menu-item"><a href="#">Home</a></li> -->
   <li><a href="/index.html">Intro</a>
     <!--
@@ -31,9 +32,10 @@
       <li><a href="#">Sub Menu 5</a></li>
     </ul> -->
   </li>
-  <li><a href="/tech.html">Technology</a>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Technology</a>
     <ul>
-      <li class="dir"><a href="/concepts.html">Concepts</a></li>
+        <li><a href="/tech.html">Overview</a></li> 
+        <li class="dir"><a href="/concepts.html">Concepts</a></li>
       <li class="dir"><a href="/configuration.html">Configuration</a></li>
     </ul>
   </li>
@@ -56,6 +58,7 @@
     <ul>
         <li class="dir"><a href="/build-and-deploy-intro.html">Introduction</a></li>
         <li class="dir"><a href="/db-build-and-deploy.html">Database</a></li>
+        <li class="dir"><a href="/deploying-your-data.html">Configure your data attributes</a></li>
         <li class="dir"><a href="/seldon-server-build-and-deploy.html">Seldon Server</a></li>
         <li class="dir"><a href="/seldon-spark.html">Seldon Spark</a></li>
     </ul>
