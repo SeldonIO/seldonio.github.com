@@ -28,52 +28,8 @@ git checkout tags/v1.0.1
 mvn -DskipTests=true clean package
 {% endhighlight %}
 
-# Offline Data Store
-The Seldon modelling and data manipulation jobs assume a structure for the data storage. This structure allows easy integration into a production environment where models are created periodically, usually each day. The directory structure is of the form
- {% highlight bash %}
-    seldon-models/${CLIENT}/${MODEL}/${DAY}
- {% endhighlight %}
-	
-e.g. for a matrix_factorization model created for client client1 on 27 Jan 2014 (unix epoch day 16461) would be 
 
- {% highlight bash %}
-    seldon-models/client1/matrix_factorization/16461
- {% endhighlight %}
-
-You can use a network file store, AWS S3 or soon HDFS for the actual store.
-
-The jobs that require activity data will use a start day and a number of days to collect from the filesystem the data they need. They will gather data from folders of the form:
-
-{% highlight bash %}
-${input-path}/${client}/actions/start-day
-${input-path}/${client}/actions/start-day-1
-${input-path}/${client}/actions/start-day-2
-.
-.
-${input-path}/${client}/actions/start-day-(num-days)
-{% endhighlight %}
-
-For example:
-
-{% highlight bash %}
-/seldon-models/client1/actions/16461
-/seldon-models/client1/actions/16460
-/seldon-models/client1/actions/16459
-{% endhighlight %}
-
-The output path will be of the form:
-
-{% highlight bash %}
-${output-path}/${client}/${model}/start-day
-{% endhighlight %}
-
-For example:
-
-{% highlight bash %}
-s3://seldon-models/client1/matrix-factorization/16461
-{% endhighlight %}
-
-# Actions Grouping
+# Actions Grouping Job
 
 To provide the core activity data needed by many modelling jobs we provide a job which collects the raw action data collected by the API and outputs into daily folders for each client. The input format is presently JSON.
 
@@ -173,58 +129,55 @@ The various configurable parameters are:
 # Item similarity
 Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
 
+## Configuration
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/<client>/offline/similar-items
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+ * **limit** : return only the top N similarities for each item
+ * **minUsersPerItem** : The minimum number of users who need to have interacted with an item for it to be included
+ * **minItemsPerUser** : The minimum number of items that a user has interacted with for that user to be included
+ * **maxUsersPerItem** : The maximum number of items a user has interacted with for that user to be included (useful to remove Bots from activity data)
+ * **dimsumThreshold** : A value >= 0 and usually < 1.0. Higher the setting the greater the efficiency but less accurate the result. See the [DIMSUM algorithm](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum) for further details.
+  * **sample** : limit the actions processed to a random subset of all actions. Value 0.0 to 1.0. Default 1.0 (all actions)
+
+Example confguration:
+
+{% highlight json %}
+{
+  "inputFolder":"/seldon-models",
+  "outputFolder":"/seldon-models",
+  "startDay" : 1,
+  "days" : 1,
+  "awsKey" : "",
+  "awsSecret" : "",  
+  "itemType":-1,
+  "limit":100,
+  "minItemsPerUser" : 0,
+  "minUsersPerItem" : 0,
+  "maxUsersPerItem" : 2000000,
+  "dimsumThreshold" : 0.1,
+  "sample" : 1.0
+}
+{% endhighlight %}
+
+Example job execution
+
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
-BASE_DIR=~/seldon-models
-
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.mllib.SimilarItems" \
 	   --master local[1] \
        ${JAR_FILE_PATH} \
 	   --client ${CLIENT} \
-	   --input-path ${BASE_DIR} \
-	   --output-path ${BASE_DIR} \
-	   --start-day ${YESTERDAY} \
-	   --numdays 180 \
-	   --minUsersPerItem 100 \
-	   --minItemsPerUser 10 \
-	   --dimsum-threshold 0.1 \
-	   --maxUsersPerItem 300000 \
-	   --limit 30
 {% endhighlight %}
 
-The various configurable parameters are:
-
- * --client : the name of the client.
- * --start-day : the start day as a unix epoch day number to use as input data
- * --numdays : the number of days into the past from the start-day to use as input data
- * --input-path : The base folder for the action input data. It will be expanded to include folders of the form:
-
-{% highlight bash %}
-   ${input-path}/${client}/actions/start-day
-   ${input-path}/${client}/actions/start-day-1
-   ${input-path}/${client}/actions/start-day-2
-   .
-   .
-   ${input-path}/${client}/actions/start-day-(num-days)
-{% endhighlight %}
-
- * --output-path : the base folder for the item similarity output. It will be expanded to place the result of the modeling in:
-
-{% highlight bash %}
- ${output-path}/${client}/item-similarity/start-day
-{% endhighlight %}
-
- * --sample : limit the actions processed to a random subset of all actions. Value 0.0 to 1.0. Default 1.0 (all actions)
- * --limit : return only the top N similarities for each item
- * --dimsum_threshold : A value >= 0 and usually < 1.0. Higher the setting the greater the efficiency but less accurate the result. See the [DIMSUM algorithm](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum) for further details.
- * --minUsersPerItem : The minimum number of users who need to have interacted with an item for it to be included
- * --minItemsPerUser : The minimum number of items that a user has interacted with for that user to be included
- * --maxUsersPerItem : The maximum number of items a user has interacted with for that user to be included (useful to remove Bots from activity data)
- 
 Once complete the Seldon database needs to be updated with the similarities so they can be served.
 
 You will need to get from local filesystem, AWS S3 or HDFS the output of the job and run a script to convert to SQL and upload to the Seldon DB. An example for the result stored on the local filesystem is shown below:
