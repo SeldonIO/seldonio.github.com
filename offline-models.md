@@ -77,7 +77,8 @@ All jobs usually have a set of basic parameters they need including
  * **awskey** : AWS key (only needed if using S3 for storage)
  * **awssecret** : AWS secret (only needed if using S3 storage)
  * **itemType** : restrict activity data to only these types of items (-1 is allow all)
- 
+ * **activate** : whether to activate the model immediately in the Seldon Server so predictions can be provided
+
 An example:
 
 {% highlight json %}
@@ -89,6 +90,7 @@ An example:
   "awsKey" : "",
   "awsSecret" : "",
   "itemType":-1,
+  "activate":true
 }
 {% endhighlight %}
 

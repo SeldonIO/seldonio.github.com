@@ -83,48 +83,54 @@ ${SPARK_HOME}/bin/spark-submit \
 # Matrix Factorization
 An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
 
+## Configuration
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/<client>/offline/matrix-factorization
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+ * **rank** : the number of latent factors in the model.
+ * **iterations** : the number of iterations to run the modelling
+ * **lambda** :  the regularization parameter in ALS to stop over-fitting 
+ * **alpha** : governs the baseline confidence in preference observations
+
+Example confguration:
+
+{% highlight json %}
+{
+  "inputFolder":"/seldon-models",
+  "outputFolder":"/seldon-models",
+  "startDay" : 1,
+  "days" : 1,
+  "activate" : true,
+  "awsKey" : "",
+  "awsSecret" : "",  
+  "rank" : 30,
+  "lambda" : 0.1,
+  "alpha" : 1,
+  "iterations" : 5
+}
+{% endhighlight %}
+
+## Run Modeling
+
+
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 BASE_DIR=~/seldon-models
-
-NUM_DAYS=120
-RANK=30
-LAMBDA=0.1
-ALPHA=1
-ITERATIONS=5
-ZOOKEEPER_NODES=zkhost1,zknost2,zkhost3
 
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.mllib.MfModelCreation" \
 	   --master local[1] \
 	   ${JAR_FILE_PATH} \
-	   ${CLIENT}
-	   ${YESTERDAY}
-	   ${NUM_DAYS}
-	   ${RANK}
-	   ${LAMBDA}
-	   ${ALPHA}
-	   ${ITERATIONS}
-	   ${ZOOKEEPER_NODES}
-	   ${BASE_DIR}/${CLIENT}/actions
-	   ${BASE_DIR}/${CLIENT}/matrix-factorization
+	   --client ${CLIENT}
 {% endhighlight %}
 
-The various configurable parameters are:
-
- * client : the name of the client.
- * start-day : the start day as a unix epoch day number to use as input data
- * numdays : the number of days into the past from the start-day to use as input data
- * base_dir : The base folder for input and output 
- * rank : the number of latent factors in the model.
- * iterations : the number of iterations to run the modelling
- * lambda :  the regularization parameter in ALS to stop over-fitting 
- * alpha : governs the baseline confidence in preference observations
- * zookeeper_nodes : the zookeeper nodes to update to inform the seldon-server that a new model is available
- 
 
 # Item similarity
 Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
@@ -164,6 +170,8 @@ Example confguration:
   "sample" : 1.0
 }
 {% endhighlight %}
+
+## Run Modelling
 
 Example job execution
 
