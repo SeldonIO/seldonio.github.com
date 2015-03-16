@@ -7,6 +7,10 @@ title: Spark Offline Models
  
 The Seldon Spark component is used to run [Apache Spark](https://spark.apache.org/) jobs that process logs and build models to be used by the Seldon Server.
 
+ * [Actions Grouping Job](#actions)
+ * [Matrix Factorization](#matrix-factorization)
+ * [Item Activity Similarity](#item-similarity)
+  
 # Set Up
 
 ## Prerequisites
@@ -29,7 +33,7 @@ mvn -DskipTests=true clean package
 {% endhighlight %}
 
 
-# Actions Grouping Job
+# Actions Grouping Job<a name="actions"></a>
 
 To provide the core activity data needed by many modelling jobs we provide a job which collects the raw action data collected by the API and outputs into daily folders for each client. The input format is presently JSON.
 
@@ -80,7 +84,7 @@ ${SPARK_HOME}/bin/spark-submit \
 {% endhighlight %}
 
 
-# Matrix Factorization
+# Matrix Factorization<a name="matrix-factorization"></a>
 An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
 
 ## Configuration
@@ -132,7 +136,7 @@ ${SPARK_HOME}/bin/spark-submit \
 {% endhighlight %}
 
 
-# Item similarity
+# Item Activity Similarity<a name="item-similarity"></a>
 Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
 
 ## Configuration
