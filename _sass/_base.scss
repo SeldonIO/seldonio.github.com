@@ -6,6 +6,10 @@ p, blockquote, pre, hr,
 dl, dd, ol, ul, figure {
     margin: 0;
     padding: 0;
+    font-family: $base-font-family;
+    line-height: $base-line-height;
+    font-weight: 300;
+    color: $text-color;
 }
 
 
@@ -72,7 +76,9 @@ li {
     > ol {
          margin-bottom: 0;
     }
+    line-height: inherit;
 }
+
 
 
 
@@ -83,12 +89,17 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
 
+h1 {
+    font-size: 32px;
+}
 
-
+h2 {
+    font-size: 24px;
+}
 /**
  * Links
  */
-a {
+.dropdown-menu li>a {
     color: $brand-color;
     text-decoration: none;
 
@@ -121,7 +132,9 @@ blockquote {
 }
 
 
-
+.dropdown {
+    line-height:20px;
+}
 /**
  * Code formatting
  */

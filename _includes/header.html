@@ -2,12 +2,14 @@
 
   <div class="wrapper">
 
-  <a href="http://www.seldon.io">
-  <img src="/img/seldon-logo.png" title="Seldon" alt="Seldon" class="logo" /></a>
+      <div class="brand"><a href="http://www.seldon.io">
+        <img src="/img/seldon-logo.png" title="Seldon" alt="Seldon" class="logo" /></a>
+      </div>
 <!-- <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a> -->
 
     <nav id="primary_nav_wrap">
-<ul>
+    <div id="topbar" class="navbar">
+    <ul class="nav">
   <!-- <li class="current-menu-item"><a href="#">Home</a></li> -->
   <li><a href="/index.html">Intro</a>
     <!--
@@ -31,20 +33,23 @@
       <li><a href="#">Sub Menu 5</a></li>
     </ul> -->
   </li>
-  <li><a href="/tech.html">Technology</a>
-    <ul>
-      <li class="dir"><a href="/concepts.html">Concepts</a></li>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Technology<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="/tech.html">Overview</a></li> 
+        <li class="dir"><a href="/concepts.html">Concepts</a></li>
       <li class="dir"><a href="/configuration.html">Configuration</a></li>
     </ul>
   </li>
-  <li><a href="/api.html">Seldon APIs</a>
-    <ul>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Seldon APIs<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li class="dir"><a href="/api.html">Overview</a></li>
       <li class="dir"><a href="/api-rest.html">REST API</a></li>
       <li class="dir"><a href="/api-javascript.html">JavaScript API</a></li>
     </ul>
   </li>
-  <li><a href="/getting-started.html">Getting Started</a>
-    <ul>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li class="dir"><a href="/getting-started.html">Overview</a></li>
       <li class="dir"><a href="/vm.html">Seldon Vagrant VM</a></li>
       <li class="dir"><a href="/vm-aws.html">Seldon AMI for Amazon Web Services</a></li>
       <li class="dir"><a href="/movie-recommender-demo.html">Movie Recommender Demo</a></li>
@@ -52,12 +57,15 @@
       <li class="dir"><a href="/content-recommendation-models.html">Content Recommendation Models</a></li>
     </ul>
   </li>
-  <li><a>Build and Deploy</a>
-    <ul>
+  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Deploying<span class="caret"></span></a>
+    <ul class="dropdown-menu">
         <li class="dir"><a href="/build-and-deploy-intro.html">Introduction</a></li>
-        <li class="dir"><a href="/db-build-and-deploy.html">Database</a></li>
-        <li class="dir"><a href="/seldon-server-build-and-deploy.html">Seldon Server</a></li>
-        <li class="dir"><a href="/seldon-spark.html">Seldon Spark</a></li>
+        <li class="dir"><a href="/deploying-steps.html">Deploy Steps</a></li>
+        <li class="dir"><a href="/db-build-and-deploy.html">Create Seldon Database</a></li>
+        <li class="dir"><a href="/deploying-your-data.html">Configure your data attributes</a></li>
+        <li class="dir"><a href="/seldon-server-build-and-deploy.html">Deploy Seldon Server</a></li>
+        <li class="dir"><a href="/static-activity-data.html">Import static data</a></li>
+        <li class="dir"><a href="/offline-models.html">Create Models</a></li>
     </ul>
     </li>
 
@@ -65,6 +73,7 @@
   <li><a href="mailto:support@seldon.io">Contact Us</a></li>
     <li><a href="http://www.seldon.io" target="_blank">Seldon Website</a></li>
 </ul>
+</div>
 </nav>
 
 
