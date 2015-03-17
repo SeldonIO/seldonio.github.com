@@ -7,6 +7,12 @@ title: Offline Model Creation
 
 Seldon provides a variety of models that can be created and makes it easy for new custom models to be added.
 
+The current integrated models are:
+
+ * [Models created via Apache Spark](spark-models.html)
+ * Models created via Semantic Vectors (docs coming soon)
+ * Models created via Vowpal Wabbit (docs coming soon)
+
 Confguration is either passed on the command line to the offline jobs or set in zookeeper
 
 # Offline Data Store
@@ -94,11 +100,5 @@ An example:
 }
 {% endhighlight %}
 
-
-The current integrated models are:
-
- * [Models created via Apache Spark](spark-models.html)
- * Models created via Semantic Vectors (coming soon)
- * Models created via Vowpal Wabbit (coming soon)
 
 
