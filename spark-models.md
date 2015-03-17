@@ -10,6 +10,8 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
  * [Actions Grouping Job](#actions)
  * [Matrix Factorization](#matrix-factorization)
  * [Item Activity Similarity](#item-similarity)
+ * [Word2Vec](#word2vec)
+ * [User Clusters](#user-clusters)
   
 # Set Up
 
@@ -204,8 +206,8 @@ cat /seldon-models/${CLIENT}/item-similarity/${DAY}/part* | ${SELDON-SPARK-HOME}
 mysql -h${DB_HOST} -u${DB_USER} -p${DB_PASS} ${CLIENT} < upload.sql 
 {% endhighlight %}
 
-# Word2Vec
-Word2Vec are deep learning based language models that create vector space representations. Traditionally they are trained on a large text corpus but there has been recent use of training them on session activity data. In this setting a "sentence" is a user session whose "words" are the products/items they have interacted with. By training on large amounts of session data we can create vectors that describe the products and can be used to find similar products. For the word2vec training we use the implementation in [Apache Spark](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec).
+# Word2Vec<a name="word2vec"></a>
+Word2Vec models are deep learning based language models that create vector space representations. Traditionally they are trained on a large text corpus but there has been recent use of training them on session activity data. In this setting a "sentence" is a user session whose "words" are the products/items they have interacted with. By training on large amounts of session data we can create vectors that describe the products and can be used to find similar products. For the word2vec training we use the implementation in [Apache Spark](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec).
 
 There are two Spark jobs that need to be run:
 
@@ -220,7 +222,7 @@ Set the configuration in zookeeper at node :
 /<client>/offline/sessionitems
 {% endhighlight %}
 
-The algorithm specific parameters are:
+The specific parameters are:
 
 Example confguration:
 
@@ -261,7 +263,7 @@ ${SPARK_HOME}/bin/spark-submit \
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/sessionitems
+/<client>/offline/word2vec
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -299,8 +301,53 @@ ${SPARK_HOME}/bin/spark-submit \
 {% endhighlight %}
 
 
-# Other Spark Based Models
+# User Clustering Models<a name="user-clusters"></a>
+For news sites or other sites where item churn is rapid and relevancy of items decays fast we can base recommendations on what similar users are interacting with on your site. These models are based on clustering the users against a static set of clusters (e.g., an item taxonomy) or in a free way (e.g. using fuzzy k-means). This implementation is based on the assumption items are added into the Seldon datastore with particular dimensions, e.g. article type - sports, finance, gossip etc. See the [deploying your data section](deploying-your-data.html). The model simply groups users who have a more than average association with any particular dimension, e.g., users who read more sports articles than the average user. Recommendation is done by seeing what similar users are interacting with miniute by minute on the live site. Therefore, live activity data is needed to put this model into production and it can't be used just on historical data. 
 
-The seldon-spark project also contains other models that can be used. These include:
+## Configuration
+Set the configuration in zookeeper at node :
 
- * clustering : For news sites or other sites where item churn is rapid and relevancy of items decays fast we can base recommendation of what similar users are interacting with on your site. These models are based on clustering the users against a static set of clusters (e.g., an item taxonomy) or in a free way (e.g. using fuzzy k-means)
+{% highlight bash %}
+/<client>/offline/cluster-by-dimension
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+ * **jdbc** : jdbc url to the seldon database to get dimensions for all items
+ * **minActionsPerUser** : min number of actions per user
+ * **minClusterSize** : min cluster size
+ * **delta** :  min difference in dim percentage for user to be clustered in dimension
+ 
+Example confguration:
+
+{% highlight json %}
+{
+  "inputFolder":"/seldon-models",
+  "outputFolder":"/seldon-models",
+  "startDay" : 1,
+  "days" : 1,
+  "awsKey" : "",
+  "awsSecret" : "",
+  "activate" : "false",
+  "jdbc" : "jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8",
+  "minActionsPerUser" : 0,
+  "delta" : 0.1,
+  "minClusterSize" : 200
+{% endhighlight %}
+
+## Run Modelling
+
+Example job execution
+
+{% highlight bash %}
+SELDON_SPARK_HOME=~/seldon-spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.cluster.ClusterUsersByDimension" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+{% endhighlight %}
+
+
