@@ -200,9 +200,103 @@ cat /seldon-models/${CLIENT}/item-similarity/${DAY}/part* | ${SELDON-SPARK-HOME}
 mysql -h${DB_HOST} -u${DB_USER} -p${DB_PASS} ${CLIENT} < upload.sql 
 {% endhighlight %}
 
+# Word2Vec
+Word2Vec are deep learning based language models that create vector space representations. Traditionally they are trained on a large text corpus but there has been recent use of training them on session activity data. In this setting a "sentence" is a user session whose "words" are the products/items they have interacted with. By training on large amounts of session data we can create vectors that describe the products and can be used to find similar products. For the word2vec training we use the implementation in [Apache Spark](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec).
+
+There are two Spark jobs that need to be run:
+
+ * Create session items from the actions activity data
+ * Create word2vec vectors from the session data
+
+## Create Session Data
+
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/<client>/offline/sessionitems
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+Example confguration:
+
+ * **minActionsPerUser** : min number of actions per user
+ * **maxActionsPerUser** : max number of actions per user
+ * **maxIntraSessionGapSecs** : max number of secs before assume session over, -1 for no limit
+
+{% highlight json %}
+{
+  "inputFolder":"/seldon-models",
+  "outputFolder":"/seldon-models",
+  "startDay" : 1,
+  "days" : 1,
+  "awsKey" : "",
+  "awsSecret" : "",  
+  "maxIntraSessionGapSecs" : -1,
+  "minActionsPerUser" : 0,
+  "maxActionsPerUser" : 100000
+}
+{% endhighlight %}
+
+Example job execution
+
+{% highlight bash %}
+SELDON_SPARK_HOME=~/seldon-spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.topics.SessionItems" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+{% endhighlight %}
+
+## Create Word2Vec Model
+
+
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/<client>/offline/sessionitems
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+Example confguration:
+
+ * **minWordCount** : min count for a token to be included
+ * **vectorSize** : vector size
+
+{% highlight json %}
+{
+  "inputFolder":"/seldon-models",
+  "outputFolder":"/seldon-models",
+  "startDay" : 1,
+  "days" : 1,
+  "awsKey" : "",
+  "awsSecret" : "",
+  "activate" : true,
+  "minWordCount" : 50,
+  "vectorSize" : 200
+}
+{% endhighlight %}
+
+Example job execution
+
+{% highlight bash %}
+SELDON_SPARK_HOME=~/seldon-spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.features.Word2VecJob" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+{% endhighlight %}
+
+
 # Other Spark Based Models
 
 The seldon-spark project also contains other models that can be used. These include:
 
- * word2vec : Create vector based representations of your products based on the user session activity. This is a novel use of word2vec technology where the "words" are your items (products, articles) and the "sentences" are the session history of users interacting with these items.
  * clustering : For news sites or other sites where item churn is rapid and relevancy of items decays fast we can base recommendation of what similar users are interacting with on your site. These models are based on clustering the users against a static set of clusters (e.g., an item taxonomy) or in a free way (e.g. using fuzzy k-means)
