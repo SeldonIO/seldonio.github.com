@@ -102,12 +102,17 @@ The algorithm specific parameters are:
  * **lambda** :  the regularization parameter in ALS to stop over-fitting 
  * **alpha** : governs the baseline confidence in preference observations
 
+The data parameters are:
+ 
+ * **inputPath** : location of the actions data
+ * **outputPath** : location of the output model
+
 Example confguration:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
   "activate" : true,
