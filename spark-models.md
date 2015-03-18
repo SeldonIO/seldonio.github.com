@@ -30,7 +30,6 @@ To use Seldon Spark, the following need to be installed:
 cd ~/
 git clone https://github.com/SeldonIO/seldon-spark
 cd seldon-spark
-git checkout tags/v1.0.1
 mvn -DskipTests=true clean package
 {% endhighlight %}
 
