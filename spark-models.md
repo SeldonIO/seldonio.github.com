@@ -20,7 +20,7 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
 To use Seldon Spark, the following need to be installed:
 
 * Java (v = 7)
-* Spark (v >= 1.2.0)
+* Spark (v = 1.3.0)
 * Maven (v >=3)
 * Git
 
