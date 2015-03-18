@@ -135,10 +135,11 @@ SPARK_HOME=/opt/spark
 BASE_DIR=~/seldon-models
 
 ${SPARK_HOME}/bin/spark-submit \
-	   --class "io.seldon.spark.mllib.MfModelCreation" \
-	   --master local[1] \
-	   ${JAR_FILE_PATH} \
-	   --client ${CLIENT}
+    --class "io.seldon.spark.mllib.MfModelCreation" \
+    --master local[1] \
+    ${JAR_FILE_PATH} \
+    --client ${CLIENT} \
+    --zookeeper 127.0.0.1 
 {% endhighlight %}
 
 
