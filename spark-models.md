@@ -115,6 +115,9 @@ Example confguration:
   "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
+  "awsKey" : "",
+  "awsSecret" : "",
+  "zkHosts" : "",
   "activate" : true,
   "rank" : 30,
   "lambda" : 0.1,
@@ -129,7 +132,7 @@ An example using zookeeper zkCli to create a new confguration for client "client
 {% highlight bash %}
 create /client1 ""
 create /client1/offline ""
-create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true}
+create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true,"awsKey":"","awkSecret":"","zkHosts":""}
 {% endhighlight %}
 
 ## Run Modeling
