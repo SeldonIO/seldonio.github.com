@@ -129,7 +129,7 @@ An example using zookeeper zkCli to create a new confguration for client "client
 {% highlight bash %}
 create /client1 ""
 create /client1/offline ""
-create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local";true}
+create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true}
 {% endhighlight %}
 
 ## Run Modeling
@@ -186,6 +186,15 @@ Example confguration:
   "sample" : 1.0
 }
 {% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /client1 ""
+create /client1/offline ""
+create /client1/offline/similar-items {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"itemType":-1,"limit":100,"minItemsPerUser":0,"minUsersPerItem":0,"maxUsersPerItem":2000000,"dimsumThreshold":0.1,"sample":1.0,"local":true}
+{% endhighlight %}
+
 
 ## Run Modelling
 
@@ -253,6 +262,17 @@ Example confguration:
 }
 {% endhighlight %}
 
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /client1 ""
+create /client1/offline ""
+create /client1/offline/sessionitems {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"maxIntraSessionGapSecs":-1,"minActionsPerUser":0,"maxActionsPerUser":100000,"local":true}
+{% endhighlight %}
+
+
+
+
 Example job execution
 
 {% highlight bash %}
@@ -294,6 +314,17 @@ Example confguration:
   "vectorSize" : 200
 }
 {% endhighlight %}
+
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /client1 ""
+create /client1/offline ""
+create /client1/offline/word2vec {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minWordCount":50,"vectorSize":200,local":true,activate:true}
+{% endhighlight %}
+
+
 
 Example job execution
 
@@ -341,6 +372,16 @@ Example confguration:
   "delta" : 0.1,
   "minClusterSize" : 200
 {% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /client1 ""
+create /client1/offline ""
+create /client1/offline/cluster-by-dimension {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minActionsPerUser":0,"delta":0.1,"minClusterSize":200,local":true,activate:true}
+{% endhighlight %}
+
+
 
 ## Run Modelling
 
