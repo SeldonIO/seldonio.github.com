@@ -321,7 +321,7 @@ An example using zookeeper zkCli to create a new confguration for client "client
 {% highlight bash %}
 create /client1 ""
 create /client1/offline ""
-create /client1/offline/word2vec {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minWordCount":50,"vectorSize":200,local":true,activate:true}
+create /client1/offline/word2vec {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minWordCount":50,"vectorSize":200,"local":true,"activate":true}
 {% endhighlight %}
 
 
@@ -378,7 +378,7 @@ An example using zookeeper zkCli to create a new confguration for client "client
 {% highlight bash %}
 create /client1 ""
 create /client1/offline ""
-create /client1/offline/cluster-by-dimension {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minActionsPerUser":0,"delta":0.1,"minClusterSize":200,local":true,activate:true}
+create /client1/offline/cluster-by-dimension {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"jdbc":"jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8","minActionsPerUser":0,"delta":0.1,"minClusterSize":200,"local":true,"activate":true}
 {% endhighlight %}
 
 
