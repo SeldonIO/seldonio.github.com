@@ -116,13 +116,20 @@ Example confguration:
   "startDay" : 1,
   "days" : 1,
   "activate" : true,
-  "awsKey" : "",
-  "awsSecret" : "",  
   "rank" : 30,
   "lambda" : 0.1,
   "alpha" : 1,
-  "iterations" : 5
+  "iterations" : 5,
+  "local" : true,
 }
+{% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /client1 ""
+create /client1/offline ""
+create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local";true}
 {% endhighlight %}
 
 ## Run Modeling
@@ -166,12 +173,10 @@ Example confguration:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
-  "awsKey" : "",
-  "awsSecret" : "",  
   "itemType":-1,
   "limit":100,
   "minItemsPerUser" : 0,
@@ -195,6 +200,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --master local[1] \
        ${JAR_FILE_PATH} \
 	   --client ${CLIENT} \
+       --zookeeper 127.0.0.1 	   
 {% endhighlight %}
 
 Once complete the Seldon database needs to be updated with the similarities so they can be served.
@@ -237,12 +243,10 @@ Example confguration:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
-  "awsKey" : "",
-  "awsSecret" : "",  
   "maxIntraSessionGapSecs" : -1,
   "minActionsPerUser" : 0,
   "maxActionsPerUser" : 100000
@@ -260,6 +264,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --master local[1] \
        ${JAR_FILE_PATH} \
 	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
 {% endhighlight %}
 
 ## Create Word2Vec Model
@@ -280,12 +285,10 @@ Example confguration:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
-  "awsKey" : "",
-  "awsSecret" : "",
   "activate" : true,
   "minWordCount" : 50,
   "vectorSize" : 200
@@ -303,6 +306,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --master local[1] \
        ${JAR_FILE_PATH} \
 	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
 {% endhighlight %}
 
 
@@ -327,12 +331,10 @@ Example confguration:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
-  "awsKey" : "",
-  "awsSecret" : "",
   "activate" : "false",
   "jdbc" : "jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8",
   "minActionsPerUser" : 0,
@@ -353,6 +355,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --master local[1] \
        ${JAR_FILE_PATH} \
 	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
 {% endhighlight %}
 
 
