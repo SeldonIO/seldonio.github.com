@@ -3,7 +3,7 @@ layout: default
 title: Build and deploy algorithm configuration
 ---
 
-Algorithm configuration is added via ZooKeeper as per the [configuration page]().
+Algorithm configuration is added via ZooKeeper as per the [configuration page](configuration.html).
 
 # Default configuration
 

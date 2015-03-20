@@ -53,7 +53,7 @@ Zookeeper is also used to store the algorithms chosen to provide recommendations
  Which clients have a specific strategy defined for them. This is a comma separated list. Typical input would be
 
  {% highlight bash %}
- mirror,testclient
+ client1,client2
  {% endhighlight %}
 
  It is important that a client isn't added to this list before the below node is populated or else there will be an error.
@@ -66,7 +66,7 @@ Zookeeper is also used to store the algorithms chosen to provide recommendations
  {"algorithms":[{"name":"dynamicClusterCountsRecommender","tag":"CLUSTER_COUNTS_DYNAMIC","includers":["mostPopularIncluder"],"config":{"items_per_includer":200}},{"name":"globalClusterCountsRecommender","tag":"CLUSTER_COUNTS_GLOBAL","includers":[]},{"name":"itemClusterCountsRecommender","tag":"CLUSTER_COUNTS_FOR_ITEM","includers":[]},{"name":"recentItemsRecommender","tag":"RECENT_ITEMS","includers":[]}],"combiner":"firstSuccessfulCombiner"}
  {% endhighlight %}
 
- Essentially this is a list of algorithm strategies with a combiner on the end. An algorithm strategy comprises, an algorithm spring bean name ("name" which is the camel case version of the name of thealg class), a tag (the legacy name for the algorithm), optionally a set of includers and/or excluders and optionally some config ("config"). The order of these algorithm strategies is priority order.
+ Essentially this is a list of algorithm strategies with a combiner on the end. An algorithm strategy comprises, an algorithm spring bean name ("name" which is the camel case version of the name of the alg class), a tag (the legacy name for the algorithm), optionally a set of includers and/or excluders and optionally some config ("config"). The order of these algorithm strategies is priority order.
 
 ### Model Creation
 
