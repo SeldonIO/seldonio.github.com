@@ -89,12 +89,10 @@ An example:
 
 {% highlight json %}
 {
-  "inputFolder":"/seldon-models",
-  "outputFolder":"/seldon-models",
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
-  "awsKey" : "",
-  "awsSecret" : "",
   "itemType":-1,
   "activate":true
 }
