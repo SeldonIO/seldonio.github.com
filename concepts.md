@@ -21,19 +21,18 @@ Actions are any time when a user interacts with an item (viewing it, buying it, 
 
 *User, Item and Action can be enriched with arbitrary attributes depending on the use case. For example, a newspaper article might have a subtitle and a category.  When the Seldon Server makes its recommendations for a user, it takes the history of items that he/she has interacted with and their attributes into account.*
 
-## Algorithm
+## Online Predictive Scoring
  
-Algorithms recommend content/items according to the following specification.
+Online prediction scoring algorithms recommend content/items according to the following specification.
 
 {% highlight java %}
-ItemRecommendationResultSet recommend(CFAlgorithm options,String client, Long user, int dimensionId, int maxRecsCount, RecommendationContext ctxt, List<Long> recentItemInteractions);
+ItemRecommendationResultSet recommend(String client, Long user, int dimension,RecommendationContext ctxt, int maxRecsCount, List<Long> recentitemInteractions);
 {% endhighlight %}
 
 A couple of things to focus on here are
 
- 1. **CFAlgorithm** a store for legacy options that will eventually be removed
  1. **RecommendationContext** explained below
- 1. **recentItemInteractions** another legacy concept that will eventually be rolled into the RecommendationContext
+ 1. **recentItemInteractions** the recent items a user has interacted with. This may be used by algorithms if needed.
  1. **maxRecsCount** the maximum recommendations that this alg should return. Even if the alg cannot create this many, it should still return as many as possible as they can be used in certain combiner configurations.
 
 All algorithms must conform to the ItemRecommendationAlgorithm interface and be defined spring components. This is to allow easy discovery of all algorithms when the server starts. 
@@ -60,7 +59,4 @@ given different pair based on the hash of his username.
 
 Store for algorithm options. One option that is common to all algorithms is the **MODE**. The possible values are **INCLUSION**, **EXCLUSION** or **NONE**. **INCLUSION** means that the set of items stored in the context are to be recommended from, **EXCLUSION** means that they are excluded from any recs and **NONE** means that the context has no opinion on the item set to be recommended from -- the alg is free to choose any item.
  
-## ClientAlgorithmStore
-
-Store for which of the above concepts to use for each client, also controls testing.
 
