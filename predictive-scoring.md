@@ -25,7 +25,7 @@ The current built in predictive scoring algorithms are as follows:
 `itemClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
 `itemCategoryClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
 `globalClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
-`semanticVectorsRecommender` | [content based models](predictive-scoring.html#content-based)
+`semanticVectorsRecommender` | [content based models](predictive-scoring.html#content-based), [word2vec model](predictive-scoring.html#word2vec)
 `recentItemsRecommender` | [baseline models](predictive-scoring.html#baseline)
 `mostPopularRecommender` | [baseline models](predictive-scoring.html#baseline)
 
@@ -38,8 +38,47 @@ Algorithms that utilize a [matrix factorization](spark-models.html#matrix-factor
  **Algorithm** : `mfRecommender`  
  **Description** : Utilizes the derived offline latent factors to provide a set of recommendations for a user.   
 
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"mfRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
+
+
+
  **Algorithm** :  `recentMfRecommender`  
  **Description** :  Uses the recent item interactions to create a snapshot latent representation of the user from the item factors and use that to recommend new content.  
+
+Optional config setting for this algorithm are:
+
+ * `io.seldon.algorithm.general.numrecentactionstouse` : integer - number of recent item interactions to use to score against
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"recentMfRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[{"name":"io.seldon.algorithm.general.numrecentactionstouse","value":"1"}]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
+
 
 
 ## Item Activity Models<a name="similar-items"></a>
@@ -48,6 +87,23 @@ Algorithms that utilize activity based [item similarity](spark-models.html#item-
 
  **Algorithm** : `itemSimilarityRecommender`   
  **Description** :  Uses the recent item interactions to find a set of top scoring similar items to recommend
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"itemSimilarityRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
+
 
 ## User Clustering Models<a name="user-clustering"></a>
 
@@ -73,6 +129,37 @@ Algorithms that utilize the content meta data of items to find related items. Th
 **Algorithm** : `semanticVectorsRecommender`  
 **Description** : Score items based on the content similarity to recent items the user has interacted with  
 
+## Word2vec Models<a name="word2vec"></a>
+
+Algorithms that utilize [word2vec](spark-models.html#user-clusters) models for each item to find related items. 
+
+**Algorithm** : `semanticVectorsRecommender`  
+**Description** : Score items based on the word2vec similarity to recent items the user has interacted with  
+
+The word2vec model is scored using the semantic vectors online recommender so a Required config option is:
+
+ * `io.seldon.algorithm.semantic.prefix` : word2vec. 
+
+Optional config settings are:
+
+ * `io.seldon.algorithm.general.numrecentactionstouse` : integer - number of recent item interactions to use to score against
+
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"semanticVectorsRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[{"name":"io.seldon.algorithm.semantic.prefix","value":"word2vec"}]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
 
 ## Baseline Models<a name="baseline"></a>
 
