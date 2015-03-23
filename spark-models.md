@@ -92,7 +92,7 @@ An algorithm made popular due to its sucess in the Netflix competition. It tries
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/matrix-factorization
+/all_clients/<client>/offline/matrix-factorization
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -127,9 +127,9 @@ Example confguration:
 An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
 
 {% highlight bash %}
-create /client1 ""
-create /client1/offline ""
-create /client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true}
 {% endhighlight %}
 
 ## Run Modeling
@@ -157,7 +157,7 @@ Item similarity models find correlations in the user-item interactions to find p
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/similar-items
+/all_clients/<client>/offline/similar-items
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -190,9 +190,9 @@ Example confguration:
 An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
 
 {% highlight bash %}
-create /client1 ""
-create /client1/offline ""
-create /client1/offline/similar-items {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"itemType":-1,"limit":100,"minItemsPerUser":0,"minUsersPerItem":0,"maxUsersPerItem":2000000,"dimsumThreshold":0.1,"sample":1.0,"local":true}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/similar-items {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"itemType":-1,"limit":100,"minItemsPerUser":0,"minUsersPerItem":0,"maxUsersPerItem":2000000,"dimsumThreshold":0.1,"sample":1.0,"local":true}
 {% endhighlight %}
 
 
@@ -239,7 +239,7 @@ There are two Spark jobs that need to be run:
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/sessionitems
+/all_clients/<client>/offline/sessionitems
 {% endhighlight %}
 
 The specific parameters are:
@@ -265,9 +265,9 @@ Example confguration:
 An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
 
 {% highlight bash %}
-create /client1 ""
-create /client1/offline ""
-create /client1/offline/sessionitems {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"maxIntraSessionGapSecs":-1,"minActionsPerUser":0,"maxActionsPerUser":100000,"local":true}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/sessionitems {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"maxIntraSessionGapSecs":-1,"minActionsPerUser":0,"maxActionsPerUser":100000,"local":true}
 {% endhighlight %}
 
 
@@ -293,7 +293,7 @@ ${SPARK_HOME}/bin/spark-submit \
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/word2vec
+/all_clients/<client>/offline/word2vec
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -319,9 +319,9 @@ Example confguration:
 An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
 
 {% highlight bash %}
-create /client1 ""
-create /client1/offline ""
-create /client1/offline/word2vec {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minWordCount":50,"vectorSize":200,"local":true,"activate":true}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/word2vec {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minWordCount":50,"vectorSize":200,"local":true,"activate":true}
 {% endhighlight %}
 
 
@@ -348,7 +348,7 @@ For news sites or other sites where item churn is rapid and relevancy of items d
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/<client>/offline/cluster-by-dimension
+/all_clients/<client>/offline/cluster-by-dimension
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -376,9 +376,9 @@ Example confguration:
 An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
 
 {% highlight bash %}
-create /client1 ""
-create /client1/offline ""
-create /client1/offline/cluster-by-dimension {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"jdbc":"jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8","minActionsPerUser":0,"delta":0.1,"minClusterSize":200,"local":true,"activate":true}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/cluster-by-dimension {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"jdbc":"jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8","minActionsPerUser":0,"delta":0.1,"minClusterSize":200,"local":true,"activate":true}
 {% endhighlight %}
 
 
