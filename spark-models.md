@@ -221,7 +221,7 @@ DB_HOST=db
 DB_USER=user
 DB_PASS=pass
 DAY=16491
-cat /seldon-models/${CLIENT}/item-similarity/${DAY}/part* | ${SELDON-SPARK-HOME}/scripts/item-similarity/create-sql > upload.sql
+cat /seldon-models/${CLIENT}/item-similarity/${DAY}/part* | ${SELDON_SPARK_HOME}/scripts/item-similarity/create-sql.py > upload.sql
 mysql -h${DB_HOST} -u${DB_USER} -p${DB_PASS} ${CLIENT} < upload.sql 
 {% endhighlight %}
 
