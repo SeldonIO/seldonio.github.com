@@ -17,7 +17,7 @@ This provides a base set of algorithms. If you want to alter this then please re
 
 # Activate model for client in Seldon Server
 
-The table below shows which node in zookeeper you should add your client name to activate the model for your client.
+The table below shows the nodes in zookeeper where the list of clients using a model is specified and where the location of a model for a particular client is specified.
 
 
 | model | client list node | model location node
@@ -29,9 +29,16 @@ The table below shows which node in zookeeper you should add your client name to
 
 The output of the item similarity job is presently placed directly in the db so is not controlled in this way.
 
-So, to activate a matrix factorization client for client `test1` ensure this is added as appropriate e.g.,
+To activate a matrix factorization client for client `test1` ensure the client name is added e.g.,
 
  * `/config/mf => some_other_client1,test1,some_other_client2`
+
+The seldon server will look for the model location in:
+
+ * `/all_clients/test1/mf`
+
+
+
 
 
 
