@@ -74,6 +74,6 @@ For a client specific algorithm strategy add to
 
 ### Model Creation
 
- * /[clientname]/offline/[model]
+ * /all_clients/[clientname]/offline/[model]
 
  The settings for offline creation of a model for a particular algorithm for this client. See [offline models](offline-models.html) for further details and examples. 
