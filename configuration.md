@@ -51,13 +51,13 @@ Zookeeper is also used to store the algorithms chosen to provide recommendations
    "name":"mfRecommender",
    "includers":["mostPopularIncluder"],
    "filters":[],
-   "config":[{"name":"items_per_includer","value":200}]
+   "config":[{"name":"io.seldon.algorithm.inclusion.itemsperincluder","value":200}]
    },
    {
    "name":"globalClusterCountsRecommender",
    "includers":[],
    "filters":[],
-   "config":[{"name":"items_per_includer","value":200}]
+   "config":[{"name":"io.seldon.algorithm.inclusion.itemsperincluder","value":200}]
    }
   ],
   "combiner":"firstSuccessfulCombiner"
