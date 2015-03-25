@@ -10,7 +10,7 @@ The Seldon Recommendation Engine (SRE) allows recommendations to be generated ba
 
 ## Why you would use it (examples)
 
-Seldon can has been designed genrically so that it can be useful in many contexts. It was first developed for the media industry. It recommended content for users to view on a website based on the content that the user had previously looked at.
+Seldon has been designed generically so that it can be useful in many contexts. It was first developed for the media industry. It recommended content for users to view on a website based on the content that the user had previously looked at.
 
 Other examples of use include:
 
