@@ -188,10 +188,31 @@ Example config to set in `/all_clients/[client]/algs`:
 
 ## Content Based Models<a name="content-based"></a>
 
-Algorithms that utilize the content meta data of items to find related items. The offline algorithm required for this predictive scoring will be documented soon.
+Algorithms that utilize the content meta data of items to find related items. Building the models is described [here](semantic-vectors.html)
 
 **Algorithm** : `semanticVectorsRecommender`  
 **Description** : Score items based on the content similarity to recent items the user has interacted with  
+
+Optional config settings are:
+
+ * `io.seldon.algorithm.general.numrecentactionstouse` : integer - number of recent item interactions to use to score against
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"semanticVectorsRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
+
 
 ## Word2vec Models<a name="word2vec"></a>
 
