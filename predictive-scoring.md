@@ -107,7 +107,7 @@ Example config to set in `/all_clients/[client]/algs`:
 
 ## User Clustering Models<a name="user-clustering"></a>
 
-Algorithms that utilize [user clustering](spark-models.html#user-clusters). These algorithms all collect counts for which items are being viewed by clusters of users in real time. These counts are stored in the Seldon datastore and decayed through time. Recommendations are based on top counts weighted by the clusters a user is contained within. Based on [Google's Scalable News Personalization](http://www2007.org/papers/paper570.pdf).
+Algorithms that utilize [user clustering](spark-models.html#user-clusters). These algorithms all collect counts for which items are being viewed by clusters of users in real time. These counts are stored in the Seldon datastore and decayed through time. Recommendations are based on top counts weighted by the clusters a user is contained within. Based on [Google's Scalable News Personalization](http://www2007.org/papers/paper570.pdf). Some live activity data is needed to use this algorithm.
 
  **Algorithm** : `dynamicClusterCountsRecommender`  
  **Description** : recommend presently popular content being interacted with by users in clusters the target user is contained within  
