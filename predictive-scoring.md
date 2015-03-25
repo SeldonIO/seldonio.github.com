@@ -112,14 +112,78 @@ Algorithms that utilize [user clustering](spark-models.html#user-clusters). Thes
  **Algorithm** : `dynamicClusterCountsRecommender`  
  **Description** : recommend presently popular content being interacted with by users in clusters the target user is contained within  
 
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+    "algorithms": [
+        {
+            "config": [],
+            "filters": [],
+            "includers": [],
+            "name": "dynamicClusterCountsRecommender"
+        }
+    ],
+    "combiner": "firstSuccessfulCombiner"
+}
+{% endhighlight %}
+
  **Algorithm** : `itemClusterCountsRecommender`  
  **Description** : recommend content presently being interacted by users in the dimension of the current item the user has just interacted with, e.g., if the current page is a sports page then recommend content that is currently being read by people in the sports cluster. Note this might not be just sports articles.   
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+    "algorithms": [
+        {
+            "config": [],
+            "filters": [],
+            "includers": [],
+            "name": "itemClusterCountsRecommender"
+        }
+    ],
+    "combiner": "firstSuccessfulCombiner"
+}
+{% endhighlight %}
 
 **Algorithm** : `itemCategoryClusterCountsRecommender`  
  **Description** : recommend content presently popular in the dimension of the current item the user has just interacted with, e.g., if the current page is a sports page then recommend the top sports articles presently being read  
 
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+    "algorithms": [
+        {
+            "config": [],
+            "filters": [],
+            "includers": [],
+            "name": "itemCategoryClusterCountsRecommender"
+        }
+    ],
+    "combiner": "firstSuccessfulCombiner"
+}
+{% endhighlight %}
+
 **Algorithm** : `globalClusterCountsRecommender`  
  **Description** : recommend the most popular content overall that is presently being interacted with  
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+    "algorithms": [
+        {
+            "config": [],
+            "filters": [],
+            "includers": [],
+            "name": "globalClusterCountsRecommender"
+        }
+    ],
+    "combiner": "firstSuccessfulCombiner"
+}
+{% endhighlight %}
 
 
 ## Content Based Models<a name="content-based"></a>
