@@ -1,7 +1,9 @@
 ---
 layout: default
-title: Introduction
+title: Create Seldon Database
 ---
+
+# Create Seldon Database
 
 Start with a fresh MySQL installation, ensure that the "[mysqld]" section of "my.cnf" has the following entry.
 {% highlight text %}

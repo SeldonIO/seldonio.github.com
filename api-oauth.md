@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Oauth API
+title: OAuth API
 ---
 
-The seldon API interacts with three main concepts:
+The Seldon API interacts with three main concepts:
 
 * [Items](#items) : Pieces of content, e.g., articles, products, game items
 * [Users](#users) : Users of a service

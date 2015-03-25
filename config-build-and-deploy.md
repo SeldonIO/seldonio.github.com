@@ -1,11 +1,13 @@
 ---
 layout: default
-title: Build and deploy algorithm configuration
+title: Seldon Algorithm Configuration
 ---
+
+# Algorithm Configuration
 
 Algorithm configuration is added via ZooKeeper as per the [configuration page](configuration.html).
 
-# Default configuration
+## Default configuration
 
 Provided below is a default set of algorithm configurations to add. Put this at `/config/default_strategy` 
 
@@ -15,7 +17,7 @@ Provided below is a default set of algorithm configurations to add. Put this at 
 
 This provides a base set of algorithms. If you want to alter this then please refer to the [configuration page](configuration.html).
 
-# Activate model for client in Seldon Server
+## Activate model for client in Seldon Server
 
 The table below shows the nodes in zookeeper where the list of clients using a model is specified and where the location of a model for a particular client is specified.
 

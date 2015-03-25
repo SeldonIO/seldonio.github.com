@@ -3,7 +3,7 @@ layout: default
 title: Technology Overview
 ---
 
-# Seldon Technology
+# Seldon Technology Overview
 
 Seldon is made up of many components that work together to deliver the best recommendations. Roughly, all user actions are captured via the REST API and streamed to logs. Those logs are processed in batch and new user models are delivered to the API Server. Then recommendations are delivered via the REST API.
 

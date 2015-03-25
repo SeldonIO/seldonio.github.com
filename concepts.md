@@ -3,6 +3,8 @@ layout: default
 title: Concepts 
 ---
 
+# Seldon Concepts
+
 ## Client
 
 On each Seldon deployment, it is possible to provide recommendations for several totally different data sets (for example, two websites). These data sets are divided by using different clients. Each call to the API has client as one of the attributes. The instructions we've provided so far only allow one client to be set up, but watch these docs for updates on how to extend this.

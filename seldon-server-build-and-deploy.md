@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Introduction
+title: Deploy Seldon Server
 ---
 
-# Set Up
+# Deploy Seldon Server
 
 ## Prerequisites
  
