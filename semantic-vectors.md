@@ -15,7 +15,7 @@ We provide a Docker Hub image to allow easy creation of models using semantic ve
 Set the configuration in zookeeper at node :
 
 {% highlight bash %}
-/all_clients/<client>/offline/svtext
+/all_clients/<client>/offline/semvec
 {% endhighlight %}
 
 The algorithm specific parameters are:
@@ -29,7 +29,6 @@ Example confguration:
 
 {% highlight json %}
 {
-  "inputPath":"/seldon-models",
   "outputPath":"/seldon-models",
   "startDay" : 1,
   "days" : 1,
