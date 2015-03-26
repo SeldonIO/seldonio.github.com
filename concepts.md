@@ -42,9 +42,9 @@ All algorithms must conform to the ItemRecommendationAlgorithm interface and be 
  
 Provides a set of items for the algorithm to recommend against. You can have multiple of these in which case the union of the set of items are recommended against, or combine them with excluders. An example would be the RecentItemsIncluder which includes items that have recently been added to the DB.
 
-## Excluder
+## Filter 
 
-Opposite of Includer
+Opposite of Includer, i.e. removes items from the set to be recommended against.
 
 ## Combiner
 
