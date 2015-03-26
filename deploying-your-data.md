@@ -1,7 +1,9 @@
 ---
 layout: default
-title: Using your own data
+title: Configure your data attributes
 ---
+
+# Configure your data attributes
 
 The Seldon Server allows a wide variety of data to be recommended from. To support all these types we allow you define the schema that your data will fit into. We will introduce some restrictions to this below and then talk about how to get your schema uploaded.
 

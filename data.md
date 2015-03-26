@@ -1,7 +1,9 @@
 ---
 layout: default
-title: Using your own data
+title: Importing your data
 ---
+
+# Importing your data
 
 The Seldon Recommendation Engine allows a wide variety of data to be recommended from. We will introduce the restrictions below and then talk about how to get your historical data generating recommendations!
 

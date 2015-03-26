@@ -4,7 +4,7 @@ title: Content Recommendation Models
 ---
 
 # Content Recommendation Models
-Seldon provides various content recommendation models you can train from your data. We will describe here each type of model, its pros and cons, how its trained and how to deploy it to the Seldon API server.
+The Seldon VM/AMI provides various content recommendation models you can train from your data. We will describe here each type of model, its pros and cons, how its trained and how to deploy it to the Seldon API server.
 
 For the Seldon VM We assume you will be using one of the pre-configured Seldon clients, test1 to test5. In the examples that follow replace ${CLIENT} with the desired client.
 

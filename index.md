@@ -10,7 +10,7 @@ Seldon is an Open Predictive Platform that currently allows recommendations to b
 
 ## Why you would use it?
 
-Seldon can has been designed genrically so that it can be useful in many contexts. It was first developed for the media industry to personalise high traffic news websites. It recommends content for users to view on a website or app based on the content that the user had previously looked at. Showing relevant content leads to increased engagement and improved user experience.
+Seldon has been designed generically so that it can be useful in many contexts. It was first developed for the media industry to personalise high traffic news websites. It recommends content for users to view on a website or app based on the content that the user had previously looked at. Showing relevant content leads to increased engagement and improved user experience.
 
 Other examples of use include:
 

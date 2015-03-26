@@ -3,6 +3,8 @@ layout: default
 title: Importing your static data
 ---
 
+# Importing your static data
+
 After defining your data schema in a previous step, we are now ready to add any previously collected data you have. To add data to the DB it needs to be split into users, items and actions. This data needs to be in CSV format. You should quote any data that has unicode characters in it.
 
 ### Items

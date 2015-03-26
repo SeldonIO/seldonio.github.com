@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Introduction 
+title: Introduction to Deploying Seldon 
 ---
 
+# Introduction to Deploying Seldon
 
-
-# Open Source Projects
+## Open Source Projects
 The open source projects that comprise Seldon can be seen in the image below grouped into logical sections. The diagram also illustrate the extension points that can be used to add custom algorithms (offline model creation and real time prediction scoring) to easily extend Seldon.
 
 ![Open Source Projects](/img/OpenSourceProjects.png "Open Source Projects (project at https://github.com/SeldonIO")
@@ -14,6 +14,7 @@ The open source projects that comprise Seldon can be seen in the image below gro
 
  * [seldon-js-lib](https://github.com/SeldonIO/seldon-js-lib) : A javascript library to allow easy integration of Seldon onto existing website
  * [seldon-java-client](https://github.com/SeldonIO/seldon-java-client) : A server to server implementation of the Seldon Oauth REST API in Java
+ * [seldon-importer-web](https://github.com/SeldonIO/seldon-importer-web) : Scrape content meta data from web pages and import via Seldon API
 
 ## Real-Time Predictive Scoring
 
