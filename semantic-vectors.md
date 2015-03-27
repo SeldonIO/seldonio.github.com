@@ -18,6 +18,12 @@ Set the configuration in zookeeper at node :
 /all_clients/<client>/offline/semvec
 {% endhighlight %}
 
+Activate the client for this algorithm. Make sure the client is part of the comma separated list that's running this algorithm.
+
+{% highlight bash %}
+/config/svtext <client>,<other-client1>,<other-client2>,...
+{% endhighlight %}
+
 The algorithm specific parameters are:
 
  * **jdbc** : the JDBC setting to connect to the Seldon datastore
