@@ -37,6 +37,15 @@ e.g.,
 http://127.0.0.1:8080/swagger/
 {% endhighlight %}
 
+The API Explorer will require a consumer key and secret for the OAuth API and a consumer key for the js API. These are client specific and are given below for the five test clients in the VM:
+
+ * Client: **test1**, JS consumer key: **test1js**, Oauth consumer_key: **test1consumer**, Oauth secret **test1secret**
+ * Client: **test2**, JS consumer key: **test2js**, Oauth consumer_key: **test2consumer**, Oauth secret **test2secret**
+ * Client: **test3**, JS consumer key: **test3js**, Oauth consumer_key: **test3consumer**, Oauth secret **test3secret**
+ * Client: **test4**, JS consumer key: **test4js**, Oauth consumer_key: **test4consumer**, Oauth secret **test4secret**
+ * Client: **test4**, JS consumer key: **test5js**, Oauth consumer_key: **test5consumer**, Oauth secret **test5secret**
+
+
 # In Depth Discussion
 
 In the following sections we discuss each model and its particular parameters.
