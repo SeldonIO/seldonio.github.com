@@ -74,13 +74,13 @@ Let's go though these fields one by one
 
 ## Adding the schema to the DB
 
-Now that we have this schema defined we can add it into the database. This can be acheived by using one of the shell scripts defined in the /your_data directory. Put your schema in /your_data/schema/ (you will see the example schema in there -- example_schema.javascript) then run the following.
+Now that we have this schema defined we can add it into the database. This can be acheived by using one of the shell scripts defined in the /your_data directory. Put your schema in /your_data/schema/ (you will see the example schema in there -- example_schema.json) then run the following.
 
 {% highlight bash %}
-    ./load_schema.sh test1 example_schema.javascript
+    ./load_schema.sh test1 example_schema.json
 {% endhighlight %}
 
-replacing 'test1' with the DB that you want to use and 'example_schema.javascript' with the schema file that you want (just the filename, not the folder).
+replacing 'test1' with the DB that you want to use and 'example_schema.json' with the schema file that you want (just the filename, not the folder).
 {% highlight javascript %}
     We've added a number of databases for you to use. Take your pick from test1 -- test10
 {% endhighlight %}

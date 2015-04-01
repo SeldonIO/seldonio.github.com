@@ -31,7 +31,7 @@ e.g.,
 {% endhighlight %}
 
 
- * Got to the API Explorer to test
+ * Go to the API Explorer to test
 
 {% highlight http %}
 http://127.0.0.1:8080/swagger/
