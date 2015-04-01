@@ -47,9 +47,10 @@ To use this recommender, follow these steps:
             "pool_size" : 1
         }
 
-    Change **RECOMMENDER_ALG** to the name of the script with the custom "get_recommendations" function, without the .py extension.
-
-    Change **MEMCACHE** to your memcache settings.
+    * **RECOMMENDER_ALG** : The name of the script with the custom "get_recommendations" function, without the .py extension.
+    * **MEMCACHE** : Change to your memcache settings.
+        * **servers** : List of host:ip strings of memcache servers
+        * **pool_size** : Size of memcache pool, for the process.
 
 1. Serve the recommender for testing.
 
