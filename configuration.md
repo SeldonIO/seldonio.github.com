@@ -11,14 +11,6 @@ Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuratio
 
 A lot of configuration options are contained in ZooKeeper, below we pick out a few that are important to gain an understanding of Seldon Server and associated components.
 
-### Clients
- 
-A comma separated list of clients that are having recommendations created should be stored in the `/clients` node. For example:
-
-{% highlight bash %}
- /clients => "test1,test2"
-{% endhighlight %}
-
 ### Model location
  
 Zookeeper is presently used to specify the algorithms that are active for a client along with the location of the model files. The Seldon API server will watch certain nodes in Zookeeper so it can be immediately informed of changes. Algorithms activated within the API server create watches on a core node `/config/<alg_name>`, e.g. `/config/mf` (for matrix factorization). This node will have a comma separated list of clients who are running the algorithm for example:
