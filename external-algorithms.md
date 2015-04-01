@@ -27,9 +27,18 @@ To use this recommender, follow these steps:
 
         cd seldon-server/external-recommender/python
 
-1. Copy or edit the "example_alg.py" script, and customize the "get_recommendations" function.
+1. Copy or edit the "**example_alg.py**" script, and customize the "**get_recommendations**" function.
 
-1. Modify the script "recommender_config.py".  
+    The paramters to the "get_recommendations" function is as follows:
+
+    * **user_id** : a long for the user id
+    * **item_id** : a long for the item id
+    * **client** : a str for the client
+    * **recent_interactions_list** : a list of item ids
+    * **data_set** : a set of item ids
+    * **limit** : an int for the number of recommendations to return
+
+1. Modify the script "**recommender_config.py**".  
     Example:
 
         RECOMMENDER_ALG="example_alg"
@@ -38,7 +47,7 @@ To use this recommender, follow these steps:
             "pool_size" : 1
         }
 
-    Change **RECOMMENDER_ALG** to the name of the script with custom "get_recommendations" function, without the .py extension.
+    Change **RECOMMENDER_ALG** to the name of the script with the custom "get_recommendations" function, without the .py extension.
 
     Change **MEMCACHE** to your memcache settings.
 
