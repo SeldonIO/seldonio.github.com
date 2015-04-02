@@ -82,7 +82,7 @@ Now that we have this schema defined we can add it into the database. This can b
 
 replacing 'test1' with the DB that you want to use and 'example_schema.json' with the schema file that you want (just the filename, not the folder).
 {% highlight javascript %}
-    We've added a number of databases for you to use. Take your pick from test1 -- test10
+    We've added a number of databases for you to use. Take your pick from test1 -- test5
 {% endhighlight %}
 
 ## The actual data
