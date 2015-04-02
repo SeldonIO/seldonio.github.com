@@ -146,3 +146,11 @@ user_id,item_id,value,time
 
 The first two columns should be obvious. 'value' is a field that represents the magnitude of the action. If all actions are created equal, then you should just set this to one. 'time' is the unixtimestamp of the action.
 
+Put the CSV in /your_data/actions_data/ and then run
+{% highlight bash %}
+	./load_actions.sh test1 example_actions.csv
+{% endhighlight %}
+
+This will create a JSON file from your actions and place it in the seldon-models folder to be used as input for the content recommendation offline modeling.
+
+
