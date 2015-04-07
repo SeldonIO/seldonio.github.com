@@ -28,16 +28,25 @@ To use this recommender, follow these steps:
 
         cd seldon-server/external-recommender/python
 
-1. Copy or edit the "**example_alg.py**" script, and customize the "**get_recommendations**" function.
+1. Copy or edit the "**example_alg.py**" script, and customize the "**get_recommendations**" function and if needed the "**init**" function.
 
-    The paramters to the "get_recommendations" function is as follows:
+    The paramters to the "**get_recommendations**" function are as follows:
 
     * **user_id** : a long for the user id
-    * **item_id** : a long for the item id
+    * **item_id** : a long for the item id current being interacted with by the user
     * **client** : a str for the client
-    * **recent_interactions_list** : a list of item ids
-    * **data_set** : a set of item ids
+    * **recent_interactions_list** : a list of item ids of recent itms the user has interacted with
+    * **data_set** : a set of item ids to score
     * **limit** : an int for the number of recommendations to return
+
+    Expand the "**get_recommendations**" function to return a dictionary of item_id->score for user with id **user_id**.
+
+    The parameters to the "**init**" function are as follows:
+
+    * **mc** : memcache pool from pylibmc
+    * **config** : dictionary from the load of "**recommender_config.py**", see below
+
+    Add to the init function anything your recommender needs to setup. For example, the location of a model may be taken from the config and loaded into memory.
 
 1. Modify the script "**recommender_config.py**".  
     Example:
