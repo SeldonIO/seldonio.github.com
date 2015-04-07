@@ -28,8 +28,8 @@ To use Seldon Spark, the following need to be installed:
 
 {% highlight bash %}
 cd ~/
-git clone https://github.com/SeldonIO/seldon-spark
-cd seldon-spark
+git clone https://github.com/SeldonIO/seldon-server.git
+cd seldon-server/offline-jobs/spark
 mvn -DskipTests=true clean package
 {% endhighlight %}
 
