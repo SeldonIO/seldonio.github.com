@@ -41,7 +41,7 @@ Zookeeper is also used to store the algorithms chosen to provide recommendations
  "algorithms":[
    {
    "name":"mfRecommender",
-   "includers":["mostPopularIncluder"],
+   "includers":["recentItemsIncluder"],
    "filters":[],
    "config":[{"name":"io.seldon.algorithm.inclusion.itemsperincluder","value":200}]
    },
