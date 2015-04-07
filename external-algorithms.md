@@ -16,6 +16,7 @@ To use this recommender, follow these steps:
 1. Install python dependencies.
 
         pip install Flask
+        sudo apt-get install libmemcached-dev
         pip install pylibmc
         pip install gunicorn
 
