@@ -54,7 +54,7 @@ The external algorithm serving the request should return JSON with a list of ite
 Below is an example internal call the seldon server would make for a client *test1*, for user with id *1* who has recently interacted with content with item ids *16* and *260* requesting recommendations with no items that need to be excluded and a key for memcache to get the items to score which is *RecentItems:test1:0:100000*
 
 {% highlight http %}
-GET /recommend?client=test1&user_id=1&recent_interactions=16,260&exclusion_items=&data_key=RecentItems%3Atest1%3A0%3A100000&limit=30
+GET /recommend?client=test1&user_id=1&recent_interactions=16,260&exclusion_items=&data_key=ce136f0d0fac274a7d353e672bf4b187&limit=30
 {% endhighlight %}	
 
 
