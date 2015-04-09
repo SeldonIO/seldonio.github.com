@@ -7,15 +7,16 @@ title: Getting Started
 
 Seldon has created a virtual machine with all services pre-wired for you to test with your service data and movie recommender demo.
 
-To receive the Seldon VM Closed Alpha and be the first to hear about further releases [sign up for the beta program](http://www.seldon.io/open-source)
-
  * Ways to get the VM :
    * [Vagrant Virtual Machine installation](vm.html)
-   * [AWS AMI](aws-ami.html)
+   * [AWS AMI](vm-aws.html)
  * [Movie Recommender Demo](movie-recommender-demo.html)
  * Creating Recommenders with your own data
    * [Loading your data into Seldon](data.html)
    * [Creating Content Recommendation Models](content-recommendation-models.html)
+
+
+To hear about further releases [sign up for the beta program](http://www.seldon.io/open-source)
 
 
 ## Can I use Seldon in my project?
