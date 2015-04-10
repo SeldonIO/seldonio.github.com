@@ -62,5 +62,5 @@ Let's go though these fields one by one
 
 ## Adding the schema to the DB
 
-Now that we have this schema defined we can add it into the database. This can be acheived by running `add_attr_schema.py` in the [seldon server scripts](https://github.com/SeldonIO/seldon-server/tree/master/scripts) folder. If successful, you will receive a dimensions.json file in your folder you ran the script from.  
+Now that we have this schema defined we can add it into the database. This can be acheived by running `add_attr_schema.py` in the `seldon-server/scripts` folder. If successful, you will receive a dimensions.json file in your folder you ran the script from.  
 
