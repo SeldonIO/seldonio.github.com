@@ -3,23 +3,26 @@ layout: default
 title: External Algorithms
 ---
 
-# (Experimental) External Algorithms
+# External Algorithms
 
-External algorithms allow you to add any custom algorithm into Seldon rather than being limited to the ones available in the existing code. For example, you might want to use Vowpal Wabbit to build a model and provide predictions from that within the Seldon ecosystem. There are two components:
+External algorithms allow you to add any custom algorithm into Seldon rather than being limited to the ones available in the existing code. For example, you might want to use Vowpal Wabbit to build a model and provide predictions from that within the Seldon ecosystem. The following sections describe the various components:
 
- * Custom offline model creation
- * Custom online external recommender 
+ * [Offline model creation](#offline-model)
+ * [Online external recommender](#online-model)
+   * [Micro-service REST API](#rest-api)
+   * [Zookeeper configuration](#zookeeper-conf)
+ * [Example python recommender template](#python-template)
 
-## Offline Model
+## Offline Model<a name="offline-model"></a>
 
 You can utilize any method to create the offline model. However,to fit the model into the Seldon framework you need to ensure you use the internal user and item ids as defined within the Seldon database for your users and items. If you are running Seldon in production we provide a Spark job that takes the daily activity data from REST API calls and stores it in per client JSON files as described [here](spark-models.html#actions). This JSON will contain the user and item ids and can be used for algorithms that use the user activity to derive their models.
 
 If you are building models using Spark then a good place to start is to look at the code for the existing Spark jobs in [github](https://github.com/SeldonIO/seldon-server/offline-jobs/spark/).
 
-## Online Recommender
+## Online Recommender<a name="online-model"></a>
 For the online predictive scoring component of an external algoithm we provide a REST API definition that any external algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender.
 
-### External Algorithm REST API
+### Micro-service REST API<a name="rest-api"></a>
 
 {% highlight http %}
 GET     /recommend
@@ -58,7 +61,7 @@ GET /recommend?client=test1&user_id=1&recent_interactions=16,260&exclusion_items
 {% endhighlight %}	
 
 
-### Zookeeper configuration
+### Zookeeper configuration<a name="zookeeper-conf"></a>
 When you have an external recommendation server running that supports the internal REST API you can activtae this new recommender inside Seldon for a particular client by specifying an **externalItemRecommendationAlgorithm** for the client in its **algs** node, for example to specify an external algorithm running at ```http://127.0.0.1:5000/recommend``` for client **client1** which uses the most recent 10000 items to score you would set the node ```/all_clients/client1/algs``` to 
 
 {% highlight bash %}
@@ -83,7 +86,7 @@ There are two config options that should be set:
  * io.seldon.algorithm.external.url : the endpoint for the REST API 
  * io.seldon.algorithm.external.name : the name of the algorithm (will appear in the logs)
 
-### External Python Recommender Template
+### External Python Recommender Template<a name="python-template"></a>
 We have provided a template for writing an external recommender in python.
 
 To use this recommender, follow these steps:
@@ -91,7 +94,7 @@ To use this recommender, follow these steps:
 1. Install python dependencies.
 
         pip install Flask
-        sudo apt-get install libmemcached-dev
+        apt-get install libmemcached-dev
         pip install pylibmc
         pip install gunicorn
 
