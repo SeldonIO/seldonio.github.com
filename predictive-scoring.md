@@ -253,6 +253,23 @@ A set of baseline predictive scoring algorithms used for testing and as final al
 **Algorithm** : `recentItemsRecommender`  
 **Description** : Return the most recently added items, e.g., in a news setting the most recent published articles.
 
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+    "algorithms": [
+        {
+            "config": [],
+            "filters": [],
+            "includers": [],
+            "name": "recentItemsRecommender"
+        }
+    ],
+    "combiner": "firstSuccessfulCombiner"
+}
+{% endhighlight %}
+
+
 **Algorithm** : `mostPopularRecommender`  
 **Description** : Return the most popular items
 
