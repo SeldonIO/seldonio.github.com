@@ -9,20 +9,20 @@ External algorithms allow you to add any custom algorithm into Seldon rather tha
 
  * [Offline model creation](#offline-model)
  * [Online external recommender](#online-model)
-   * [Micro-service REST API](#rest-api)
+   * [Microservices REST API](#rest-api)
    * [Zookeeper configuration](#zookeeper-conf)
  * [Example python recommender template](#python-template)
 
 ## Offline Model<a name="offline-model"></a>
 
-You can utilize any method to create the offline model. However,to fit the model into the Seldon framework you need to ensure you use the internal user and item ids as defined within the Seldon database for your users and items. If you are running Seldon in production we provide a Spark job that takes the daily activity data from REST API calls and stores it in per client JSON files as described [here](spark-models.html#actions). This JSON will contain the user and item ids and can be used for algorithms that use the user activity to derive their models.
+You can utilize any method to create the offline model. However,to fit the model into the Seldon framework you need to ensure you use the internal user and item ids as defined within the Seldon database for your users and items. If you are running Seldon in production we provide a Spark job that takes the daily activity data from REST API calls and stores it in per client JSON files as described [here](spark-models.html#actions). This JSON will contain the user and item IDs and can be used for algorithms that use the user activity to derive their models.
 
 If you are building models using Spark then a good place to start is to look at the code for the existing Spark jobs in [github](https://github.com/SeldonIO/seldon-server/offline-jobs/spark/).
 
 ## Online Recommender<a name="online-model"></a>
 For the online predictive scoring component of an external algoithm we provide a REST API definition that any external algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender.
 
-### Micro-service REST API<a name="rest-api"></a>
+### Microservices REST API<a name="rest-api"></a>
 
 {% highlight http %}
 GET     /recommend
