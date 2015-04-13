@@ -66,7 +66,7 @@ The options to the job are as follows:
 SELDON_SPARK_HOME=~/seldon-spark
 DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 INPUT_DATE_STRING=${DATE_YESTERDAY}
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 
 INPUT_DIR=~/seldon-logs
@@ -136,7 +136,7 @@ create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-m
 
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 BASE_DIR=~/seldon-models
 
@@ -201,7 +201,7 @@ Example job execution
 
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.mllib.SimilarItems" \
@@ -276,7 +276,7 @@ Example job execution
 
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.topics.SessionItems" \
@@ -330,7 +330,7 @@ Example job execution
 
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.features.Word2VecJob" \
@@ -390,7 +390,7 @@ Example job execution
 
 {% highlight bash %}
 SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-1.0.1-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.cluster.ClusterUsersByDimension" \

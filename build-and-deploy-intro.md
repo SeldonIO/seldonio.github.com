@@ -12,18 +12,18 @@ The open source projects that comprise Seldon can be seen in the image below gro
 
 ## External Interfaces
 
- * [seldon-js-lib](https://github.com/SeldonIO/seldon-js-lib) : A javascript library to allow easy integration of Seldon onto existing website
- * [seldon-java-client](https://github.com/SeldonIO/seldon-java-client) : A server to server implementation of the Seldon Oauth REST API in Java
- * [seldon-importer-web](https://github.com/SeldonIO/seldon-importer-web) : Scrape content meta data from web pages and import via Seldon API
+ * [seldon-js-lib](https://github.com/SeldonIO/seldon-server/tree/master/client/js-client) : A javascript library to allow easy integration of Seldon onto existing website
+ * [seldon-java-client](https://github.com/SeldonIO/seldon-server/tree/master/client/java-client) : A server to server implementation of the Seldon Oauth REST API in Java
+ * [seldon-importer-web](https://github.com/SeldonIO/seldon-server/tree/master/web-item-importer) : Scrape content meta data from web pages and import via Seldon API
 
 ## Real-Time Predictive Scoring
 
  * [seldon-server](https://github.com/SeldonIO/seldon-server) : Real-time predictive scoring that exposes a REST API for external clients.
- * Micro-services for custom algorithms : A soon to be released internal REST API allowing easy plug-in of real-time predictive scoring for algorithms written in an language. In this way the Seldon-server can be easily extended with new pluggable components.
+ * Micro-services for custom algorithms : [Pluggable custom algorithms](http://docs.seldon.io/external-algorithms.html) with [example python template](https://github.com/SeldonIO/seldon-server/tree/master/external-recommender/python) 
 
 ## Offline Modelling
 
- * [seldon-spark](https://github.com/SeldonIO/seldon-spark) : Implementations of predictive models in Spark.
+ * [seldon-spark](https://github.com/SeldonIO/seldon-server/tree/master/offline-jobs/spark) : Implementations of predictive models in Spark.
  * [semantic-vectors-lucene-tools](https://github.com/SeldonIO/semantic-vectors-lucene-tools) : Vector based models for language modelling using Semantic vectors
  * Custom Offline Models : Seldon is not prescriptive in how models are created. They simply need a runtime scoring component to serve their predictions.
 
