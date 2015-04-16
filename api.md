@@ -28,5 +28,5 @@ A service will be provided with a consumer_key which should be passed with each 
 # API Details
 
 * [JS API](api-javascript.html)
-* [OAuth API](api-oauth.html)
+* [REST API](api-oauth.html)
 
