@@ -18,26 +18,28 @@ There also needs to be a ZooKeeper server running along with Memcached and a MyS
 
 ## The main project
 
-Clone the project [seldon-server](https://github.com/SeldonIO/seldon-server). This main project contains a number of sub-projects including the **config project** and the **server project**.
+Clone the project [seldon-server](https://github.com/SeldonIO/seldon-server). 
 
-### Config project
+## Configure Zookeeper
+Zookeeper is the central location for all settings needed by Seldon. You will need to enter into zookeeper values for the following nodes:
 
-Change directory to `seldon-server/config`.  
-This provides a template for the configuration required in the Seldon project. Edit `server.properties`, filling in the properties to match your set up. Here is what the properties mean:
+ * `/config/dbcp` : Database connection pool settings. [Details](configuration.html#dbcp)
+ * `/config/default_strategy` : Default algorithms to use`. [Details](configuration.html#algorithms)
+ * `/all_clients/[clientname]` : Name of connection pool to use for client. [Details](configuration.html#client)
+ * `/all_clients/[clientname]/algs` : (Optional - will fall back to `/config/default_strategy`) Algorithms for [clientname]
+ * `/all_clients/[clientmame]/offline/[alg_name]` : Settings for offline models [Details](configuration.html#models)
 
-* **CLIENT_NAME** - in this initial setup doc we only allow one client. This name should be without spaces and without special characters. It is the name you will use in the REST API etc from now on.
-* **ZK_HOST** - the host name of the server that contains the zookeeper instance. This will most likely be localhost.
-* **MEMCACHED_HOST** - the host name of the server that contains the Memcached instance. This will most likely be localhost.
-* **MEMCACHED_PORT** - see above.
-* **DB_HOST** - the host name of the MySQL instance.
-* **DB_USER** - the user name of the above.
-* **DB_PWD** - the password of the above.
-* **LOGS_DIR** - where to output the Seldon Server logs. This can be any directory.
-* **TD_LOGS_DIR** - where to output the td-agent logs. These are used for the input for the Spark jobs. It is probable that you are running the Spark jobs on the same machine. If so then this can be any directory. If you are running the Spark jobs on a separate machine then you should give a folder that is on a shared drive.
+We provide a python utility script to help you set the correct zookeeper settings in seldon-server/scripts/zookeeper.
 
-Run `./rewrite_properties.sh` to propagate the properties from `server.properties` into other property files. Then you are ready to build the config set. Run `mvn clean install` to install the config for use by the Seldon Server. Also produced is the td-agent.conf file that needs to replace the default. The location of this file depends on what platform you are runing on, for me it is `/etc/td-agent/td-agent.conf`. Overwrite this file with the one in the config project and restart td-agent.
+ * Edit the file example-client-zookeeper-config.txt
+ * Assuming you have a local zookeeper you can set the configuration with:
 
-### The server project
+{% highlight bash %}
+cat example-client-zookeeper-config.txt | python set-client-config.py --zookeeper localhost
+{% endhighlight %}
+
+
+## The server project
 
 Change directory to `seldon-server/server`.  
 Run `mvn clean package`.  
