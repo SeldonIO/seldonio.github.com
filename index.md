@@ -22,6 +22,10 @@ In March 2015 we created a public [seldon-users group](https://groups.google.com
 
 To post to the group, send an email to [seldon-users@googlegroups.com](seldon-users@googlegroups.com)
 
+## Join the chat room
+Seldon developers have started using the Gitter chat room. Come say hello and feel free to ask questions in here too:
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SeldonIO/seldon-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ## Sign up to the beta list
 To be among the first to hear the latest news and receive Seldon releases, [join the Seldon beta list](http://eepurl.com/6X6n1).
 
