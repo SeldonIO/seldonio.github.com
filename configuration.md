@@ -5,12 +5,21 @@ title: Seldon Configuration
 
 # Seldon Configuration
 
-Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuration. It is used to store the location of various models and allow the Seldon API Server to notice the availability of new models which need to be loaded.
+Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuration. It is used to specify all settings needed by the Seldon server as well as offline model creation jobs.
 
 ## Zookeeper Configration
 
-A lot of configuration options are contained in ZooKeeper, below we pick out a few that are important to gain an understanding of Seldon Server and associated components.
+The set of available zookeeper configurations settings are shown below.
 
+ * [Memcached](#memcached)
+ * [Database pool](#dbcp)
+ * [Client datastore](#client)
+ * [Model locations](#models)
+ * [Client algorithm settings](#algorithms)
+ * [Offline model creation settings](#offline)
+ * [Statsd](#statsd)
+ * [Airbrake](#airbrake)
+ 
 ### Memcached Settings<a name="memcached"></a>
 Seldon uses Memcached for caching data. The configuration is set in "**/config/memcached_servers**" and can be a single host:port setting or a comma separated list of host:port pairs.
 eg.
@@ -46,7 +55,7 @@ The possible values follow the availble configuration parameters for Apache DBCP
   "driverClassName":"com.mysql.jdbc.ReplicationDriver",
   "user":"user1",
   "password":"mypass",
-  "maxTotal":600
+  "maxTotal":600,
   "maxIdle":50,
   "minIdle":20,
   "maxWait":20000,
@@ -71,7 +80,7 @@ Each client needs to connect to a datastore which holds the Seldon database for 
  /all_clients/client1  => "ClientDB"
 {% endhighlight %}
 
-### Model location
+### Model location<a name="models"></a>
  
 Zookeeper is presently used to specify the algorithms that are active for a client along with the location of the model files. The Seldon API server will watch certain nodes in Zookeeper so it can be immediately informed of changes. Algorithms activated within the API server create watches on a core node `/config/<alg_name>`, e.g. `/config/mf` (for matrix factorization). This node will have a comma separated list of clients who are running the algorithm for example:
 
@@ -124,7 +133,7 @@ For a client specific algorithm strategy add to
 
  the strategy to use for this client. 
 
-### Model Creation<a name="models"></a>
+### Model Creation<a name="offline"></a>
 
  * /all_clients/[clientname]/offline/[model]
 
@@ -143,7 +152,7 @@ This is **optional** and can be used for gathering stats. The server will check 
 {% endhighlight %}
 
 ### Airbrake Settings<a name="airbrake"></a>
-This is **optional** and can be used for sending server exception details to the Airbrake service. The server will check the setting **/config/airbrake** and only setup Airbrake usage if it exists. The setting is a json object. eg.
+This is **optional** and can be used for sending server exception details to the [Airbrake service](https://airbrake.io/). The server will check the setting **/config/airbrake** and only setup Airbrake usage if it exists. The setting is a json object. eg.
 
 {% highlight json %}
 {
