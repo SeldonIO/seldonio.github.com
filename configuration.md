@@ -11,6 +11,14 @@ Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuratio
 
 A lot of configuration options are contained in ZooKeeper, below we pick out a few that are important to gain an understanding of Seldon Server and associated components.
 
+### Memcached Settings<a name="memcached"></a>
+Seldon uses Memcached for caching data. The configuration is set in "**/config/memcached_servers**" and can be a single host:port setting or a comma separated list of host:port pairs.
+eg.
+
+{% highlight html %}
+192.168.59.103:11211,192.168.59.104:11211
+{% endhighlight %}
+
 ### Database Pool Settings<a name="dbcp"></a>
 Seldon needs access to a JDBC compliant datastore that holds the client databases as well as a special "api" database that contains the consumer keys and secrets for clients. An [Apache DBCP2](http://commons.apache.org/proper/commons-dbcp/) database pool is configured for each datastore. The configuration is set in `/config/dbcp', an example is show below:
 
@@ -121,3 +129,27 @@ For a client specific algorithm strategy add to
  * /all_clients/[clientname]/offline/[model]
 
  The settings for offline creation of a model for a particular algorithm for this client. See [offline models](offline-models.html) for further details and examples. 
+
+### Statsd Settings<a name="statsd"></a>
+This is **optional** and can be used for gathering stats. The server will check the setting **/config/statsd** and only setup Statsd usage if it exists. The setting is a json object. eg.
+
+{% highlight json %}
+{
+    "id": "statsTest",
+    "port": 8125,
+    "sample_rate": 0.25,
+    "server": "192.168.59.103"
+}
+{% endhighlight %}
+
+### Airbrake Settings<a name="airbrake"></a>
+This is **optional** and can be used for sending server exception details to the Airbrake service. The server will check the setting **/config/airbrake** and only setup Airbrake usage if it exists. The setting is a json object. eg.
+
+{% highlight json %}
+{
+    "api_key": "_YOUR_AIRBRAKE_KEY_",
+    "enabled": true,
+    "env": "dev"
+}
+{% endhighlight %}
+
