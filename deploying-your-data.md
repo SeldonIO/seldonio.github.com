@@ -52,15 +52,44 @@ Let's go though these fields one by one
 
  Once you have worked out how to put your data schema in this format, write the JSON to a file and save it for later.
 
+## Adding the schema to the DB
+
+Now that we have this schema defined we can add it into the database. This can be acheived by running `add_attr_schema.py` in the `seldon-server/scripts` folder. For example, assuming a client client1 and example db settings:
+
+{% highlight bash %}
+python add_attr_schema.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -schema-file item_attr.json
+{% endhighlight %}
+
+# Historical data
+The `seldon-server/scripts` folder also contains scripts to prepopulate and process historical data.
+
+## Add items with their meta data
+If we have a CSV with items and their meta data it can be processed with the `add_items.py` script. One column should be `id` for the item id and other columns can be as we specified in the `item_attr_schema.json`.
+
+{% highlight bash %}
+python add_items.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -items items.csv
+{% endhighlight %}
+
 ### Users
  
- At the moment, you cannot add extra attributes to a user, so there's no need for a user schema.
+ At the moment, you cannot add extra attributes to a user, so there's no need for a user schema. But if you have a list of existing user ids you can add them with:
+
+{% highlight bash %}
+python add_users.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -users users.csv
+{% endhighlight %}
 
 ### Actions
 
- At the moment, you can only have one action type and you cannot add extra attributes to an action, so theres no need for an action schema.
+ At the moment, you can only have one action type and you cannot add extra attributes to an action, so theres no need for an action schema. if you have a list of actions in csv format they can be processed. The expected fields are:
+ 
+ * `user_id` : the user id : should correspond to user_ids added above
+ * `item_id` : the item id : should correspond to item_ids added above
+ * `value` : a value associated with the action for example the rating
+ * `time` : a unix timestamp
 
-## Adding the schema to the DB
+You can then run
 
-Now that we have this schema defined we can add it into the database. This can be acheived by running `add_attr_schema.py` in the `seldon-server/scripts` folder. If successful, you will receive a dimensions.json file in your folder you ran the script from.  
+{% highlight bash %}
+python create_actions_json.py -db-host localhost -db-user user1 -db-pass mypass -client client -actions actions.csv -out actions.json
+{% endhighlight %}
 
