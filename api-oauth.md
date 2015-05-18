@@ -1,17 +1,21 @@
 ---
 layout: default
-title: OAuth API
+title: OAuth REST API
 ---
 
-The Seldon API interacts with three main concepts:
+# Seldon REST API
 
-* [Items](#items) : Pieces of content, e.g., articles, products, game items
-* [Users](#users) : Users of a service
-* [Actions](#actions) : Actions done by users on items, e.g., read an article, purchase a product or pick up a game item
+The Seldon REST API interacts with three main concepts:
 
-Finally, one then uses the API to provide predictions, presently:
+* [Items](#items) : Pieces of content, e.g., articles, products, game items.
+* [Users](#users) : Users of a service.
+* [Actions](#actions) : Triple of actions done by users on items, e.g., read an article, purchase a product or pick up a game item.
+* [Events](#events) : Arbitrary JSON representing some event from which we want to create a prediction model 
 
-* [Recommendations](#recommendations)
+Use the relevant API endpoint to provide predictions, presently:
+
+* [Item Recommendations](#recommendations)
+* [Predcitive Scoring](#predictive-scoring)
 
 An API method can be called with the following template
 {% highlight http %}
@@ -19,6 +23,8 @@ An API method can be called with the following template
 {% endhighlight %}
 	
 For security reasons using the HTTPS protocol is recommended.
+
+
 
 # API Input Endpoints
 
@@ -197,7 +203,7 @@ Input
 
 Example
 
-The service is an E-commerce website.
+The service is an e-commerce website.
 
 The action types are:
 
@@ -241,11 +247,29 @@ The JSON to  post a review action performed by the user “xxx” on the item �
 }
 {% endhighlight %}
 
+### Events <a name="events"></a>
+Events allow input into Seldon of arbitrary events from which we wish to create a predictive model. 
+
+{% highlight http %}
+POST     /events
+{% endhighlight %}
+
+Example
+
+The service injects house price data
+
+{% highlight json %}
+{
+"num_bedrooms"    :        2,
+"detached" 	  : true,
+"postcode"    :        "SW1",
+"price" : 400000
+}
+{% endhighlight %}
 
 ## API Personalisation Endpoints <a name="recommendations"></a>
 
 This section describes the endpoints which provide personalisation and recommendation functionality derived from the user, item, action data that has been POSTed to the API.
-
 
 ### Recommended Items
 
@@ -297,6 +321,40 @@ Output
 
 where list is an array containing a list of items. For each item the pos specify the rank in the recommendation list
 
+## Preditive Scoring <a name="predictive-scoring"></a>
+
+This section describes the predictive scoring endpoints derived from the models created from the data sent to the events endpoint.
+
+### Prediction
+
+{% highlight http %}
+POST     /predict
+{% endhighlight %}	
+
+The endpoint should be passed JSON containing features from which a prediction is to be made.
+
+Example
+
+A housing price predcitor based on features:
+
+{% highlight json %}
+{
+"num_bedrooms"    :        2,
+"detached" 	  : true,
+"postcode"    :        "SW1"
+}
+{% endhighlight %}
+
+Output
+
+{% highlight json %}
+{"size":1,"list":
+	[
+	{"prediction":400000,"predictedClass":1,"confidence":1.0}
+	]
+}
+{% endhighlight %}
+
 ## Appendix
 
 ### Dimensions
@@ -309,7 +367,7 @@ Dimensions allow the item space to be divided into relevant semantic sections wh
 
 Example
 
-The service is an E-commerce Music Website. The item set is composed of songs.
+The service is an e-commerce music website. The item set is composed of songs.
 
 
 The item attribute definition is:
@@ -394,12 +452,15 @@ This user would be in the dimension2 and dimension4:
 There are a set of best practices we recommend when using the Seldon API:
            
 * Provide both curated content and recommendations
-** Try to mix curated content links with recommended links so a user of the site has opportunities to explore new content as well as have a set of personalised links provided by the API. This allows users to explore areas and subjects they may not have expressed opinions about in the past, and therefore helps the API provide better personalisations in future.
+
+    Try to mix curated content links with recommended links so a user of the site has opportunities to explore new content as well as have a set of personalised links provided by the API. This allows users to explore areas and subjects they may not have expressed opinions about in the past, and therefore helps the API provide better personalisations in future.
 * Cache API responses
-** Where possible, cache API responses for a limited time so as not to call the API when 
+  
+    Where possible, cache API responses for a limited time so as not to call the API when 
 the cached response is appropriate. Seldon can provide advice on appropriate 
 caching times for each endpoint given the particular user and content activity of your 
 site.
 * Prefetch data
-** Whenever it is possible, call the API methods trying to predict the information the service is likely to need in advance. In this way page load time will be minimized.
+
+    Whenever it is possible, call the API methods trying to predict the information the service is likely to need in advance. In this way page load time will be minimized.
 
