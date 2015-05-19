@@ -19,7 +19,7 @@ The open source projects that comprise Seldon can be seen in the image below gro
 ## Real-Time Predictive Scoring
 
  * [seldon-server](https://github.com/SeldonIO/seldon-server) : Real-time predictive scoring that exposes a REST API for external clients.
- * Micro-services for custom algorithms : [Pluggable custom algorithms](http://docs.seldon.io/external-algorithms.html) with [example python template](https://github.com/SeldonIO/seldon-server/tree/master/external-recommender/python) 
+ * Micro-services for custom algorithms : [Pluggable custom algorithms](external-algorithms.html) with example python templates for [item recommendation](external-algorithms.html#recommender-python-template) and [predictive scoring](external-algorithms.html#prediction-python-template) and an example using [vowpal wabbit](external-algorithms.html#prediction-python-vw)
 
 ## Offline Modelling
 
