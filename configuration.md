@@ -15,7 +15,8 @@ The set of available zookeeper configurations settings are shown below.
  * [Database pool](#dbcp)
  * [Client datastore](#client)
  * [Model locations](#models)
- * [Client algorithm settings](#algorithms)
+ * [Client recommendation algorithm settings](#recommender-algorithms)
+ * [Client prediction algorithm settings](#prediction-algorithms)
  * [Offline model creation settings](#offline)
  * [Statsd](#statsd)
  * [Airbrake](#airbrake)
@@ -97,7 +98,7 @@ For each client in the list for an algorithm there will be a related node holdin
 This will allow the Seldon API server to load into memory the models for this client and serve requests for recommendations.
 As stated, these values can be dynamically changed to allow the API server to get updated models and activate new clients.
  
-### Algorithms<a name="algorithms"></a>
+### Recommendation Algorithms<a name="recommender-algorithms"></a>
 
 Zookeeper is also used to store the algorithms chosen to provide recommendations for each client. For example, one client may use matrix factorization where as another may use a clustering algorithm. Now that we have the various concepts defined we can look at how they translate into configuration. A client's algorithms are controlled with JSON stored in a ZooKeeper node hierarchy. Unfortunately this currently has to be inputted manually. Below are some important nodes.
 
@@ -132,6 +133,28 @@ For a client specific algorithm strategy add to
  * /all_clients/[clientname]/algs
 
  the strategy to use for this client. 
+
+### Prediction Algorithms<a name="prediction-algorithms"></a>
+    
+At present we only provide predictive scoring algorithms via an [internal micro-service API](external-algorithms.html#online-predictive-scoring). The global default configuration is set in:
+
+ * /config/default_prediction_strategy
+
+An example setting would be:
+
+ {% highlight json %}
+{"algorithms":
+	[{"name":"externalPredictionServer",
+	  "config":[
+		{"name":"io.seldon.algorithm.external.url","value":"http://127.0.0.1:5000/predict"}
+		]}
+	]
+}
+ {% endhighlight %}
+
+A client specific strategy would be placed in 
+
+ * /all_clients/[clientname]/predict_algs
 
 ### Model Creation<a name="offline"></a>
 

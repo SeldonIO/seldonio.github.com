@@ -12,7 +12,7 @@ External algorithms allow you to add any custom algorithm into Seldon rather tha
    * [Microservices REST API](#recommender-internal-rest-api)
    * [Zookeeper configuration](#recommender-zookeeper-conf)
    * [Example python recommender template](#recommender-python-template)
- * [Online external prediction](#online-prediction-model)
+ * [Online external prediction](#online-predictive-scoring)
    * [Microservices REST API](#prediction-internal-rest-api)
    * [Zookeeper configuration](#prediction-zookeeper-conf)
    * [Example python predictive scoring template](#prediction-python-template)
@@ -301,4 +301,4 @@ To use this predictor, follow these steps:
 
         gunicorn -w 4 -b 127.0.0.1:5000 server:app
 
-
+1. 

@@ -1,33 +1,33 @@
 ---
 layout: default
-title: Predictive Scoring 
+title: Runtime Item Recommendation Algorithms 
 ---
 
-# Predictive Scoring Algorithms
+# Runtime Item Recommendation Algorithms
 
-At runtime the Seldon server can utilize a set of predictive scoring algorithms to provide recommendations. These predictive scoring algorithms are usually based on some offline model. To configure which algorithm to use please see the [configuration page](configuration.html). The list of default algorithms and their associated models are described below.
+At runtime the Seldon server can utilize a set of item recommendation algorithms to provide recommendations. These runtime algorithms are usually based on some offline model. To configure which algorithm to use please see the [configuration page](configuration.html). The list of default algorithms and their associated models are described below.
 
 Many of the content recommendation algorithms use two general ways to provide recommendations :
 
  1. Use the entire built model to score new items for a user
- 1. Use the user's recent item interactions as a basis to score new items for a user. This method is using the users recent interests as a basis for predictive scoring. For example, use the last three pages a user has read on a news site as a basis to provide recommendations
+ 1. Use the user's recent item interactions as a basis to score new items for a user. This method is using the users recent interests as a basis for item recommendation. For example, use the last three pages a user has read on a news site as a basis to provide recommendations
 
 As Seldon allows combining algorithms both can be used together to produce a final recommendation result.
 
-The current built in predictive scoring algorithms are as follows:
+The current built in runtime item recommendation algorithms are as follows:
 
-**Predictive Scoring Algorithm** | **Offline Model**
+**Runtime Item Recommendation Algorithm** | **Offline Model**
 --|--
-`mfRecommender` | [matrix factorization model](predictive-scoring.html#matrix-factorization)
-`recentMfRecommender` | [matrix factorization model](predictive-scoring.html#matrix-factorization)
-`itemSimilarityRecommender` | [item activity model](predictive-scoring.html#similar-items)
-`dynamicClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
-`itemClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
-`itemCategoryClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
-`globalClusterCountsRecommender` | [user clustering model](predictive-scoring.html#user-clustering)
-`semanticVectorsRecommender` | [content based models](predictive-scoring.html#content-based), [word2vec model](predictive-scoring.html#word2vec)
-`recentItemsRecommender` | [baseline models](predictive-scoring.html#baseline)
-`mostPopularRecommender` | [baseline models](predictive-scoring.html#baseline)
+`mfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
+`recentMfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
+`itemSimilarityRecommender` | [item activity model](runtime-recommendation.html#similar-items)
+`dynamicClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
+`itemClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
+`itemCategoryClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
+`globalClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
+`semanticVectorsRecommender` | [content based models](runtime-recommendation.html#content-based), [word2vec model](runtime-recommendation.html#word2vec)
+`recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
+`mostPopularRecommender` | [baseline models](runtime-recommendation.html#baseline)
 
 
 
@@ -248,7 +248,7 @@ Example config to set in `/all_clients/[client]/algs`:
 
 ## Baseline Models<a name="baseline"></a>
 
-A set of baseline predictive scoring algorithms used for testing and as final algorithms to use if all other algorithms fail to provide recommendations for a user.
+A set of baseline algorithms used for testing and as final algorithms to use if all other algorithms fail to provide recommendations for a user.
 
 **Algorithm** : `recentItemsRecommender`  
 **Description** : Return the most recently added items, e.g., in a news setting the most recent published articles.

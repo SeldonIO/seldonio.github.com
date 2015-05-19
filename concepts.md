@@ -23,9 +23,13 @@ Actions are any time when a user interacts with an item (viewing it, buying it, 
 
 *User, Item and Action can be enriched with arbitrary attributes depending on the use case. For example, a newspaper article might have a subtitle and a category.  When the Seldon Server makes its recommendations for a user, it takes the history of items that he/she has interacted with and their attributes into account.*
 
-## Online Predictive Scoring
+## Event
+
+A event is an arbitrary set of features. These events can be used to build a predictive model to target one feature in the event. For example an event might supply house size and location along with price. A model can be built to predict the price feature from the other features. At runtime a set of features not including price can be supplied and a prediction of the price returned.
+
+## Runtime Item Recommendation
  
-Online prediction scoring algorithms recommend content/items according to the following specification.
+Runtime item recommendation algorithms recommend content/items according to the following specification.
 
 {% highlight java %}
 ItemRecommendationResultSet recommend(String client, Long user, int dimension,RecommendationContext ctxt, int maxRecsCount, List<Long> recentitemInteractions);
@@ -39,6 +43,10 @@ A couple of things to focus on here are
 
 All algorithms must conform to the ItemRecommendationAlgorithm interface and be defined spring components. This is to allow easy discovery of all algorithms when the server starts. 
  
+## Runtime Preditive Scoring
+
+Runtime predictive scoring algorithms take a set of features passed in and score those against a model that has been trained to predict a target variable supplied from the initial data sent in as events.
+
 ## Includer
  
 Provides a set of items for the algorithm to recommend against. You can have multiple of these in which case the union of the set of items are recommended against, or combine them with excluders. An example would be the RecentItemsIncluder which includes items that have recently been added to the DB.
