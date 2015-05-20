@@ -172,11 +172,56 @@ To use this predictor, follow these steps:
 
 1. Test internal micro-service API via curl
 
+        curl 'http://127.0.0.1:5000/predict?json=\{"f1":1.6,"f2":2.7,"f3":5.3,"f4":1.9\}'
+
+You should see a reponse like:
+
+{% highlight json %}
+{
+  "predictions": [
+    {
+      "confidence": 1.0,
+      "predictedClass": "Iris-setosa",
+      "prediction": 0.12470537784315563
+    },
+    {
+      "confidence": 1.0,
+      "predictedClass": "Iris-versicolor",
+      "prediction": 0.37473067225490664
+    },
+    {
+      "confidence": 1.0,
+      "predictedClass": "Iris-virginica",
+      "prediction": 0.5005639499019378
+    }
+  ]
+}
+{% endhighlight %}
+
 To integrate this into Seldon server you will need to follow next steps:
 
 1. [Setup Seldon Server](/seldon-server-setup.html) 
 
-1. script to set conf in zookeeper
-   use one in scripts/zookeeper with conf supplied here
+1. Set configuration.
+  
+        cd seldon-server/scripts/zookeeper
+        echo 'set /config/default_prediction_strategy {"algorithms":[{"name":"externalPredictionServer","config":[{"name":"io.seldon.algorithm.external.url","value":"http://127.0.0.1:5000/predict"}]}]}' | python set-client-config.py --zookeeper localhost
 
-1. Example curls
+1. Test prediction, replace CONSUMER_KEY with the key setup when you configured the Seldon server:
+
+        curl  'http://127.0.0.1:8080/seldon-server/js/predict?consumer_key=CONSUMER_KEY&jsonpCallback=a&f1=1.6&f2=2.7&f3=5.3&f4=1.9'
+
+You should receive a response like:
+
+{% highlight json %}
+a(
+	{"size":3,
+	"requested":0,
+	"list":[
+		{"prediction":0.12470537784315563,"predictedClass":"Iris-setosa","confidence":1.0},
+		{"prediction":0.37473067225490664,"predictedClass":"Iris-versicolor","confidence":1.0},
+		{"prediction":0.5005639499019378,"predictedClass":"Iris-virginica","confidence":1.0}
+		]
+	}
+)
+{% endhighlight %}

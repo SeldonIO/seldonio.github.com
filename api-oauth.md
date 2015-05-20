@@ -350,7 +350,7 @@ Output
 {% highlight json %}
 {"size":1,"list":
 	[
-	{"prediction":400000,"predictedClass":1,"confidence":1.0}
+	{"prediction":400000,"predictedClass":"1","confidence":1.0}
 	]
 }
 {% endhighlight %}
