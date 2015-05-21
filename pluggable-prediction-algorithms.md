@@ -146,7 +146,7 @@ To use this predictor, follow these steps:
         pip install Flask
         pip install gunicorn
 
-1. Download and install [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
+1. Download and install [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) and ensure vw is in your PATH
 
 1. Clone the Seldon Server project.
 
