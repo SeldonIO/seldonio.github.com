@@ -28,7 +28,9 @@ The current built in runtime item recommendation algorithms are as follows:
 `semanticVectorsRecommender` | [content based models](runtime-recommendation.html#content-based), [word2vec model](runtime-recommendation.html#word2vec)
 `recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `mostPopularRecommender` | [baseline models](runtime-recommendation.html#baseline)
+`externalItemRecommendationAlgorithm` | [custom model](pluggable-recommendation-algorithms.html)
 
+These algorithms will be utilized when the item recommendation endpoints of the [REST](api-oauth.html#recommendations) or [Javascript](api-javascript.html#recommendations) API are used.
 
 
 ## Matrix Factorization Models<a name="matrix-factorization"></a>

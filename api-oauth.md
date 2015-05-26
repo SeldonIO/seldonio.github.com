@@ -267,11 +267,11 @@ The service injects house price data
 }
 {% endhighlight %}
 
-## API Personalisation Endpoints <a name="recommendations"></a>
+## API Personalisation Endpoints 
 
 This section describes the endpoints which provide personalisation and recommendation functionality derived from the user, item, action data that has been POSTed to the API.
 
-### Recommended Items
+### Recommended Items <a name="recommendations"></a>
 
 A list of recommended items can be retrieved for a user. The list size can be specified with a limit. The filter type, for selecting only a specific item type, or dimension, for selecting items in a specific category can be applied.
 If the service has provided textual content for the items, a personalized search can be performed specifying the keyword parameter. The relevant items matching the keywords are retrieved and reordered for the specified user. 

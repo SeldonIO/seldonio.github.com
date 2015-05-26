@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Offline Model Creation
+title: Offline Recommendation Model Creation
 ---
 
-# Offline Model Creation
+# Offline Recommendation Model Creation
 
-Seldon provides a variety of models that can be created and makes it easy for new custom models to be added.
+Seldon provides a variety of item recommendation models that can be created and makes it easy for new custom models to be added.
 
 The current integrated models are:
 

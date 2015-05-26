@@ -52,7 +52,7 @@ http://<HOST>/js/action/new?consumer_key=XYZ&user=1&item=2&type=1&jsonpCallback=
 }
 {% endhighlight %}	
 
-## User Recommendations
+## User Recommendations <a name="recommendations"></a>
 
 {% highlight http %}
 GET     /js/recommendations
@@ -144,7 +144,7 @@ Assuming the consumer key matches client "client1" this would create an event ob
 }
 {% endhighlight %}	
 
-## Predict
+## Predict <a name="predictive-scoring"></a>
 
 {% highlight http %}
 GET     /js/predict
