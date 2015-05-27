@@ -5,17 +5,19 @@ title: JavaScript API
 
 # Seldon JavaScript API
 
-The Seldon JavaScript API provides the simplest method of integrating Seldon onto web based services. It provides two methods:
+The Seldon JavaScript API provides the simplest method of integrating Seldon onto web based services. It provides the following methods:
 
-* User Action : Called from each web page where a user performs an action, e.g. loads the web page on a news site.
-* User Recommendation : Called to get recommedations for the current user to display on the page, e.g. to fill a recommendations box on a news web site with articles the user may be interested in reading. 
+* [User Action](#actions) : Called from each web page where a user performs an action, e.g. loads the web page on a news site.
+* [User Recommendation](#recommendations) : Called to get recommedations for the current user to display on the page, e.g. to fill a recommendations box on a news web site with articles the user may be interested in reading. 
+* [Events](#events) : Called to send to Seldon arbitray event data to be used to build a predictive model
+* [Prediction](#predictive-scoring) : do a real time prediction based on some features
 
 For details on the overall concepts of users, items and actions see the [Oauth API](api-oauth.html)
 
 ## Self contained JS Library
 Seldon has a self contained drop in library which contains these calls which it will be releasing soon.
 
-## User Action
+## User Action <a name="actions"></a>
 
 {% highlight http %}
 GET     /js/actions
@@ -109,7 +111,7 @@ j({
 {% endhighlight %}	
 
 
-## Events
+## Events <a name="events"></a>
 An endpoint to allow the injestion of arbitrary JSON event data.
 
 {% highlight http %}

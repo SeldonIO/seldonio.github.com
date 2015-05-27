@@ -136,7 +136,7 @@ For a client specific algorithm strategy add to
 
 ### Prediction Algorithms<a name="prediction-algorithms"></a>
     
-At present we only provide predictive scoring algorithms via an [internal micro-service API](external-algorithms.html#online-predictive-scoring). The global default configuration is set in:
+The global default configuration is set in:
 
  * /config/default_prediction_strategy
 

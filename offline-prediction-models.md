@@ -5,7 +5,7 @@ title: Offline Prediction Model Creation
 
 # Offline Prediction Model Creation
 
-Seldon currently supports models created by Vowpal Wabbit. Simple classification models can be runtime scored inside the [seldon server](runtime-prediction.html) while more complex models can be accessed via our [micro-service API](pluggable-prediction-algorithms.html#prediction-python-vw).
+Seldon currently supports models created by [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki). Simple Vowpal Wabbit classification models can be runtime scored inside the [seldon server](runtime-prediction.html) while more complex models can be accessed via our [micro-service API](pluggable-prediction-algorithms.html#prediction-python-vw).
 
 ## Create VW Features from JSON Events
 Seldon injests data via the /events endpoints in its API. These events are stored as JSON. A simple Spark job is provided to create a Vowpal Wabbit training file from JSON events.

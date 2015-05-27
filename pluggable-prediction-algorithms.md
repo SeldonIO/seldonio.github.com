@@ -16,13 +16,13 @@ Pluggable algorithms allow you to add any custom algorithm into Seldon rather th
 
 ## Offline Model<a name="offline-model"></a>
 
-You can utilize any method to create the offline model. You can use the seldon '''/events''' endpoints in the [REST](api-oauth.html#events) and [javascript](api-js#events) APIs to inject the events.
+You can utilize any method to create the offline model. You can use the seldon '''/events''' endpoints in the [REST](api-oauth.html#events) and [javascript](api-javascript.html#events) APIs to inject the events.
 
 
 
 ## Online Predictive Scoring<a name="online-predictive-scoring"></a>
 
-For the online predictive scoring of an external algoithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use vowpall wabbit as the online predictive scorer.
+For the online predictive scoring of an external algoithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use Vowpall Wabbit as the online predictive scorer.
 
 ### Microservices REST API<a name="prediction-internal-rest-api"></a>
 
@@ -42,12 +42,12 @@ The external algorithm serving the request should return JSON with an array of o
   "predictions": [
     {
       "score": 0.9,
-      "classId": 1,
+      "classId": "1",
       "confidence":0.7
     },
     {
       "score": 0.1,
-      "classId": 2,
+      "classId": "2",
       "confidence":0.7
     }
   ]
@@ -62,14 +62,14 @@ GET /predict?client=test1&json=%7B%22f1%22%3A4.8%2C%22f2%22%3A3.0%2C%22f3%22%3A1
 
 
 ### Zookeeper configuration<a name="prediction-zookeeper-conf"></a>
-When you have an external recommendation server running that supports the internal REST API you can activtae this new recommender inside Seldon for a particular client by specifying an **externalItemRecommendationAlgorithm** for the client in its **algs** node, for example to specify an external algorithm running at ```http://127.0.0.1:5000/recommend``` for client **client1** which uses the most recent 10000 items to score you would set the node ```/all_clients/client1/algs``` to 
+When you have an external recommendation server running that supports the internal REST API you can activate this new recommender inside Seldon for a particular client by specifying an **externalPredictionServer** for the client in its **predict_algs** node, for example to specify an external algorithm running at ```http://127.0.0.1:5000/predict``` for client **client1** you would set the node ```/all_clients/client1/predict_algs``` to 
 
 {% highlight bash %}
 {
 "algorithms":
 	[{"name":"externalPredictionServer",
 	"config":[
-		   {"name":"io.seldon.algorithm.external.url","value":"http://127.0.0.1:5000/recommend"},
+		   {"name":"io.seldon.algorithm.external.url","value":"http://127.0.0.1:5000/predict"},
 		   {"name":"io.seldon.algorithm.external.name","value":"example_alg"}]
          	 ]
          }]
@@ -108,7 +108,7 @@ To use this predictor, follow these steps:
     * **client** : a string for the client
     * **json** : a dictionary representation of the json input
 
-    Expand the "**get_predictions**" function to return a a list of 3-tuples of (score,classId,confidence) of type (double,integer,double)
+    Expand the "**get_predictions**" function to return a a list of 3-tuples of (score,classId,confidence) of type (double,string,double)
 
     The parameters to the "**init**" function are as follows:
 
@@ -121,7 +121,7 @@ To use this predictor, follow these steps:
 
         PREDICTION_ALG="example_predict"
 
-    * **PREDCITION_ALG** : The name of the script with the custom "get_predictions" function, without the .py extension.
+    * **PREDICTION_ALG** : The name of the script with the custom "get_predictions" function, without the .py extension.
 
 1. Serve the predictive scoring for testing.
 
@@ -133,9 +133,9 @@ To use this predictor, follow these steps:
         gunicorn -w 4 -b 127.0.0.1:5000 server:app
 
 
-###  External Python Predcition Server using Vowpal Wabbit<a name="prediction-python-vw"></a>
+###  External Python Prediction Server using Vowpal Wabbit<a name="prediction-python-vw"></a>
 
-We provide an example interface to the popular online machine learning tool Vowapl Wabbit to server predictions. We create a very simple model from the [Iris dataset](https://archive.ics.uci.edu/ml/datasets/Iris) and get vw to serve this using its daemon functionality. We extend the python template for Seldon micro-service predcition API to connect to the vw daemon to get recommendations.
+We provide an example interface to the popular online machine learning tool [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) to serve predictions. We create a very simple model from the [Iris dataset](https://archive.ics.uci.edu/ml/datasets/Iris) and get vw to serve this using its daemon functionality. We extend the python template for the Seldon micro-service prediction API to connect to the vw daemon to get recommendations.
 
 
 

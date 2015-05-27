@@ -6,6 +6,7 @@ title: Seldon Server Setup
 # Seldon Server Setup
 
 To setup the Seldon server you will need to do the following steps:
+
   * [Create seldon Database](#seldon-db)
   * [Deploy Seldon Server](#deploy-server)
 
