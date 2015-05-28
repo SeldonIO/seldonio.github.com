@@ -19,8 +19,8 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
 
 To use Seldon Spark, the following need to be installed:
 
-* Java (v = 7)
-* Spark (v = 1.3.0)
+* Java (v = 7) (Java 8 will **NOT** work at present)
+* Spark (v >= 1.3.0)
 * Maven (v >=3)
 * Git
 
@@ -63,10 +63,11 @@ The options to the job are as follows:
 * **--gzip-output** - Use this option to compress the output data.
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 INPUT_DATE_STRING=${DATE_YESTERDAY}
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 
 INPUT_DIR=~/seldon-logs
@@ -135,8 +136,9 @@ create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-m
 
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 BASE_DIR=~/seldon-models
 
@@ -200,8 +202,9 @@ create /all_clients/client1/offline/similar-items {"inputPath":"/seldon-models",
 Example job execution
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.mllib.SimilarItems" \
@@ -215,7 +218,7 @@ Once complete the Seldon database needs to be updated with the similarities so t
 
 You will need to get from local filesystem, AWS S3 or HDFS the output of the job and run a script to convert to SQL and upload to the Seldon DB. An example for the result stored on the local filesystem is shown below:
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 CLIENT=client
 DB_HOST=db
 DB_USER=user
@@ -275,8 +278,9 @@ create /all_clients/client1/offline/sessionitems {"inputPath":"/seldon-models","
 Example job execution
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.topics.SessionItems" \
@@ -329,8 +333,9 @@ create /all_clients/client1/offline/word2vec {"inputPath":"/seldon-models","outp
 Example job execution
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.features.Word2VecJob" \
@@ -389,8 +394,9 @@ create /all_clients/client1/offline/cluster-by-dimension {"inputPath":"/seldon-m
 Example job execution
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.91-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 ${SPARK_HOME}/bin/spark-submit \
 	   --class "io.seldon.spark.cluster.ClusterUsersByDimension" \
