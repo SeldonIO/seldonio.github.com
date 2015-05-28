@@ -42,6 +42,12 @@ Example config to set in `/all_clients/[client]/predict_algs`:
 {% endhighlight %}
 
 
+The location of the readable model should be specified at `/all_clients/[client]/vw`. The vwClassifier will attempt to load a file `model` from this location. It will also attempt to load an optional file `classes.txt` which gives the mapping of target class ids to a human friendly name, for example:
 
+{% highlight bash %}
+1,Iris-setosa
+2,Iris-versicolor
+3,Iris-virginica
+{% endhighlight %}
 
 
