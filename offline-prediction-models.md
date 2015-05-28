@@ -53,8 +53,9 @@ create /all_clients/client1/offline/vwfeatures {"inputPath":"/seldon-models","ou
 ## Run Modeling
 
 {% highlight bash %}
-SELDON_SPARK_HOME=~/seldon-spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-0.93-jar-with-dependencies.jar
+SELDON_VERSION=0.93
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
 BASE_DIR=~/seldon-models
 
