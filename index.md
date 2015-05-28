@@ -5,7 +5,7 @@ title: Introduction to Seldon
 
 # Introduction to Seldon
 
-Seldon is an Open Predictive Platform that currently allows recommendations to be generated based on structured historical data. It has a variety of algorithms to produce these recommendations and can report a variety of statistics.
+Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data. It has a variety of algorithms to produce these recommendations and predictions and can report a variety of statistics.
 
 
 ## Why you would use it?
@@ -14,8 +14,8 @@ Seldon has been designed generically so that it can be useful in many contexts. 
 
 Other examples of use include:
 
-* e-commerce where the recommendations are again based on items that the user has viewed as well as the items that they have bought.
-* general personalisation of any website or app.
+* General personalisation of any website or app.
+* Allowing a data science team to put predictive pipelines into production
 
 ## Join the seldon-users group
 In March 2015 we created a public [seldon-users group](https://groups.google.com/forum/#!forum/seldon-users) powered by Google Groups, and now the Seldon VM and AMI have been released we encourage you to leave feedback and ask questions in this group. [Click here to join the seldon-users group](https://groups.google.com/forum/#!forum/seldon-users).
