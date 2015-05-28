@@ -19,17 +19,17 @@ The open source projects that comprise Seldon can be seen in the image below gro
 ## Real-Time Predictive Scoring
 
  * [seldon-server](https://github.com/SeldonIO/seldon-server) : Real-time predictive scoring that exposes a REST API for external clients.
- * Micro-services for custom algorithms : [Pluggable custom algorithms](external-algorithms.html) with example python templates for [item recommendation](external-algorithms.html#recommender-python-template) and [predictive scoring](external-algorithms.html#prediction-python-template) and an example using [vowpal wabbit](external-algorithms.html#prediction-python-vw)
+ * Micro-services for custom algorithms : Pluggable custom algorithms with example python templates for [item recommendation](pluggable-recommendation-algorithms.html#recommender-python-template) and [predictive scoring](pluggable-prediction-algorithms.html#prediction-python-template) and an example using [Vowpal Wabbit](pluggable-prediction-algorithms.html#prediction-python-vw)
 
 ## Offline Modelling
 
  * [seldon-spark](https://github.com/SeldonIO/seldon-server/tree/master/offline-jobs/spark) : Implementations of predictive models in Spark.
- * [semantic-vectors-lucene-tools](https://github.com/SeldonIO/semantic-vectors-lucene-tools) : Vector based models for language modelling using Semantic vectors
+ * [Docker container for Semantic Vectors](semantic-vectors.html) : Vector based models for language modelling using Semantic vectors
  * Custom Offline Models : Seldon is not prescriptive in how models are created. They simply need a runtime scoring component to serve their predictions.
 
 ## Demo/Evaluation
 
 Please join our [beta list](http://www.seldon.io/open-source) to get easy access to these demos.
 
- * [seldon-vm](https://github.com/SeldonIO/seldon-vm) : An all-one virtual machine with all Seldon components packaged and ready to run. Provides a movie recommendation demo built from open source data.
+ * [seldon-vm](https://github.com/SeldonIO/seldon-server/tree/master/vm) : An all-one virtual machine with all Seldon components packaged and ready to run. Provides a movie recommendation demo built from open source data.
  * AWS AMI : An AWS AMI with Seldon on a single machine EC2 instance.
