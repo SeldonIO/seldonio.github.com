@@ -49,22 +49,5 @@ The Seldon Virtual Machines (both Vagrant and AMI) provide the components and fu
 
         cd ${TOMCAT_HOME}/logs
 
-* Building and Testing the movie demo
-
-        cd ~/movie-demo-setup
-        ./create-movie-demo
-
-    Once the build process finishes, start the Seldon API
-
-        cd ${TOMCAT_HOME}/bin
-        ./startup.sh
-        
-    The demo can be seen with the following url:
-
-        http://localhost:8080/movie-demo/
-
-
-    The API can be explored using Swagger:
-
-        http://localhost:8080/swagger/
-
+# Movie Recommender Demo
+We provide scripts to create a movie recommendaton demo. To set this up see [here](movie-recommender-demo.html)
