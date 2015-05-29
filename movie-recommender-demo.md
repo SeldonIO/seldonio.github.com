@@ -16,40 +16,54 @@ The dataset is of reasonable size so you will need at least 4G of RAM for creati
 1. Determine and setup the Embedly key usage if necessary. Otherwise the images will not show correctly.
 If you plan to view the demo via a url other than 'localhost' then you have two choices (Note you will be fine on the Vagrant VM so can skip this step):
 
-    **option 1**: Use an Embedly key.
-    Sign up at "http://embed.ly/", obtain the key and save in the demo:
+   **option 1**: Use an Embedly key.
+   Sign up at "http://embed.ly/", obtain the key and save in the demo:
 
-        cd ~/movie-demo-setup
-        echo "export EMBEDLY_KEY=<your-key>" > run_settings
+     ```
+     cd ~/movie-demo-setup
+     ```
 
-    **option 2**: Use a ssh tunnel to obtain "localhost" url. This will be explained later.
+     ```
+     echo "export EMBEDLY_KEY=<your-key>" > run_settings
+     ```
+
+   **option 2**: Use a ssh tunnel to obtain "localhost" url. This will be explained later.
 
 1. Create the movie demo
 
-        ./create-movie-demo
+   ```
+   cd ~/movie-demo-setup
+   ```
+
+   ```
+   ./create-movie-demo
+   ```
 
 1. Start Apache Tomcat 
 
-        cd ~/apps/apache-tomcat-7.0.61/bin
-        ./startup.sh
+   ```
+   ~/apps/tomcat/bin/startup.sh
+   ```
 
 1. View the demo in your browser:
 
-        http://localhost:8080/movie-demo/
+   ```
+   http://localhost:8080/movie-demo/
+   ```
 
-    If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown if no Embedly key was used when creating the demo.
+If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown if no Embedly key was used when creating the demo.
 
-    To display the images in case use a ssh tunnel to obtain "localhost" url. Use the following in a terminal to forward port 8080 from your remote host to your localhost:
+To display the images in case use a ssh tunnel to obtain "localhost" url. Use the following in a terminal to forward port 8080 from your remote host to your localhost:
+{% highlight bash %}
+ssh -i <path-to-your-pem-file> -L 8080:localhost:8080 ubuntu@<your-remote-host>
+{% endhighlight %}        
+Leave that open and use the following in a browser:
+{% highlight http %}
+http://localhost:8080/movie-demo/
+{% endhighlight %}        
+An example screenshot is shown below:
 
-            ssh -i <path-to-your-pem-file> -L 8080:localhost:8080 ubuntu@<your-remote-host>
-
-    Leave that open and use the following in a browser:
-
-        http://localhost:8080/movie-demo/
-
-    An example screenshot is shown below:
-
-    ![Movie Demo](/img/movie-demo.png)
+![Movie Demo](/img/movie-demo.png)
 
 ## Seldon API Explorer
 The Seldon REST and Javascript APIs can be explored using:
