@@ -13,7 +13,7 @@ The dataset is of reasonable size so you will need at least 4G of RAM for creati
 
 1. Install and ssh into the Seldon [VM](vm.html) or [AWS AMI](vm-aws.html).
 
-2. Determine and setup the Embedly key usage if necessary. Otherwise the images will not show correctly.
+1. Determine and setup the Embedly key usage if necessary. Otherwise the images will not show correctly.
 If you plan to view the demo via a url other than 'localhost' then you have two choices (Note you will be fine on the Vagrant VM so can skip this step):
 
 **option 1**: Use an Embedly key.
