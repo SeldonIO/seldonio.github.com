@@ -11,36 +11,39 @@ The dataset is of reasonable size so you will need at least 4G of RAM for creati
 
 ## Quick Start
 
- 1. Install and ssh into the Seldon [VM](vm.html) or [AWS AMI](vm-aws.html) and then:
+1. Install and ssh into the Seldon [VM](vm.html) or [AWS AMI](vm-aws.html).
+
+2. Determine and setup the Embedly key usage if necessary. Otherwise the images will not show correctly.
+If you plan to view the demo via a url other than 'localhost' then you have two choices (Note you will be fine on the Vagrant VM so can skip this step):
+
+**option 1**: Use an Embedly key.
+Sign up at "http://embed.ly/", obtain the key and save in the demo:
 {% highlight bash %}
 cd ~/movie-demo-setup
+echo "export EMBEDLY_KEY=<your-key>" > run_settings
+{% endhighlight %}        
+
+**option 2**: Use a ssh tunnel to obtain "localhost" url. This will be explained later.
+
+1. Create the movie demo
+{% highlight bash %}
 ./create-movie-demo
 {% endhighlight %}
 
- 1. Start Apache Tomcat 
+1. Start Apache Tomcat 
 {% highlight bash %}
 cd ~/apps/apache-tomcat-7.0.61/bin
 ./startup.sh
 {% endhighlight %}        
 
- 1. View the demo in your browser:
+1. View the demo in your browser:
 {% highlight http %}
         http://localhost:8080/movie-demo/
 {% endhighlight %}        
 
+If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown if no Embedly key was used when creating the demo.
 
-**IMPORTANT**: If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown.  
-To display the images there are two options:
-
-**option 1**: Use an Embedly key.
-Sign up at "http://embed.ly/", obtain the key and re-start using the following:
-{% highlight bash %}
-cd ~/seldon/dist
-export EMBEDLY_KEY=<your-key>
-./start-all
-{% endhighlight %}        
-
-**option 2**: Use a ssh tunnel to obtain "localhost" url. Use the following in a terminal to formard port 8080 from your remote host to your localhost:
+To display the images in case use a ssh tunnel to obtain "localhost" url. Use the following in a terminal to formard port 8080 from your remote host to your localhost:
 {% highlight bash %}
 ssh -i <path-to-your-pem-file> -L 8080:localhost:8080 ubuntu@<your-remote-host>
 {% endhighlight %}        
