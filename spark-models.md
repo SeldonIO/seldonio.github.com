@@ -118,7 +118,7 @@ Example confguration:
   "days" : 1,
   "activate" : true,
   "rank" : 30,
-  "lambda" : 0.1,
+  "lambda" : 0.01,
   "alpha" : 1,
   "iterations" : 5
 }
@@ -129,7 +129,7 @@ An example using zookeeper zkCli to create a new confguration for client "client
 {% highlight bash %}
 create /all_clients/client1 ""
 create /all_clients/client1/offline ""
-create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.1,"alpha":1,"iterations":5,"local":true}
+create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"activate":true,"rank":30,"lambda":0.01,"alpha":1,"iterations":5,"local":true}
 {% endhighlight %}
 
 ## Run Modeling
