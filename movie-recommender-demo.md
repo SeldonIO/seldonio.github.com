@@ -16,30 +16,40 @@ The dataset is of reasonable size so you will need at least 4G of RAM for creati
 1. Determine and setup the Embedly key usage if necessary. Otherwise the images will not show correctly.
 If you plan to view the demo via a url other than 'localhost' then you have two choices (Note you will be fine on the Vagrant VM so can skip this step):
 
-**option 1**: Use an Embedly key.
-Sign up at "http://embed.ly/", obtain the key and save in the demo:
-{% highlight bash %}
-cd ~/movie-demo-setup
-echo "export EMBEDLY_KEY=<your-key>" > run_settings
-{% endhighlight %}        
+   **option 1**: Use an Embedly key.
+   Sign up at "http://embed.ly/", obtain the key and save in the demo:
 
-**option 2**: Use a ssh tunnel to obtain "localhost" url. This will be explained later.
+     ```
+     cd ~/movie-demo-setup
+     ```
+
+     ```
+     echo "export EMBEDLY_KEY=<your-key>" > run_settings
+     ```
+
+   **option 2**: Use a ssh tunnel to obtain "localhost" url. This will be explained later.
 
 1. Create the movie demo
-{% highlight bash %}
-./create-movie-demo
-{% endhighlight %}
+
+   ```
+   cd ~/movie-demo-setup
+   ```
+
+   ```
+   ./create-movie-demo
+   ```
 
 1. Start Apache Tomcat 
-{% highlight bash %}
-cd ~/apps/apache-tomcat-7.0.61/bin
-./startup.sh
-{% endhighlight %}        
+
+   ```
+   ~/apps/tomcat/bin/startup.sh
+   ```
 
 1. View the demo in your browser:
-{% highlight http %}
-        http://localhost:8080/movie-demo/
-{% endhighlight %}        
+
+   ```
+   http://localhost:8080/movie-demo/
+   ```
 
 If running via the Seldon AMI, using a url other than "localhost" will result in no images being shown if no Embedly key was used when creating the demo.
 
