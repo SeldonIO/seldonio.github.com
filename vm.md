@@ -28,17 +28,11 @@ title: Seldon VM
 
         vagrant up
 
-1. Start the Seldon services.
+1. Log into the vm.
 
-        vagrant ssh -c '/home/core/seldon/dist/start-all'
+        vagrant ssh
 
-1. Use a browser to check that the api has finished initialization and is ready.
-
-        http://127.0.0.1:8080/
-
-1. Explore the API using Swagger.
-
-        http://127.0.0.1:8080/swagger/
+1. After logging on, see the [Seldon VM usage](vm-usage.html) docs for getting started.
 
 1. For larger datasets you can customize the memory size of the vm.
 
@@ -54,5 +48,4 @@ title: Seldon VM
         vagrant destroy
         vagrant up
 
-1. Next Steps - create a [Movie Recommender Demo](movie-recommender-demo.html)
 
