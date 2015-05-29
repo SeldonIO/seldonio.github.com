@@ -18,20 +18,66 @@ To be the first to receive updates about the AMI, please [sign up for the beta p
 
 ## Getting started with the Seldon AMI
 
-1. ssh into the running AMI EC2 instance.
+The Seldon AMI provides the components and functionality necessary to use the Seldon platform.
 
-1. Start the Seldon services.
+* Support Services - Zookeeper, Memcached, td-agent and MySQL Server
 
-        /home/ubuntu/seldon/dist/start-all
+    These can be all be started and stopped together as follows:
 
-1. Use a browser to check that the API has finished initialization and is ready.
+        cd ~/seldon-server/vm/bin/
+        ./start-all
+        ./stop-all
 
-        http://127.0.0.1:8080/
+    Or individually:
 
-1. Explore the API using Swagger.
+        cd ~/seldon-server/vm/bin/
+        ./zookeeper start
+        ./zookeeper stop
+        ./memcached start
+        ./memcached stop
+        ./td-agent start
+        ./td-agent stop
+        ./mysql start
+        ./mysql stop
 
-        http://127.0.0.1:8080/swagger/
+* Servlet Container for hosting the Seldon API with Tomcat
 
-1. Next Steps - create a [Movie Recommender Demo](movie-recommender-demo.html)
+    The Seldon API can be started and stopped as follows:
 
+        cd ${TOMCAT_HOME}/bin
+        ./startup.sh
+        ./shutdown.sh
+
+* Examining and setting data in zookeeper
+
+        cd ~/seldon-server/vm/bin/
+        ./zkshell
+
+* Examining and setting data in mysql
+
+        cd ~/seldon-server/vm/bin/
+        ./mysql-shell
+
+* Checking the logs
+
+        cd ${TOMCAT_HOME}/logs
+
+* Building and Testing the movie demo
+
+        cd ~/movie-demo-setup
+        ./create-movie-demo
+
+    Once the build process finishes, start the Seldon API
+
+        cd ${TOMCAT_HOME}/bin
+        ./startup.sh
+        
+    The demo can be seen with the following url:
+
+        http://localhost:8080/movie-demo/
+
+
+    The API can be explored using Swagger:
+
+        http://localhost:8080/swagger/
 
