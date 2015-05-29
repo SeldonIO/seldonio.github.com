@@ -50,4 +50,7 @@ The Seldon Virtual Machines (both Vagrant and AMI) provide the components and fu
         cd ${TOMCAT_HOME}/logs
 
 # Movie Recommender Demo
-We provide scripts to create a movie recommendaton demo. To set this up see [here](movie-recommender-demo.html)
+We provide scripts to create a movie recommendaton demo. To set this up see [here](movie-recommender-demo.html).
+
+# Build models with your data
+Follow the [deployment steps](deploying-steps.html) to build models using your own data.

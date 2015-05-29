@@ -11,7 +11,7 @@ Follow the steps below to set Seldon up to provide recommendation or prediction 
 Steps involved in setting up Seldon from source to serve content recommendations:
 
  1. [Start with an understanding of Seldon concepts](/concepts.html)
- 1. [Setup Seldon Server](/seldon-server-setup.html)
+ 1. [Setup Seldon Server](/seldon-server-setup.html) (*not need if running inside VM*)
  1. [Configure your data](/item-recommendation-data.html)
  1. Provide [realtime activity data](/realtime-activity-data.html) 
  1. [Generate an offline model](/offline-models.html)
@@ -23,7 +23,7 @@ Steps involved in setting up Seldon from source to serve content recommendations
 Steps involved in setting up Seldon from source to serve predictions (alpha release):
 
  1. [Start with an understanding of Seldon concepts](/concepts.html)
- 1. [Setup Seldon Server](/seldon-server-setup.html)
+ 1. [Setup Seldon Server](/seldon-server-setup.html) (*not need if running inside VM*)
  1. Injest arbitrary JSON event data via the [REST](api-oauth.html#events) or [Javascript](api-javascript.html) APIs
  1. [Generate an offline model](offline-prediction-models.html)
  1. [Algorithm configuration](/runtime-prediction.html)
