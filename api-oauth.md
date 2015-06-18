@@ -289,9 +289,9 @@ Parameters
 * limit (optional) int size of the recommendations list (by default set to 10)
 * type (optional) int filtering on the item type  
 * dimension (optional) int 
-** if dimension = -1 retrieves recommendations using trust graph
-** if dimension = 0 retrieves recommendations using trust and user preferences (default)
-** if dimension > 0 filters recommendations on a specific item category
+  * if dimension > 0 filters recommendations on a specific item category
+* dimensions (optional) comma separated int
+  * filter on multiple dimensions, inclusive or
 * keyword (optional) string comma separated containing the keywords for the search
 
 Example

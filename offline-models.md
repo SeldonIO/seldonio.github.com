@@ -11,7 +11,6 @@ The current integrated models are:
 
  * [Models created via Apache Spark](spark-models.html)
  * [Models created via Semantic Vectors](semantic-vectors.html)
- * Models created via Vowpal Wabbit (docs coming soon)
 
 Confguration is either passed on the command line to the offline jobs or set in zookeeper
 

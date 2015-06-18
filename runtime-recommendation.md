@@ -26,6 +26,7 @@ The current built in runtime item recommendation algorithms are as follows:
 `itemCategoryClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
 `globalClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
 `semanticVectorsRecommender` | [content based models](runtime-recommendation.html#content-based), [word2vec model](runtime-recommendation.html#word2vec)
+`userTagAffinityRecommender` | [tag based model](runtime-recommendation.html#tag-based)
 `recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `mostPopularRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `externalItemRecommendationAlgorithm` | [custom model](pluggable-recommendation-algorithms.html)
@@ -187,6 +188,49 @@ Example config to set in `/all_clients/[client]/algs`:
 }
 {% endhighlight %}
 
+Configuration options required:
+
+ * `io.seldon.algorithm.clusters.minnumberitemsforvalidclusterresult` : minimum number of results to be included as a valid result
+ * `io.seldon.algorithm.clusters.decayratesecs` : decay rate in seconds for the counts of what people are reading. Smaller rates will be more reactive but also more noisy. Suggested : 10800
+ * `io.seldon.algorithm.clusters.categorydimensionname` : name of the attribute in the Seldon database to be use to used as a dimension to restrict results
+ 
+
+## Tag Based Models<a name="tag-based"></a>
+
+Algorithms that utilize the content meta data providing tags for item. Building the model is described [here](spark-models.html#tag-affinity).
+
+**Algorithm** : `userTagAffinityRecommender`  
+**Description** : Score items based user association with tags, .e.g., a user that has read more than the usual number of articles tagged with "manchester united" would get currently ppopular articles that have this tag.
+
+Required onfig settings are:
+
+ * `io.seldon.algorithm.tags.attrid` : integer - attribute id in the Seldon db containing the tags for the items
+ * `io.seldon.algorithm.tags.useitemdim` : boolean - whether to use the category dimension of the current page (i.e. to restrict results to the same category as the current item the user is interacting with)
+
+As this recommender using the user clustering real time stats on what people are reading it requires these configuration settings as well:
+
+ * `io.seldon.algorithm.clusters.minnumberitemsforvalidclusterresult` : minimum number of results to be included as a valid result
+ * `io.seldon.algorithm.clusters.decayratesecs` : decay rate in seconds for the counts of what people are reading. Smaller rates will be more reactive but also more noisy. Suggested : 10800
+ * `io.seldon.algorithm.clusters.categorydimensionname` : name of the attribute in the Seldon database to be use to used as a dimension to restrict results
+
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+ {
+  "algorithms":[
+   {
+   "name":"userTagAffinityRecommender",
+   "filters":[],
+   "includers":[],
+   "config":[]
+   }
+  ],
+  "combiner":"firstSuccessfulCombiner"
+  }
+{% endhighlight %}
+
+
 
 ## Content Based Models<a name="content-based"></a>
 
@@ -247,6 +291,8 @@ Example config to set in `/all_clients/[client]/algs`:
   "combiner":"firstSuccessfulCombiner"
   }
 {% endhighlight %}
+
+
 
 ## Baseline Models<a name="baseline"></a>
 

@@ -59,3 +59,6 @@ create /all_clients/client1/offline/semvec {"inputPath":"/seldon-models","output
 To run the modelling you should run the image with appropriate networking, in this case we use `--net="host"` to use the host network. In the example below zookeeper is running on the local host. The docker container will also need access to the datastore specified in the `jdbc` setting. The example assumes a client called "client1":
 
 `docker run --name "semantic vectors modeling" -rm  --net="host" seldonio/semantic-vectors-for-seldon bash -c "./semvec/semantic-vectors.py --client client1 --zookeeper 127.0.0.1:2181 "`
+
+
+You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#content-based) with this model.

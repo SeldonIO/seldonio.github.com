@@ -67,6 +67,7 @@ Input
 * item : currently viewed item id
 * limit :  max recommended items to return
 * dimension : dimension to use (e.g., just sports articles) 
+* dimensions : muliple dimensions to use (e.g., just news or opinion articles) 
 * attributes : fields to return for each recommended item
 * algorithms : override the default algorithms with specific ones
 * jsonpCallback : jsonp callback

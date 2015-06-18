@@ -12,6 +12,7 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
  * [Item Activity Similarity](#item-similarity)
  * [Word2Vec](#word2vec)
  * [User Clusters](#user-clusters)
+ * [Tag Affinity](#tag-affinity)
   
 # Set Up
 
@@ -63,7 +64,7 @@ The options to the job are as follows:
 * **--gzip-output** - Use this option to compress the output data.
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 INPUT_DATE_STRING=${DATE_YESTERDAY}
@@ -136,7 +137,7 @@ create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-m
 
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -150,6 +151,7 @@ ${SPARK_HOME}/bin/spark-submit \
     --zookeeper 127.0.0.1 
 {% endhighlight %}
 
+You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#matrix-factorization) with this model.
 
 # Item Activity Similarity<a name="item-similarity"></a>
 Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
@@ -202,7 +204,7 @@ create /all_clients/client1/offline/similar-items {"inputPath":"/seldon-models",
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -227,6 +229,8 @@ DAY=16491
 cat /seldon-models/${CLIENT}/item-similarity/${DAY}/part* | ${SELDON_SPARK_HOME}/scripts/item-similarity/create-sql.py > upload.sql
 mysql -h${DB_HOST} -u${DB_USER} -p${DB_PASS} ${CLIENT} < upload.sql 
 {% endhighlight %}
+
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#similar-items) with this model.
 
 # Word2Vec<a name="word2vec"></a>
 Word2Vec models are deep learning based language models that create vector space representations. Traditionally they are trained on a large text corpus but there has been recent use of training them on session activity data. In this setting a "sentence" is a user session whose "words" are the products/items they have interacted with. By training on large amounts of session data we can create vectors that describe the products and can be used to find similar products. For the word2vec training we use the implementation in [Apache Spark](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec).
@@ -278,7 +282,7 @@ create /all_clients/client1/offline/sessionitems {"inputPath":"/seldon-models","
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -333,7 +337,7 @@ create /all_clients/client1/offline/word2vec {"inputPath":"/seldon-models","outp
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -345,6 +349,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --zookeeper 127.0.0.1 
 {% endhighlight %}
 
+You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#word2vec) with this model.
 
 # User Clustering Models<a name="user-clusters"></a>
 For news sites or other sites where item churn is rapid and relevancy of items decays fast we can base recommendations on what similar users are interacting with on your site. These models are based on clustering the users against a static set of clusters (e.g., an item taxonomy) or in a free way (e.g. using fuzzy k-means). This implementation is based on the assumption items are added into the Seldon datastore with particular dimensions, e.g. article type - sports, finance, gossip etc. See the [deploying your data section](deploying-your-data.html). The model simply groups users who have a more than average association with any particular dimension, e.g., users who read more sports articles than the average user. Recommendation is done by seeing what similar users are interacting with miniute by minute on the live site. Therefore, live activity data is needed to put this model into production and it can't be used just on historical data. 
@@ -394,7 +399,7 @@ create /all_clients/client1/offline/cluster-by-dimension {"inputPath":"/seldon-m
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.93
+SELDON_VERSION=0.94
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -407,3 +412,74 @@ ${SPARK_HOME}/bin/spark-submit \
 {% endhighlight %}
 
 
+
+
+You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#user-clustering) with this model.
+
+
+
+# Tag Affinity<a name="tag-affinity"></a>
+If the item meta data contains tags then a simple model that associates users to tags they have interacted with more than the average user can be utilized.
+The output of this model can be used by a simple recommender that combines the tags and their weights to recommend items that are currently popular that have the users tags.
+
+## Configuration
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/all_clients/<client>/offline/tagaffinity
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+ * **jdbc** : jdbc url to the seldon database to get tags for items
+ * **minActionsPerUser** : min number of actions per user
+ * **tagAttr** : the name of the attribute for an item that contains the tags
+ * **minTagCount** : the minimum number of times a user has interacted with a tag before it is included in the result
+ * **minPcIncrease** : the minimum percentage increase over the average that a user has interacted with a tag before it is included
+ * **tagFilterPath** : the path to a file containing a set of times. Only tags found in this file will be included.
+ 
+Example confguration:
+
+{% highlight json %}
+{
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
+  "activate":true,
+  "startDay" : 1,
+  "days" : 1,
+  "activate" : "false",
+  "jdbc" : "jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8",
+  "minActionsPerUser" : 0,
+  "minTagCount" : 10,
+  "minPcIncrease" : 0.2
+{% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/tagaffinity {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"jdbc":"jdbc:mysql://localhost:3306/client?user=root&characterEncoding=utf8","minActionsPerUser":0,"minTagCount":10,"minPcIncrease":0.2,"local":true,"activate":true}
+{% endhighlight %}
+
+
+
+## Run Modelling
+
+Example job execution
+
+{% highlight bash %}
+SELDON_VERSION=0.94
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.tags.UserTagAffinity" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
+{% endhighlight %}
+
+
+You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#tag-based) with this model.
