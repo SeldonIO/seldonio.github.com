@@ -27,6 +27,7 @@ The current built in runtime item recommendation algorithms are as follows:
 `globalClusterCountsRecommender` | [user clustering model](runtime-recommendation.html#user-clustering)
 `semanticVectorsRecommender` | [content based models](runtime-recommendation.html#content-based), [word2vec model](runtime-recommendation.html#word2vec)
 `userTagAffinityRecommender` | [tag based model](runtime-recommendation.html#tag-based)
+`assocRulesRecommender` | [association rules model](runtime-recommendation.html#assoc-rules)
 `recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `mostPopularRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `externalItemRecommendationAlgorithm` | [custom model](pluggable-recommendation-algorithms.html)
@@ -292,6 +293,37 @@ Example config to set in `/all_clients/[client]/algs`:
   }
 {% endhighlight %}
 
+
+## Association Rules<a name="assoc-rules"></a>
+
+Algorithms that utilize association rules created from offline modelling  [here](spark-models.html#assoc-rules).
+
+**Algorithm** : `assocRuleRecommender`  
+**Description** : Create recommendations by looking at the current basket of the user and finding the best matching association rules
+
+Required onfig settings are:
+
+
+ * `io.seldon.algorithm.assocrules.basket.maxsize` : Integer - the max basket size. At present this has a hard limit of 3 for efficiency reasons
+ * `io.seldon.algorithm.assocrules.usetype` : Boolean - whether to use the types of the recent actions to recreate the basket using add and remove action types specified below
+ * `io.seldon.algorithm.actions.storefullactions` : Boolean - if `io.seldon.algorithm.assocrules.usetype` is true then you need this set to true as well so the Seldon server will store the full details of each action a user is performing
+ * `io.seldon.algorithm.assocrules.add.basket.action.type` : Integer -  the action type that represents "add to basket"
+ * `io.seldon.algorithm.assocrules.remove.basket.action.type` : Integer - the action type that represents "remove from basket"
+
+Example config to set in `/all_clients/[client]/algs`:
+
+{% highlight json %}
+{
+ "algorithms":[
+  {"name":"assocRuleRecommender",
+   "includers":[],
+   "config":[{"name":"io.seldon.algorithm.assocrules.add.basket.action.type","value":"1"},
+		{"name":"io.seldon.algorithm.assocrules.remove.basket.action.type","value":"2"},
+		{"name":"io.seldon.algorithm.actions.storefullactions","value":true},
+		{"name":"io.seldon.algorithm.assocrules.usetype","value":true}]}],
+    "combiner":"firstSuccessfulCombiner"
+}
+{% endhighlight %}
 
 
 ## Baseline Models<a name="baseline"></a>

@@ -13,6 +13,7 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
  * [Word2Vec](#word2vec)
  * [User Clusters](#user-clusters)
  * [Tag Affinity](#tag-affinity)
+ * [Association Rules](#assoc-rules)
   
 # Set Up
 
@@ -151,7 +152,7 @@ ${SPARK_HOME}/bin/spark-submit \
     --zookeeper 127.0.0.1 
 {% endhighlight %}
 
-You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#matrix-factorization) with this model.
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#matrix-factorization) with this model.
 
 # Item Activity Similarity<a name="item-similarity"></a>
 Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
@@ -349,7 +350,7 @@ ${SPARK_HOME}/bin/spark-submit \
 	   --zookeeper 127.0.0.1 
 {% endhighlight %}
 
-You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#word2vec) with this model.
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#word2vec) with this model.
 
 # User Clustering Models<a name="user-clusters"></a>
 For news sites or other sites where item churn is rapid and relevancy of items decays fast we can base recommendations on what similar users are interacting with on your site. These models are based on clustering the users against a static set of clusters (e.g., an item taxonomy) or in a free way (e.g. using fuzzy k-means). This implementation is based on the assumption items are added into the Seldon datastore with particular dimensions, e.g. article type - sports, finance, gossip etc. See the [deploying your data section](deploying-your-data.html). The model simply groups users who have a more than average association with any particular dimension, e.g., users who read more sports articles than the average user. Recommendation is done by seeing what similar users are interacting with miniute by minute on the live site. Therefore, live activity data is needed to put this model into production and it can't be used just on historical data. 
@@ -414,7 +415,7 @@ ${SPARK_HOME}/bin/spark-submit \
 
 
 
-You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#user-clustering) with this model.
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#user-clustering) with this model.
 
 
 
@@ -482,4 +483,141 @@ ${SPARK_HOME}/bin/spark-submit \
 {% endhighlight %}
 
 
-You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#tag-based) with this model.
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#tag-based) with this model.
+
+
+# Association Rules<a name="assoc-rules"></a>
+Association rule learning is a form of basket analysis that is useful in e-commerce to provide recommendations for which items could be added to a basket given a current set of items. There are two Spark jobs that need to be run consecutively:
+
+ 1. Basket Analysis : This will break up the actions event stream and process the *add-to-basket* and *remove-from-basket* events and create a set of session baskets
+ 1. Associaton Rules : This will process the baskets , find frequent item sets using the [Spark MLib FP Growth algorithm](https://spark.apache.org/docs/latest/mllib-frequent-pattern-mining.html) and create association rules
+
+
+## Basket Analysis
+
+## Configuration
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/all_clients/<client>/offline/basketanalysis
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+
+ * **maxIntraSessionGapSecs** : max number of secs allowed to elapse for consecutive actions to be considered part of the same session
+ * **minActionsPerUser** : min number of actions per user
+ * **maxActionsPerUser** : max number of actions per user
+ * **addToBasketType** : the action type which represents an "add to basket" event
+ * **removefromBasketType** : the action type which represents a "remove from basket" event
+ 
+Example confguration:
+
+{% highlight json %}
+{
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
+  "activate":true,
+  "startDay" : 1,
+  "days" : 1,
+  "maxIntraSessionGapSecs" : 3600,
+  "minActionsPerUser" : 0,
+  "addToBasketType" : 1,
+  "removefromBasketType" : 2
+}
+{% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/basketanalysis {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"maxIntraSessionGapSecs":3600,"minActionsPerUser":0,"addToBasketType":1,"removefromBasketType":2}
+
+{% endhighlight %}
+
+## Run Modelling
+
+Example job execution
+
+{% highlight bash %}
+SELDON_VERSION=0.94
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.transactions.BasketAnalysis" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
+{% endhighlight %}
+
+
+## Association Rules 
+
+## Configuration
+Set the configuration in zookeeper at node :
+
+{% highlight bash %}
+/all_clients/<client>/offline/fpgrowth
+{% endhighlight %}
+
+The algorithm specific parameters are:
+
+ * **minSupport** : percentage of total transactions for an itemset to be included
+ * **minConfidence** : the min percentage for the itemset as compared to its antecedent for the rule itemset, itemset+item -> item
+ * **minInterest** : confidence minus support for item to be recommendde
+ * **minLift** : min lift for rule to be included
+ * **minItemSetFreq** : min absolute freq of an itemset to be included
+ * **maxItemSetSize** :  max length of an itemset to be included
+ 
+Example confguration:
+
+{% highlight json %}
+{
+  "inputPath":"/seldon-models",
+  "outputPath":"/seldon-models",
+  "activate":true,
+  "startDay" : 1,
+  "days" : 1,
+  "minSupport" : 0.01,
+  "minConfidence" : 0.2,
+  "minInterest" : 0.1,
+  "minLift" : 0.0,
+  "maxItemSetSize" : 4
+}
+{% endhighlight %}
+
+An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
+
+{% highlight bash %}
+create /all_clients/client1 ""
+create /all_clients/client1/offline ""
+create /all_clients/client1/offline/fpgrowth {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"minSupport":0.01,"minConfidence":0.2,"minInterest":0.1,"minLift":0.0,"maxItemSetSize":4}
+
+
+{% endhighlight %}
+
+## Run Modelling
+
+Example job execution
+
+{% highlight bash %}
+SELDON_VERSION=0.94
+SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
+JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
+SPARK_HOME=/opt/spark
+${SPARK_HOME}/bin/spark-submit \
+	   --class "io.seldon.spark.transactions.FPGrowthJob" \
+	   --master local[1] \
+       ${JAR_FILE_PATH} \
+	   --client ${CLIENT} \
+	   --zookeeper 127.0.0.1 
+{% endhighlight %}
+
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#assoc-rules) with this model.
+
+
+
+ 
