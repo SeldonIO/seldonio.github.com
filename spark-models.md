@@ -65,7 +65,7 @@ The options to the job are as follows:
 * **--gzip-output** - Use this option to compress the output data.
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 INPUT_DATE_STRING=${DATE_YESTERDAY}
@@ -138,7 +138,7 @@ create /all_clients/client1/offline/matrix-factorization {"inputPath":"/seldon-m
 
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -205,7 +205,7 @@ create /all_clients/client1/offline/similar-items {"inputPath":"/seldon-models",
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -283,7 +283,7 @@ create /all_clients/client1/offline/sessionitems {"inputPath":"/seldon-models","
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -338,7 +338,7 @@ create /all_clients/client1/offline/word2vec {"inputPath":"/seldon-models","outp
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -400,7 +400,7 @@ create /all_clients/client1/offline/cluster-by-dimension {"inputPath":"/seldon-m
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -470,7 +470,7 @@ create /all_clients/client1/offline/tagaffinity {"inputPath":"/seldon-models","o
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -541,7 +541,7 @@ create /all_clients/client1/offline/basketanalysis {"inputPath":"/seldon-models"
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
@@ -604,7 +604,7 @@ create /all_clients/client1/offline/fpgrowth {"inputPath":"/seldon-models","outp
 Example job execution
 
 {% highlight bash %}
-SELDON_VERSION=0.94
+SELDON_VERSION=0.95
 SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
 SPARK_HOME=/opt/spark
