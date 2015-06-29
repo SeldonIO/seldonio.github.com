@@ -292,6 +292,8 @@ Parameters
   * if dimension > 0 filters recommendations on a specific item category
 * dimensions (optional) comma separated int
   * filter on multiple dimensions, inclusive or
+* sort (optional) comma separated item ids. 
+  * Seldon will score only the items supplied and return in order of interest for the user
 * keyword (optional) string comma separated containing the keywords for the search
 
 Example

@@ -64,12 +64,13 @@ Input
 
 * consumer_key 
 * user : user id of current user 
-* item : currently viewed item id
-* limit :  max recommended items to return
-* dimension : dimension to use (e.g., just sports articles) 
-* dimensions : muliple dimensions to use (e.g., just news or opinion articles) 
+* item : (optional) currently viewed item id
+* limit :  (optional) max recommended items to return
+* dimension : (optional) dimension to use (e.g., just sports articles) 
+* dimensions : (optional) muliple dimensions to use (e.g., just news or opinion articles) 
+* sort : (optional) comma separated list of item ids. Seldon will sort these into order of interest for the user
 * attributes : fields to return for each recommended item
-* algorithms : override the default algorithms with specific ones
+* algorithms : (optional) override the default algorithms with specific ones
 * jsonpCallback : jsonp callback
 
 Example
