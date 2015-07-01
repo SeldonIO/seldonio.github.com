@@ -70,9 +70,8 @@ SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
 DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
 INPUT_DATE_STRING=${DATE_YESTERDAY}
 JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
-SPARK_HOME=/opt/spark
 
-INPUT_DIR=~/seldon-logs
+INPUT_DIR=${TOMCAT_HOME}/logs/fluentd
 OUTPUT_DIR=~/seldon-models
 
 ${SPARK_HOME}/bin/spark-submit \
