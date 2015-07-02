@@ -7,6 +7,16 @@ title: Seldon Logging
 
 The Seldon server generates logs on disk in response to handling requests on the rest api. Some of the logs are used for monitoring the inner workings of the server, whilst others are used as a source of data for further processing.
 
+##Server Logging
+
+Once the server is started, it will start logging to the following file:
+
+{% highlight bash %}
+${TOMCAT_HOME}/logs/seldon-server/base/api.log
+{% endhighlight %}
+
+This log is useful for monitoring both startup messages and api usage messages.
+
 ##Actions Logging
 
 Actions are logged by the server in response to processing calls received on the following endpoints:
