@@ -22,12 +22,13 @@ The set of available zookeeper configurations settings are shown below.
  * [Airbrake](#airbrake)
  
 ### Memcached Settings<a name="memcached"></a>
-Seldon uses Memcached for caching data. The configuration is set in "**/config/memcached_servers**" and can be a single host:port setting or a comma separated list of host:port pairs.
-eg.
+Seldon uses Memcached for caching data. The configuration is set in "**/config/memcached**" example:
 
 {% highlight html %}
-192.168.59.103:11211,192.168.59.104:11211
+{"servers":"192.168.59.103:11211,192.168.59.104:11211","numClients":1}
 {% endhighlight %}
+
+Seldon uses the [spymemcached](https://github.com/couchbase/spymemcached) library which has a single I/O thread to each server. It may be useful in high volume settings to increase the number of spymemcached clients. Use the "numClients" feature for this.
 
 ### Database Pool Settings<a name="dbcp"></a>
 Seldon needs access to a JDBC compliant datastore that holds the client databases as well as a special "api" database that contains the consumer keys and secrets for clients. An [Apache DBCP2](http://commons.apache.org/proper/commons-dbcp/) database pool is configured for each datastore. The configuration is set in `/config/dbcp', an example is show below:
