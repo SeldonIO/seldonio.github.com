@@ -154,3 +154,10 @@ The first two columns should be obvious. 'value' is a field that represents the 
 
 The actions are not added to the DB, but they require transformation so that the Spark jobs can consume them. Run the `create_actions_json.py` script in the `seldon-server/scripts` folder to create this.
 
+Note: When using the `create_actions_json.py`, it`s not necessary to run the group actions job - however the  the output file needs to in the right place for the other offline jobs to find it.
+{% highlight bash %}
+${SELDON_MODELS_DIR}/${CLIENT}/actions/${DAY}/actions.json
+eg.
+~/seldon-models/movielens/actions/1/actions.json
+{% endhighlight %}
+
