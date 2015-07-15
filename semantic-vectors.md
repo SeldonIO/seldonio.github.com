@@ -61,4 +61,4 @@ To run the modelling you should run the image with appropriate networking, in th
 `docker run --name "semantic vectors modeling" -rm  --net="host" seldonio/semantic-vectors-for-seldon bash -c "./semvec/semantic-vectors.py --client client1 --zookeeper 127.0.0.1:2181 "`
 
 
-You can no utilize a [runtime recommendation algorithm](runtime-recommendation.html#content-based) with this model.
+You can now utilize a [runtime recommendation algorithm](runtime-recommendation.html#content-based) with this model.
