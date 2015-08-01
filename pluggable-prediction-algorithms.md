@@ -22,7 +22,7 @@ You can utilize any method to create the offline model. You can use the seldon '
 
 ## Online Predictive Scoring<a name="online-predictive-scoring"></a>
 
-For the online predictive scoring of an external algoithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use Vowpall Wabbit as the online predictive scorer.
+For the online predictive scoring of an external algorithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use Vowpall Wabbit as the online predictive scorer.
 
 ### Microservices REST API<a name="prediction-internal-rest-api"></a>
 
@@ -103,7 +103,7 @@ To use this predictor, follow these steps:
 
 1. Copy or edit the "**example_predict.py**" script, and customize the "**get_predictions**" function and if needed the "**init**" function.
 
-    The paramters to the "**get_predictions**" function are as follows:
+    The parameters to the "**get_predictions**" function are as follows:
 
     * **client** : a string for the client
     * **json** : a dictionary representation of the json input
@@ -114,7 +114,7 @@ To use this predictor, follow these steps:
 
     * **config** : dictionary from the load of "**server_config.py**", see below
 
-    Add to the init function anything your preditive scoring algorithm needs to setup. For example, the location of a model may be taken from the config and loaded into memory.
+    Add to the init function anything your predictive scoring algorithm needs to setup. For example, the location of a model may be taken from the config and loaded into memory.
 
 1. Modify the script "**server_config.py**".  
     Example:
@@ -135,7 +135,7 @@ To use this predictor, follow these steps:
 
 ###  External Python Prediction Server using Vowpal Wabbit<a name="prediction-python-vw"></a>
 
-We provide an example interface to the popular online machine learning tool [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) to serve predictions. We create a very simple model from the [Iris dataset](https://archive.ics.uci.edu/ml/datasets/Iris) and get vw to serve this using its daemon functionality. We extend the python template for the Seldon micro-service prediction API to connect to the vw daemon to get recommendations.
+We provide an example interface to the popular online machine learning tool [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) to serve predictions. We create a very simple model from the [Iris dataset](https://archive.ics.uci.edu/ml/datasets/Iris) and get VW to serve this using its daemon functionality. We extend the python template for the Seldon micro-service prediction API to connect to the VW daemon to get recommendations.
 
 
 
@@ -146,18 +146,18 @@ To use this predictor, follow these steps:
         pip install Flask
         pip install gunicorn
 
-1. Download and install [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) and ensure vw is in your PATH
+1. Download and install [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) and ensure VW is in your PATH
 
 1. Clone the Seldon Server project.
 
         git clone https://github.com/SeldonIO/seldon-server.git
 
-1. Create the vw model and start a daemon
+1. Create the VW model and start a daemon
 
         cd seldon-server/external/predictor/python/vw/iris
         make daemon
 
-1. Navigate to python server folder for vw
+1. Navigate to python server folder for VW
 
         cd seldon-server/external/predictor/python/vw
 
@@ -174,7 +174,7 @@ To use this predictor, follow these steps:
 
         curl 'http://127.0.0.1:5000/predict?json=\{"f1":1.6,"f2":2.7,"f3":5.3,"f4":1.9\}'
 
-You should see a reponse like:
+You should see a response like:
 
 {% highlight json %}
 {

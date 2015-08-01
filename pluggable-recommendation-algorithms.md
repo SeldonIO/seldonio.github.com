@@ -20,7 +20,7 @@ You can utilize any method to create the offline model. For recommendation model
 If you are building recommendation models using Spark then a good place to start is to look at the code for the existing Spark jobs in [github](https://github.com/SeldonIO/seldon-server/offline-jobs/spark/).
 
 ## Online Recommender<a name="online-recommendation-model"></a>
-For the online recommendation component of an external algoithm we provide a REST API definition that any external recommendation algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender.
+For the online recommendation component of an external algorithm we provide a REST API definition that any external recommendation algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender.
 
 ### Microservices REST API<a name="recommender-internal-rest-api"></a>
 
@@ -62,7 +62,7 @@ GET /recommend?client=test1&user_id=1&recent_interactions=16,260&exclusion_items
 
 
 ### Zookeeper configuration<a name="recommender-zookeeper-conf"></a>
-When you have an external recommendation server running that supports the internal REST API you can activtae this new recommender inside Seldon for a particular client by specifying an **externalItemRecommendationAlgorithm** for the client in its **algs** node, for example to specify an external algorithm running at ```http://127.0.0.1:5000/recommend``` for client **client1** which uses the most recent 10000 items to score you would set the node ```/all_clients/client1/algs``` to 
+When you have an external recommendation server running that supports the internal REST API you can activate this new recommender inside Seldon for a particular client by specifying an **externalItemRecommendationAlgorithm** for the client in its **algs** node, for example to specify an external algorithm running at ```http://127.0.0.1:5000/recommend``` for client **client1** which uses the most recent 10000 items to score you would set the node ```/all_clients/client1/algs``` to 
 
 {% highlight bash %}
 {
