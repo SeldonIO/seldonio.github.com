@@ -9,7 +9,7 @@ Feature pipelines allow you to define a repeatable process to transform a set of
 Seldon feature pipelines are presently available in python. We plan to provide Spark based pipelines in the future.
 
 # Python modules
-Seldon provides a set of [python modules](python-modules.html) to help construct feature pipelines for use inside Seldon.
+Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon.
 
 A pipeline consists of a series of Feature_Transforms. The currently available transforms are:
 

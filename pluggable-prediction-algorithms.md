@@ -3,14 +3,18 @@ layout: default
 title: Pluggable Prediction Algorithms
 ---
 
-# Pluggable Prediction Algorithms
+# Microservice Runtime Predictive Services
 
-Pluggable algorithms allow you to add any custom algorithm into Seldon rather than being limited to the ones available in the existing code. For example, you might want to use Vowpal Wabbit to build a model and provide predictions from that within the Seldon ecosystem. The following sections describe the various components:
+Microservice runtime prediction services allow you to add any custom predictive scorer into Seldon rather than being limited to the ones available in the core Java server.  The following sections describe the various components:
 
  * [Offline model creation](#offline-model)
  * [Online external prediction](#online-predictive-scoring)
    * [Microservices REST API](#prediction-internal-rest-api)
    * [Zookeeper configuration](#prediction-zookeeper-conf)
+ * [Prepackaged Microservices](#prepackaged)
+   * [Vowpal Wabbit predictive scorer](#prepackaged-vw)
+   * [XGBoost predictive scorer](#prepackaged-xgboost)
+ * [Creating your own Predictive Scorer](#create-your-own)
    * [Example python predictive scoring template](#prediction-python-template)
    * [Example python predictive scoring with Vowpal Wabbit](#prediction-python-vw)
 
@@ -82,7 +86,120 @@ There are two config options that should be set:
  * io.seldon.algorithm.external.name : the name of the algorithm (will appear in the logs)
 
 
-### External Python Prediction Template<a name="prediction-python-template"></a>
+
+# Prepackaged Predictive microservices<a name="prepackaged"></a>
+Seldon provides prepackaged microservices using our [python package](python-package.html). At present this allows one to build VW and XGBoost models and runtime predictive scorers.
+
+## Vowpal Wabbit Predictive Scorer<a name="prepackaged-vw"></a>
+Create a Vowpal Wabbit runtime scorer that will run a feature extraction pipeline and perform the predictions on a loaded model.
+
+`docker pull seldonio/vw_runtime`
+
+This image contains a python script `/vw/vw_runtime/setup.py` which download the models a initialises the config needed for the server. Then a vw daemon is started and a HTTP server to server requests. The setup entry script has the following arguments:
+
+ * **--client** : client
+ * **--inputPath** : input base folder to find features data
+ * **--day** : days to get features data for
+ * **--zkHosts** : zookeeper
+ * **--awsKey** : aws key - needed if input or output is on AWS and no IAM
+ * **--awsSecret** : aws secret - needed if input or output on AWS  and no IAM
+ * **--namespaces** :  JSON providing per feature namespace mapping - default is no namespaces
+ * **--include** : include these features
+ * **--exclude** : exclude these features
+
+An example using the iris data set can be found in `external/predictor/python/docker/examples/iris`. Run `make vw_runtime` to run all tasks including model building and feature extraction and start a vw microservice to server requests. The command to run the vw microservice runtime scorer is shown below.
+
+{% highlight bash %}
+docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
+{% endhighlight %}
+
+Run, `make test_vw_server` to test the server which has ports exposed on your localhost at port 5000. This will run:
+
+{% highlight bash %}
+curl -G  "http://127.0.0.1:5000/predict?client=iris" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
+{% endhighlight %}
+
+The response should be:
+
+{% highlight json %}
+{
+  "predictions": [
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-virginica", 
+      "prediction": 0.1820051759757194
+    }, 
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-setosa", 
+      "prediction": 0.5443882835483635
+    }, 
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-versicolor", 
+      "prediction": 0.27360654047591704
+    }
+  ]
+}
+{% endhighlight %}
+
+
+## XGBoost Predictive Scorer<a name="prepackaged-xgboost"></a>
+Create an XGBoost runtime scorer that will run a feature extraction pipeline and perform the predictions on a loaded model.
+
+`docker pull seldonio/xgboost_runtime`
+
+This image contains a python script `/vw/vw_runtime/setup.py` which download the models a initialises the config needed for the server. Then an HTTP server to server requests is started. The setup entry script has the following arguments:
+
+ * **--client** : client
+ * **--inputPath** : input base folder to find features data
+ * **--day** : days to get features data for
+ * **--zkHosts** : zookeeper
+ * **--awsKey** : aws key - needed if input or output is on AWS and no IAM
+ * **--awsSecret** : aws secret - needed if input or output on AWS  and no IAM
+ * **--svmFeatures** : the JSON feature containing the svm features
+
+An example using the iris data set can be found in `external/predictor/python/docker/examples/iris`. Run `make xgboost_runtime` to run all tasks including model building and feature extraction and start a xgboost microservice to server requests. The command to run the xgboost microservice runtime scorer is shown below.
+
+{% highlight bash %}
+docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
+{% endhighlight %}
+
+Run, `make test_xgboost_server` to test the server which has ports exposed on your localhost at port 5001. This will run:
+
+{% highlight bash %}
+curl -G  "http://127.0.0.1:5001/predict?client=iris" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
+{% endhighlight %}
+
+The response should be:
+
+{% highlight json %}
+{
+  "predictions": [
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-virginica", 
+      "prediction": 0.1725599765777588
+    }, 
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-setosa", 
+      "prediction": 0.4815942049026489
+    }, 
+    {
+      "confidence": 1.0, 
+      "predictedClass": "Iris-versicolor", 
+      "prediction": 0.17391864955425262
+    }
+  ]
+}
+{% endhighlight %}
+
+
+# Creating your own microservice predicitve scorer<a name="create-your-own"></a>
+You can use the existing prepackaged python Docker predictive scorers as a base to make a new predictve scorer. Alternatively, you can follow the steps below which describe a simple predictive scorer that does not transform the input features using a feature extraction pipeline.
+
+## External Python Prediction Template<a name="prediction-python-template"></a>
 
 We have provided a template for writing an external predictive scorer in python.
 
