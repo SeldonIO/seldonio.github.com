@@ -5,142 +5,71 @@ title: Offline Prediction Model Creation
 
 # Offline Prediction Model Creation
 
-Seldon currently supports models created by [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki). Simple Vowpal Wabbit classification models can be runtime scored inside the [seldon server](runtime-prediction.html) while more complex models can be accessed via our [micro-service API](pluggable-prediction-algorithms.html#prediction-python-vw).
+Seldon currently provide fully integrated classification models built using:
 
+ * [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki). 
+     * Simple Vowpal Wabbit classification models can be runtime scored inside the [seldon server](runtime-prediction.html) while more complex models can be accessed via our [micro-service API](pluggable-prediction-algorithms.html#prediction-python-vw).
+ * [XGBoost](https://github.com/dmlc/xgboost)
 
-## Create a Vowpal Wabbit model
-Create a Vowpal Wabbit model from features. We provide a Docker container to run the modelling:
+These example wrappers can be used as examples to connect other machine learning algorithms to Seldon.
 
-`docker pull seldonio/vw`
+## Create a Vowpal Wabbit Classifier
+Create a Vowpal Wabbit classification model from features. We provide a Docker container to run the modelling:
 
-### Configuration
-Set the configuration in zookeeper at node :
+`docker pull seldonio/vw_train`
 
-{% highlight bash %}
-/all_clients/<client>/offline/vw
-{% endhighlight %}
+This image contains a python script `/vw/vw_train/vw_train.py` which provides a light wrapper to the vw module in the Seldon [python modules](python-modules.html). Its takes the following arguments:
 
-The algorithn specific options are:
+ * **--client** : client
+ * **--zkHosts** : zookeeper
+ * **--inputPath** : input base folder to find features data
+ * **--outputPath** : output folder to store model
+ * **--day** : days to get features data for
+ * **--activate** : activate model in zookeeper
+ * **--awsKey** : aws key - needed if input or output is on AWS and no IAM
+ * **--awsSecret** : aws secret - needed if input or output on AWS  and no IAM
+ * **--vwArgs** : vw training args
+ * **--namespaces** :  JSON providing per feature namespace mapping - default is no namespaces
+ * **--include** : include these features
+ * **--exclude** : exclude these features
+ * **--target** : target feature (should contain integer ids in range 1..Num Classes
+ * **--target_readable** : the feature containing the human readable version of target
+ * **--train_filename** : convert data to vw training format and save to file rather than directly train using wabbit_wappa
+ * **--dataType** : json or csv (default json)
 
- * **vwArgs** : the command line options for vw. The job uses wabbit_wappa internally which itself requires "--save_resume --predictions /dev/stdout --quiet" so you should not add these.
- * **features** : Provides a key on how to handle each feature in the input JSON. By default each feature will be converted to feature:value for if the value can be interpreted as a number, otherwise it will be treated as a categorical value and added as feature_value. Two explicit options are presently handled
-      * **split** : split the feature value and add each as a separate categorical feature in vw
-      * **label** : the specified feature is the target feature, Its value should be an integer.
- * **namespaces** : Specify which namespace each feature should be put in. By default all features are added to the default vw namespace.
+The final input and output folders utilize the client name and day to construct the final path. See the [prediction overview](prediction-overview.html) for a summary.
 
-An example is: 
-{% highlight json %}
-{"features":{"f1":"split","t":"label"},"namespaces":{"f1":"words","f2":"f"}}
-{% endhighlight %}
-For an input:
-{% highlight json %}
-{"f1":"the cat sat on the mat","f2":2.1,"t":1}
-{% endhighlight %}
-would create the vw line 
-{% highlight bash %}
-1 words| the cat sat on the mat f| f2:2.1
-{% endhighlight %}
-
-
-The data parameters are:
-
- * **client** : the client name 
- * **inputPath** : the base folder for features data
- * **outputPath** : the base folder of the output model
- * **day** : the unix day 
-
-The data will be searched for in:
-
+A fully worked example using a pipeline for the Iris data set is contained within the code at `external/predictor/python/docker/examples/iris`. This contains an example to use vowpal wabbit to build a model with the following command using docker:
 
 {% highlight bash %}
-<inputPath>/<client>/features/<day>
+docker run --rm -t -v ${PWD}/data:/data seldonio/vw_train bash -c "cd /vw/vw_train ; python vw_train.py --client iris --day 1 --inputPath /data/ --outputPath /data/ --vwArgs '--passes 3 --oaa 3' --target nameId --include f1 f2 f3 f4 --train_filename train.vw --target_readable name"
 {% endhighlight %}
 
-The model will be output to
+
+## Create an XGBoost Classifier
+Create an XGBoost classification model from features. We provide a Docker container to run the modelling:
+
+`docker pull seldonio/xgboost_train`
+
+This image contains a python script `/vw/xgboost_train/xgboost_train.py` which provides a light wrapper to the xgboost module in the Seldon [python modules](python-modules.html). Its takes the following arguments:
+
+ * **--client** : client
+ * **--zkHosts** : zookeeper
+ * **--inputPath** : input base folder to find features data
+ * **--outputPath** : output folder to store model
+ * **--day** : days to get features data for
+ * **--activate** : activate model in zookeeper
+ * **--awsKey** : aws key - needed if input or output is on AWS and no IAM
+ * **--awsSecret** : aws secret - needed if input or output on AWS  and no IAM
+ * **--svmFeatures** : the JSON feature containing the svm features
+ * **--target** : target feature (should contain integer ids in range 1..Num Classes
+ * **--target_readable** : the feature containing the human readable version of target
+
+The final input and output folders utilize the client name and day to construct the final path. See the [prediction overview](prediction-overview.html) for a summary.
+
+A fully worked example using a pipeline for the Iris data set is contained within the code at `external/predictor/python/docker/examples/iris`. This contains an example to use XGBoost to build a model with the following command using docker:
 
 {% highlight bash %}
-<outputPath>/<client>/vw/<day>
-{% endhighlight %}
-
-
-Example confguration:
-
-{% highlight json %}
-{
-  "inputPath":"/seldon-models",
-  "outputPath":"/seldon-models",
-  "day" : 1,
-  "vwArgs" : "--oaa 3",
-  "features":{"f1":"split","t":"label"},
-  "namespaces":{"f1":"words","f2":"f"}}
-}
-{% endhighlight %}
-
-
-## Run Modeling
-
-To run the modelling you should run the image with appropriate networking, in this case we use `--net="host"` to use the host network. In the example below zookeeper is running on the local host. 
-
-`docker run --name "vw modeling" -rm  --net="host" seldonio/vw bash -c "/scripts/vw.py --client client1 --zkHosts 127.0.0.1:2181"`
-
-
-## Create VW Features from JSON Events
-Seldon injests data via the /events endpoints in its API. These events are stored as JSON. A simple Spark job is provided to create a Vowpal Wabbit training file from JSON events.
-
-## Configuration
-Set the configuration in zookeeper at node :
-
-{% highlight bash %}
-/all_clients/<client>/offline/vwfeatures
-{% endhighlight %}
-
-The algorithm specific parameters are:
-
- * **targetFeature** : the JSON feature to use as the target
- * **excludedFeatures** : features to ignore from the JSON
- * **oaa** :  whether to create a "one-against-all" model
-
-The data parameters are:
- 
- * **inputPath** : location of the actions data
- * **outputPath** : location of the output vw training file and class id map
-
-Example confguration:
-
-{% highlight json %}
-{
-  "inputPath":"/seldon-models",
-  "outputPath":"/seldon-models",
-  "startDay" : 1,
-  "days" : 1,
-  "targetFeature" : "iris-name",
-  "excludedFeatures" : "client,timestamp"
-  "oaa" : true
-}
-{% endhighlight %}
-
-An example using zookeeper zkCli to create a new confguration for client "client1" is shown below:
-
-{% highlight bash %}
-create /all_clients/client1 ""
-create /all_clients/client1/offline ""
-create /all_clients/client1/offline/vwfeatures {"inputPath":"/seldon-models","outputPath":"/seldon-models","startDay":1,"days":1,"targetFeature":"iris-name","excludedFeatures":"client,timestamp","oaa":true,"local":true}
-{% endhighlight %}
-
-## Run Modeling
-
-{% highlight bash %}
-SELDON_VERSION=0.95
-SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
-SPARK_HOME=/opt/spark
-BASE_DIR=~/seldon-models
-
-${SPARK_HOME}/bin/spark-submit \
-    --class "io.seldon.spark.vw.CreateVwFeatures" \
-    --master local[1] \
-    ${JAR_FILE_PATH} \
-    --client ${CLIENT} \
-    --zookeeper 127.0.0.1 
+docker run --rm -t -v ${PWD}/data:/data seldonio/xgboost_train bash -c  "cd /xgboost/xgboost_train ; python xgboost_train.py --client iris --inputPath /data --outputPath /data --day 1 --target nameId --svmFeatures svmfeatures --target_readable name"
 {% endhighlight %}
 

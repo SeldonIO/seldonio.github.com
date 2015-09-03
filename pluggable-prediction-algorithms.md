@@ -22,7 +22,7 @@ You can utilize any method to create the offline model. You can use the seldon '
 
 ## Online Predictive Scoring<a name="online-predictive-scoring"></a>
 
-For the online predictive scoring of an external algoithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use Vowpall Wabbit as the online predictive scorer.
+For the online predictive scoring of an external algoithm we provide a REST API definition that any external predictive scoring algorithm must conform to. You would create a component that satisfies this REST API and publish its endpoint within the Seldon zookeeper configuration for the client you want to have use it. These steps are explained below. Finally, we have provided a python reference template that satisfies this REST API that you can use to write your own external recommender along with an example interface to use Vowpal Wabbit as the online predictive scorer.
 
 ### Microservices REST API<a name="prediction-internal-rest-api"></a>
 

@@ -3,19 +3,17 @@ layout: default
 title: OAuth REST API
 ---
 
-# Seldon REST API
+# Seldon REST API for Content Recommendation
 
-The Seldon REST API interacts with three main concepts:
+The Seldon Recommendation REST API interacts with three main concepts:
 
 * [Items](#items) : Pieces of content, e.g., articles, products, game items.
 * [Users](#users) : Users of a service.
 * [Actions](#actions) : Triple of actions done by users on items, e.g., read an article, purchase a product or pick up a game item.
-* [Events](#events) : Arbitrary JSON representing some event from which we want to create a prediction model 
 
-Use the relevant API endpoint to provide predictions, presently:
+Use the relevant API endpoint to provide content recommendations
 
 * [Item Recommendations](#recommendations)
-* [Predcitive Scoring](#predictive-scoring)
 
 An API method can be called with the following template
 {% highlight http %}
@@ -247,31 +245,7 @@ The JSON to  post a review action performed by the user “xxx” on the item �
 }
 {% endhighlight %}
 
-### Events <a name="events"></a>
-Events allow input into Seldon of arbitrary events from which we wish to create a predictive model. 
-
-{% highlight http %}
-POST     /events
-{% endhighlight %}
-
-Example
-
-The service injects house price data
-
-{% highlight json %}
-{
-"num_bedrooms"    :        2,
-"detached" 	  : true,
-"postcode"    :        "SW1",
-"price" : 400000
-}
-{% endhighlight %}
-
-## API Personalisation Endpoints 
-
-This section describes the endpoints which provide personalisation and recommendation functionality derived from the user, item, action data that has been POSTed to the API.
-
-### Recommended Items <a name="recommendations"></a>
+## Recommend Items <a name="recommendations"></a>
 
 A list of recommended items can be retrieved for a user. The list size can be specified with a limit. The filter type, for selecting only a specific item type, or dimension, for selecting items in a specific category can be applied.
 If the service has provided textual content for the items, a personalized search can be performed specifying the keyword parameter. The relevant items matching the keywords are retrieved and reordered for the specified user. 
@@ -322,40 +296,6 @@ Output
 {% endhighlight %}	
 
 where list is an array containing a list of items. For each item the pos specify the rank in the recommendation list
-
-## Preditive Scoring <a name="predictive-scoring"></a>
-
-This section describes the predictive scoring endpoints derived from the models created from the data sent to the events endpoint.
-
-### Prediction
-
-{% highlight http %}
-POST     /predict
-{% endhighlight %}	
-
-The endpoint should be passed JSON containing features from which a prediction is to be made.
-
-Example
-
-A housing price predcitor based on features:
-
-{% highlight json %}
-{
-"num_bedrooms"    :        2,
-"detached" 	  : true,
-"postcode"    :        "SW1"
-}
-{% endhighlight %}
-
-Output
-
-{% highlight json %}
-{"size":1,"list":
-	[
-	{"prediction":400000,"predictedClass":"1","confidence":1.0}
-	]
-}
-{% endhighlight %}
 
 ## Appendix
 

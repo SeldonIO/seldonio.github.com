@@ -9,13 +9,8 @@ The Seldon JavaScript API provides the simplest method of integrating Seldon ont
 
 * [User Action](#actions) : Called from each web page where a user performs an action, e.g. loads the web page on a news site.
 * [User Recommendation](#recommendations) : Called to get recommedations for the current user to display on the page, e.g. to fill a recommendations box on a news web site with articles the user may be interested in reading. 
-* [Events](#events) : Called to send to Seldon arbitray event data to be used to build a predictive model
-* [Prediction](#predictive-scoring) : do a real time prediction based on some features
 
 For details on the overall concepts of users, items and actions see the [Oauth API](api-oauth.html)
-
-## Self contained JS Library
-Seldon has a self contained drop in library which contains these calls which it will be releasing soon.
 
 ## User Action <a name="actions"></a>
 
@@ -113,69 +108,3 @@ j({
 {% endhighlight %}	
 
 
-## Events <a name="events"></a>
-An endpoint to allow the injestion of arbitrary JSON event data.
-
-{% highlight http %}
-GET     /js/event/new
-{% endhighlight %}
-
-Input
-
-* consumer_key 
-* json : the url encoded JSON data (if provided this will be assumed to contain the event data)
-* jsonpCallback : jsonp callback
-
-If a json parameter is not provied then all parameters will be marshalled into a JSON event other than the reserved parameters: consumer_key, consumer_secret, oauth_token, client and jsonpcallback
-
-If a timestamp field is not provided one will be added.
-
-Example
-
-{% highlight http %}
-http://<HOST>/js/event/new?consumer_key=XYZ&user=1&num_rooms=4&postcode=sw1&price=400000&jsonpCallback=j
-{% endhighlight %}
-
-Assuming the consumer key matches client "client1" this would create an event object similar to below:
-
-{% highlight json %}
-{
-	"num_rooms":"4",
-	"postcode":"sw1",
-	"price":"400000",
-	"client":"client1",
-	"timestamp":1421336333669
-}
-{% endhighlight %}	
-
-## Predict <a name="predictive-scoring"></a>
-
-{% highlight http %}
-GET     /js/predict
-{% endhighlight %}
-
-Input
-
-* consumer_key 
-* json : the url encoded JSON data (if provided this will be assumed to contain the event data)
-* jsonpCallback : jsonp callback
-
-If a json parameter is not provied then all parameters will be marshalled into a JSON event other than the reserved parameters: consumer_key, consumer_secret, oauth_token, client and jsonpcallback
-
-If a timestamp field is not provided one will be added.
-
-Example
-
-{% highlight http %}
-http://<HOST>/js/predict?consumer_key=XYZ&user=1&num_rooms=4&postcode=sw1&jsonpCallback=j
-{% endhighlight %}
-
-A response maybe like the following where the "price" field is predicted:
-
-{% highlight json %}
-{"size":1,"list":
-	[
-	{"prediction":400000,"predictedClass":"1","confidence":1.0}
-	]
-}
-{% endhighlight %}
