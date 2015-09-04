@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.pipeline.pipelines &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>seldon.pipeline.pipelines</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for seldon.pipeline.pipelines</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">seldon.fileutil</span> <span class="kn">as</span> <span class="nn">fu</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="kn">import</span> <span class="n">joblib</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shutil</span> 
+<span class="kn">import</span> <span class="nn">unicodecsv</span>
+
+<div class="viewcode-block" id="Feature_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform">[docs]</a><span class="k">class</span> <span class="nc">Feature_transform</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base feature transformation class with method defaults</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<div class="viewcode-block" id="Feature_transform.set_pipeline_pos"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_pipeline_pos">[docs]</a>    <span class="k">def</span> <span class="nf">set_pipeline_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Store position in pipeline for this transformation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.get_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_models">[docs]</a>    <span class="k">def</span> <span class="nf">get_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the input and output features</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.set_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_models">[docs]</a>    <span class="k">def</span> <span class="nf">set_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">models</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set the input and output features and return rest of models info to caller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">models</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.get_added_features"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_added_features">[docs]</a>    <span class="k">def</span> <span class="nf">get_added_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the feature added by this transformation</span>
+
+<span class="sd">        This is used for CSV files where we need to know CSV column names at start</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+            
+</div>
+<div class="viewcode-block" id="Feature_transform.set_input_feature"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_input_feature">[docs]</a>    <span class="k">def</span> <span class="nf">set_input_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setter for input feature</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span> <span class="o">=</span> <span class="n">feature</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.set_output_feature"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_output_feature">[docs]</a>    <span class="k">def</span> <span class="nf">set_output_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; setter for output feature</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span> <span class="o">=</span> <span class="n">feature</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">objs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;fir method by default does nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;transform by default does nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">obj</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.set_logging"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_logging">[docs]</a>    <span class="k">def</span> <span class="nf">set_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">logger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setter for logging </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+</div>
+<div class="viewcode-block" id="Feature_transform.get_log_prefix"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_log_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">get_log_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get a useful description for logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__module__</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="o">+</span><span class="s">&quot; &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="o">+</span><span class="s">&quot;-&gt;&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span>
+</div></div>
+<div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A pipeline of feature transformation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_folders (list): list of folders containing feature files (or single file for CSV)</span>
+
+<span class="sd">        output_folder [Optional(str)]: output folder to store the result of the pipeline</span>
+
+<span class="sd">        models_folder [Optional(str)]: folder to store the feature transformation models needed to rerun the pipeline</span>
+
+<span class="sd">        local_models_folder (str): local tmp folder to store models while processing</span>
+
+<span class="sd">        local_data_folder (str): local tmp data folder to store data while processing</span>
+
+<span class="sd">        aws_key [Optional(str)]: aws key (for S3 access)</span>
+
+<span class="sd">        aws_secret [Optional(str)]: aws secret (for S3 access)</span>
+
+<span class="sd">        data_type (str): json or csv</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input_folders</span><span class="o">=</span><span class="p">[],</span><span class="n">output_folder</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">models_folder</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">local_models_folder</span><span class="o">=</span><span class="s">&quot;./models&quot;</span><span class="p">,</span><span class="n">local_data_folder</span><span class="o">=</span><span class="s">&quot;./data&quot;</span><span class="p">,</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">data_type</span><span class="o">=</span><span class="s">&#39;json&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models_folder</span> <span class="o">=</span> <span class="n">models_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_folders</span> <span class="o">=</span> <span class="n">input_folders</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span> <span class="o">=</span> <span class="n">local_models_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_data_folder</span> <span class="o">=</span> <span class="n">local_data_folder</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_data_folder</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_data_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fu</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">FileUtil</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">aws_key</span><span class="p">,</span><span class="n">secret</span><span class="o">=</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(asctime)s</span><span class="s"> - </span><span class="si">%(name)s</span><span class="s"> - </span><span class="si">%(levelname)s</span><span class="s"> - </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_data_folder</span> <span class="o">+</span> <span class="s">&quot;/current&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_data_folder</span> <span class="o">+</span> <span class="s">&quot;/next&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">data_type</span>
+
+<div class="viewcode-block" id="Pipeline.full_class_name"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.full_class_name">[docs]</a>    <span class="k">def</span> <span class="nf">full_class_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">o</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get name of class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            o (object): class instance to get name for</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__module__</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="n">o</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+</div>
+<div class="viewcode-block" id="Pipeline.get_class"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.get_class">[docs]</a>    <span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kls</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get a named class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kls (str): class name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">kls</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="s">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span> <span class="n">module</span> <span class="p">)</span>
+        <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span>            
+        <span class="k">return</span> <span class="n">m</span>
+</div>
+<div class="viewcode-block" id="Pipeline.save_pipeline"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.save_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">save_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;save a pipeline</span>
+
+<span class="sd">        store ordered list of class names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="o">+</span><span class="s">&quot;/pipeline.txt&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_class_name</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Pipeline.load_pipeline"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.load_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">load_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load a pipeline</span>
+
+<span class="sd">        create an instance of each class specified in pipeline defns file and add to pipeline</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="o">+</span><span class="s">&quot;/pipeline.txt&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="n">cl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">cl</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Pipeline.upload_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.upload_models">[docs]</a>    <span class="k">def</span> <span class="nf">upload_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;upload models from local folder to final models folder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">models_folder</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fu</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">models_folder</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.download_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.download_models">[docs]</a>    <span class="k">def</span> <span class="nf">download_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;download models to local folder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">models_folder</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fu</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models_folder</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.store_features"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.store_features">[docs]</a>    <span class="k">def</span> <span class="nf">store_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;store features in final location folder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fu</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">output_folder</span><span class="o">+</span><span class="s">&quot;/features&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.store_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.store_models">[docs]</a>    <span class="k">def</span> <span class="nf">store_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;for each transformation in pipeline get models and pickle them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="p">)</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">models</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="Pipeline.load_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.load_models">[docs]</a>    <span class="k">def</span> <span class="nf">load_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;local models for each transformation in pipelie from pickle file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_models_folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">set_models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="Pipeline.add"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature_transform</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add a transformation to a pipeline</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            feature_transform (object): instance of feature transform class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_transform</span><span class="p">)</span>
+        <span class="n">feature_transform</span><span class="o">.</span><span class="n">set_pipeline_pos</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">))</span>
+        <span class="n">feature_transform</span><span class="o">.</span><span class="n">set_logging</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.save_features_local"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.save_features_local">[docs]</a>    <span class="k">def</span> <span class="nf">save_features_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;save data line to local features file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line (str): features data line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="Pipeline.getFeatures"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.getFeatures">[docs]</a>    <span class="k">def</span> <span class="nf">getFeatures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">locations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get features from folders and store locally the data</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            locations (list): list of folders</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;streaming features from&quot;</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span><span class="s">&quot; to &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fu</span><span class="o">.</span><span class="n">stream_multi</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">save_features_local</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Pipeline.transform_init"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform_init">[docs]</a>    <span class="k">def</span> <span class="nf">transform_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;prepare for transform</span>
+
+<span class="sd">        download models locally, load the pipeline and set its models</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">download_models</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_pipeline</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_models</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Pipeline.transform_json"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform_json">[docs]</a>    <span class="k">def</span> <span class="nf">transform_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;transform a features dictionary row</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f (dict): features to transform</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">ft</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span>
+</div>
+<div class="viewcode-block" id="Pipeline.get_csv_fieldnames"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.get_csv_fieldnames">[docs]</a>    <span class="k">def</span> <span class="nf">get_csv_fieldnames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ds</span><span class="p">,</span><span class="n">ft</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the fieldnames for csv output for thsi transform</span>
+
+<span class="sd">        union of added features from transform along with existing features</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ds (Dataset): dataset</span>
+<span class="sd">            ft (Feature_transform): feature transform</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fieldnames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ft</span><span class="o">.</span><span class="n">get_added_features</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+            <span class="n">fieldnames</span> <span class="o">=</span> <span class="n">fieldnames</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">break</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">fieldnames</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ds</span><span class="p">,</span><span class="n">ft</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;internal transform of dataset by a feature transform</span>
+
+<span class="sd">        Handles both csv and json data. Loads each into a dictionary to be transformed. Uses two files current and next, iterates over current and writes to next. Finally, swaps the two around ready for next transform.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            ds (Dataset): dataset</span>
+<span class="sd">            ft (Feature_transform): feature transform</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_dataset</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="s">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">csvwriter</span> <span class="o">=</span> <span class="n">unicodecsv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_file</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_csv_fieldnames</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="n">ft</span><span class="p">),</span> <span class="n">restval</span><span class="o">=</span><span class="s">&quot;NA&quot;</span><span class="p">)</span>
+            <span class="n">csvwriter</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+            <span class="n">jNew</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">jNew</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="s">&#39;csv&#39;</span><span class="p">:</span>
+                    <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">jNew</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">jStr</span> <span class="o">=</span>  <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jNew</span><span class="p">,</span><span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jStr</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_dataset</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pipeline.get_dataset"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.get_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get dataset based on type (csv or json)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;json&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonDataSet</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;csv&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CsvDataSet</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;apply all transforms in a pipeline</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_folders</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ft</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="n">ft</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Pipeline.fit_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;fit a pipeline and then apply its transforms</span>
+
+<span class="sd">        gets features, fits, transforms and stores results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_folders</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ft</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">)</span>
+            <span class="n">ft</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="n">ft</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_models</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_pipeline</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_models</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_features</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_dataset</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="JsonDataSet"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.JsonDataSet">[docs]</a><span class="k">class</span> <span class="nc">JsonDataSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a JSON dataset</span>
+<span class="sd">        </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): location of JSON file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span><span class="n">filename</span>
+ 
+<div class="viewcode-block" id="JsonDataSet.__iter__"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.JsonDataSet.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;iterate over a JSON dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">j</span>
+</div></div>
+<div class="viewcode-block" id="CsvDataSet"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.CsvDataSet">[docs]</a><span class="k">class</span> <span class="nc">CsvDataSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a CSV Dataset</span>
+<span class="sd">        </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): location of JSON file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span><span class="n">filename</span>
+ 
+<div class="viewcode-block" id="CsvDataSet.__iter__"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.pipelines.CsvDataSet.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;iterate over a CSV dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">unicodecsv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">d</span>
+
+
+            </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../static/jquery.js"></script>
+      <script type="text/javascript" src="../../../static/underscore.js"></script>
+      <script type="text/javascript" src="../../../static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
