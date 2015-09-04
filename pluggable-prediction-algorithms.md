@@ -20,7 +20,7 @@ Microservice runtime prediction services allow you to add any custom predictive 
 
 ## Offline Model<a name="offline-model"></a>
 
-You can utilize any method to create the offline model. You can use the seldon '''/events''' endpoints in the [REST](api-oauth.html#events) and [javascript](api-javascript.html#events) APIs to inject the events.
+You can utilize any method to create the offline model. You can use the seldon '''/events''' endpoints in the [REST](api-oauth.html#events) and [javascript](api-javascript.html#events) APIs to inject the events. Some examples of creating models with Vowlpal Wabbit and XGBoost are [provided](offline-prediction-models.html).
 
 
 
@@ -74,7 +74,7 @@ When you have an external recommendation server running that supports the intern
 	[{"name":"externalPredictionServer",
 	"config":[
 		   {"name":"io.seldon.algorithm.external.url","value":"http://127.0.0.1:5000/predict"},
-		   {"name":"io.seldon.algorithm.external.name","value":"example_alg"}]
+		   {"name":"io.seldon.algorithm.external.name","value":"example_alg"}
          	 ]
          }]
 }

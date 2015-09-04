@@ -16,3 +16,7 @@ Steps involved in setting up Seldon from source to serve content recommendations
  1. [Algorithm configuration](/runtime-recommendation.html)
  1. Start recommending using the [Seldon API](api.html)
 
+# API Reference Docs
+
+ * [Seldon Prediction API](/api.html)
+

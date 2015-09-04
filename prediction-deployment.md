@@ -12,8 +12,9 @@ Steps involved in setting up Seldon from source to serve predictions (alpha rele
  1. [Create a feature extraction pipeline](feature-pipeline.html)
  1. [Generate an offline model](offline-prediction-models.html)
  1. [Create a runtime predictive scorer](/runtime-prediction.html) and an optional [microservice predictive scorer](/pluggable-prediction-algorithms.html)
- 1. Start predicting using the [Seldon API](api.html)
+ 1. Start predicting using the via the [REST](api-oauth-prediction.html#events) or [Javascript](api-javascript-prediction.html) APIs
 
-# API Docs
+# API Reference Docs
 
- 1. [Seldon python modules](/python/index.html)
+ * [Seldon python modules](/python/index.html)
+ * [Seldon Prediction API](/api-prediction.html)

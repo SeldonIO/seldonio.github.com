@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon package &mdash; seldon  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon  documentation" href="index.html"/>
+        <link rel="next" title="seldon.pipeline package" href="seldon.pipeline.html"/>
+        <link rel="prev" title="Welcome to seldon’s documentation!" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>seldon package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="sources/seldon.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="seldon-package">
+<h1>seldon package<a class="headerlink" href="#seldon-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="seldon.pipeline.html">seldon.pipeline package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.auto_transforms">seldon.pipeline.auto_transforms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.basic_transforms">seldon.pipeline.basic_transforms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.pipelines">seldon.pipeline.pipelines module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.tfidf_transform">seldon.pipeline.tfidf_transform module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-seldon.fileutil">
+<span id="seldon-fileutil-module"></span><h2>seldon.fileutil module<a class="headerlink" href="#module-seldon.fileutil" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.fileutil.FileUtil">
+<em class="property">class </em><code class="descclassname">seldon.fileutil.</code><code class="descname">FileUtil</code><span class="sig-paren">(</span><em>key=None</em>, <em>secret=None</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil" title="Permalink to this definition">¶</a></dt>
+<dd><p>utilities to input and output files. Locally or from AWS S3.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>[Optional(str)]</strong> (<em>secret</em>) &#8211; aws key</li>
+<li><strong>[Optional(str)]</strong> &#8211; aws secret</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><em>fromPath</em>, <em>toPath</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy files. local-&gt;local, S3-&gt;local, local-&gt;S3 (S3-&gt;S3 not supported)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fromPath</strong> (<em>str</em>) &#8211; local or S3 URL</li>
+<li><strong>toPath</strong> (<em>str</em>) &#8211; local or S3 URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.copy_local">
+<code class="descname">copy_local</code><span class="sig-paren">(</span><em>fromPath</em>, <em>toPath</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.copy_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy local folders</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fromPath</strong> (<em>str</em>) &#8211; local from path to copy all files under</li>
+<li><strong>toPath</strong> (<em>str</em>) &#8211; local destination folder (will be created if does not exist)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.copy_s3_file">
+<code class="descname">copy_s3_file</code><span class="sig-paren">(</span><em>fromPath</em>, <em>bucket</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.copy_s3_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy from local file to S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fromPath</strong> (<em>str</em>) &#8211; local file</li>
+<li><strong>bucket</strong> (<em>str</em>) &#8211; S3 bucket</li>
+<li><strong>path</strong> (<em>str</em>) &#8211; S3 prefix to add to files</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.download_s3">
+<code class="descname">download_s3</code><span class="sig-paren">(</span><em>fromPath</em>, <em>toPath</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.download_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>download from S3 to local folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fromPath</strong> (<em>str</em>) &#8211; S3 URL</li>
+<li><strong>toPath</strong> (<em>str</em>) &#8211; local folder</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.getFolders">
+<code class="descname">getFolders</code><span class="sig-paren">(</span><em>baseFolder</em>, <em>startDay</em>, <em>numDays</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.getFolders" title="Permalink to this definition">¶</a></dt>
+<dd><p>construct list of folders for a range of days</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseFolder</strong> (<em>str</em>) &#8211; base folder prefix</li>
+<li><strong>startDay</strong> (<em>int</em>) &#8211; start day inclusive</li>
+<li><strong>numDays</strong> (<em>int</em>) &#8211; number of day folders to list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream">
+<code class="descname">stream</code><span class="sig-paren">(</span><em>inputPath</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream from an inputpath calling function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inputPath</strong> (<em>str</em>) &#8211; input path to stream from</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_decompress">
+<code class="descname">stream_decompress</code><span class="sig-paren">(</span><em>stream</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_decompress" title="Permalink to this definition">¶</a></dt>
+<dd><p>decompress a stream</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_gzip">
+<code class="descname">stream_gzip</code><span class="sig-paren">(</span><em>k</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_gzip" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream from gzip file and call function for each line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> (<em>file</em>) &#8211; input gziped file</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call for each line</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_local">
+<code class="descname">stream_local</code><span class="sig-paren">(</span><em>folders</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream from local folders call a function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>folders</strong> (<em>list</em>) &#8211; list of folders</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_multi">
+<code class="descname">stream_multi</code><span class="sig-paren">(</span><em>inputPaths</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream multilple paths calling a function on each line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inputPaths</strong> (<em>list</em>) &#8211; list of input folders</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_s3">
+<code class="descname">stream_s3</code><span class="sig-paren">(</span><em>bucket</em>, <em>prefix</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream from an AWS S3 bucket all files under a prefix and call a function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bucket</strong> (<em>str</em>) &#8211; name of S3 bucket</li>
+<li><strong>prefix</strong> (<em>str</em>) &#8211; prefix in bucket</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call for each line</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.stream_text">
+<code class="descname">stream_text</code><span class="sig-paren">(</span><em>k</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.stream_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>stream text line by line calling function for each line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> (<em>file</em>) &#8211; input text file</li>
+<li><strong>fn</strong> (<em>function</em>) &#8211; function to call for each line</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.fileutil.FileUtil.upload_s3">
+<code class="descname">upload_s3</code><span class="sig-paren">(</span><em>fromPath</em>, <em>toPath</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.fileutil.FileUtil.upload_s3" title="Permalink to this definition">¶</a></dt>
+<dd><p>upload from local path to S3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fromPath</strong> (<em>str</em>) &#8211; folder to copy from</li>
+<li><strong>toPath</strong> (<em>str</em>) &#8211; S3 URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.vw">
+<span id="seldon-vw-module"></span><h2>seldon.vw module<a class="headerlink" href="#module-seldon.vw" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.vw.VWSeldon">
+<em class="property">class </em><code class="descclassname">seldon.vw.</code><code class="descname">VWSeldon</code><span class="sig-paren">(</span><em>client=None</em>, <em>awsKey=None</em>, <em>awsSecret=None</em>, <em>zkHosts=None</em>, <em>vwArgs=''</em>, <em>features={}</em>, <em>namespaces={}</em>, <em>include=[]</em>, <em>exclude=None</em>, <em>target=None</em>, <em>weights=None</em>, <em>target_readable=None</em>, <em>dataType='json'</em>, <em>explicitPaths=None</em>, <em>inputPath=None</em>, <em>day=1</em>, <em>outputPath=None</em>, <em>activate=False</em>, <em>train_filename=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to train a Vowpal Wabbit model for Seldon data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>client</strong> (<em>str</em>) &#8211; Name of client. Used to construct input and output full paths if not explicitPaths</li>
+<li><strong>awsKey</strong> (<em>Optional[str]</em>) &#8211; AWS key. Needed if using S3 paths and no IAM</li>
+<li><strong>awsSecret</strong> (<em>Optional[str]</em>) &#8211; AWS secret. Needed if using S3 paths and no IAM</li>
+<li><strong>zkHosts</strong> (<em>Optional[str]</em>) &#8211; zookeeper hosts. Used to get configuation if supplied.</li>
+<li><strong>vwArgs</strong> (<em>Optional[str]</em>) &#8211; training args for vowpal wabbit</li>
+<li><strong>features</strong> (<em>Optional[dict]</em>) &#8211; dictionary of features and how to translate them to VW</li>
+<li><strong>namespaces</strong> (<em>Optional[dict]</em>) &#8211; dictionary of features to the VW namespace to place them</li>
+<li><strong>(Optional[list(str)]</strong> (<em>exclude</em>) &#8211; features to include</li>
+<li><strong>(Optional[list(str)]</strong> &#8211; features to exclude</li>
+<li><strong>target</strong> (<em>Optional[str]</em>) &#8211; name of target feature.</li>
+<li><strong>target_readable</strong> (<em>Optional[str]</em>) &#8211; name of the feature containing human readable target</li>
+<li><strong>dataTtpe</strong> (<em>str</em>) &#8211; json or csv</li>
+<li><strong>explicitPaths</strong> (<em>Optional[str]</em>) &#8211; whether to use the input and output paths as given</li>
+<li><strong>inputPath</strong> (<em>Optional[str]</em>) &#8211; input path for features to train</li>
+<li><strong>outputPath</strong> (<em>Optional[str]</em>) &#8211; output path for vw model</li>
+<li><strong>day</strong> (<em>int</em>) &#8211; unix day number. Used to construct location of data</li>
+<li><strong>activate</strong> (<em>boolean</em>) &#8211; whether to update zookeeper with location of new model</li>
+<li><strong>train_filename</strong> (<em>Optional(str)</em>) &#8211; name of filename to create with vw training lines rather then use wabbit_wappa directly</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.activateModel">
+<code class="descname">activateModel</code><span class="sig-paren">(</span><em>client</em>, <em>folder</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.activateModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>activate vw model in zookeeper</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.convertJsonFeature">
+<code class="descname">convertJsonFeature</code><span class="sig-paren">(</span><em>conversion</em>, <em>ns</em>, <em>name</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.convertJsonFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert feature into vw feature</p>
+<p>if number create a feature:value vw feature else create a categorical feature from the feature name and value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.create_vw">
+<code class="descname">create_vw</code><span class="sig-paren">(</span><em>vwArgs</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.create_vw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create wabbit_wappa vw instance for creating the training lines and possibly doing the training</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="seldon.vw.VWSeldon.is_number">
+<em class="property">static </em><code class="descname">is_number</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.is_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.jsonToVw">
+<code class="descname">jsonToVw</code><span class="sig-paren">(</span><em>j</em>, <em>tag=None</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.jsonToVw" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert a dict of features into vw line</p>
+<p>Will include and exclude features as defined args.
+Add weights and puts features into namespaces as directed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>process the lines from the input and turn into vw lines</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.save_data">
+<code class="descname">save_data</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.save_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>save data to local file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.save_target_map">
+<code class="descname">save_target_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.save_target_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>save mapping of target ids to their descriptive meanings</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.vw.VWSeldon.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>train_filename=None</em>, <em>vw_command=None</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.vw.VWSeldon.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>train a vw model from input and save to output</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.xgb">
+<span id="seldon-xgb-module"></span><h2>seldon.xgb module<a class="headerlink" href="#module-seldon.xgb" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.xgb.XGBoostSeldon">
+<em class="property">class </em><code class="descclassname">seldon.xgb.</code><code class="descname">XGBoostSeldon</code><span class="sig-paren">(</span><em>client=None</em>, <em>awsKey=None</em>, <em>awsSecret=None</em>, <em>zkHosts=None</em>, <em>svmFeatures={}</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>zeroBased=False</em>, <em>inputPath=None</em>, <em>day=1</em>, <em>outputPath=None</em>, <em>activate=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seldon wrapper for training XGBoost models</p>
+<blockquote>
+<div>Input from local or S3. Files can be JSON or a single CSV file.
+Output model to local or S3.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>client</strong> (<em>str</em>) &#8211; Name of client. Used to construct input and output full paths if not explicitPaths</li>
+<li><strong>awsKey</strong> (<em>Optional[str]</em>) &#8211; AWS key. Needed if using S3 paths and no IAM</li>
+<li><strong>awsSecret</strong> (<em>Optional[str]</em>) &#8211; AWS secret. Needed if using S3 paths and no IAM</li>
+<li><strong>zkHosts</strong> (<em>Optional[str]</em>) &#8211; zookeeper hosts. Used to get configuation if supplied.</li>
+<li><strong>svmFeatures</strong> (<em>Optional[dict]</em>) &#8211; dictionary of svm (numeric key) features to their values</li>
+<li><strong>target</strong> (<em>Optional[str]</em>) &#8211; name of target feature.</li>
+<li><strong>target_readable</strong> (<em>Optional[str]</em>) &#8211; name of the feature containing human readable target</li>
+<li><strong>inputPath</strong> (<em>Optional[str]</em>) &#8211; input path for features to train</li>
+<li><strong>outputPath</strong> (<em>Optional[str]</em>) &#8211; output path for vw model</li>
+<li><strong>day</strong> (<em>int</em>) &#8211; unix day number. Used to construct location of data</li>
+<li><strong>activate</strong> (<em>boolean</em>) &#8211; whether to update zookeeper with location of new model</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.activateModel">
+<code class="descname">activateModel</code><span class="sig-paren">(</span><em>client</em>, <em>folder</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.activateModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>activate vw model in zookeeper</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.generate_dmatrix">
+<code class="descname">generate_dmatrix</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.generate_dmatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>generate dmatrix from input for xgboost model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>features</strong> (<em>dict</em>) &#8211; dictionary of features to score</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: generated dmatricx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.get_accuracy">
+<code class="descname">get_accuracy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.get_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>get accuracy of test</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.jsonToSvm">
+<code class="descname">jsonToSvm</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.jsonToSvm" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert dictionary to svm line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>j</strong> (<em>dict</em>) &#8211; dictionary of SVM features. Assumes numeric keys which can be sorted and numeric values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.load_models">
+<code class="descname">load_models</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.load_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>load an xgboost model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict againts a model using features</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>features</strong> (<em>dict</em>) &#8211; features to predict against</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: predictions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.predict_json">
+<code class="descname">predict_json</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict against a model features in j</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>j</strong> (<em>dict</em>) &#8211; dictionary of features</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: scores for each class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.predict_line">
+<code class="descname">predict_line</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict line against a model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) &#8211; input feature line in SVM format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>process the lines from the input and turn into SVMLight lines</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.save_target_map">
+<code class="descname">save_target_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.save_target_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>save mapping of target ids to their descriptive meanings</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.test">
+<code class="descname">test</code><span class="sig-paren">(</span><em>test_features_path</em><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>test model against features from file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.train">
+<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>train an XGBoost model using features from inputPath and putting model in outputPath</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.xgb.XGBoostSeldon.train_model">
+<code class="descname">train_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.train_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>train an xgboost model from generated SVM features file</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seldon.pipeline.html" class="btn btn-neutral float-right" title="seldon.pipeline package">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to seldon’s documentation!"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Clive Cox.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

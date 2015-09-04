@@ -5,30 +5,62 @@ title: Introduction to Seldon
 
 # Introduction to Seldon
 
-Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data. It has a variety of algorithms to produce these recommendations and predictions and can report a variety of statistics.
-
+Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data. It has a variety of algorithms to produce these recommendations and predictions and is designed to run at scale in enterprise environments.
 
 ## Why you would use it?
 
-Seldon has been designed generically so that it can be useful in many contexts. It was first developed for the media industry to personalise high traffic news websites. It recommends content for users to view on a website or app based on the content that the user had previously looked at. Showing relevant content leads to increased engagement and improved user experience.
+Seldon has been designed generically so that it can be useful in many contexts. 
 
-Other examples of use include:
+ * **Content Recommendation**
+    * Show personalized up-to-the-minute content for each user to allow them to engage with the latest published articles.
+    * Optimize engagement and clicks through targeted recommendations for each user
+    * Select from a suite of industry leading algorithms including: cluster based, matrix factorization, content based, activity similarity
+    * Combine, A/B and optimize test sets of algorithms
+    * Integrate multiple recommendation areas per page
 
-* General personalisation of any website or app.
-* Allowing a data science team to put predictive pipelines into production
+ * **E-Commerce**
+    * Product Recommendation
+    * Provide focused product recommendations during the user journey.
+    * Increase revenue with focused products
+    * Cross sell related products
+    * Select from a suite of industry leading algorithms : matrix factorization, content based, activity similarity, basket analysis (association rules)
 
-## Join the seldon-users group
-In March 2015 we created a public [seldon-users group](https://groups.google.com/forum/#!forum/seldon-users) powered by Google Groups, and now the Seldon VM and AMI have been released we encourage you to leave feedback and ask questions in this group. [Click here to join the seldon-users group](https://groups.google.com/forum/#!forum/seldon-users).
+ * **Lifetime Value**
+    * Identify in real time customers who are likely to generate revenue
 
-To post to the group, send an email to [seldon-users@googlegroups.com](seldon-users@googlegroups.com)
+ * **Churn Prediction**
+    * Identify customers who are likely to be lost to allow proactive re-engagement
+
+ * **CRM**
+    * Customer Support Triage
+         * For example, classifying customer support requests to reduce overhead of manual triage roles.
+    * Scoring Sales Leads
+
+ * **Real-time marketing**
+     * Optimize the customer journey to by orchestrating personalized multi-channel communication.
+
+  * **Finance**
+     * Provide risk analysis for prospective customers
+
+ * **Identify Emerging Markets**
+     * Identify new markets, trends or products from news and social media
+     * Provide early investment opportunities by spotting emerging trends
+
+ * **Insurance**
+     * Recommend products for users
+     * Predict which insurance products are appropriate for a customer.
+
+ * **Fraud detection**
+     * Identify fraudulent applications
 
 ## Join the chat room
 Seldon developers have started using the Gitter chat room. Come say hello and feel free to ask questions in here too:
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SeldonIO/seldon-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-## Sign up to the beta list
+## Sign up to the Newsletter
 To be among the first to hear the latest news and receive Seldon releases, [join the Seldon beta list](http://eepurl.com/6X6n1).
 
 ## Technology
 
-* [Technology Overview](tech.html)
+* [Content Recommendation Technology Overview](content-recommendation-tech.html)
+* [General Predcitive Technology Overview](prediction-overview.html)

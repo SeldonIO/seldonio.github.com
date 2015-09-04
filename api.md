@@ -3,7 +3,7 @@ layout: default
 title: Seldon APIs
 ---
 
-# Seldon APIs
+# Seldon Content Recommendation API
 
 ## Introduction
 This document provides an overview of how to use the Seldon OAuth [REST API](api-oauth.html) and [JavaScript API](api-javascript.html), including the available methods, the inputs required for personalized recommendations and the output specifications. Seldon provides a REST API with JSON for data representation and OAuth 2.0 for authorisation. For further clarification on any section please contact support at seldon dot io.
@@ -25,7 +25,7 @@ POST     /token?consumer_key=k&consumer_secret=s
 A service will be provided with a consumer_key which should be passed with each JavaScript request.
 
 
-# API Details
+# Content Recommendation API Details
 
 * [JS API](api-javascript.html)
 * [REST API](api-oauth.html)
