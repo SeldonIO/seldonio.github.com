@@ -7,7 +7,7 @@ title: Seldon AMI for Amazon Web Services
 
 For AWS users, we have created an all-in-one packaged Seldon as a private AMI. 
 
-The Seldon AMI is a self-contained environment with the full Seldon platform pre-configured for you to test with your service data. It contains the same tools as [Seldon VM](vm.html), and a movie recommender demo that serves as an example to show you [how to load your data](data.html).
+The Seldon AMI is a self-contained environment with the full Seldon platform pre-configured for you to test with your service data. It contains the same tools as [Seldon VM](vm.html), and a movie recommender demo that serves as an example to show you [how to load your data](data.html) for content recommendation.
 
 You should run the Seldon AMI on at least an m3.medium sized instance.
 

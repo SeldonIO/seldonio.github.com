@@ -18,5 +18,5 @@ Steps involved in setting up Seldon from source to serve content recommendations
 
 # API Reference Docs
 
- * [Seldon Prediction API](/api.html)
+ * [Seldon Content Recommedation API](/api.html)
 

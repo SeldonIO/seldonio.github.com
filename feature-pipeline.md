@@ -4,7 +4,7 @@ title: Feature Pipelines
 ---
 
 # Feature Extraction Pipelines 
-Feature pipelines allow you to define a repeatable process to transform a set of input features before you build a machine learning model on a final set of features. When the resulting model is put into production the feature peipeline will need to be rerun on each input feature set before being passed to the model for scoring.
+Feature extraction pipelines allow you to define a repeatable process to transform a set of input features before you build a machine learning model on a final set of features. When the resulting model is put into production the feature pipeline will need to be rerun on each input feature set before being passed to the model for scoring.
 
 Seldon feature pipelines are presently available in python. We plan to provide Spark based pipelines in the future.
 
@@ -15,9 +15,9 @@ A pipeline consists of a series of Feature_Transforms. The currently available t
 
  * **Include_features_transform** : include a subset of features
  * **Split_transform** : split a series of textual features into tokens
- * **Exist_features_transform : filter data to only those containing a set of features
- * **Svmlight_transform** : create a feature that contain SVMLight numeric features from some input set of features
- * **Feature_id_transform** : create an id feature some input feature
+ * **Exist_features_transform** : filter data to only those containing a set of features
+ * **Svmlight_transform** : create a feature that contains SVMLight numeric features from some input set of features
+ * **Feature_id_transform** : create an id feature from some input feature
  * **Tfidf_transform** : create TFIDF features from an input feature
  * **Auto_transform** : attempt to automatically normalize and create numeric, categorical and date features
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 The example code provides methods to download the Iris dataset and create the JSON events. Then the pipeline can be run as:
 
 {% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data iris_pipeline bash -c "python /pipeline/iris_pipeline.py --events /data/iris/events/1 --features /data/iris/features/1 --models /data/iris/models/1"
+docker run --rm -t -v ${PWD}/data:/data seldonio/iris_pipeline bash -c "python /pipeline/iris_pipeline.py --events /data/iris/events/1 --features /data/iris/features/1 --models /data/iris/models/1"
 {% endhighlight %}
 
 The first few lines of the input events JSON look like:

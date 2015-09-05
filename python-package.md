@@ -6,6 +6,8 @@ title: python module
 # Python modules
 Seldon provides a set of python modules to help construct feature pipelines for use inside Seldon.
 
+ * [Seldon Package Reference](/python/index.html)
+
 You can install them in three ways:
 
 ## Install from seldon-server project
@@ -18,6 +20,8 @@ The module dependencies are:
   * [unicodecsv](https://github.com/jdunck/python-unicodecsv)
   * [kazoo](https://kazoo.readthedocs.org/en/latest/)
   * [boto](https://github.com/boto/boto)
+
+The above packages themselves have many dependencies so if you are starting from scratch it may be best to install [Anaconda](http://continuum.io/downloads) which will provide many of the dependencies or use the Docker container below.
 
 After installing the dependencies from a [seldon-server install](seldon-server-setup.html) go to  ```external/predictor/python``` and run
 {% highlight bash %}
@@ -38,5 +42,5 @@ A Docker image contains the pipelines and dependencies needed. It can be used as
    pip install seldon
 {% endhighlight %}
 
-**Caveat - at present you will need to install [xgboost](https://github.com/dmlc/xgboost/tree/master/python-package) manually as the pip install fails.**
+**at present you will need to install [xgboost](https://github.com/dmlc/xgboost/tree/master/python-package) and [wabbit_wappa](https://github.com/mokelly/wabbit_wappa) manually as they have issues with their pip packages.**
 

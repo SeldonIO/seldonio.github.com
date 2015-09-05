@@ -60,7 +60,7 @@ The target feature is the productName and the provided predictive features are j
 {"productType" : 1, "productName":"shoes", "like_tfidf" : {"1142214":0.1,"3463634":0.25,"34643643":0.15}}
 {% endhighlight %}
 
-Associated feature files to allow us to recreate this transform will have been saved. We build our model and then at runtime we might get features like:
+Associated feature models to allow us to recreate this transform will have been saved. We build our model and then at runtime we might receive features like:
 
 {% highlight json %}
 {"likes" : ["111231","3463634","3465436"]}

@@ -19,11 +19,10 @@ The open source projects that comprise Seldon can be seen in the image below gro
 ## Real-Time Predictive Scoring
 
  * [seldon-server](https://github.com/SeldonIO/seldon-server) : Real-time predictive scoring that exposes a REST API for external clients.
- * Micro-services for custom algorithms : Pluggable custom algorithms with example python templates for [item recommendation](pluggable-recommendation-algorithms.html#recommender-python-template) and [predictive scoring](pluggable-prediction-algorithms.html#prediction-python-template).
+ * Micro-services for custom algorithms with example python templates for [item recommendation](pluggable-recommendation-algorithms.html#recommender-python-template) and [predictive scoring](pluggable-prediction-algorithms.html#prediction-python-template).
 
 ## Offline Modelling
 
  * [seldon-spark](https://github.com/SeldonIO/seldon-server/tree/master/offline-jobs/spark) : Implementations of predictive models in Spark.
+ * Prepackeged Docker integrations with [Vowpal Wabbit](offline-prediction-models.html#vw) and [XGBoost](offline-prediction-models.html#xgboost)
  * [Docker container for Semantic Vectors](semantic-vectors.html) : Vector based models for language modelling using Semantic vectors
- * Prepackeged integrations with [Vowpal Wabbit](offline-prediction-models.html#vw) and [XGBoost](offline-prediction-models.html#xgboost)
-

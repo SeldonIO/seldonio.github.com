@@ -5,7 +5,7 @@ title: Introduction to Seldon
 
 # Introduction to Seldon
 
-Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data. It has a variety of algorithms to produce these recommendations and predictions and is designed to run at scale in enterprise environments.
+Seldon is an Open Predictive Platform that currently provides content recommendations and general predictive functionality. It has a variety of algorithms to produce these recommendations and predictions and is designed to run at scale in enterprise environments.
 
 ## Why you would use it?
 
@@ -14,16 +14,16 @@ Seldon has been designed generically so that it can be useful in many contexts.
  * **Content Recommendation**
     * Show personalized up-to-the-minute content for each user to allow them to engage with the latest published articles.
     * Optimize engagement and clicks through targeted recommendations for each user
-    * Select from a suite of industry leading algorithms including: cluster based, matrix factorization, content based, activity similarity
-    * Combine, A/B and optimize test sets of algorithms
+    * Select from a suite of industry leading algorithms including: cluster based, matrix factorization, content based, and activity similarity
+    * Combine, A/B and optimize sets of algorithms
     * Integrate multiple recommendation areas per page
 
  * **E-Commerce**
     * Product Recommendation
-    * Provide focused product recommendations during the user journey.
+    * Provide focused product recommendations during the user journey
     * Increase revenue with focused products
     * Cross sell related products
-    * Select from a suite of industry leading algorithms : matrix factorization, content based, activity similarity, basket analysis (association rules)
+    * Select from a suite of industry leading algorithms : matrix factorization, content based, activity similarity, and basket analysis (association rules)
 
  * **Lifetime Value**
     * Identify in real time customers who are likely to generate revenue

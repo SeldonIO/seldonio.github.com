@@ -19,9 +19,9 @@ The logical structure is shown below.
 * Real-time Stats are generated to allow effective monitoring
 * Article Importers may periodically run to scrape content from web sites to update item meta data
 
-Seldon operates as a set of inter-connected Docker containers. Seldon provides a full set of containers to create a fully working systems as shown below. However, users are free to swap in their own infrastructure components that subsumes some subset of these, such as using their own JDBC compliant database engine.
+Seldon operates as a set of inter-connected components. Seldon provides a full set of components to create a fully working systems as shown below. However, users are free to swap in their own infrastructure components that subsumes some subset of these, such as using their own JDBC compliant database engine.
 
-![Seldon Container Diagram](/img/containers.png)
+![Seldon infrastructure Diagram](/img/infrastructure.png)
 
 The Seldon infrastructure is best described as a set of layers.
 
@@ -50,10 +50,10 @@ The Seldon infrastructure is best described as a set of layers.
 Model creation pipelines using Vowpal wabbit or Semantic Vectors. 
 Scraping of content from web sites to capture item meta data for newly published items.
 
-## Stats Layer
+## Stats Layer (not yet provided)
 
 * Influxdb is used to store real-time stats.
-* Grafana is provided with a set of dashboards.
+* Grafana dashboards.
 
 
 

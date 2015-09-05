@@ -3,11 +3,13 @@ layout: default
 title: Concepts 
 ---
 
-# Seldon Concepts
+# General Seldon Concepts
 
 ## Client
 
-On each Seldon deployment, it is possible to provide recommendations for several totally different data sets (for example, two websites). These data sets are divided by using different clients. Each call to the API has client as one of the attributes. The instructions we've provided so far only allow one client to be set up, but watch these docs for updates on how to extend this.
+On each Seldon deployment, it is possible to provide recommendations for several totally different data sets (for example, two websites). These data sets are divided by using different clients. Each call to the API has client as one of the attributes. 
+
+# Content Recommendation Concepts
 
 ## User
 
@@ -23,11 +25,13 @@ Actions are any time when a user interacts with an item (viewing it, buying it, 
 
 *User, Item and Action can be enriched with arbitrary attributes depending on the use case. For example, a newspaper article might have a subtitle and a category.  When the Seldon Server makes its recommendations for a user, it takes the history of items that he/she has interacted with and their attributes into account.*
 
+# General Prediction Concepts
+
 ## Event
 
 A event is an arbitrary set of features. These events can be used to build a predictive model to target one feature in the event. For example an event might supply house size and location along with price. A model can be built to predict the price feature from the other features. At runtime a set of features not including price can be supplied and a prediction of the price returned.
 
-## Runtime Item Recommendation
+# Real Time Item Recommendation
  
 Runtime item recommendation algorithms recommend content/items according to the following specification.
 
@@ -42,10 +46,6 @@ A couple of things to focus on here are
  1. **maxRecsCount** the maximum recommendations that this alg should return. Even if the alg cannot create this many, it should still return as many as possible as they can be used in certain combiner configurations.
 
 All algorithms must conform to the ItemRecommendationAlgorithm interface and be defined spring components. This is to allow easy discovery of all algorithms when the server starts. 
- 
-## Runtime Preditive Scoring
-
-Runtime predictive scoring algorithms take a set of features passed in and score those against a model that has been trained to predict a target variable supplied from the initial data sent in as events.
 
 ## Includer
  
@@ -59,14 +59,23 @@ Opposite of Includer, i.e. removes items from the set to be recommended against.
 
 A combiner takes the output of multiple algorithms and combines them into one set of recommendations. An example would be the FirstSuccessfulCombiner which takes the output of whichever algorithm
 provides the requisite number of recs first and outputs those. Combiners have the power to stop other algorithms being run if they find that there is already enough recs.
- 
+
+## RecommendationContext
+
+Store for algorithm options. One option that is common to all algorithms is the **MODE**. The possible values are **INCLUSION**, **EXCLUSION** or **NONE**. **INCLUSION** means that the set of items stored in the context are to be recommended from, **EXCLUSION** means that they are excluded from any recs and **NONE** means that the context has no opinion on the item set to be recommended from -- the alg is free to choose any item.
+
 ## Strategy
 
 Describes how to map the client/user pair to a set of Alg/Context pairs. Usually this is a simple mapping -- all users get the same alg/context pair. However, when a test is set up, a user may be
 given different pair based on the hash of his username.
- 
-## RecommendationContext
 
-Store for algorithm options. One option that is common to all algorithms is the **MODE**. The possible values are **INCLUSION**, **EXCLUSION** or **NONE**. **INCLUSION** means that the set of items stored in the context are to be recommended from, **EXCLUSION** means that they are excluded from any recs and **NONE** means that the context has no opinion on the item set to be recommended from -- the alg is free to choose any item.
+ 
+# Real Time Preditive Scoring
+
+Runtime predictive scoring algorithms take a set of features passed in and scores those against a model that has been trained to predict a target variable supplied from the initial data sent in as events.
+
+
+ 
+ 
  
 
