@@ -234,7 +234,10 @@
                     <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span> <span class="n">v</span><span class="p">,</span> <span class="n">f</span> <span class="p">)</span>
                 <span class="k">except</span><span class="p">:</span>
                     <span class="k">pass</span>
-        <span class="k">return</span> <span class="s">&quot;t_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unix_time</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="mi">86400</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;t_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unix_time</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="mi">86400</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
 </div>
 <div class="viewcode-block" id="Auto_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">objs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;try to guess a transform to apply to each feature</span>
@@ -276,7 +279,9 @@
                 <span class="n">jNew</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">j</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span><span class="p">:</span>
-                    <span class="n">jNew</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">[</span><span class="n">f</span><span class="p">])(</span><span class="n">f</span><span class="p">,</span><span class="n">j</span><span class="p">[</span><span class="n">f</span><span class="p">])</span>
+                    <span class="n">vNew</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">[</span><span class="n">f</span><span class="p">])(</span><span class="n">f</span><span class="p">,</span><span class="n">j</span><span class="p">[</span><span class="n">f</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">vNew</span><span class="p">:</span>
+                        <span class="n">jNew</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">vNew</span>
         <span class="k">return</span> <span class="n">jNew</span>
 
 </div></div>
