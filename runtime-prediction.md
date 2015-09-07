@@ -7,7 +7,7 @@ title: Runtime Prediction Algorithms
 
 At runtime Seldon can score requests against prediction models. At present simple classification based Vowpal Wabbit models are supported inside the Seldon Server while the full range of Vowpal Wabbit models can be utilized via a micro-service API. The available runtime prediction algorithms are:
 
-**Runtime Predcition Algorithm** | **Model**
+**Runtime Prediction Algorithm** | **Model**
 --|--
 `vwClassifier` | Vowpal Wabbit binary or one-against-all model
 `externalPredictionServer` | [Custom Model](pluggable-prediction-algorithms.html)
@@ -21,9 +21,9 @@ A runtime scorer for Vowpal Wabbit classification models. At present only a subs
 
  * Saved as a readable model
  * Can be only a binary classification model or "one-against-all", i.e., the only value of the "options:" line in the readable model can be an "--oaa" option.
- * Does not use quadratic, cubic, ngram or other feature extensions of vw
+ * Does not use quadratic, cubic, ngram or other feature extensions of VW
 
-If these requirements are too restrive one can use an external prediction server accessed over the micro-services REST API and utilize a vw server running as a daemon as described in [pluggable prediction algorithms](pluggable-prediction-algorithms.html#prediction-python-vw).
+If these requirements are too restrictive one can use an external prediction server accessed over the microservices REST API and utilize a VW server running as a daemon as described in [pluggable prediction algorithms](pluggable-prediction-algorithms.html#prediction-python-vw).
 
  **Algorithm** : `vwClassifier`  
  **Description** : Utilizes a Vowpal Wabbit classification model   

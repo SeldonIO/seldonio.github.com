@@ -198,12 +198,12 @@ Configuration options required:
 
 ## Tag Based Models<a name="tag-based"></a>
 
-Algorithms that utilize the content meta data providing tags for item. Building the model is described [here](spark-models.html#tag-affinity).
+Algorithms that utilize the content metadata providing tags for item. Building the model is described [here](spark-models.html#tag-affinity).
 
 **Algorithm** : `userTagAffinityRecommender`  
-**Description** : Score items based user association with tags, .e.g., a user that has read more than the usual number of articles tagged with "manchester united" would get currently ppopular articles that have this tag.
+**Description** : Score items based user association with tags, .e.g., a user that has read more than the usual number of articles tagged with "manchester united" would get currently popular articles that have this tag.
 
-Required onfig settings are:
+Required config settings are:
 
  * `io.seldon.algorithm.tags.attrid` : integer - attribute id in the Seldon db containing the tags for the items
  * `io.seldon.algorithm.tags.useitemdim` : boolean - whether to use the category dimension of the current page (i.e. to restrict results to the same category as the current item the user is interacting with)
@@ -235,7 +235,7 @@ Example config to set in `/all_clients/[client]/algs`:
 
 ## Content Based Models<a name="content-based"></a>
 
-Algorithms that utilize the content meta data of items to find related items. Building the models is described [here](semantic-vectors.html)
+Algorithms that utilize the content metadata of items to find related items. Building the models is described [here](semantic-vectors.html)
 
 **Algorithm** : `semanticVectorsRecommender`  
 **Description** : Score items based on the content similarity to recent items the user has interacted with  
@@ -296,12 +296,12 @@ Example config to set in `/all_clients/[client]/algs`:
 
 ## Association Rules<a name="assoc-rules"></a>
 
-Algorithms that utilize association rules created from offline modelling  [here](spark-models.html#assoc-rules).
+Algorithms that utilize association rules created from offline modeling [here](spark-models.html#assoc-rules).
 
 **Algorithm** : `assocRuleRecommender`  
 **Description** : Create recommendations by looking at the current basket of the user and finding the best matching association rules
 
-Required onfig settings are:
+Required config settings are:
 
 
  * `io.seldon.algorithm.assocrules.basket.maxsize` : Integer - the max basket size. At present this has a hard limit of 3 for efficiency reasons
