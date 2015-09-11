@@ -7,7 +7,7 @@ title: Advanced Recommender Configuration
 The basic configuration for providing recommendation is discused [here](http://docs.seldon.io/runtime-recommendation.html). However, Seldon allows much more complex scenarios to be configured which are discussed in the following sections:
 
  * [Cascading algorithms](#cascading-algorithms) : try and/or combine several recommendation algorithms in 1 API call
- * [Multi-variant testing](#multi-variant-tests) : start and stop A/B tests or multi-variant tests
+ * [Multivariate testing](#multivariate-tests) : start and stop A/B tests or multivariate tests
  * [API controlled recommendation variants](#recommendation-variants) : use tags sent via the API call to choose from a selection of recommendation strategies
  
 ## Cascading Algorithms<a name="cascading-algorithms"></a>
@@ -31,7 +31,7 @@ Another scenario is that you may wish to combine the results of several recommen
  * rankSumCombiner : combine multiple recommendations using the rank of each item returned in each recommenders list of recommendations. The number of algorithms combined defaults to two but can be configured with the config option combiner.maxResultSets
  * scoreOrderCombiner : combine multipe recommendations using the scores returned from each item in each individual recommender.
 
-## Multi Variant Tests<a name="multi-variant-tests"></a>
+## Multi Variant Tests<a name="multivariate-tests"></a>
 It is common practice when testing algorithms in live environments to run A/B tests to evaluate the success of different strategies. A test can be defined in zookeeper by setting the path 
 
 {% highlight bash %}
@@ -73,14 +73,14 @@ A template for an A/B test is shown below, with the algorithm sections missing:
 
 To switch on the test you set the zookeeper path ```/all_clients/<client_name>/alg_test_switch``` to contain the value ```true```. Similarly to stop a test you set this zookeeper node to contain ```false```.
 
-Multi-variant tests can be set up in the same manner by simply extending the number of variations and changing the ratios as appropriate. The results of impressions and clicks will appear in the ctr-alg.log in the Seldon log folder. Seldon's codebase contains Spark algorithms to process these logs once they have been pushed to a central location by fluentd and produce CTR analytics.
+Multivariate tests can be set up in the same manner by simply extending the number of variations and changing the ratios as appropriate. The results of impressions and clicks will appear in the ctr-alg.log in the Seldon log folder. Seldon's codebase contains Spark algorithms to process these logs once they have been pushed to a central location by fluentd and produce CTR analytics.
 
 ## API Controlled Recommendion Variants and Tests<a name="recommendation-variants"></a>
 There are many situations where you want to control the algorithms run via the API itself, for example:
   
  * To have multiple recommendations per page, e.g. in-section recommendations and site-wide recommendations
  * To serve different recommendations for mobile users as opposed to desktop users
- * To run a multi-variant test on an API determined set of users, e.g. users who view a certain subsection of a web-site
+ * To run a multivariate test on an API determined set of users, e.g. users who view a certain subsection of a web-site
 
 These cases can be handled by passing a recommendation tag in the API call. The added parameter is ```recTag``` and it should contain a string keyword. This tag is matched against the configuration for a client and the apporpriate set of algorithms is run. If no match is found then a default set of algorihtms is run. An example configuration for this is shown in outline below:
 
