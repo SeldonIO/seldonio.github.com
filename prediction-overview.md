@@ -9,9 +9,9 @@ Seldon provides the ability to build supervised learning based predictive models
 
 ![Predictive Data Pipelines](/img/predictive-data-pipelines.png)
 
-There are offline and realtime components. Data to be predicted on is sent to Seldon via its REST API. This data is sent as arbitrary JSON. It is normally the case that the raw JSON data sent to Seldon is not in the best format to directly build machine learning models. Therefore, in the offline modelling stage the data is first sent through an (optional) set of feature transformations to extract and create appripriate features that are useful for creating predictive models. After these transformation a model can be build to predict some target feature in the data based on the extracted/transformed features. 
+There are offline and realtime components. Raw data to be used for creating a predictive pipeline is sent to Seldon via its REST API in real time. This data can be sent as arbitrary JSON which allows complete freedom for a client to provide whatever data is available. It is normally the case that this raw JSON data sent to Seldon is not in the best format to directly build machine learning models. Therefore, in the offline modelling stage the data is first sent through an (optional) set of feature transformations to extract and create appropriate features that are useful for creating predictive models. After these transformations a model can be built to predict some target feature in the data based on the extracted/transformed features. 
 
-At runtime as prediction calls come in the same set of transformations performed offline will need to be repeated to create the same set of final features to test against the model. Once the transformations have been done the features can be scored and a predictive result returned.
+At runtime as prediction calls come in the same set of transformations performed offline will need to be repeated to create the same set of final features to test against the model. Once the transformations have been done the features can be scored and a predictive result returned to the client in real time.
 
 ## Data transformations
 
