@@ -3,6 +3,11 @@ layout: default
 title: Offline Prediction Model Creation
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> **offline model** --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+
+
 # Offline Prediction Model Creation
 
 Seldon currently provide fully integrated classification models built using:

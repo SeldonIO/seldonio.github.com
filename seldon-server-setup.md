@@ -2,6 +2,14 @@
 layout: default
 title: Seldon Server Setup
 ---
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> **setup server** --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
+
+##### General Prediction Steps 
+
+ **setup server** --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+
 
 # Deploy Seldon Server<a name="deploy-server"></a>
 

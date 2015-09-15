@@ -3,6 +3,11 @@ layout: default
 title: Seldon Logging
 ---
 
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> **logging** --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
+
+
 # Seldon Logging
 
 The Seldon server generates logs on disk in response to handling requests on the rest api. Some of the logs are used for monitoring the inner workings of the server, whilst others are used as a source of data for further processing.
@@ -51,4 +56,8 @@ ${TOMCAT_HOME}/logs/fluentd/actions.2015/0630/10/20150630-10_0.log.gz
 {% endhighlight %}
 
 The contents of these logs are used by the [Actions Grouping](/spark-models.html#actions) spark job.
+
+## Next Step
+
+ * [Configure your data](/item-recommendation-data.html)
 

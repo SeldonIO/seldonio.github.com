@@ -3,6 +3,11 @@ layout: default
 title: JavaScript API for Prediction
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> **events** --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> **predictions**
+
+
 # Seldon JavaScript API for Prediction
 
 The Seldon JavaScript API provides the simplest method of integrating Seldon onto web based services. It provides the following methods:

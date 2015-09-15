@@ -3,6 +3,11 @@ layout: default
 title: Feature Pipelines
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> **feature extraction pipeline** --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+
+
 # Feature Extraction Pipelines 
 Feature extraction pipelines allow you to define a repeatable process to transform a set of input features before you build a machine learning model on a final set of features. When the resulting model is put into production the feature pipeline will need to be rerun on each input feature set before being passed to the model for scoring.
 

@@ -2,6 +2,10 @@
 layout: default
 title: Semantic Vectors Models
 ---
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> **offline model** --> [runtime configuration](/runtime-recommendation.html) --> [recommendations](api.html)
+
 
 # Semantic Vectors Models
 

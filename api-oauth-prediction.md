@@ -3,6 +3,11 @@ layout: default
 title: OAuth REST API for Prediction
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> **events** --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> **predictions**
+
+
 # Seldon REST API for Prediction
 
 The Seldon prediction REST API has a single endpoint which injest arbitrary JSON objects representing feature data to be used to train a model

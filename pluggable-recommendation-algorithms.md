@@ -3,6 +3,12 @@ layout: default
 title: Pluggable Item Recommendtion Algorithms
 ---
 
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> **microservices** --> [recommendations](api.html)
+
+
+
 # Pluggable Item Recommendation Algorithms
 
 Pluggable Item Recommendation algorithms allow you to add any custom recommendation algorithm into Seldon rather than being limited to the ones available in the existing code. For example, you might want to use Vowpal Wabbit to build a model and provide predictions from that within the Seldon ecosystem. The following sections describe the various components:

@@ -3,6 +3,11 @@ layout: default
 title: Runtime Item Recommendation Algorithms 
 ---
 
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> **runtime configuration** --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
+
+
 # Runtime Item Recommendation Algorithms
 
 At runtime the Seldon server can utilize a set of item recommendation algorithms to provide recommendations. These runtime algorithms are usually based on some offline model. To configure which algorithm to use please see the [configuration page](configuration.html). The list of default algorithms and their associated models are described below.

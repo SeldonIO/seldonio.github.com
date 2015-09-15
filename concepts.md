@@ -2,6 +2,9 @@
 layout: default
 title: Concepts 
 ---
+##### Content Recommendation Steps
+
+**concepts** --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
 
 # General Seldon Concepts
 

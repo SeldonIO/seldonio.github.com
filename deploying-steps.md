@@ -13,7 +13,7 @@ Steps involved in setting up Seldon from source to serve content recommendations
  1. [Configure your data](/item-recommendation-data.html)
  1. Provide [realtime activity data](/realtime-activity-data.html)
  1. [Generate an offline model](/offline-models.html)
- 1. [Algorithm configuration](/runtime-recommendation.html)
+ 1. [Algorithm configuration](/runtime-recommendation.html) and optional [Custom microservices](pluggable-recommendation-algorithms.html) 
  1. Start recommending using the [Seldon API](api.html)
 
 # In Production

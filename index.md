@@ -7,6 +7,11 @@ title: Introduction to Seldon
 
 Seldon is an Open Predictive Platform that currently provides content recommendations and general predictive functionality. It has a variety of algorithms to produce these recommendations and predictions and is designed to run at scale in enterprise environments.
 
+## Get Started
+
+ * [Deployment Steps for Content Recommendation](deploying-steps.html)
+ * [Deployment Steps for General Prediction](prediction-deployment.html)
+
 ## Why you would use it?
 
 Seldon has been designed generically so that it can be useful in many contexts. 

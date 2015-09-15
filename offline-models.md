@@ -3,6 +3,10 @@ layout: default
 title: Offline Recommendation Model Creation
 ---
 
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> **offline model** --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
+
 # Offline Recommendation Model Creation
 
 Seldon provides a variety of item recommendation models that can be created and makes it easy for new custom models to be added.
@@ -12,7 +16,7 @@ The current integrated models are:
  * [Models created via Apache Spark](spark-models.html)
  * [Models created via Semantic Vectors](semantic-vectors.html)
 
-Confguration is either passed on the command line to the offline jobs or set in zookeeper
+Confguration is either passed on the command line to the offline jobs or set in zookeeper. 
 
 # Offline Data Store
 The Seldon modelling and data manipulation jobs assume a structure for the data storage. This structure allows easy integration into a production environment where models are created periodically, usually each day. The directory structure is of the form

@@ -3,6 +3,12 @@ layout: default
 title: Pluggable Prediction Algorithms
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> **microservice scorer** --> [predictions](prediction-api.html)
+
+
+
 # Microservice Runtime Predictive Services
 
 Microservice runtime prediction services allow you to add any custom predictive scorer into Seldon rather than being limited to the ones available in the core Java server.  The following sections describe the various components:

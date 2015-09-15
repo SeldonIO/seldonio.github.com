@@ -3,6 +3,10 @@ layout: default
 title: Runtime Prediction Algorithms 
 ---
 
+##### General Prediction Steps 
+
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> **runtime scorer** --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+
 # Runtime Prediction Algorithms
 
 At runtime Seldon can score requests against prediction models. At present simple classification based Vowpal Wabbit models are supported inside the Seldon Server while the full range of Vowpal Wabbit models can be utilized via a micro-service API. The available runtime prediction algorithms are:

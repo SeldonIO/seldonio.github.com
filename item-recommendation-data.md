@@ -3,7 +3,9 @@ layout: default
 title: Item Recommendation Data
 ---
 
-This section will show you how to define your item meta data and import any historical actions you may have.
+##### Content Recommendation Steps
+
+[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> **configure data** --> [realtime activity](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> [recommendations](api.html)
 
 # Configure your data attributes
 
@@ -160,4 +162,5 @@ ${SELDON_MODELS_DIR}/${CLIENT}/actions/${DAY}/actions.json
 eg.
 ~/seldon-models/movielens/actions/1/actions.json
 {% endhighlight %}
+
 
