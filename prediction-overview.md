@@ -87,6 +87,7 @@ We can then eventually feed this to our model scorer and get back a predicted re
       "prediction": 0.063,
       "confidence": 1.0
     }
+  ]
 }
 {% endhighlight %}
 
