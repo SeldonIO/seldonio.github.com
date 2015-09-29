@@ -260,9 +260,9 @@ First add a new client "iris" to the server by editing the server_config.json.
 		"servers": [
 			{
 				"name":"ClientDB",
-				"host":"localhost",
+				"host":"127.0.0.1",
 				"port":3306,
-				"user":"user1",
+				"user":"root",
 				"password":"mypass"
 			}
 		]
