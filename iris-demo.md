@@ -154,7 +154,7 @@ make vw_runtime
 Which runs:
 
 {% highlight bash %}
-docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
+docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime:1.0.2 bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
 {% endhighlight %}
 
 We can test this service by calling
@@ -208,7 +208,7 @@ make xgboost_runtime
 Which runs:
 
 {% highlight bash %}
-docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
+docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime:1.0.1 bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
 {% endhighlight %}
 
 We can test this service by calling
@@ -296,7 +296,7 @@ create /all_clients/iris/predict_algs {"algorithms":[{"name":"externalPrediction
 You should now be able to call Seldon API predict requests using the JS consumer key provided able.
 
 {% highlight bash %}
-curl  -G "http://127.0.0.1:8080/seldon-server/js/predict?consumer_key=<CONSUMER_KEY_HERE>&jsonpCallback=callback" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
+curl  -G "http://127.0.0.1:8080/js/predict?consumer_key=<CONSUMER_KEY_HERE>&jsonpCallback=callback" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
 {% endhighlight %}
 
 This should give a response like:
