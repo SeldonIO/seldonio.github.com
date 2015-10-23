@@ -122,7 +122,7 @@ make data/iris/vw/1
 Which runs:
 
 {% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data seldonio/vw_train bash -c "cd /vw/vw_train ; python vw_train.py --client iris --day 1 --inputPath /data/ --outputPath /data/ --vwArgs '--passes 3 --oaa 3' --target nameId --include f1 f2 f3 f4 --train_filename train.vw --target_readable name"
+docker run --rm -t -v ${PWD}/data:/data seldonio/vw_train:1.1 bash -c "cd /vw/vw_train ; python vw_train.py --client iris --day 1 --inputPath /data/ --outputPath /data/ --vwArgs '--passes 3 --oaa 3' --target nameId --include f1 f2 f3 f4 --train_filename train.vw --target_readable name"
 {% endhighlight %}
 
 For more details see [here](offline-prediction-models.html#vw).
@@ -137,7 +137,7 @@ make data/iris/vw/1
 Which runs:
 
 {% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data seldonio/xgboost_train bash -c  "cd /xgboost/xgboost_train ; python xgboost_train.py --client iris --inputPath /data --outputPath /data --day 1 --target nameId --svmFeatures svmfeatures --target_readable name"
+docker run --rm -t -v ${PWD}/data:/data seldonio/xgboost_train:1.1 bash -c  "cd /xgboost/xgboost_train ; python xgboost_train.py --client iris --inputPath /data --outputPath /data --day 1 --target nameId --svmFeatures svmfeatures --target_readable name"
 {% endhighlight %}
 
 For more details see [here](offline-prediction-models.html#xgboost).
@@ -154,7 +154,7 @@ make vw_runtime
 Which runs:
 
 {% highlight bash %}
-docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime:1.0.2 bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
+docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime:1.1 bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
 {% endhighlight %}
 
 We can test this service by calling
@@ -208,7 +208,7 @@ make xgboost_runtime
 Which runs:
 
 {% highlight bash %}
-docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime:1.0.1 bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
+docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime:1.1 bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
 {% endhighlight %}
 
 We can test this service by calling

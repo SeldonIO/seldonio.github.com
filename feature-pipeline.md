@@ -19,6 +19,8 @@ Seldon provides a set of [python modules](python-package.html) to help construct
 A pipeline consists of a series of Feature_Transforms. The currently available transforms are:
 
  * **Include_features_transform** : include a subset of features
+ * **Exclude_features_transform** : exclude some subset of features
+ * **Binary_transform** : create a binary feature based on existence of a feature
  * **Split_transform** : split a series of textual features into tokens
  * **Exist_features_transform** : filter data to only those containing a set of features
  * **Svmlight_transform** : create a feature that contains SVMLight numeric features from some input set of features
