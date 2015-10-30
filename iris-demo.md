@@ -85,7 +85,7 @@ if __name__ == '__main__':
 The pipeline can be run as:
 
 {% highlight bash %}
-   make data/iris/features/1/features
+   make data/iris/features/1
 {% endhighlight %}
 
 This will call Docker to run:
@@ -131,7 +131,7 @@ For more details see [here](offline-prediction-models.html#vw).
 We will create an XGBoost model from our transformed features. We will use the [Seldon python package](python-package.html) which has a wrapper to allow easy creation of XGBoost models. 
 
 {% highlight bash %}
-make data/iris/vw/1
+make data/iris/xgboost/1
 {% endhighlight %}
 
 Which runs:
