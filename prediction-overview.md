@@ -13,7 +13,7 @@ There are offline and realtime components. Raw data to be used for creating a pr
 
 At runtime as prediction calls come in the same set of transformations performed offline will need to be repeated to create the same set of final features to test against the model. Once the transformations have been done the features can be scored and a predictive result returned to the client in real time.
 
-## Data transformations
+## Predictive pipelines
 
 As Seldon receives JSON events they are stored (presently locally or in AWS S3) in folders of the form:
 
@@ -27,23 +27,12 @@ e.g.
  * events - folder to store raw events
  * day_number - a unix day number to separate events received into days
 
-The offline feature transformations will then take some number of days of events, for example the last 120 days of events, and transform them into a single new file which is stored in a "features" folder under the current day number. Also stored will be the models needed to recreate the transformation at runtime. Example folders are show below:
+The offline feature transformations will then take some number of days of events, for example the last 120 days of events, and run a predictive pipeline which may contain some feeature transformation and a final modelling stage using some machine learning algorithm. The models created from the transformations and final estimator are stored for later use at runtime. For example a pipeline with a final xgboost model might be stored in the following folder:
 
 {% highlight bash %}
-/<client>/models/<day_number>/<feature_model>
-/<client>/features/<day_number>/features.json
+/<client>/xgboost/<day_number>/model
 e.g.
-/acme/models/16550/1
-/acme/models/16550/2
-/acme/features/16550/features.json
-{% endhighlight %}
-
-Finally some offline modelling witll be performed and the resulting model stored under a folder for client, model type (e.g. vowpal wabbit) and day number.
-
-{% highlight bash %}
-/<client>/vw/<day_number>/model
-e.g.
-/acme/vw/1/model
+/acme/xgboost/1/model
 {% endhighlight %}
 
 ## Example
@@ -54,25 +43,15 @@ As an example, assume we wish to predict the type of product a person will buy b
 {"productName":"shoes", "likes" : ["1142214","3463634","34643643"]}
 {% endhighlight %}
 
-The target feature is the productName and the provided predictive features are just the "likes" feature in this case. We might wish to transform the likes by treating them as words in a document and creating TFIDF features for each. We might also create a unique internal ids for each product to predict which can more easily be used by the machine learning model. After these transforms on many days of events features an example tranformed JSON line might be:
+The target feature is the productName and the provided predictive features are just the "likes" feature in this case. We might wish to transform the likes by treating them as words in a document and creating TFIDF features for each. We might also create a unique internal ids for each product to predict which can more easily be used by the machine learning model. Finally we might create an XGBoost model.
 
-{% highlight json %}
-{"productType" : 1, "productName":"shoes", "like_tfidf" : {"1142214":0.1,"3463634":0.25,"34643643":0.15}}
-{% endhighlight %}
-
-Associated feature models to allow us to recreate this transform will have been saved. We build our model and then at runtime we might receive features like:
+Associated feature models to allow us to recreate these transforms will be saved. At runtime we might receive features like:
 
 {% highlight json %}
 {"likes" : ["111231","3463634","3465436"]}
 {% endhighlight %}
 
-We then rerun our transform pipeline on these to create a set of features we can feed to our runtime scorer, this might create:
-
-{% highlight json %}
-{"like_tfidf" : {"111231":0.25,"3463634":0.3,"3465436":0.2}}
-{% endhighlight %}
-
-We can then eventually feed this to our model scorer and get back a predicted result, something like:
+We can rerun the transformation and eventually feed this to our model scorer and get back a predicted result, something like:
 
 {% highlight json %}
 {

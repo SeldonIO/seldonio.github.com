@@ -27,7 +27,7 @@ A runtime scorer for Vowpal Wabbit classification models. At present only a subs
  * Can be only a binary classification model or "one-against-all", i.e., the only value of the "options:" line in the readable model can be an "--oaa" option.
  * Does not use quadratic, cubic, ngram or other feature extensions of VW
 
-If these requirements are too restrictive one can use an external prediction server accessed over the microservices REST API and utilize a VW server running as a daemon as described in [pluggable prediction algorithms](pluggable-prediction-algorithms.html#prediction-python-vw).
+If these requirements are too restrictive one can use an external prediction server accessed over the microservices REST API as described in [pluggable prediction algorithms](pluggable-prediction-algorithms.html).
 
  **Algorithm** : `vwClassifier`  
  **Description** : Utilizes a Vowpal Wabbit classification model   

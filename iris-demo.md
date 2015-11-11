@@ -8,14 +8,11 @@ title: Iris Prediction
 # Iris Prediction Demo
 We provide a demo for creating a multi-class classification predictive endpoint for the classic Iris classification task using the dataset provided [here](http://archive.ics.uci.edu/ml/datasets/Iris).
 
-The steps are outlined below.
+The steps are:
 
  1. [Download the static iris data and create JSON events](#events)
- 1. [Create and run a feature extraction pipleline](#pipeline)
- 1. [Create a Vowpal wabbit model](#vw)
- 1. [Create an XGBoost model](#xgboost)
- 1. [Start a Vowpal Wabbit runtime predcition microservice](#vw-microservice)
- 1. [Start an XGBoost runtime prediction microservice](#xgboost-microservice)
+ 1. [Create predictive pipelines with XGBoost, Vowpal Wabbit, and keras](#pipelines)
+ 1. [Start runtime prediction microservices](#microservices)
  1. [Integrate into Seldon Server](#seldon-server)
 
 The code for creating the models and predictive pipeline can be found in `external/predictor/python/docker/examples/iris`. 
@@ -35,141 +32,82 @@ Go to `external/predictor/python/docker/examples/iris` and run:
    make data/iris/events/1/iris.json
 {% endhighlight %}
 
-This will download the raw data and convert into JSON placing the JSON data in a seldon structured client/DAY folder. The steps run are:
-{% highlight bash %}
-	mkdir -p data
-	cd data ; wget --quiet http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data
-	mkdir -p data/iris/events/1
-	cat data/iris.data | python create-json.py | shuf > data/iris/events/1/iris.json
-{% endhighlight %}
+This will download the raw data and convert into JSON placing the JSON data in a seldon structured client/DAY folder.
 
-
-## Create Feature Extraction Pipeline<a name="pipeline"></a>
-For the iris dataset we need a very simple pipeline that does the following tasks:
+## Create Machine Learning Pipelines<a name="pipelines"></a>
+For the iris dataset we create very simple pipelines that do the following tasks:
 
  1. Create an id feature from the name feature
  1. Create an SVMLight feature from the four core predictive features (for use by XGBoost)
+ 1. Build a model using [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) or [Keras](https://github.com/fchollet/keras)
 
-The code for this is:
+Example code for the XGBoost pipeline is shown below:
 
 {% highlight python %}
 import sys, getopt, argparse
 import seldon.pipeline.basic_transforms as bt
-import seldon.pipeline.pipelines as pl
+import seldon.pipeline.util as sutl
+import seldon.pipeline.auto_transforms as pauto
+from sklearn.pipeline import Pipeline
+import seldon.xgb as xg
 import sys
 
-def run_pipeline(events,features,models):
-    p = pl.Pipeline(input_folders=events,output_folder=features,local_models_folder="models_tmp",models_folder=models)
+def run_pipeline(events,models):
 
-    tNameId = bt.Feature_id_transform(min_size=0,exclude_missing=True)
-    tNameId.set_input_feature("name")
-    tNameId.set_output_feature("nameId")
-    svmTransform = bt.Svmlight_transform(included=["f1","f2","f3","f4"] )
-    svmTransform.set_output_feature("svmfeatures")
-    p.add(tNameId)
-    p.add(svmTransform)
-    p.fit_transform()
+    tNameId = bt.Feature_id_transform(min_size=0,exclude_missing=True,zero_based=True,input_feature="name",output_feature="nameId")
+    tAuto = pauto.Auto_transform(max_values_numeric_categorical=2,exclude=["nameId","name"])
+    xgb = xg.XGBoostClassifier(target="nameId",target_readable="name",excluded=["name"],learning_rate=0.1,silent=0)
+
+    transformers = [("tName",tNameId),("tAuto",tAuto),("xgb",xgb)]
+    p = Pipeline(transformers)
+
+    pw = sutl.Pipeline_wrapper()
+    df = pw.create_dataframe(events)
+    df2 = p.fit(df)
+    pw.save_pipeline(p,models)
+
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='bbm_pipeline')
+    parser = argparse.ArgumentParser(prog='xgb_pipeline')
     parser.add_argument('--events', help='events folder', required=True)
-    parser.add_argument('--features', help='output features folder', required=True)
     parser.add_argument('--models', help='output models folder', required=True)
 
     args = parser.parse_args()
     opts = vars(args)
 
-    run_pipeline([args.events],args.features,args.models)
+    run_pipeline([args.events],args.models)
 {% endhighlight %}
 
-The pipeline can be run as:
+The various pipelines can run as follows
+
+ * Create an XGBoost pipeline : ```make data/iris/xgb_models/1```
+ * Create a VW pipeline : ```make data/iris/vw_models/1```
+ * Create a Keras pipeline : ```data/iris/keras_models/1```
+
+The models for the pipelines are stored in the locations above
+
+# Online Prediction Microservices
+Now that we have built various models we can run a realtime predictor as a microservice that will take in raw features, run our saved feature extraction pipeline and pass these features to the runtime model to score returning a result.
+
+The various services for each pipeline can be started as below
+
+ * Run XGBoost microservice : ```make xgboost_runtime:```
+ * Run VW microservice : ```make vw_runtime```
+ * Run Keras mixroservice : ```make keras_runtime```
+
+We can test test the pipelines with:
+
+ * Send an example to XGBoost microservice : ```make test_xgboost_runtime```
+ * Send an example to VW microservice : ```make test_vw_runtime```
+ * Send an example to Keras microservice : ```make test_keras_runtime```
+
+Which uses curl to fire a JSON test set of feeatures to the microservice, for xgboost microservice running on port 5001 this would be
 
 {% highlight bash %}
-   make data/iris/features/1
+curl -G  "http://127.0.0.1:5001/predict?client=iris" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
 {% endhighlight %}
 
-This will call Docker to run:
-
-{% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data iris_pipeline bash -c "python /pipeline/iris_pipeline.py --events /data/iris/events/1 --features /data/iris/features/1 --models /data/iris/models/1"
-{% endhighlight %}
-
-The first few lines of the input events JSON look like:
-
-{% highlight json %}
-{"f1": 6.1, "f2": 3.0, "f3": 4.9, "f4": 1.8, "name": "Iris-virginica"}
-{"f1": 5.0, "f2": 3.2, "f3": 1.2, "f4": 0.2, "name": "Iris-setosa"}
-{"f1": 5.7, "f2": 2.9, "f3": 4.2, "f4": 1.3, "name": "Iris-versicolor"}
-{"f1": 5.2, "f2": 2.7, "f3": 3.9, "f4": 1.4, "name": "Iris-versicolor"}
-{% endhighlight %}
-
-This is transformed by the pipeline into:
-
-{% highlight json %}
-{"f1": 6.1, "f2": 3.0, "f3": 4.9, "f4": 1.8, "name": "Iris-virginica", "nameId": 1, "svmfeatures": {"1": 6.1, "2": 3.0, "3": 4.9, "4": 1.8}}
-{"f1": 5.0, "f2": 3.2, "f3": 1.2, "f4": 0.2, "name": "Iris-setosa", "nameId": 2, "svmfeatures": {"1": 5.0, "2": 3.2, "3": 1.2, "4": 0.2}}
-{"f1": 5.7, "f2": 2.9, "f3": 4.2, "f4": 1.3, "name": "Iris-versicolor", "nameId": 3, "svmfeatures": {"1": 5.7, "2": 2.9, "3": 4.2, "4": 1.3}}
-{"f1": 5.2, "f2": 2.7, "f3": 3.9, "f4": 1.4, "name": "Iris-versicolor", "nameId": 3, "svmfeatures": {"1": 5.2, "2": 2.7, "3": 3.9, "4": 1.4}}
-{% endhighlight %}
-
-## Vowpal Wabbit Model<a name="vw"></a>
-We will create a Vowpal Wabbit model from our transformed features. We will use the [Seldon python package](python-package.html) which has a wrapper to allow easy creation of Vowpal wabbit models. 
-
-{% highlight bash %}
-make data/iris/vw/1
-{% endhighlight %}
-
-Which runs:
-
-{% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data seldonio/vw_train:1.1 bash -c "cd /vw/vw_train ; python vw_train.py --client iris --day 1 --inputPath /data/ --outputPath /data/ --vwArgs '--passes 3 --oaa 3' --target nameId --include f1 f2 f3 f4 --train_filename train.vw --target_readable name"
-{% endhighlight %}
-
-For more details see [here](offline-prediction-models.html#vw).
-
-## Create an XGBoost model<a name="xgboost"></a>
-We will create an XGBoost model from our transformed features. We will use the [Seldon python package](python-package.html) which has a wrapper to allow easy creation of XGBoost models. 
-
-{% highlight bash %}
-make data/iris/xgboost/1
-{% endhighlight %}
-
-Which runs:
-
-{% highlight bash %}
-docker run --rm -t -v ${PWD}/data:/data seldonio/xgboost_train:1.1 bash -c  "cd /xgboost/xgboost_train ; python xgboost_train.py --client iris --inputPath /data --outputPath /data --day 1 --target nameId --svmFeatures svmfeatures --target_readable name"
-{% endhighlight %}
-
-For more details see [here](offline-prediction-models.html#xgboost).
-
-# Vowpal Wabbit Microservice<a name="vw-microservice"></a>
-Now that we have built a VW model we can run a VW predictor as a microservice that will take in raw features, run our saved feature extraction pipeline and pass these features to VW to score returning a result.
-
-This service can be started by running the command below which will start a microservice on port 5000.
-
-{% highlight bash %}
-make vw_runtime
-{% endhighlight %}
-
-Which runs:
-
-{% highlight bash %}
-docker run --name="vw_runtime" -d -v ${PWD}/data:/data -p 5000:5000 seldonio/vw_runtime:1.1 bash -c "cd /vw/vw_runtime;python setup.py --client iris --day 1 --inputPath /data --exclude svmfeatures ;./start_vw_service.sh"
-{% endhighlight %}
-
-We can test this service by calling
-
-{% highlight bash %}
-make test_vw_runtime
-{% endhighlight %}
-
-Which uses curl to fire a JSON test set of feeatures to the microservice:
-
-{% highlight bash %}
-curl -G  "http://127.0.0.1:5000/predict?client=iris" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
-{% endhighlight %}
-
-The response should be:
+The response should be like:
 
 {% highlight json %}
 {
@@ -195,59 +133,6 @@ The response should be:
 
 This shows the predition to be "Iris-setosa".
 
-
-# XGBoost Microservice<a name="xgboost-microservice"></a>
-Now that we have built an XGBoost model we can run an XGBoost predictor as a microservice that will take in raw features, run our saved feature extraction pipeline and pass these features to XGBoost to score returning a result.
-
-This service can be started by running the command below which will start a microservice on port 5001.
-
-{% highlight bash %}
-make xgboost_runtime
-{% endhighlight %}
-
-Which runs:
-
-{% highlight bash %}
-docker run --name="xgboost_runtime" -d -p 5001:5000 -v ${PWD}/data:/data seldonio/xgboost_runtime:1.1 bash -c "cd xgboost/xgboost_runtime ; python setup.py --client iris --day 1 --inputPath /data --svmFeatures svmfeatures ; ./start-service.sh"
-{% endhighlight %}
-
-We can test this service by calling
-
-{% highlight bash %}
-make test_xgboost_runtime
-{% endhighlight %}
-
-Which uses curl to fire a JSON test set of feeatures to the microservice:
-
-{% highlight bash %}
-curl -G  "http://127.0.0.1:5001/predict?client=iris" --data-urlencode 'json={"f1": 4.6, "f2": 3.2, "f3": 1.4, "f4": 0.2}'
-{% endhighlight %}
-
-The response should be:
-
-{% highlight json %}
-{
-  "predictions": [
-    {
-      "confidence": 1.0, 
-      "predictedClass": "Iris-virginica", 
-      "prediction": 0.1725599765777588
-    }, 
-    {
-      "confidence": 1.0, 
-      "predictedClass": "Iris-setosa", 
-      "prediction": 0.4815942049026489
-    }, 
-    {
-      "confidence": 1.0, 
-      "predictedClass": "Iris-versicolor", 
-      "prediction": 0.17391864955425262
-    }
-  ]
-}
-{% endhighlight %}
-
-This shows the predition to be "Iris-setosa".
 
 # Seldon Server Integration<a name="seldon-server"></a>
 We can now integrate our microservice(s) into the Seldon server. You will need a running Seldon server.

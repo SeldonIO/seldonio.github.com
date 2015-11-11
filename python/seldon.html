@@ -68,6 +68,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon">Module contents</a></li>
@@ -118,7 +120,9 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.auto_transforms">seldon.pipeline.auto_transforms module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.basic_transforms">seldon.pipeline.basic_transforms module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.pipelines">seldon.pipeline.pipelines module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.cross_validation">seldon.pipeline.cross_validation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.pandas_pipelines">seldon.pipeline.pandas_pipelines module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.sklearn_transform">seldon.pipeline.sklearn_transform module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.tfidf_transform">seldon.pipeline.tfidf_transform module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline">Module contents</a></li>
 </ul>
@@ -375,94 +379,268 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-seldon.keras">
+<span id="seldon-keras-module"></span><h2>seldon.keras module<a class="headerlink" href="#module-seldon.keras" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.keras.KerasClassifier">
+<em class="property">class </em><code class="descclassname">seldon.keras.</code><code class="descname">KerasClassifier</code><span class="sig-paren">(</span><em>model_create=&lt;function default_classification_model&gt;</em>, <em>tmp_model='/tmp/model'</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>optimizer='adam'</em>, <em>loss='categorical_crossentropy'</em>, <em>train_batch_size=128</em>, <em>test_batch_size=128</em>, <em>nb_epoch=100</em>, <em>shuffle=True</em>, <em>show_accuracy=False</em>, <em>validation_split=0</em>, <em>validation_data=None</em>, <em>callbacks=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<dl class="method">
+<dt id="seldon.keras.KerasClassifier.__getstate__">
+<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove parts of class that cause issue in pickling. Can recreate them in setstate</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.keras.KerasClassifier.__setstate__">
+<code class="descname">__setstate__</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.__setstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.__setstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create compiled model from parameters. saving model to file and loading it back in</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.keras.KerasClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derived from <a class="reference external" href="https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py">https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py</a>
+Adds:
+Handling pandas inputs
+Saving of model into the class to allow for easy pickling</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>pandas dataframe or array-like</em>) &#8211; training samples</li>
+<li><strong>y</strong> (<em>array like, required for array-like X and not used presently for pandas dataframe</em>) &#8211; class labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>self</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.keras.KerasClassifier.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns class probability estimates for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
+<dd>Test samples</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
+Class probability estimates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="seldon.keras.default_classification_model">
+<code class="descclassname">seldon.keras.</code><code class="descname">default_classification_model</code><span class="sig-paren">(</span><em>input_width</em>, <em>num_classes</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#default_classification_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.default_classification_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default classification model</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.sklearn_estimator">
+<span id="seldon-sklearn-estimator-module"></span><h2>seldon.sklearn_estimator module<a class="headerlink" href="#module-seldon.sklearn_estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.sklearn_estimator.SKLearnClassifier">
+<em class="property">class </em><code class="descclassname">seldon.sklearn_estimator.</code><code class="descname">SKLearnClassifier</code><span class="sig-paren">(</span><em>clf=None</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>vectorizer=None</em>, <em>**sk_args</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<p>Wrapper for XGBoost classifier with pandas support
+XGBoost specific arguments follow <a class="reference external" href="https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py">https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py</a></p>
+<dl class="docutils">
+<dt>clf <span class="classifier-delimiter">:</span> <span class="classifier">sklearn estimator</span></dt>
+<dd>sklearn estimator to run</dd>
+<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Target column</dd>
+<dt>target_readable <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>More descriptive version of target variable</dd>
+<dt>included <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
+<dd>columns to include</dd>
+<dt>excluded <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
+<dd>columns to exclude</dd>
+<dt>id_map <span class="classifier-delimiter">:</span> <span class="classifier">dict (int,str), optional</span></dt>
+<dd>map of class ids to high level names</dd>
+<dt>sk_args <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>extra args for sklearn classifier</dd>
+</dl>
+<dl class="method">
+<dt id="seldon.sklearn_estimator.SKLearnClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an sklearn classifier to data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>pandas dataframe or array-like</em>) &#8211; training samples</li>
+<li><strong>y</strong> (<em>array like, required for array-like X and not used presently for pandas dataframe</em>) &#8211; class labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>self</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.sklearn_estimator.SKLearnClassifier.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns class predictions</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
+<dd>Test samples</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
+Class predictions</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.sklearn_estimator.SKLearnClassifier.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns class probability estimates for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
+<dd>Test samples</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
+Class probability estimates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-seldon.vw">
 <span id="seldon-vw-module"></span><h2>seldon.vw module<a class="headerlink" href="#module-seldon.vw" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.vw.VWSeldon">
-<em class="property">class </em><code class="descclassname">seldon.vw.</code><code class="descname">VWSeldon</code><span class="sig-paren">(</span><em>client=None</em>, <em>awsKey=None</em>, <em>awsSecret=None</em>, <em>zkHosts=None</em>, <em>vwArgs=''</em>, <em>features={}</em>, <em>namespaces={}</em>, <em>include=[]</em>, <em>exclude=None</em>, <em>target=None</em>, <em>weights=None</em>, <em>target_readable=None</em>, <em>dataType='json'</em>, <em>explicitPaths=None</em>, <em>inputPath=None</em>, <em>day=1</em>, <em>outputPath=None</em>, <em>activate=False</em>, <em>train_filename=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper to train a Vowpal Wabbit model for Seldon data</p>
+<dt id="seldon.vw.VWClassifier">
+<em class="property">class </em><code class="descclassname">seldon.vw.</code><code class="descname">VWClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>num_iterations=1</em>, <em>raw_predictions_file='/tmp/raw_predictions'</em>, <em>model_file='/tmp/model'</em>, <em>pid_file='/tmp/vw_pid_file'</em>, <em>vw_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<p>Wrapper for Vowpall Wabbit classifier with pandas support</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>client</strong> (<em>str</em>) &#8211; Name of client. Used to construct input and output full paths if not explicitPaths</li>
-<li><strong>awsKey</strong> (<em>Optional[str]</em>) &#8211; AWS key. Needed if using S3 paths and no IAM</li>
-<li><strong>awsSecret</strong> (<em>Optional[str]</em>) &#8211; AWS secret. Needed if using S3 paths and no IAM</li>
-<li><strong>zkHosts</strong> (<em>Optional[str]</em>) &#8211; zookeeper hosts. Used to get configuation if supplied.</li>
-<li><strong>vwArgs</strong> (<em>Optional[str]</em>) &#8211; training args for vowpal wabbit</li>
-<li><strong>features</strong> (<em>Optional[dict]</em>) &#8211; dictionary of features and how to translate them to VW</li>
-<li><strong>namespaces</strong> (<em>Optional[dict]</em>) &#8211; dictionary of features to the VW namespace to place them</li>
-<li><strong>(Optional[list(str)]</strong> (<em>exclude</em>) &#8211; features to include</li>
-<li><strong>(Optional[list(str)]</strong> &#8211; features to exclude</li>
-<li><strong>target</strong> (<em>Optional[str]</em>) &#8211; name of target feature.</li>
-<li><strong>target_readable</strong> (<em>Optional[str]</em>) &#8211; name of the feature containing human readable target</li>
-<li><strong>dataTtpe</strong> (<em>str</em>) &#8211; json or csv</li>
-<li><strong>explicitPaths</strong> (<em>Optional[str]</em>) &#8211; whether to use the input and output paths as given</li>
-<li><strong>inputPath</strong> (<em>Optional[str]</em>) &#8211; input path for features to train</li>
-<li><strong>outputPath</strong> (<em>Optional[str]</em>) &#8211; output path for vw model</li>
-<li><strong>day</strong> (<em>int</em>) &#8211; unix day number. Used to construct location of data</li>
-<li><strong>activate</strong> (<em>boolean</em>) &#8211; whether to update zookeeper with location of new model</li>
-<li><strong>train_filename</strong> (<em>Optional(str)</em>) &#8211; name of filename to create with vw training lines rather then use wabbit_wappa directly</li>
+<li><strong>target</strong> (<em>str</em>) &#8211; Target column</li>
+<li><strong>target_readable</strong> (<em>str</em>) &#8211; More descriptive version of target variable</li>
+<li><strong>included</strong> (<em>list str, optional</em>) &#8211; columns to include</li>
+<li><strong>excluded</strong> (<em>list str, optional</em>) &#8211; columns to exclude</li>
+<li><strong>id_map</strong> (<em>dict (int,str), optional</em>) &#8211; map of class ids to high level names</li>
+<li><strong>num_iterations</strong> (<em>int</em>) &#8211; number of iterations over data to run vw</li>
+<li><strong>raw_predictions_file</strong> (<em>str</em>) &#8211; file to push raw predictions from vw to</li>
+<li><strong>model_file</strong> (<em>str</em>) &#8211; model filename</li>
+<li><strong>pid_file</strong> (<em>str</em>) &#8211; file to store pid of vw server so we can terminate it</li>
+<li><strong>vw_args</strong> (<em>optional dict</em>) &#8211; extra args to pass to vw</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.vw.VWSeldon.activateModel">
-<code class="descname">activateModel</code><span class="sig-paren">(</span><em>client</em>, <em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.activateModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.activateModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>activate vw model in zookeeper</p>
+<dt id="seldon.vw.VWClassifier.__getstate__">
+<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove things that should not be pickled</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.vw.VWSeldon.convertJsonFeature">
-<code class="descname">convertJsonFeature</code><span class="sig-paren">(</span><em>conversion</em>, <em>ns</em>, <em>name</em>, <em>val</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.convertJsonFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.convertJsonFeature" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert feature into vw feature</p>
-<p>if number create a feature:value vw feature else create a categorical feature from the feature name and value</p>
+<dt id="seldon.vw.VWClassifier.__setstate__">
+<code class="descname">__setstate__</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.__setstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.__setstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add thread based variables when creating</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.vw.VWSeldon.create_vw">
-<code class="descname">create_vw</code><span class="sig-paren">(</span><em>vwArgs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.create_vw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.create_vw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create wabbit_wappa vw instance for creating the training lines and possibly doing the training</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="seldon.vw.VWSeldon.is_number">
-<em class="property">static </em><code class="descname">is_number</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.is_number" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seldon.vw.VWSeldon.jsonToVw">
-<code class="descname">jsonToVw</code><span class="sig-paren">(</span><em>j</em>, <em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.jsonToVw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.jsonToVw" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert a dict of features into vw line</p>
-<p>Will include and exclude features as defined args.
-Add weights and puts features into namespaces as directed.</p>
+<dt id="seldon.vw.VWClassifier.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutdown the vw process</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.vw.VWSeldon.process">
-<code class="descname">process</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.process" title="Permalink to this definition">¶</a></dt>
-<dd><p>process the lines from the input and turn into vw lines</p>
+<dt id="seldon.vw.VWClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert data to vw lines and then train for required iterations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>pandas dataframe or array-like</em>) &#8211; training samples</li>
+<li><strong>y</strong> (<em>array like, required for array-like X and not used presently for pandas dataframe</em>) &#8211; class labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>self</strong> (<em>object</em>)</li>
+<li><em>Caveats</em></li>
+<li><strong>1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https</strong> (<em>//github.com/JohnLangford/vowpal_wabbit/issues/262</em>)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.vw.VWSeldon.save_data">
-<code class="descname">save_data</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.save_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.save_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>save data to local file</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.vw.VWSeldon.save_target_map">
-<code class="descname">save_target_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.save_target_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.save_target_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>save mapping of target ids to their descriptive meanings</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.vw.VWSeldon.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>train_filename=None</em>, <em>vw_command=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWSeldon.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWSeldon.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>train a vw model from input and save to output</p>
+<dt id="seldon.vw.VWClassifier.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create predictions. Start a vw process. Convert data to vw format and send.
+Returns class probability estimates for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
+<dd>Test samples</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>proba</strong> (<em>array-like, shape = (n_samples, n_outputs)</em>) &#8211;
+Class probability estimates.</li>
+<li><em>Caveats</em></li>
+<li><strong>1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https</strong> (<em>//github.com/JohnLangford/vowpal_wabb#it/issues/262</em>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -471,152 +649,107 @@ Add weights and puts features into namespaces as directed.</p>
 <div class="section" id="module-seldon.xgb">
 <span id="seldon-xgb-module"></span><h2>seldon.xgb module<a class="headerlink" href="#module-seldon.xgb" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.xgb.XGBoostSeldon">
-<em class="property">class </em><code class="descclassname">seldon.xgb.</code><code class="descname">XGBoostSeldon</code><span class="sig-paren">(</span><em>client=None</em>, <em>awsKey=None</em>, <em>awsSecret=None</em>, <em>zkHosts=None</em>, <em>svmFeatures={}</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>zeroBased=False</em>, <em>inputPath=None</em>, <em>day=1</em>, <em>outputPath=None</em>, <em>activate=False</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seldon wrapper for training XGBoost models</p>
-<blockquote>
-<div>Input from local or S3. Files can be JSON or a single CSV file.
-Output model to local or S3.</div></blockquote>
+<dt id="seldon.xgb.XGBoostClassifier">
+<em class="property">class </em><code class="descclassname">seldon.xgb.</code><code class="descname">XGBoostClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>clf=None</em>, <em>id_map={}</em>, <em>vectorizer=None</em>, <em>dict_feature=None</em>, <em>max_depth=3</em>, <em>learning_rate=0.1</em>, <em>n_estimators=100</em>, <em>silent=True</em>, <em>objective='reg:linear'</em>, <em>nthread=-1</em>, <em>gamma=0</em>, <em>min_child_weight=1</em>, <em>max_delta_step=0</em>, <em>subsample=1</em>, <em>colsample_bytree=1</em>, <em>colsample_bylevel=1</em>, <em>reg_alpha=0</em>, <em>reg_lambda=1</em>, <em>scale_pos_weight=1</em>, <em>base_score=0.5</em>, <em>seed=0</em>, <em>missing=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<p>Wrapper for XGBoost classifier with pandas support
+XGBoost specific arguments follow <a class="reference external" href="https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py">https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py</a></p>
+<dl class="docutils">
+<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Target column</dd>
+<dt>target_readable <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>More descriptive version of target variable</dd>
+<dt>included <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
+<dd>columns to include</dd>
+<dt>excluded <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
+<dd>columns to exclude</dd>
+<dt>id_map <span class="classifier-delimiter">:</span> <span class="classifier">dict (int,str), optional</span></dt>
+<dd>map of class ids to high level names</dd>
+<dt>num_iterations <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>number of iterations over data to run vw</dd>
+<dt>raw_predictions <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>file to push raw predictions from vw to</dd>
+<dt>max_depth <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Maximum tree depth for base learners.</dd>
+<dt>learning_rate <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Boosting learning rate (xgb&#8217;s &#8220;eta&#8221;)</dd>
+<dt>n_estimators <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of boosted trees to fit.</dd>
+<dt>silent <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Whether to print messages while running boosting.</dd>
+<dt>objective <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Specify the learning task and the corresponding learning objective.</dd>
+<dt>nthread <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of parallel threads used to run xgboost.</dd>
+<dt>gamma <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Minimum loss reduction required to make a further partition on a leaf node of the tree.</dd>
+<dt>min_child_weight <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Minimum sum of instance weight(hessian) needed in a child.</dd>
+<dt>max_delta_step <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Maximum delta step we allow each tree&#8217;s weight estimation to be.</dd>
+<dt>subsample <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Subsample ratio of the training instance.</dd>
+<dt>colsample_bytree <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Subsample ratio of columns when constructing each tree.</dd>
+<dt>colsample_bylevel <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Subsample ratio of columns for each split, in each level.</dd>
+<dt>reg_alpha <span class="classifier-delimiter">:</span> <span class="classifier">float (xgb&#8217;s alpha)</span></dt>
+<dd>L2 regularization term on weights</dd>
+<dt>reg_lambda <span class="classifier-delimiter">:</span> <span class="classifier">float (xgb&#8217;s lambda)</span></dt>
+<dd>L1 regularization term on weights</dd>
+<dt>scale_pos_weight <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Balancing of positive and negative weights.</dd>
+<dt>base_score:</dt>
+<dd>The initial prediction score of all instances, global bias.</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Random number seed.</dd>
+<dt>missing <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
+<dd>Value in the data which needs to be present as a missing value. If
+None, defaults to np.nan.</dd>
+</dl>
+<dl class="method">
+<dt id="seldon.xgb.XGBoostClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a model:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>client</strong> (<em>str</em>) &#8211; Name of client. Used to construct input and output full paths if not explicitPaths</li>
-<li><strong>awsKey</strong> (<em>Optional[str]</em>) &#8211; AWS key. Needed if using S3 paths and no IAM</li>
-<li><strong>awsSecret</strong> (<em>Optional[str]</em>) &#8211; AWS secret. Needed if using S3 paths and no IAM</li>
-<li><strong>zkHosts</strong> (<em>Optional[str]</em>) &#8211; zookeeper hosts. Used to get configuation if supplied.</li>
-<li><strong>svmFeatures</strong> (<em>Optional[dict]</em>) &#8211; dictionary of svm (numeric key) features to their values</li>
-<li><strong>target</strong> (<em>Optional[str]</em>) &#8211; name of target feature.</li>
-<li><strong>target_readable</strong> (<em>Optional[str]</em>) &#8211; name of the feature containing human readable target</li>
-<li><strong>inputPath</strong> (<em>Optional[str]</em>) &#8211; input path for features to train</li>
-<li><strong>outputPath</strong> (<em>Optional[str]</em>) &#8211; output path for vw model</li>
-<li><strong>day</strong> (<em>int</em>) &#8211; unix day number. Used to construct location of data</li>
-<li><strong>activate</strong> (<em>boolean</em>) &#8211; whether to update zookeeper with location of new model</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>pandas dataframe or array-like</em>) &#8211; training samples. If pandas dataframe can handle dict of feature in one column or cnvert a set of columns</li>
+<li><strong>y</strong> (<em>array like, required for array-like X and not used presently for pandas dataframe</em>) &#8211; class labels</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>self</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.activateModel">
-<code class="descname">activateModel</code><span class="sig-paren">(</span><em>client</em>, <em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.activateModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.activateModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>activate vw model in zookeeper</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.generate_dmatrix">
-<code class="descname">generate_dmatrix</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.generate_dmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.generate_dmatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>generate dmatrix from input for xgboost model</p>
+<dt id="seldon.xgb.XGBoostClassifier.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns class probability estimates for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
+<dd>Test samples</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>features</strong> (<em>dict</em>) &#8211; dictionary of features to score</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
+Class probability estimates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
 </tr>
 </tbody>
 </table>
-<p>Returns: generated dmatricx</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.get_accuracy">
-<code class="descname">get_accuracy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.get_accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.get_accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><p>get accuracy of test</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.jsonToSvm">
-<code class="descname">jsonToSvm</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.jsonToSvm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.jsonToSvm" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert dictionary to svm line</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>j</strong> (<em>dict</em>) &#8211; dictionary of SVM features. Assumes numeric keys which can be sorted and numeric values</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.load_models">
-<code class="descname">load_models</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.load_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.load_models" title="Permalink to this definition">¶</a></dt>
-<dd><p>load an xgboost model</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>features</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>predict againts a model using features</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>features</strong> (<em>dict</em>) &#8211; features to predict against</td>
-</tr>
-</tbody>
-</table>
-<p>Returns: predictions</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.predict_json">
-<code class="descname">predict_json</code><span class="sig-paren">(</span><em>j</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.predict_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>predict against a model features in j</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>j</strong> (<em>dict</em>) &#8211; dictionary of features</td>
-</tr>
-</tbody>
-</table>
-<p>Returns: scores for each class</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.predict_line">
-<code class="descname">predict_line</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.predict_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.predict_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>predict line against a model</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) &#8211; input feature line in SVM format</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.process">
-<code class="descname">process</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.process" title="Permalink to this definition">¶</a></dt>
-<dd><p>process the lines from the input and turn into SVMLight lines</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.save_target_map">
-<code class="descname">save_target_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.save_target_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.save_target_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>save mapping of target ids to their descriptive meanings</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.test">
-<code class="descname">test</code><span class="sig-paren">(</span><em>test_features_path</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.test" title="Permalink to this definition">¶</a></dt>
-<dd><p>test model against features from file</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.train">
-<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>train an XGBoost model using features from inputPath and putting model in outputPath</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.xgb.XGBoostSeldon.train_model">
-<code class="descname">train_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostSeldon.train_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostSeldon.train_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>train an xgboost model from generated SVM features file</p>
 </dd></dl>
 
 </dd></dl>

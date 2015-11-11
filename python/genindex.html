@@ -67,6 +67,8 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
@@ -118,9 +120,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#J"><strong>J</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -133,12 +133,24 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.CsvDataSet.__iter__">__iter__() (seldon.pipeline.pipelines.CsvDataSet method)</a>
+  <dt><a href="seldon.html#seldon.keras.KerasClassifier.__getstate__">__getstate__() (seldon.keras.KerasClassifier method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.JsonDataSet.__iter__">(seldon.pipeline.pipelines.JsonDataSet method)</a>
+  <dt><a href="seldon.html#seldon.vw.VWClassifier.__getstate__">(seldon.vw.VWClassifier method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.keras.KerasClassifier.__setstate__">__setstate__() (seldon.keras.KerasClassifier method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.html#seldon.vw.VWClassifier.__setstate__">(seldon.vw.VWClassifier method)</a>
   </dt>
 
       </dl></dd>
@@ -147,22 +159,6 @@
 
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.activateModel">activateModel() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.activateModel">(seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.add">add() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-  </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform">Auto_transform (class in seldon.pipeline.auto_transforms)</a>
@@ -175,6 +171,12 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator">BasePandasEstimator (class in seldon.pipeline.pandas_pipelines)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
   <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform">Binary_transform (class in seldon.pipeline.basic_transforms)</a>
   </dt>
 
@@ -185,21 +187,29 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.convert_dataframe">convert_dataframe() (seldon.pipeline.pipelines.Pipeline method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.close">close() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.html#seldon.vw.VWClassifier.close">(seldon.vw.VWClassifier method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.convert_dataframe">convert_dataframe() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
       
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.convertJsonFeature">convertJsonFeature() (seldon.vw.VWSeldon method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.convert_numpy">convert_numpy() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
       
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.copy">copy() (seldon.fileutil.FileUtil method)</a>
   </dt>
 
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.copy_features_locally">copy_features_locally() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.copy_local">copy_local() (seldon.fileutil.FileUtil method)</a>
   </dt>
@@ -208,30 +218,8 @@
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.copy_s3_file">copy_s3_file() (seldon.fileutil.FileUtil method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.create_dayofweek_features">create_dayofweek_features() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.create_hour_features">create_hour_features() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.create_month_features">create_month_features() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.create_tfidf">create_tfidf() (seldon.pipeline.tfidf_transform.Tfidf_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.create_vw">create_vw() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.CsvDataSet">CsvDataSet (class in seldon.pipeline.pipelines)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.create_class_id_map">create_class_id_map() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
   </dl></td>
@@ -241,7 +229,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.download_models">download_models() (seldon.pipeline.pipelines.Pipeline method)</a>
+  <dt><a href="seldon.html#seldon.keras.default_classification_model">default_classification_model() (in module seldon.keras)</a>
   </dt>
 
   </dl></td>
@@ -256,6 +244,10 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.encode_onehot">encode_onehot() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
+  </dt>
+
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform">Exclude_features_transform (class in seldon.pipeline.basic_transforms)</a>
   </dt>
@@ -277,20 +269,20 @@
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform">Feature_transform (class in seldon.pipeline.pipelines)</a>
-  </dt>
-
-      
   <dt><a href="seldon.html#seldon.fileutil.FileUtil">FileUtil (class in seldon.fileutil)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.fit">fit() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
+  <dt><a href="seldon.html#seldon.keras.KerasClassifier.fit">fit() (seldon.keras.KerasClassifier method)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.fit">(seldon.pipeline.auto_transforms.Auto_transform method)</a>
+  </dt>
+
         
   <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform.fit">(seldon.pipeline.basic_transforms.Binary_transform method)</a>
   </dt>
@@ -320,26 +312,30 @@
   </dt>
 
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.fit">(seldon.pipeline.pipelines.Feature_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.fit">(seldon.pipeline.cross_validation.Seldon_KFold method)</a>
   </dt>
 
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.fit">(seldon.pipeline.pipelines.Pipeline method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.sklearn_transform.sklearn_transform.fit">(seldon.pipeline.sklearn_transform.sklearn_transform method)</a>
   </dt>
 
         
   <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.fit">(seldon.pipeline.tfidf_transform.Tfidf_transform method)</a>
   </dt>
 
+        
+  <dt><a href="seldon.html#seldon.sklearn_estimator.SKLearnClassifier.fit">(seldon.sklearn_estimator.SKLearnClassifier method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.html#seldon.vw.VWClassifier.fit">(seldon.vw.VWClassifier method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.html#seldon.xgb.XGBoostClassifier.fit">(seldon.xgb.XGBoostClassifier method)</a>
+  </dt>
+
       </dl></dd>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.fit_transform">fit_transform() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.full_class_name">full_class_name() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
@@ -347,69 +343,25 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.generate_dmatrix">generate_dmatrix() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.get_accuracy">get_accuracy() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_added_features">get_added_features() (seldon.pipeline.pipelines.Feature_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.get_class">get_class() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_log_prefix">get_log_prefix() (seldon.pipeline.pipelines.Feature_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.get_models">get_models() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_class_id_map">get_class_id_map() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform.get_models">(seldon.pipeline.basic_transforms.Binary_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform.get_models">(seldon.pipeline.basic_transforms.Exclude_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform.get_models">(seldon.pipeline.basic_transforms.Exist_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform.get_models">(seldon.pipeline.basic_transforms.Feature_id_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Include_features_transform.get_models">(seldon.pipeline.basic_transforms.Include_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.get_models">(seldon.pipeline.basic_transforms.Split_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.get_models">(seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.get_models">(seldon.pipeline.pipelines.Feature_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.get_models">(seldon.pipeline.tfidf_transform.Tfidf_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.get_class_id_map">(seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
       </dl></dd>
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_scores">get_scores() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.get_target">get_target() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.get_tokens">get_tokens() (seldon.pipeline.tfidf_transform.Tfidf_transform method)</a>
   </dt>
@@ -429,89 +381,15 @@
   </dt>
 
   </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.is_number">is_number() (seldon.pipeline.auto_transforms.Auto_transform static method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.is_number">(seldon.pipeline.basic_transforms.Split_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.is_number">(seldon.pipeline.basic_transforms.Svmlight_transform static method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.is_number">(seldon.vw.VWSeldon static method)</a>
-  </dt>
-
-      </dl></dd>
-  </dl></td>
 </tr></table>
 
-<h2 id="J">J</h2>
+<h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.JsonDataSet">JsonDataSet (class in seldon.pipeline.pipelines)</a>
+  <dt><a href="seldon.html#seldon.keras.KerasClassifier">KerasClassifier (class in seldon.keras)</a>
   </dt>
 
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.jsonToSvm">jsonToSvm() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.jsonToVw">jsonToVw() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.load_models">load_models() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.load_models">(seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      </dl></dd>
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.load_pipeline">load_pipeline() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.make_cat">make_cat() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform.map">map() (seldon.pipeline.basic_transforms.Feature_id_transform method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.map">(seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -519,30 +397,36 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline">Pipeline (class in seldon.pipeline.pipelines)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.predict">predict() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.predict_json">predict_json() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.predict_line">predict_line() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.process">process() (seldon.vw.VWSeldon method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.predict">predict() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.process">(seldon.xgb.XGBoostSeldon method)</a>
+  <dt><a href="seldon.html#seldon.sklearn_estimator.SKLearnClassifier.predict">(seldon.sklearn_estimator.SKLearnClassifier method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.keras.KerasClassifier.predict_proba">predict_proba() (seldon.keras.KerasClassifier method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.predict_proba">(seldon.pipeline.cross_validation.Seldon_KFold method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.html#seldon.sklearn_estimator.SKLearnClassifier.predict_proba">(seldon.sklearn_estimator.SKLearnClassifier method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.html#seldon.vw.VWClassifier.predict_proba">(seldon.vw.VWClassifier method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.html#seldon.xgb.XGBoostClassifier.predict_proba">(seldon.xgb.XGBoostClassifier method)</a>
   </dt>
 
       </dl></dd>
@@ -553,41 +437,15 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.save_data">save_data() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.save_dataframe">save_dataframe() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.save_features_local">save_features_local() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.save_pipeline">save_pipeline() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.save_target_map">save_target_map() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.save_target_map">(seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.scale">scale() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      
   <dt><a href="seldon.html#module-seldon">seldon (module)</a>
   </dt>
 
       
   <dt><a href="seldon.html#module-seldon.fileutil">seldon.fileutil (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.html#module-seldon.keras">seldon.keras (module)</a>
   </dt>
 
       
@@ -603,11 +461,23 @@
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#module-seldon.pipeline.pipelines">seldon.pipeline.pipelines (module)</a>
+  <dt><a href="seldon.pipeline.html#module-seldon.pipeline.cross_validation">seldon.pipeline.cross_validation (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.pipeline.html#module-seldon.pipeline.pandas_pipelines">seldon.pipeline.pandas_pipelines (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.pipeline.html#module-seldon.pipeline.sklearn_transform">seldon.pipeline.sklearn_transform (module)</a>
   </dt>
 
       
   <dt><a href="seldon.pipeline.html#module-seldon.pipeline.tfidf_transform">seldon.pipeline.tfidf_transform (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator (module)</a>
   </dt>
 
       
@@ -618,84 +488,26 @@
   <dt><a href="seldon.html#module-seldon.xgb">seldon.xgb (module)</a>
   </dt>
 
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.set_id">set_id() (seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_input_feature">set_input_feature() (seldon.pipeline.pipelines.Feature_transform method)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_logging">set_logging() (seldon.pipeline.pipelines.Feature_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold">Seldon_KFold (class in seldon.pipeline.cross_validation)</a>
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.set_models">set_models() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform.set_models">(seldon.pipeline.basic_transforms.Binary_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform.set_models">(seldon.pipeline.basic_transforms.Exclude_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform.set_models">(seldon.pipeline.basic_transforms.Exist_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform.set_models">(seldon.pipeline.basic_transforms.Feature_id_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Include_features_transform.set_models">(seldon.pipeline.basic_transforms.Include_features_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.set_models">(seldon.pipeline.basic_transforms.Split_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.set_models">(seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_models">(seldon.pipeline.pipelines.Feature_transform method)</a>
-  </dt>
-
-        
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.set_models">(seldon.pipeline.tfidf_transform.Tfidf_transform method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_output_feature">set_output_feature() (seldon.pipeline.pipelines.Feature_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.set_class_id_map">set_class_id_map() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.set_pipeline_pos">set_pipeline_pos() (seldon.pipeline.pipelines.Feature_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.sklearn_transform.sklearn_transform">sklearn_transform (class in seldon.pipeline.sklearn_transform)</a>
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.split">split() (seldon.pipeline.basic_transforms.Split_transform method)</a>
+  <dt><a href="seldon.html#seldon.sklearn_estimator.SKLearnClassifier">SKLearnClassifier (class in seldon.sklearn_estimator)</a>
   </dt>
 
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform">Split_transform (class in seldon.pipeline.basic_transforms)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.store_features">store_features() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.store_models">store_models() (seldon.pipeline.pipelines.Pipeline method)</a>
   </dt>
 
       
@@ -737,37 +549,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.test">test() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      
   <dt><a href="seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform">Tfidf_transform (class in seldon.pipeline.tfidf_transform)</a>
   </dt>
 
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.to_date">to_date() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.toDict">toDict() (seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.html#seldon.vw.VWSeldon.train">train() (seldon.vw.VWSeldon method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.train">(seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
-      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon.train_model">train_model() (seldon.xgb.XGBoostSeldon method)</a>
-  </dt>
-
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.transform">transform() (seldon.pipeline.auto_transforms.Auto_transform method)</a>
   </dt>
@@ -802,11 +588,11 @@
   </dt>
 
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Feature_transform.transform">(seldon.pipeline.pipelines.Feature_transform method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.transform">(seldon.pipeline.cross_validation.Seldon_KFold method)</a>
   </dt>
 
         
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform">(seldon.pipeline.pipelines.Pipeline method)</a>
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.sklearn_transform.sklearn_transform.transform">(seldon.pipeline.sklearn_transform.sklearn_transform method)</a>
   </dt>
 
         
@@ -814,29 +600,11 @@
   </dt>
 
       </dl></dd>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform_init">transform_init() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.transform_json">transform_json() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.union">union() (seldon.pipeline.basic_transforms.Svmlight_transform method)</a>
-  </dt>
-
-      
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.pipelines.Pipeline.upload_models">upload_models() (seldon.pipeline.pipelines.Pipeline method)</a>
-  </dt>
-
-  </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.upload_s3">upload_s3() (seldon.fileutil.FileUtil method)</a>
@@ -849,7 +617,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.html#seldon.vw.VWSeldon">VWSeldon (class in seldon.vw)</a>
+  <dt><a href="seldon.html#seldon.vw.VWClassifier">VWClassifier (class in seldon.vw)</a>
   </dt>
 
   </dl></td>
@@ -859,7 +627,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="seldon.html#seldon.xgb.XGBoostSeldon">XGBoostSeldon (class in seldon.xgb)</a>
+  <dt><a href="seldon.html#seldon.xgb.XGBoostClassifier">XGBoostClassifier (class in seldon.xgb)</a>
   </dt>
 
   </dl></td>

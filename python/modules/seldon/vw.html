@@ -67,6 +67,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
@@ -110,279 +112,351 @@
   <h1>Source code for seldon.vw</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">fileutil</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">kazoo.client</span> <span class="kn">import</span> <span class="n">KazooClient</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">wabbit_wappa</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
-<span class="kn">import</span> <span class="nn">seldon.pipeline.pipelines</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">Queue</span><span class="o">,</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">seldon.pipeline.pandas_pipelines</span> <span class="kn">import</span> <span class="n">BasePandasEstimator</span> 
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_X_y</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_array</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span>
 
-<div class="viewcode-block" id="VWSeldon"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon">[docs]</a><span class="k">class</span> <span class="nc">VWSeldon</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Wrapper to train a Vowpal Wabbit model for Seldon data</span>
+<div class="viewcode-block" id="VWClassifier"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier">[docs]</a><span class="k">class</span> <span class="nc">VWClassifier</span><span class="p">(</span><span class="n">BasePandasEstimator</span><span class="p">,</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper for Vowpall Wabbit classifier with pandas support</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        client (str): Name of client. Used to construct input and output full paths if not explicitPaths</span>
-
-<span class="sd">        awsKey (Optional[str]): AWS key. Needed if using S3 paths and no IAM</span>
-
-<span class="sd">        awsSecret (Optional[str]): AWS secret. Needed if using S3 paths and no IAM</span>
-
-<span class="sd">        zkHosts (Optional[str]): zookeeper hosts. Used to get configuation if supplied.</span>
-
-<span class="sd">        vwArgs (Optional[str]): training args for vowpal wabbit</span>
-
-<span class="sd">        features (Optional[dict]): dictionary of features and how to translate them to VW</span>
-
-<span class="sd">        namespaces (Optional[dict]): dictionary of features to the VW namespace to place them</span>
-
-<span class="sd">        include (Optional[list(str)]: features to include</span>
-
-<span class="sd">        exclude (Optional[list(str)]: features to exclude</span>
-
-<span class="sd">        target (Optional[str]): name of target feature.</span>
-
-<span class="sd">        target_readable (Optional[str]): name of the feature containing human readable target</span>
-
-<span class="sd">        dataTtpe (str): json or csv</span>
-
-<span class="sd">        explicitPaths (Optional[str]): whether to use the input and output paths as given</span>
-
-<span class="sd">        inputPath (Optional[str]): input path for features to train</span>
-
-<span class="sd">        outputPath (Optional[str]): output path for vw model</span>
-
-<span class="sd">        day (int): unix day number. Used to construct location of data</span>
-
-<span class="sd">        activate (boolean): whether to update zookeeper with location of new model</span>
-
-<span class="sd">        train_filename (Optional(str)): name of filename to create with vw training lines rather then use wabbit_wappa directly</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">           </span>
+<span class="sd">    target : str</span>
+<span class="sd">       Target column</span>
+<span class="sd">    target_readable : str</span>
+<span class="sd">       More descriptive version of target variable</span>
+<span class="sd">    included : list str, optional</span>
+<span class="sd">       columns to include</span>
+<span class="sd">    excluded : list str, optional</span>
+<span class="sd">       columns to exclude</span>
+<span class="sd">    id_map : dict (int,str), optional</span>
+<span class="sd">       map of class ids to high level names</span>
+<span class="sd">    num_iterations : int</span>
+<span class="sd">       number of iterations over data to run vw</span>
+<span class="sd">    raw_predictions_file : str</span>
+<span class="sd">       file to push raw predictions from vw to</span>
+<span class="sd">    model_file : str</span>
+<span class="sd">       model filename</span>
+<span class="sd">    pid_file : str</span>
+<span class="sd">       file to store pid of vw server so we can terminate it</span>
+<span class="sd">    vw_args : optional dict </span>
+<span class="sd">       extra args to pass to vw</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">raw_predictions_file</span><span class="o">=</span><span class="s">&quot;/tmp/raw_predictions&quot;</span><span class="p">,</span><span class="n">model_file</span><span class="o">=</span><span class="s">&quot;/tmp/model&quot;</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="s">&#39;/tmp/vw_pid_file&#39;</span><span class="p">,</span><span class="n">vw_args</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">VWClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">target_readable</span><span class="p">,</span><span class="n">included</span><span class="p">,</span><span class="n">excluded</span><span class="p">,</span><span class="n">id_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="o">=</span><span class="s">&quot;/tmp/model&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_suffix</span><span class="o">=</span><span class="s">&quot;_params&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_suffix</span><span class="o">=</span><span class="s">&quot;_model&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="o">=</span><span class="n">raw_predictions_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>         
+        <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span> <span class="o">=</span> <span class="n">pid_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vw_args</span> <span class="o">=</span> <span class="n">vw_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">awsKey</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">awsSecret</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">zkHosts</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">vwArgs</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="p">{},</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{},</span><span class="n">include</span><span class="o">=</span><span class="p">[],</span><span class="n">exclude</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">dataType</span><span class="o">=</span><span class="s">&quot;json&quot;</span><span class="p">,</span><span class="n">explicitPaths</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">inputPath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">outputPath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">activate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">train_filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span> <span class="o">=</span> <span class="n">awsKey</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span> <span class="o">=</span> <span class="n">awsSecret</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">zkHosts</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;connecting to zookeeper at &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="o">=</span> <span class="n">KazooClient</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__merge_conf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vwArgs</span> <span class="o">=</span> <span class="n">vwArgs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_vw</span><span class="p">(</span><span class="n">vwArgs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">features</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fns</span> <span class="o">=</span> <span class="n">namespaces</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">include</span> <span class="o">=</span> <span class="n">include</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
-        <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;label&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span> <span class="o">=</span> <span class="n">exclude</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span> <span class="o">=</span> <span class="n">target_readable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">dataType</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">explicit_paths</span> <span class="o">=</span> <span class="n">explicitPaths</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">=</span> <span class="n">inputPath</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="n">outputPath</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="n">day</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">activate</span> <span class="o">=</span> <span class="n">activate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_filename</span> <span class="o">=</span> <span class="n">train_filename</span>
-
-        
-<div class="viewcode-block" id="VWSeldon.activateModel"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.activateModel">[docs]</a>    <span class="k">def</span> <span class="nf">activateModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">client</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;activate vw model in zookeeper</span>
+<div class="viewcode-block" id="VWClassifier.__getstate__"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.__getstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove things that should not be pickled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="s">&quot;/all_clients/&quot;</span><span class="o">+</span><span class="n">client</span><span class="o">+</span><span class="s">&quot;/vw&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;Activating model in zookeper at node &quot;</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="s">&quot; with data &quot;</span><span class="p">,</span><span class="n">folder</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">folder</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">makepath</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;model_saved&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;vw&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;tailq&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;raw_predictions_thread_running&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
 </div>
-    <span class="k">def</span> <span class="nf">__merge_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">client</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;merge zookeeper configuration into class</span>
+<div class="viewcode-block" id="VWClassifier.__setstate__"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.__setstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add thread based variables when creating</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">thePath</span> <span class="o">=</span> <span class="s">&quot;/all_clients/&quot;</span><span class="o">+</span><span class="n">client</span><span class="o">+</span><span class="s">&quot;/offline/vw&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">thePath</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;merging conf from zookeeper&quot;</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">thePath</span><span class="p">)</span>
-            <span class="n">zk_conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">zk_conf</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zk_conf</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>      
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span><span class="o">=</span><span class="bp">False</span>
+            </div>
+    <span class="k">def</span> <span class="nf">_wait_model_saved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Hack to wait for vw model to finish saving. It creates a file &lt;model&gt;.writing during this process</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;waiting for &quot;</span><span class="p">,</span><span class="n">fname</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;sleeping until model is saved&quot;</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save vw model from running vw instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_model_saved</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s">&quot;.writing&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_write_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the vw model to file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelfile</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+            <span class="n">modelfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="bp">True</span>
+
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="VWSeldon.is_number"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.is_number">[docs]</a>    <span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_is_number</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
-</div>
-<div class="viewcode-block" id="VWSeldon.convertJsonFeature"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.convertJsonFeature">[docs]</a>    <span class="k">def</span> <span class="nf">convertJsonFeature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">conversion</span><span class="p">,</span><span class="n">ns</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;convert feature into vw feature</span>
-<span class="sd">           </span>
-<span class="sd">           if number create a feature:value vw feature else create a categorical feature from the feature name and value</span>
+
+    <span class="k">def</span> <span class="nf">_get_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a vw feature from name and value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">conversion</span> <span class="o">==</span> <span class="s">&quot;split&quot;</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="n">ns</span> <span class="o">=</span> <span class="n">ns</span> <span class="o">+</span> <span class="n">f</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
-                <span class="n">ns</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">val</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">ns</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)))</span>
-</div>
-<div class="viewcode-block" id="VWSeldon.jsonToVw"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.jsonToVw">[docs]</a>    <span class="k">def</span> <span class="nf">jsonToVw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;convert a dict of features into vw line</span>
-<span class="sd">        </span>
-<span class="sd">        Will include and exclude features as defined args. </span>
-<span class="sd">        Add weights and puts features into namespaces as directed.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_convert_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row</span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert a dataframe row into a vw line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ns</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fns</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="o">==</span> <span class="s">&quot;label&quot;</span><span class="p">:</span>
-                <span class="n">ns</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">importance</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">include</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fns</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fns</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;def&#39;</span>
-            <span class="n">ns_f</span> <span class="o">=</span> <span class="n">ns</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fns</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
-            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
-                <span class="n">conversion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> 
-                <span class="k">if</span> <span class="n">conversion</span> <span class="o">==</span> <span class="s">&quot;split&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">convertJsonFeature</span><span class="p">(</span><span class="n">conversion</span><span class="p">,</span><span class="n">ns_f</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>                    
-                <span class="k">elif</span> <span class="n">conversion</span> <span class="o">==</span> <span class="s">&quot;label&quot;</span><span class="p">:</span>
-                    <span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="ow">and</span> <span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">:</span>
-                        <span class="n">importance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
-                    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
-                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">basestring</span><span class="p">):</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">convertJsonFeature</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">ns_f</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">convertJsonFeature</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">ns_f</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-                    <span class="k">for</span> <span class="n">k2</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">convertJsonFeature</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">ns_f</span><span class="p">,</span><span class="n">k2</span><span class="p">,</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k2</span><span class="p">])</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">convertJsonFeature</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="n">ns_f</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">j</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">ns</span><span class="p">[</span><span class="s">&quot;def&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">basestring</span><span class="p">):</span>
+                    <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="n">ns</span><span class="p">[</span><span class="s">&quot;def&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+                        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span><span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
+                                <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+                        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
+                                <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">:</span>
+                <span class="n">target</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">namespaces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="o">==</span> <span class="s">&#39;def&#39;</span><span class="p">:</span>
                 <span class="n">namespaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Namespace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">make_line</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">label</span><span class="p">,</span><span class="n">importance</span><span class="o">=</span><span class="n">importance</span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">],</span><span class="n">namespaces</span><span class="o">=</span><span class="n">namespaces</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">make_line</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">label</span><span class="p">,</span><span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">],</span><span class="n">namespaces</span><span class="o">=</span><span class="n">namespaces</span><span class="p">)</span>
-        </div>
-<div class="viewcode-block" id="VWSeldon.create_vw"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.create_vw">[docs]</a>    <span class="k">def</span> <span class="nf">create_vw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">vwArgs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create wabbit_wappa vw instance for creating the training lines and possibly doing the training</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">make_line</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">target</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">],</span><span class="n">namespaces</span><span class="o">=</span><span class="n">namespaces</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>        
+    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span> <span class="n">predictions</span> <span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">predictions</span> <span class="p">)</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">:</span>
+            <span class="n">normalized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">p</span> <span class="o">/</span> <span class="n">s</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="n">normalized</span>  
+
+    <span class="k">def</span> <span class="nf">_start_raw_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start a thread to tail the raw predictions file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;vw --save_resume --predictions /dev/stdout --quiet &quot;</span><span class="o">+</span><span class="n">vwArgs</span> <span class="o">+</span> <span class="s">&quot; --readable_model ./model.readable&quot;</span>
-        <span class="k">print</span> <span class="n">command</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">)</span>
-        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">command</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span><span class="p">:</span>
+            <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_tail_forever</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="p">,))</span>
+            <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="VWClassifier.close"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shutdown the vw process</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;terminating pid &quot;</span><span class="p">,</span><span class="n">line</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span>
+
 </div>
-<div class="viewcode-block" id="VWSeldon.process"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;process the lines from the input and turn into vw lines</span>
+    <span class="k">def</span> <span class="nf">_tail_forever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tail the raw predictions file so we can get class probabilities when doing predictions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">vwLine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsonToVw</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numLinesProcessed</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">vwLine</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_map</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">]</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">vwLine</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&quot;tail&quot;</span><span class="p">,</span> <span class="s">&quot;-f&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">break</span>
+
+    <span class="k">def</span> <span class="nf">_get_full_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the predictions from the vw raw predictions and normalise them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rawLine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">rawLine</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">tagScores</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> 
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">classId</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+            <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigmoid</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
+        <span class="n">nscores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="n">fscores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">nscore</span> <span class="ow">in</span> <span class="n">nscores</span><span class="p">:</span>
+            <span class="n">fscores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nscore</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fscores</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_exclude_include_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;including features &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="o">+</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;excluding features&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="VWClassifier.fit"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert data to vw lines and then train for required iterations</span>
+<span class="sd">           </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        X : pandas dataframe or array-like</span>
+<span class="sd">           training samples</span>
+<span class="sd">        y : array like, required for array-like X and not used presently for pandas dataframe</span>
+<span class="sd">           class labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self: object</span>
+
+<span class="sd">        Caveats : </span>
+<span class="sd">        1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https://github.com/JohnLangford/vowpal_wabbit/issues/262</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exclude_include_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="n">df_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">=</span><span class="s">&#39;y&#39;</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df_y</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">df_base</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+        <span class="n">min_target</span> <span class="o">=</span> <span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;min target &quot;</span><span class="p">,</span><span class="n">min_target</span>
+        <span class="k">if</span> <span class="n">min_target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_class_id_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s">&quot;num classes &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">)</span>
+        <span class="n">df_vw</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">df_vw</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">parse_result</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">)</span>        
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+    <span class="k">def</span> <span class="nf">_start_vw_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">!=</span> <span class="n">mode</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Creating vw in mode&quot;</span><span class="p">,</span><span class="n">mode</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">&quot;test&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_write_model</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">server_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">29743</span><span class="p">,</span><span class="n">num_children</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span><span class="n">raw_predictions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">vwLine</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">server_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">29742</span><span class="p">,</span><span class="n">num_children</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">oaa</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vw_args</span><span class="p">)</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">command</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">=</span> <span class="n">mode</span>
 
-                </div>
-<div class="viewcode-block" id="VWSeldon.save_data"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.save_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;save data to local file</span>
+
+<div class="viewcode-block" id="VWClassifier.predict_proba"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create predictions. Start a vw process. Convert data to vw format and send. </span>
+<span class="sd">        Returns class probability estimates for the given test data.</span>
+
+<span class="sd">        X : pandas dataframe or array-like</span>
+<span class="sd">            Test samples </span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        proba : array-like, shape = (n_samples, n_outputs)</span>
+<span class="sd">            Class probability estimates.</span>
+<span class="sd">  </span>
+<span class="sd">        Caveats : </span>
+<span class="sd">        1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https://github.com/JohnLangford/vowpal_wabb#it/issues/262</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">local_input</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-
-        </div>
-<div class="viewcode-block" id="VWSeldon.save_target_map"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.save_target_map">[docs]</a>    <span class="k">def</span> <span class="nf">save_target_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;save mapping of target ids to their descriptive meanings</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_map</span><span class="p">,</span><span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;./target_map.json&#39;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-</div>
-<div class="viewcode-block" id="VWSeldon.train"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWSeldon.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">train_filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">vw_command</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;train a vw model from input and save to output</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numLinesProcessed</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_map</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="n">train_filename</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_filename</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exclude_include_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="c">#stream data into vw</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_paths</span><span class="p">:</span>
-            <span class="n">inputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">inputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/features/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;inputPath-&gt;&quot;</span><span class="p">,</span><span class="n">inputPath</span>
-        
-        <span class="c"># stream data to local file</span>
-        <span class="n">fileUtil</span> <span class="o">=</span> <span class="n">FileUtil</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span><span class="p">,</span><span class="n">secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">local_input</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;./data&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">inputPath</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">local_input</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-        <span class="c">#build vw training </span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;csv&quot;</span><span class="p">:</span>
-            <span class="n">features</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">CsvDataSet</span><span class="p">(</span><span class="s">&quot;./data&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">features</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">JsonDataSet</span><span class="p">(</span><span class="s">&quot;./data&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-
-        <span class="c"># save vw model</span>
-        <span class="k">if</span> <span class="n">train_filename</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">call</span><span class="p">([</span><span class="s">&quot;vw&quot;</span><span class="p">,</span><span class="s">&quot;--data&quot;</span><span class="p">,</span><span class="n">train_filename</span><span class="p">,</span><span class="s">&quot;-f&quot;</span><span class="p">,</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="s">&quot;--cache_file&quot;</span><span class="p">,</span><span class="s">&quot;./cache_file&quot;</span><span class="p">,</span><span class="s">&quot;--readable_model&quot;</span><span class="p">,</span><span class="s">&quot;./model.readable&quot;</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">vwArgs</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-            <span class="k">print</span> <span class="s">&quot;called and got &quot;</span><span class="p">,</span><span class="n">r</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s">&quot;./model&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vw2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">print</span> <span class="s">&quot;lines processed &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">numLinesProcessed</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_target_map</span><span class="p">()</span>
-        <span class="c"># copy models to final location</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_paths</span><span class="p">:</span>
-            <span class="n">outputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">outputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/vw/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;outputPath-&gt;&quot;</span><span class="p">,</span><span class="n">outputPath</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&quot;./model&quot;</span><span class="p">,</span><span class="n">outputPath</span><span class="o">+</span><span class="s">&quot;/model&quot;</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&quot;./model.readable&quot;</span><span class="p">,</span><span class="n">outputPath</span><span class="o">+</span><span class="s">&quot;/model.readable&quot;</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&quot;./target_map.json&quot;</span><span class="p">,</span><span class="n">outputPath</span><span class="o">+</span><span class="s">&quot;/target_map.json&quot;</span><span class="p">)</span>
-
-        <span class="c">#activate model in zookeeper</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activate</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">activateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">outputPath</span><span class="p">))</span></div></div>
+            <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="n">df_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">df_vw</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">df_vw</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">parse_result</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start_raw_predictions</span><span class="p">()</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_full_scores</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">predictions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scores</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">predictions</span><span class="p">,</span><span class="n">scores</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">predictions</span></div></div>
 </pre></div>
 
           </div>

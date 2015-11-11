@@ -67,6 +67,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
@@ -109,263 +111,183 @@
             
   <h1>Source code for seldon.xgb</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">fileutil</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">kazoo.client</span> <span class="kn">import</span> <span class="n">KazooClient</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">xgboost</span>
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="kn">as</span> <span class="nn">xgb</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_svmlight_file</span>
 <span class="kn">import</span> <span class="nn">scipy.sparse</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">DictVectorizer</span>
+<span class="kn">from</span> <span class="nn">seldon.pipeline.pandas_pipelines</span> <span class="kn">import</span> <span class="n">BasePandasEstimator</span> 
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_X_y</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_array</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span>
 
+<div class="viewcode-block" id="XGBoostClassifier"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostClassifier">[docs]</a><span class="k">class</span> <span class="nc">XGBoostClassifier</span><span class="p">(</span><span class="n">BasePandasEstimator</span><span class="p">,</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper for XGBoost classifier with pandas support</span>
+<span class="sd">    XGBoost specific arguments follow https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py</span>
 
-<div class="viewcode-block" id="XGBoostSeldon"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon">[docs]</a><span class="k">class</span> <span class="nc">XGBoostSeldon</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Seldon wrapper for training XGBoost models</span>
-
-<span class="sd">       Input from local or S3. Files can be JSON or a single CSV file.</span>
-<span class="sd">       Output model to local or S3.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        client (str): Name of client. Used to construct input and output full paths if not explicitPaths</span>
-
-<span class="sd">        awsKey (Optional[str]): AWS key. Needed if using S3 paths and no IAM</span>
-
-<span class="sd">        awsSecret (Optional[str]): AWS secret. Needed if using S3 paths and no IAM</span>
-
-<span class="sd">        zkHosts (Optional[str]): zookeeper hosts. Used to get configuation if supplied.</span>
-
-<span class="sd">        svmFeatures (Optional[dict]): dictionary of svm (numeric key) features to their values</span>
-
-<span class="sd">        target (Optional[str]): name of target feature.</span>
-
-<span class="sd">        target_readable (Optional[str]): name of the feature containing human readable target</span>
-
-<span class="sd">        inputPath (Optional[str]): input path for features to train</span>
-
-<span class="sd">        outputPath (Optional[str]): output path for vw model</span>
-
-<span class="sd">        day (int): unix day number. Used to construct location of data</span>
-
-<span class="sd">        activate (boolean): whether to update zookeeper with location of new model</span>
+<span class="sd">    target : str</span>
+<span class="sd">       Target column</span>
+<span class="sd">    target_readable : str</span>
+<span class="sd">       More descriptive version of target variable</span>
+<span class="sd">    included : list str, optional</span>
+<span class="sd">       columns to include</span>
+<span class="sd">    excluded : list str, optional</span>
+<span class="sd">       columns to exclude</span>
+<span class="sd">    id_map : dict (int,str), optional</span>
+<span class="sd">       map of class ids to high level names</span>
+<span class="sd">    num_iterations : int</span>
+<span class="sd">       number of iterations over data to run vw</span>
+<span class="sd">    raw_predictions : str</span>
+<span class="sd">       file to push raw predictions from vw to</span>
+<span class="sd">    max_depth : int</span>
+<span class="sd">        Maximum tree depth for base learners.</span>
+<span class="sd">    learning_rate : float</span>
+<span class="sd">        Boosting learning rate (xgb&#39;s &quot;eta&quot;)</span>
+<span class="sd">    n_estimators : int</span>
+<span class="sd">        Number of boosted trees to fit.</span>
+<span class="sd">    silent : boolean</span>
+<span class="sd">        Whether to print messages while running boosting.</span>
+<span class="sd">    objective : string</span>
+<span class="sd">        Specify the learning task and the corresponding learning objective.</span>
+<span class="sd">    nthread : int</span>
+<span class="sd">        Number of parallel threads used to run xgboost.</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Minimum loss reduction required to make a further partition on a leaf node of the tree.</span>
+<span class="sd">    min_child_weight : int</span>
+<span class="sd">        Minimum sum of instance weight(hessian) needed in a child.</span>
+<span class="sd">    max_delta_step : int</span>
+<span class="sd">        Maximum delta step we allow each tree&#39;s weight estimation to be.</span>
+<span class="sd">    subsample : float</span>
+<span class="sd">        Subsample ratio of the training instance.</span>
+<span class="sd">    colsample_bytree : float</span>
+<span class="sd">        Subsample ratio of columns when constructing each tree.</span>
+<span class="sd">    colsample_bylevel : float</span>
+<span class="sd">        Subsample ratio of columns for each split, in each level.</span>
+<span class="sd">    reg_alpha : float (xgb&#39;s alpha)</span>
+<span class="sd">        L2 regularization term on weights</span>
+<span class="sd">    reg_lambda : float (xgb&#39;s lambda)</span>
+<span class="sd">        L1 regularization term on weights</span>
+<span class="sd">    scale_pos_weight : float</span>
+<span class="sd">        Balancing of positive and negative weights.</span>
+<span class="sd">    base_score:</span>
+<span class="sd">        The initial prediction score of all instances, global bias.</span>
+<span class="sd">    seed : int</span>
+<span class="sd">        Random number seed.</span>
+<span class="sd">    missing : float, optional</span>
+<span class="sd">        Value in the data which needs to be present as a missing value. If</span>
+<span class="sd">        None, defaults to np.nan.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">awsKey</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">awsSecret</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">zkHosts</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">svmFeatures</span><span class="o">=</span><span class="p">{},</span><span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">zeroBased</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">inputPath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">outputPath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">activate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span> <span class="o">=</span> <span class="n">awsKey</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span> <span class="o">=</span> <span class="n">awsSecret</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">zkHosts</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;connecting to zookeeper at &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="o">=</span> <span class="n">KazooClient</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zk_hosts</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__merge_conf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">svm_features</span> <span class="o">=</span> <span class="n">svmFeatures</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">=</span> <span class="n">target</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span> <span class="o">=</span> <span class="n">target_readable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">predicted</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span> <span class="o">=</span> <span class="n">zeroBased</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">=</span> <span class="n">inputPath</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="n">outputPath</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="n">day</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">activate</span> <span class="o">=</span> <span class="n">activate</span>
-
-
-<div class="viewcode-block" id="XGBoostSeldon.activateModel"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.activateModel">[docs]</a>    <span class="k">def</span> <span class="nf">activateModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">client</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;activate vw model in zookeeper</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="s">&quot;/all_clients/&quot;</span><span class="o">+</span><span class="n">client</span><span class="o">+</span><span class="s">&quot;/xgboost&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;Activating model in zookeper at node &quot;</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="s">&quot; with data &quot;</span><span class="p">,</span><span class="n">folder</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">folder</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">makepath</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</div>
-    <span class="k">def</span> <span class="nf">__merge_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">client</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;merge zookeeper configuration into class</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">thePath</span> <span class="o">=</span> <span class="s">&quot;/all_clients/&quot;</span><span class="o">+</span><span class="n">client</span><span class="o">+</span><span class="s">&quot;/offline/vw&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">thePath</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;merging conf from zookeeper&quot;</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zk_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">thePath</span><span class="p">)</span>
-            <span class="n">zk_conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">zk_conf</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">zk_conf</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
-    
-<div class="viewcode-block" id="XGBoostSeldon.jsonToSvm"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.jsonToSvm">[docs]</a>    <span class="k">def</span> <span class="nf">jsonToSvm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;convert dictionary to svm line</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            j (dict): dictionary of SVM features. Assumes numeric keys which can be sorted and numeric values</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_features</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">svm_features</span><span class="p">]</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&quot; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
-            <span class="k">return</span> <span class="n">line</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.process"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;process the lines from the input and turn into SVMLight lines</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">svmLine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jsonToSvm</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numLinesProcessed</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">svmLine</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_map</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">]</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svmLine</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-        </div>
-<div class="viewcode-block" id="XGBoostSeldon.save_target_map"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.save_target_map">[docs]</a>    <span class="k">def</span> <span class="nf">save_target_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;save mapping of target ids to their descriptive meanings</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_map</span><span class="p">,</span><span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;./target_map.json&#39;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.train_model"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.train_model">[docs]</a>    <span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;train an xgboost model from generated SVM features file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">train_X</span><span class="p">,</span> <span class="n">train_Y</span> <span class="o">=</span> <span class="n">load_svmlight_file</span><span class="p">(</span><span class="s">&quot;train.svm&quot;</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">)</span>
-        <span class="n">xg_train</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">train_X</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">train_Y</span><span class="p">)</span>
-        <span class="c"># setup parameters for xgboost</span>
-        <span class="n">param</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c">#    param[&#39;objective&#39;] = &#39;multi:softmax&#39;</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;objective&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;multi:softprob&#39;</span>
-        <span class="c"># scale weight of positive examples</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;eta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;max_depth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;silent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;nthread&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
-        <span class="n">param</span><span class="p">[</span><span class="s">&#39;num_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_map</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">watchlist</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">xg_train</span><span class="p">,</span><span class="s">&#39;train&#39;</span><span class="p">)</span> <span class="p">]</span>
-        <span class="n">num_round</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="n">bst</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">xg_train</span><span class="p">,</span> <span class="n">num_round</span><span class="p">,</span> <span class="n">watchlist</span> <span class="p">);</span>
-        <span class="n">bst</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s">&#39;model&#39;</span><span class="p">)</span>
-
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.train"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;train an XGBoost model using features from inputPath and putting model in outputPath</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numLinesProcessed</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_map</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;train.svm&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
-
-        <span class="c">#stream data into vw</span>
-        <span class="n">inputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/features/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;inputPath-&gt;&quot;</span><span class="p">,</span><span class="n">inputPath</span>
-        <span class="n">fileUtil</span> <span class="o">=</span> <span class="n">FileUtil</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span><span class="p">,</span><span class="n">secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">inputPath</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">clf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">vectorizer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">dict_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                 <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">silent</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">objective</span><span class="o">=</span><span class="s">&quot;reg:linear&quot;</span><span class="p">,</span>
+                 <span class="n">nthread</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_child_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_delta_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">subsample</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colsample_bytree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colsample_bylevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">reg_alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">reg_lambda</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale_pos_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">base_score</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XGBoostClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">target_readable</span><span class="p">,</span><span class="n">included</span><span class="p">,</span><span class="n">excluded</span><span class="p">,</span><span class="n">id_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">vectorizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;max_depth&quot;</span><span class="p">:</span><span class="n">max_depth</span><span class="p">,</span><span class="s">&quot;learning_rate&quot;</span><span class="p">:</span><span class="n">learning_rate</span><span class="p">,</span><span class="s">&quot;n_estimators&quot;</span><span class="p">:</span><span class="n">n_estimators</span><span class="p">,</span>
+                       <span class="s">&quot;silent&quot;</span><span class="p">:</span><span class="n">silent</span><span class="p">,</span> <span class="s">&quot;objective&quot;</span><span class="p">:</span><span class="n">objective</span><span class="p">,</span>
+                       <span class="s">&quot;nthread&quot;</span><span class="p">:</span><span class="n">nthread</span><span class="p">,</span> <span class="s">&quot;gamma&quot;</span><span class="p">:</span><span class="n">gamma</span><span class="p">,</span> <span class="s">&quot;min_child_weight&quot;</span><span class="p">:</span><span class="n">min_child_weight</span><span class="p">,</span> <span class="s">&quot;max_delta_step&quot;</span><span class="p">:</span><span class="n">max_delta_step</span><span class="p">,</span>
+                       <span class="s">&quot;subsample&quot;</span><span class="p">:</span><span class="n">subsample</span><span class="p">,</span> <span class="s">&quot;colsample_bytree&quot;</span><span class="p">:</span><span class="n">colsample_bytree</span><span class="p">,</span> <span class="s">&quot;colsample_bylevel&quot;</span><span class="p">:</span><span class="n">colsample_bylevel</span><span class="p">,</span>
+                       <span class="s">&quot;reg_alpha&quot;</span><span class="p">:</span><span class="n">reg_alpha</span><span class="p">,</span> <span class="s">&quot;reg_lambda&quot;</span><span class="p">:</span><span class="n">reg_lambda</span><span class="p">,</span> <span class="s">&quot;scale_pos_weight&quot;</span><span class="p">:</span><span class="n">scale_pos_weight</span><span class="p">,</span>
+                       <span class="s">&quot;base_score&quot;</span><span class="p">:</span><span class="n">base_score</span><span class="p">,</span> <span class="s">&quot;seed&quot;</span><span class="p">:</span><span class="n">seed</span><span class="p">,</span> <span class="s">&quot;missing&quot;</span><span class="p">:</span><span class="n">missing</span> <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict_feature</span> <span class="o">=</span> <span class="n">dict_feature</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_model</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_target_map</span><span class="p">()</span>
-        <span class="c"># copy models to final location</span>
-        <span class="n">outputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/xgboost/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;outputPath-&gt;&quot;</span><span class="p">,</span><span class="n">outputPath</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&quot;./model&quot;</span><span class="p">,</span><span class="n">outputPath</span><span class="o">+</span><span class="s">&quot;/model&quot;</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&quot;./target_map.json&quot;</span><span class="p">,</span><span class="n">outputPath</span><span class="o">+</span><span class="s">&quot;/target_map.json&quot;</span><span class="p">)</span>
-
-        <span class="c">#activate model in zookeeper</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activate</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">activateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">outputPath</span><span class="p">))</span>
-
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.test"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.test">[docs]</a>    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">test_features_path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test model against features from file</span>
+    <span class="k">def</span> <span class="nf">_to_svmlight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert a dataframe row containing a dict of id:val to svmlight line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fileUtil</span> <span class="o">=</span> <span class="n">FileUtil</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span><span class="p">,</span><span class="n">secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">test_features_path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_line</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_accuracy</span><span class="p">()</span>
-        </div>
-<div class="viewcode-block" id="XGBoostSeldon.load_models"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.load_models">[docs]</a>    <span class="k">def</span> <span class="nf">load_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;load an xgboost model</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">inputPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/xgboost/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
-        <span class="n">fileUtil</span> <span class="o">=</span> <span class="n">FileUtil</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsKey</span><span class="p">,</span><span class="n">secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">awsSecret</span><span class="p">)</span>
-        <span class="n">fileUtil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">inputPath</span><span class="p">,</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;./target_map.json&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">targetMap</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">break</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bst</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">Booster</span><span class="p">(</span><span class="n">model_file</span><span class="o">=</span><span class="s">&quot;./model&quot;</span><span class="p">)</span>
-        </div>
-<div class="viewcode-block" id="XGBoostSeldon.generate_dmatrix"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.generate_dmatrix">[docs]</a>    <span class="k">def</span> <span class="nf">generate_dmatrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;generate dmatrix from input for xgboost model</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            features (dict): dictionary of features to score</span>
-
-<span class="sd">        Returns: generated dmatricx</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">col</span> <span class="o">=</span> <span class="p">[];</span> <span class="n">dat</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
-            <span class="n">colIdx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">:</span>
-                <span class="n">colIdx</span> <span class="o">=</span> <span class="n">colIdx</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colIdx</span><span class="p">);</span> <span class="n">dat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">csr</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">dat</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">csr</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="n">xg_test</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span><span class="n">csr</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">xg_test</span>
-            </div>
-<div class="viewcode-block" id="XGBoostSeldon.predict_line"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.predict_line">[docs]</a>    <span class="k">def</span> <span class="nf">predict_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;predict line against a model</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            line (str): input feature line in SVM format</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dict_feature</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&quot; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">line</span>
+        
+    <span class="k">def</span> <span class="nf">_load_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load data from dataframe with dict of id:val into numpy matrix</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">yprob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">svm_features</span><span class="p">])</span>
-        <span class="n">correct</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span>
-        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">yprob</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">predicted</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">correct</span> <span class="o">==</span> <span class="n">ylabel</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">print</span> <span class="s">&quot;loading from dictionary feature&quot;</span>
+        <span class="n">df_svm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_svmlight</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">df_svm</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">load_svmlight_file</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="XGBoostClassifier.fit"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit a model: </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        X : pandas dataframe or array-like</span>
+<span class="sd">           training samples. If pandas dataframe can handle dict of feature in one column or cnvert a set of columns</span>
+<span class="sd">        y : array like, required for array-like X and not used presently for pandas dataframe</span>
+<span class="sd">           class labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self: object</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">create_class_id_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_dict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                <span class="n">num_class</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_numpy</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                <span class="n">num_class</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">num_class</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
 </div>
-<div class="viewcode-block" id="XGBoostSeldon.predict_json"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.predict_json">[docs]</a>    <span class="k">def</span> <span class="nf">predict_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;predict against a model features in j</span>
+<div class="viewcode-block" id="XGBoostClassifier.predict_proba"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns class probability estimates for the given test data.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            j (dict): dictionary of features</span>
-
-<span class="sd">        Returns: scores for each class</span>
+<span class="sd">        X : pandas dataframe or array-like</span>
+<span class="sd">            Test samples </span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        proba : array-like, shape = (n_samples, n_outputs)</span>
+<span class="sd">            Class probability estimates.</span>
+<span class="sd">  </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fscores</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">yprob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">svm_features</span><span class="p">])</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">yprob</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">yprob</span> <span class="o">=</span> <span class="n">yprob</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">yprob</span><span class="p">)):</span>
-                <span class="n">fscores</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">yprob</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">targetMap</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)],</span><span class="mf">1.0</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">fscores</span>
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.predict"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;predict againts a model using features</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_dict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_numpy</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            features (dict): features to predict against</span>
-
-<span class="sd">        Returns: predictions</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bst</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_dmatrix</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">preds</span>
-</div>
-<div class="viewcode-block" id="XGBoostSeldon.get_accuracy"><a class="viewcode-back" href="../../seldon.html#seldon.xgb.XGBoostSeldon.get_accuracy">[docs]</a>    <span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get accuracy of test</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">correct</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predicted</span><span class="p">)</span></div></div>
-</pre></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div></div></div>
 
           </div>
           <footer>

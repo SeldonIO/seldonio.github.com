@@ -67,6 +67,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
@@ -108,54 +110,51 @@
           <div role="main" class="document">
             
   <h1>Source code for seldon.pipeline.tfidf_transform</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">seldon.pipeline.pipelines</span> <span class="kn">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectKBest</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span>
 <span class="kn">import</span> <span class="nn">logging</span> 
 
-<div class="viewcode-block" id="Tfidf_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform">[docs]</a><span class="k">class</span> <span class="nc">Tfidf_transform</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Feature_transform</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;create TF-IDF (term frequency - inverse document frequency) features. </span>
+<div class="viewcode-block" id="Tfidf_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform">[docs]</a><span class="k">class</span> <span class="nc">Tfidf_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create TF-IDF (term frequency - inverse document frequency) features. </span>
 
 <span class="sd">    can use chi-squared test to limit features. Assumes string based input feature that can be split.</span>
 <span class="sd">    Uses scikit-learn based transformers internally</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        min_df (int): min document frequency (for sklearn vectorizer)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 
-<span class="sd">        max_df (float): max document frequency (for sklearn vectorizer)</span>
-
-<span class="sd">        select_features (bool): use chi-squared test to select features</span>
-
-<span class="sd">        topn_features (int): keep top features from chi-squared test</span>
-
-<span class="sd">        stop_words (str): stop words (for sklearn vectorizer)</span>
-
-<span class="sd">        target_feature (str): target feature for chi-squared test</span>
+<span class="sd">    min_df : int, optinal</span>
+<span class="sd">       min document frequency (for sklearn vectorizer)</span>
+<span class="sd">    max_df : float, optional</span>
+<span class="sd">       max document frequency (for sklearn vectorizer)</span>
+<span class="sd">    select_features : bool, optional</span>
+<span class="sd">       use chi-squared test to select features</span>
+<span class="sd">    topn_features : int, optional</span>
+<span class="sd">       keep top features from chi-squared test</span>
+<span class="sd">    stop_words : str, optional</span>
+<span class="sd">       stop words (for sklearn vectorizer)</span>
+<span class="sd">    target_feature : str, optional</span>
+<span class="sd">       target feature for chi-squared test</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">select_features</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">topn_features</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span><span class="n">stop_words</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">target_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tfidf_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">output_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">min_df</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">select_features</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">topn_features</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span><span class="n">stop_words</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">target_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">vectorizer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">tfidf_transformer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">ch2</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">fnames</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">feature_names_support</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="o">=</span><span class="n">input_feature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="o">=</span><span class="n">output_feature</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="o">=</span><span class="n">min_df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="o">=</span><span class="n">max_df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">select_features</span> <span class="o">=</span> <span class="n">select_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">topn_features</span><span class="o">=</span><span class="n">topn_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span> <span class="o">=</span> <span class="n">stop_words</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_feature</span> <span class="o">=</span> <span class="n">target_feature</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ch2</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">vectorizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_transformer</span> <span class="o">=</span> <span class="n">tfidf_transformer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ch2</span> <span class="o">=</span> <span class="n">ch2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fnames</span> <span class="o">=</span> <span class="n">fnames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span> <span class="o">=</span> <span class="n">feature_names_support</span>
 
-<div class="viewcode-block" id="Tfidf_transform.get_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.get_models">[docs]</a>    <span class="k">def</span> <span class="nf">get_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Tfidf_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_models</span><span class="p">()</span> <span class="o">+</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">select_features</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">topn_features</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_feature</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">tfidf_transformer</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">ch2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">fnames</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span><span class="p">]</span>
-    </div>
-<div class="viewcode-block" id="Tfidf_transform.set_models"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.set_models">[docs]</a>    <span class="k">def</span> <span class="nf">set_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">models</span><span class="p">):</span>
-        <span class="n">models</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Tfidf_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
-        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">select_features</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">topn_features</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_feature</span><span class="p">)</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_transformer</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ch2</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fnames</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-</div>
+
 <div class="viewcode-block" id="Tfidf_transform.get_tokens"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.get_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;basic method to get &quot;document&quot; string from feature</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -166,9 +165,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
-
     </div>
 <div class="viewcode-block" id="Tfidf_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit tfidf transform</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        df : pandas dataframe </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self: object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="p">,</span><span class="n">max_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="p">,</span><span class="n">stop_words</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">()</span>
         <span class="k">print</span> <span class="s">&quot;getting docs&quot;</span>
@@ -184,9 +194,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ch2</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfidf</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_feature</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ch2</span><span class="o">.</span><span class="n">get_support</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="bp">True</span><span class="p">)])</span>
             <span class="k">print</span> <span class="s">&quot;selected tfidf features&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_support</span><span class="p">)</span>
-
+        <span class="k">return</span> <span class="bp">self</span>
 </div>
-<div class="viewcode-block" id="Tfidf_transform.create_tfidf"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.create_tfidf">[docs]</a>    <span class="k">def</span> <span class="nf">create_tfidf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_create_tfidf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
         <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tfidf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
@@ -202,9 +212,22 @@
                 <span class="n">doc_tfidf</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
         <span class="k">return</span> <span class="n">doc_tfidf</span>
         
-</div>
+
 <div class="viewcode-block" id="Tfidf_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.tfidf_transform.Tfidf_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
-        <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_tfidf</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        transform features with tfidf transform</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        X : pandas dataframe </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        </span>
+<span class="sd">        Transformed pandas dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_tfidf</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
 </pre></div></div></div>
 

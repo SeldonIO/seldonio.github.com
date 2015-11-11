@@ -19,6 +19,23 @@ seldon.fileutil module
     :undoc-members:
     :show-inheritance:
 
+seldon.keras module
+-------------------
+
+.. automodule:: seldon.keras
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+seldon.sklearn_estimator module
+-------------------------------
+
+.. automodule:: seldon.sklearn_estimator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 seldon.vw module
 ----------------
 
