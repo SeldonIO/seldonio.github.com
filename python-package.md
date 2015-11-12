@@ -15,11 +15,13 @@ You can install them in three ways:
 The module dependencies are:
 
   * [scikit_learn](http://scikit-learn.org/stable/)
-  * [wabbit_wappa](https://github.com/mokelly/wabbit_wappa)
+  * [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
+  * [a Seldon fork of wabbit_wappa](https://github.com/SeldonIO/wabbit_wappa)
   * [xgboost](https://github.com/dmlc/xgboost)
   * [unicodecsv](https://github.com/jdunck/python-unicodecsv)
   * [kazoo](https://kazoo.readthedocs.org/en/latest/)
   * [boto](https://github.com/boto/boto)
+  * [keras](https://github.com/fchollet/keras)
 
 The above packages themselves have many dependencies so if you are starting from scratch it may be best to install [Anaconda](http://continuum.io/downloads) which will provide many of the dependencies or use the Docker container below.
 
