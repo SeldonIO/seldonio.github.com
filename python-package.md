@@ -10,7 +10,7 @@ Seldon provides a set of python modules to help construct feature pipelines for 
 
 You can install them in three ways:
 
-## Install from seldon-server project
+## Dependencies
 
 The module dependencies are:
 
@@ -23,18 +23,29 @@ The module dependencies are:
   * [boto](https://github.com/boto/boto)
   * [keras](https://github.com/fchollet/keras)
 
-The above packages themselves have many dependencies so if you are starting from scratch it may be best to install [Anaconda](http://continuum.io/downloads) which will provide many of the dependencies or use the Docker container below.
+The above packages themselves have many dependencies so if you are starting from scratch it may be best to install [Anaconda](http://continuum.io/downloads) which will provide many of the dependencies.
 
-After installing the dependencies from a [seldon-server install](seldon-server-setup.html) go to  ```external/predictor/python``` and run
+## Python install
+
+Go to  ```external/predictor/python``` and run
 {% highlight bash %}
  python setup.py install
 {% endhighlight %}
 
-## Utilize from Docker
+## Docker
+
 A Docker image contains the pipelines and dependencies needed. It can be used as a base to build your pipelines from within Docker.
 
 {% highlight bash %}
-   docker pull seldonio/pipelines
+   docker pull seldonio/pipelines:1.2
 {% endhighlight %}
+
+## Pip
+
+Pip does not seem to allow custom dependency links to work which are needed for the fork of wabbit-wappa. Therefore installation is a two step process
+
+ 1. ```pip install -e git+git://github.com/SeldonIO/wabbit_wappa#egg=wabbit-wappa-3.0.2```
+ 1. ```pip install seldon```
+
 
 
