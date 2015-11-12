@@ -38,11 +38,3 @@ A Docker image contains the pipelines and dependencies needed. It can be used as
 {% endhighlight %}
 
 
-## Install using pip
-
-{% highlight bash %}
-   pip install seldon
-{% endhighlight %}
-
-**at present you will need to install [xgboost](https://github.com/dmlc/xgboost/tree/master/python-package) and [wabbit_wappa](https://github.com/mokelly/wabbit_wappa) manually as they have issues with their pip packages.**
-
