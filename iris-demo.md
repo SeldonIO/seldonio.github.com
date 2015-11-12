@@ -82,7 +82,7 @@ The various pipelines can run as follows
 
  * Create an XGBoost pipeline : ```make data/iris/xgb_models/1```
  * Create a VW pipeline : ```make data/iris/vw_models/1```
- * Create a Keras pipeline : ```data/iris/keras_models/1```
+ * Create a Keras pipeline : ```make data/iris/keras_models/1```
 
 The models for the pipelines are stored in the locations above
 
@@ -91,7 +91,7 @@ Now that we have built various models we can run a realtime predictor as a micro
 
 The various services for each pipeline can be started as below
 
- * Run XGBoost microservice : ```make xgboost_runtime:```
+ * Run XGBoost microservice : ```make xgboost_runtime```
  * Run VW microservice : ```make vw_runtime```
  * Run Keras mixroservice : ```make keras_runtime```
 
