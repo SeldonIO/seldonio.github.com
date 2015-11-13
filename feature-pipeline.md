@@ -29,6 +29,69 @@ The currently available example transforms are:
  * **Auto_transform** : attempt to automatically normalize and create numeric, categorical and date features
  * **sklearn_transform** : apply a [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) to a Pandas Dataframe
 
+### Small Examples
+
+Several small examples can be found in `external/predictor/python/examples`
+
+ * Use sklean's StandardScaler on a Pandas DataFrame.
+
+{% highlight python %}
+import seldon.pipeline.sklearn_transform as ssk
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+df = pd.DataFrame.from_dict([{"a":1.0,"b":2.0},{"a":2.0,"b":3.0}])
+t = ssk.sklearn_transform(input_features=["a"],output_features=["a_scaled"],transformer=StandardScaler())
+t.fit(df)
+df_2 = t.transform(df)
+print df_2
+{% endhighlight %}
+
+When run this would print:
+
+{% highlight bash %}
+python sklearn_scaler.py 
+   a  b  a_scaled
+0  1  2        -1
+1  2  3         1
+{% endhighlight %}
+
+Auto transform a set of features
+
+{% highlight python %}
+import seldon.pipeline.auto_transforms as auto
+import pandas as pd
+
+df = pd.DataFrame([{"a":10,"b":1,"c":"cat"},{"a":5,"b":2,"c":"dog","d":"Nov 13 08:36:29 2015"},{"a":10,"b":3,"d":"Oct 13 10:50:12 2015"}])
+t = auto.Auto_transform(max_values_numeric_categorical=2,date_cols=["d"])
+t.fit(df)
+df2 = t.transform(df)
+print df2
+{% endhighlight %}
+
+ This would:
+
+ * Turn column "a" into a categorical column due to the small number of variables and limit specified by "max_values_numeric_categorical"
+ * Standard scale column "b"
+ * Leave column "c" as categorical but convert empty columns to "UKN" category
+ * Convert the specified date column "d" to a series of expanded features
+
+ The converted DataFrame would be:
+
+{% highlight bash %}
+
+      a         b    c                   d      d_h1      d_h2 d_hour  \
+0  a_10 -1.224745  cat                 NaT       NaN       NaN   hnan   
+1   a_5  0.000000  dog 2015-11-13 08:36:29  0.866025 -0.500000     h8   
+2  a_10  1.224745  UKN 2015-10-13 10:50:12  0.500000 -0.866025    h10   
+
+       d_m1      d_m2 d_month   d_w      d_w1      d_w2 d_year  
+0       NaN       NaN    mnan  wnan       NaN       NaN   ynan  
+1 -0.500000  0.866025     m11    w4 -0.433884 -0.900969  y2015  
+2 -0.866025  0.500000     m10    w1  0.781831  0.623490  y2015
+
+{% endhighlight %}
+
 ## Creating a Machine Learning model
 As a final stage of any pipeline you would usually add a scikit learn Estimtor. We provide 3 builtin Estimators which allow Pandas dataframes as input and a general Estimator that can take any sckit-learn compatible estimator.
 
