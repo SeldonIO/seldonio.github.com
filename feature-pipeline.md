@@ -146,6 +146,15 @@ if __name__ == '__main__':
 
 The example is explained in more detail [here](iris-demo.html)
 
+# Further Examples
+
+Further examples can be found in ```external/predictor/python/examples```
+
+ * wine.ipynb : Jupyter python notebook to run a pipeline on wine classification
+ * credit_card.ipynb : Jupyter python notebook to run a pipeline and optimize on credit card data
+ * sklearn_scaler.py : an example of using a sklearn scaler in a pipeline with Pandas
+ * auto_transform.py : an example of a simple auto_transform on pandas data
+
 
 
 

@@ -506,6 +506,81 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-seldon.pipeline.bayes_optimize">
+<span id="seldon-pipeline-bayes-optimize-module"></span><h2>seldon.pipeline.bayes_optimize module<a class="headerlink" href="#module-seldon.pipeline.bayes_optimize" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.bayes_optimize.</code><code class="descname">BayesOptimizer</code><span class="sig-paren">(</span><em>clf=None</em>, <em>param_ranges={}</em>, <em>param_int=[]</em>, <em>cv_folds=5</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<p>sklearn wrapper for BayesianOptimization module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>clf</strong> (<em>object</em>) &#8211; sklearn compatible estimator</li>
+<li><strong>param_ranges</strong> (<em>dict</em>) &#8211; dict of parameters to optimize with ranges in form &#8216;name&#8217;:(min,max)</li>
+<li><strong>param_int</strong> (<em>list</em>) &#8211; list of parameters that need conversion to int before calling estimator</li>
+<li><strong>cv_folds</strong> (<em>int</em>) &#8211; number of cross validation folds to run</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.__getstate__">
+<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove things that should not be pickled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a model:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>pandas dataframe or array-like</em>) &#8211; training samples. If pandas dataframe can handle dict of feature in one column or convert a set of columns</li>
+<li><strong>y</strong> (<em>array like, required for array-like X and not used presently for pandas dataframe</em>) &#8211; class labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>self</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.get_best_score">
+<code class="descname">get_best_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.get_best_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.get_best_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.get_class_id_map">
+<code class="descname">get_class_id_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.get_class_id_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.get_class_id_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do nothing and pass input back</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-seldon.pipeline.cross_validation">
 <span id="seldon-pipeline-cross-validation-module"></span><h2>seldon.pipeline.cross_validation module<a class="headerlink" href="#module-seldon.pipeline.cross_validation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -549,6 +624,11 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="seldon.pipeline.cross_validation.Seldon_KFold.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.get_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.get_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="seldon.pipeline.cross_validation.Seldon_KFold.get_scores">
 <code class="descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.get_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.get_scores" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -556,6 +636,11 @@
 <dl class="method">
 <dt id="seldon.pipeline.cross_validation.Seldon_KFold.predict_proba">
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.cross_validation.Seldon_KFold.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.set_params" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

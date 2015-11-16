@@ -120,6 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.auto_transforms">seldon.pipeline.auto_transforms module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.basic_transforms">seldon.pipeline.basic_transforms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.bayes_optimize">seldon.pipeline.bayes_optimize module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.cross_validation">seldon.pipeline.cross_validation module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.pandas_pipelines">seldon.pipeline.pandas_pipelines module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.sklearn_transform">seldon.pipeline.sklearn_transform module</a></li>
@@ -551,7 +552,7 @@ Class probability estimates.</td>
 <span id="seldon-vw-module"></span><h2>seldon.vw module<a class="headerlink" href="#module-seldon.vw" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="seldon.vw.VWClassifier">
-<em class="property">class </em><code class="descclassname">seldon.vw.</code><code class="descname">VWClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>num_iterations=1</em>, <em>raw_predictions_file='/tmp/raw_predictions'</em>, <em>model_file='/tmp/model'</em>, <em>pid_file='/tmp/vw_pid_file'</em>, <em>vw_args={}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">seldon.vw.</code><code class="descname">VWClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>num_iterations=1</em>, <em>raw_predictions_file='/tmp/raw_predictions'</em>, <em>model_file='/tmp/model'</em>, <em>pid_file='/tmp/vw_pid_file'</em>, <em>**vw_args</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>Wrapper for Vowpall Wabbit classifier with pandas support</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -650,63 +651,46 @@ Class probability estimates.</li>
 <span id="seldon-xgb-module"></span><h2>seldon.xgb module<a class="headerlink" href="#module-seldon.xgb" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="seldon.xgb.XGBoostClassifier">
-<em class="property">class </em><code class="descclassname">seldon.xgb.</code><code class="descname">XGBoostClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>clf=None</em>, <em>id_map={}</em>, <em>vectorizer=None</em>, <em>dict_feature=None</em>, <em>max_depth=3</em>, <em>learning_rate=0.1</em>, <em>n_estimators=100</em>, <em>silent=True</em>, <em>objective='reg:linear'</em>, <em>nthread=-1</em>, <em>gamma=0</em>, <em>min_child_weight=1</em>, <em>max_delta_step=0</em>, <em>subsample=1</em>, <em>colsample_bytree=1</em>, <em>colsample_bylevel=1</em>, <em>reg_alpha=0</em>, <em>reg_lambda=1</em>, <em>scale_pos_weight=1</em>, <em>base_score=0.5</em>, <em>seed=0</em>, <em>missing=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">seldon.xgb.</code><code class="descname">XGBoostClassifier</code><span class="sig-paren">(</span><em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>clf=None</em>, <em>id_map={}</em>, <em>vectorizer=None</em>, <em>svmlight_feature=None</em>, <em>max_depth=3</em>, <em>learning_rate=0.1</em>, <em>n_estimators=100</em>, <em>silent=True</em>, <em>objective='reg:linear'</em>, <em>nthread=-1</em>, <em>gamma=0</em>, <em>min_child_weight=1</em>, <em>max_delta_step=0</em>, <em>subsample=1</em>, <em>colsample_bytree=1</em>, <em>colsample_bylevel=1</em>, <em>reg_alpha=0</em>, <em>reg_lambda=1</em>, <em>scale_pos_weight=1</em>, <em>base_score=0.5</em>, <em>seed=0</em>, <em>missing=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>Wrapper for XGBoost classifier with pandas support
 XGBoost specific arguments follow <a class="reference external" href="https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py">https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py</a></p>
-<dl class="docutils">
-<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>Target column</dd>
-<dt>target_readable <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>More descriptive version of target variable</dd>
-<dt>included <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
-<dd>columns to include</dd>
-<dt>excluded <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
-<dd>columns to exclude</dd>
-<dt>id_map <span class="classifier-delimiter">:</span> <span class="classifier">dict (int,str), optional</span></dt>
-<dd>map of class ids to high level names</dd>
-<dt>num_iterations <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>number of iterations over data to run vw</dd>
-<dt>raw_predictions <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>file to push raw predictions from vw to</dd>
-<dt>max_depth <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Maximum tree depth for base learners.</dd>
-<dt>learning_rate <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Boosting learning rate (xgb&#8217;s &#8220;eta&#8221;)</dd>
-<dt>n_estimators <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of boosted trees to fit.</dd>
-<dt>silent <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
-<dd>Whether to print messages while running boosting.</dd>
-<dt>objective <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Specify the learning task and the corresponding learning objective.</dd>
-<dt>nthread <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of parallel threads used to run xgboost.</dd>
-<dt>gamma <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Minimum loss reduction required to make a further partition on a leaf node of the tree.</dd>
-<dt>min_child_weight <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Minimum sum of instance weight(hessian) needed in a child.</dd>
-<dt>max_delta_step <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Maximum delta step we allow each tree&#8217;s weight estimation to be.</dd>
-<dt>subsample <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Subsample ratio of the training instance.</dd>
-<dt>colsample_bytree <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Subsample ratio of columns when constructing each tree.</dd>
-<dt>colsample_bylevel <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Subsample ratio of columns for each split, in each level.</dd>
-<dt>reg_alpha <span class="classifier-delimiter">:</span> <span class="classifier">float (xgb&#8217;s alpha)</span></dt>
-<dd>L2 regularization term on weights</dd>
-<dt>reg_lambda <span class="classifier-delimiter">:</span> <span class="classifier">float (xgb&#8217;s lambda)</span></dt>
-<dd>L1 regularization term on weights</dd>
-<dt>scale_pos_weight <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Balancing of positive and negative weights.</dd>
-<dt>base_score:</dt>
-<dd>The initial prediction score of all instances, global bias.</dd>
-<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Random number seed.</dd>
-<dt>missing <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
-<dd>Value in the data which needs to be present as a missing value. If
-None, defaults to np.nan.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target</strong> (<em>str</em>) &#8211; Target column</li>
+<li><strong>target_readable</strong> (<em>str</em>) &#8211; More descriptive version of target variable</li>
+<li><strong>included</strong> (<em>list str, optional</em>) &#8211; columns to include</li>
+<li><strong>excluded</strong> (<em>list str, optional</em>) &#8211; columns to exclude</li>
+<li><strong>id_map</strong> (<em>dict (int,str), optional</em>) &#8211; map of class ids to high level names</li>
+<li><strong>num_iterations</strong> (<em>int</em>) &#8211; number of iterations over data to run vw</li>
+<li><strong>raw_predictions</strong> (<em>str</em>) &#8211; file to push raw predictions from vw to</li>
+<li><strong>max_depth</strong> (<em>int</em>) &#8211; Maximum tree depth for base learners.</li>
+<li><strong>learning_rate</strong> (<em>float</em>) &#8211; Boosting learning rate (xgb&#8217;s &#8220;eta&#8221;)</li>
+<li><strong>n_estimators</strong> (<em>int</em>) &#8211; Number of boosted trees to fit.</li>
+<li><strong>silent</strong> (<em>boolean</em>) &#8211; Whether to print messages while running boosting.</li>
+<li><strong>objective</strong> (<em>string</em>) &#8211; Specify the learning task and the corresponding learning objective.</li>
+<li><strong>nthread</strong> (<em>int</em>) &#8211; Number of parallel threads used to run xgboost.</li>
+<li><strong>gamma</strong> (<em>float</em>) &#8211; Minimum loss reduction required to make a further partition on a leaf node of the tree.</li>
+<li><strong>min_child_weight</strong> (<em>int</em>) &#8211; Minimum sum of instance weight(hessian) needed in a child.</li>
+<li><strong>max_delta_step</strong> (<em>int</em>) &#8211; Maximum delta step we allow each tree&#8217;s weight estimation to be.</li>
+<li><strong>subsample</strong> (<em>float</em>) &#8211; Subsample ratio of the training instance.</li>
+<li><strong>colsample_bytree</strong> (<em>float</em>) &#8211; Subsample ratio of columns when constructing each tree.</li>
+<li><strong>colsample_bylevel</strong> (<em>float</em>) &#8211; Subsample ratio of columns for each split, in each level.</li>
+<li><strong>reg_alpha</strong> (<em>float (xgb&#8217;s alpha)</em>) &#8211; L2 regularization term on weights</li>
+<li><strong>reg_lambda</strong> (<em>float (xgb&#8217;s lambda)</em>) &#8211; L1 regularization term on weights</li>
+<li><strong>scale_pos_weight</strong> (<em>float</em>) &#8211; Balancing of positive and negative weights.</li>
+<li><strong>base_score</strong> &#8211; The initial prediction score of all instances, global bias.</li>
+<li><strong>seed</strong> (<em>int</em>) &#8211; Random number seed.</li>
+<li><strong>missing</strong> (<em>float, optional</em>) &#8211; Value in the data which needs to be present as a missing value. If
+None, defaults to np.nan.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="seldon.xgb.XGBoostClassifier.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier.fit" title="Permalink to this definition">¶</a></dt>

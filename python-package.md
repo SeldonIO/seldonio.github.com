@@ -27,6 +27,8 @@ The above packages themselves have many dependencies so if you are starting from
 
 ## Python install
 
+ * If you want to use the module bayes_opt then ``````pip install -e git+git://github.com/fmfn/BayesianOptimization#egg=bayes_opt```
+
 Go to  ```external/predictor/python``` and run
 {% highlight bash %}
  python setup.py install
@@ -42,9 +44,10 @@ A Docker image contains the pipelines and dependencies needed. It can be used as
 
 ## Pip
 
-Pip does not seem to allow custom dependency links to work which are needed for the fork of wabbit-wappa. Therefore installation is a two step process
+Two custom libraries are needed - a Seldon fork of wabbit_wappa and BayesianOptimization if you wish to optimize hyper parameters in pipeline estimators.
 
  1. ```pip install -e git+git://github.com/SeldonIO/wabbit_wappa#egg=wabbit-wappa-3.0.2```
+ 1. ```pip install -e git+git://github.com/fmfn/BayesianOptimization#egg=bayes_opt```
  1. ```pip install seldon```
 
 
