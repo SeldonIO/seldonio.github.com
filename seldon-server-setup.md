@@ -8,7 +8,7 @@ title: Seldon Server Setup
 
 ##### General Prediction Steps 
 
- **setup server** --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+ **setup server** --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
 
 
 # Deploy Seldon Server<a name="deploy-server"></a>

@@ -5,7 +5,7 @@ title: Feature Pipelines
 
 ##### General Prediction Steps 
 
- [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> **feature extraction pipeline** --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> **feature extraction pipeline** --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
 
 
 # Predictive Pipelines 
@@ -18,22 +18,22 @@ Seldon provides a set of [python modules](python-package.html) to help construct
 
 The currently available example transforms are:
 
- * **Include_features_transform** : include a subset of features
- * **Exclude_features_transform** : exclude some subset of features
- * **Binary_transform** : create a binary feature based on existence of a feature
- * **Split_transform** : split a series of textual features into tokens
- * **Exist_features_transform** : filter data to only those containing a set of features
- * **Svmlight_transform** : create a feature that contains SVMLight numeric features from some input set of features
- * **Feature_id_transform** : create an id feature from some input feature
- * **Tfidf_transform** : create TFIDF features from an input feature
- * **Auto_transform** : attempt to automatically normalize and create numeric, categorical and date features
- * **sklearn_transform** : apply a [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) to a Pandas Dataframe
+ * [Include_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Include_features_transform) : include a subset of features
+ * [Exclude_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Exclude_features_transform) : exclude some subset of features
+ * [Binary_transform](python/modules/seldon/pipeline/basic_transforms.html#Binary_transform) : create a binary feature based on existence of a feature
+ * [Split_transform](python/modules/seldon/pipeline/basic_transforms.html#Split_transform) : split a series of textual features into tokens
+ * [Exist_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Exist_features_transform) : filter data to only those containing a set of features
+ * [Svmlight_transform](python/modules/seldon/pipeline/basic_transforms.html#Svmlight_transform) : create a feature that contains SVMLight numeric features from some input set of features
+ * [Feature_id_transform](python/modules/seldon/pipeline/basic_transforms.html#Feature_id_transform) : create an id feature from some input feature
+ * [Tfidf_transform](python/seldon.pipeline.html#module-seldon.pipeline.tfidf_transform) : create TFIDF features from an input feature
+ * [Auto_transform](python/seldon.pipeline.html#module-seldon.pipeline.auto_transforms) : attempt to automatically normalize and create numeric, categorical and date features
+ * [sklearn_transform](python/seldon.pipeline.html#module-seldon.pipeline.sklearn_transform) : apply a [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) to a Pandas Dataframe
 
 ### Small Examples
 
 Several small examples can be found in `external/predictor/python/examples`
 
- * Use sklean's StandardScaler on a Pandas DataFrame.
+### Use sklean's StandardScaler on a Pandas DataFrame.
 
 {% highlight python %}
 import seldon.pipeline.sklearn_transform as ssk
@@ -56,7 +56,7 @@ python sklearn_scaler.py
 1  2  3         1
 {% endhighlight %}
 
-Auto transform a set of features
+### Auto transform a set of features
 
 {% highlight python %}
 import seldon.pipeline.auto_transforms as auto
@@ -95,10 +95,10 @@ print df2
 ## Creating a Machine Learning model
 As a final stage of any pipeline you would usually add a scikit learn Estimtor. We provide 3 builtin Estimators which allow Pandas dataframes as input and a general Estimator that can take any sckit-learn compatible estimator.
 
- * **XGBoostClassifier** : XGBoost classifier which allows Pandas Dataframes as input
- * **VWClassifier** : VW classifier which allows Pandas Dataframes as input
- * **KerasClassifier** : Keras classifier which allows Pandas Dataframes as input
- * **SKLearnClassifier** : General classifier that runs any [sklearn classifier](http://scikit-learn.org/stable/supervised_learning.html) taking Pandas dataframes as input.
+ * [XGBoostClassifier](python/seldon.html#module-seldon.xgb) : XGBoost classifier which allows Pandas Dataframes as input
+ * [VWClassifier](python/seldon.html#module-seldon.vw) : VW classifier which allows Pandas Dataframes as input
+ * [KerasClassifier](python/seldon.html#module-seldon.keras) : Keras classifier which allows Pandas Dataframes as input
+ * [SKLearnClassifier](python/seldon.html#module-seldon.sklearn_estimator) : General classifier that runs any [sklearn classifier](http://scikit-learn.org/stable/supervised_learning.html) taking Pandas dataframes as input.
 
 # Simple Predictive Pipeline using Iris Dataset
 An example pipeline to do very simple extraction on the Iris dataset is contained within the code at `external/predictor/python/docker/examples/iris`. This contains pipelines that utilize Seldon's Docker pipeline and create the following python pipelines:
@@ -146,14 +146,25 @@ if __name__ == '__main__':
 
 The example is explained in more detail [here](iris-demo.html)
 
+
+## Testing and Optimization
+
+There are two modules for helping in testing and optimizing pipelines:
+
+ * [cross_validation](python/seldon.pipeline.html#module-seldon.pipeline.cross_validation) : Allow cross validation to be run on pipelines that use pandas dataframes
+ * [bayes_optimize](python/seldon.pipeline.html#module-seldon.pipeline.bayes_optimize) : Optimize an estimators parameters
+
+A notebook showing how to use these can be found in ```external/predictor/python/examples/credit_card.ipynb````
+
+
 # Further Examples
 
 Further examples can be found in ```external/predictor/python/examples```
 
- * wine.ipynb : Jupyter python notebook to run a pipeline on wine classification
- * credit_card.ipynb : Jupyter python notebook to run a pipeline and optimize on credit card data
- * sklearn_scaler.py : an example of using a sklearn scaler in a pipeline with Pandas
- * auto_transform.py : an example of a simple auto_transform on pandas data
+ * [wine.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/wine.ipynb) : Jupyter python notebook to run a pipeline on wine classification
+ * [credit_card.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/credit_card.ipynb) : Jupyter python notebook to run a pipeline and optimize on credit card data
+ * [sklearn_scaler.py](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/sklearn_scaler.py) : an example of using a sklearn scaler in a pipeline with Pandas
+ * [auto_transform.py](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/auto_transform.py) : an example of a simple auto_transform on pandas data
 
 
 

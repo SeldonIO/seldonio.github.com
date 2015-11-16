@@ -5,7 +5,7 @@ title: Pluggable Prediction Algorithms
 
 ##### General Prediction Steps 
 
- [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [offline model](offline-prediction-models.html) --> [runtime scorer](/runtime-prediction.html) --> **microservice scorer** --> [predictions](prediction-api.html)
+ [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> [feature extraction pipeline](feature-pipeline.html) --> [runtime scorer](/runtime-prediction.html) --> **microservice scorer** --> [predictions](prediction-api.html)
 
 
 
