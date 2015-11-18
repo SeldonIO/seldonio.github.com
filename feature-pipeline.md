@@ -14,7 +14,7 @@ Feature extraction pipelines allow you to define a repeatable process to transfo
 Seldon feature pipelines are presently available in python. We plan to provide Spark based pipelines in the future.
 
 ## Python modules
-Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon. We use [scikit-learn](http://scikit-learn.org/stable/) pipelines and [Pandas](http://pandas.pydata.org/). For feature extraction and transformation we provide a starter set of python scikit-learn Tranformers that take Pandas dataframes as input apply some transformations and output Pandas dataframes. 
+Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon. We use [scikit-learn](http://scikit-learn.org/stable/) pipelines and [Pandas](http://pandas.pydata.org/). For feature extraction and transformation we provide a starter set of python scikit-learn Tranformers that take Pandas dataframes as input apply some transformations and output Pandas dataframes. There is also the ability to use any existing [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) on Pandas dataframes with [sklearn_transform](python/seldon.pipeline.html#module-seldon.pipeline.sklearn_transform).
 
 The currently available example transforms are:
 
@@ -93,7 +93,7 @@ print df2
 {% endhighlight %}
 
 ## Creating a Machine Learning model
-As a final stage of any pipeline you would usually add a scikit learn Estimtor. We provide 3 builtin Estimators which allow Pandas dataframes as input and a general Estimator that can take any sckit-learn compatible estimator.
+As a final stage of any pipeline you would usually add a [sklearn Estimator](http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html). We provide 3 builtin Estimators which wrap some popular machine learning toolkits and allow Pandas dataframes as input. There is also a general Estimator that can take any sckit-learn compatible estimator.
 
  * [XGBoostClassifier](python/seldon.html#module-seldon.xgb) : XGBoost classifier which allows Pandas Dataframes as input
  * [VWClassifier](python/seldon.html#module-seldon.vw) : VW classifier which allows Pandas Dataframes as input
@@ -154,7 +154,7 @@ There are two modules for helping in testing and optimizing pipelines:
  * [cross_validation](python/seldon.pipeline.html#module-seldon.pipeline.cross_validation) : Allow cross validation to be run on pipelines that use pandas dataframes
  * [bayes_optimize](python/seldon.pipeline.html#module-seldon.pipeline.bayes_optimize) : Optimize an estimators parameters
 
-A notebook showing how to use these can be found in ```external/predictor/python/examples/credit_card.ipynb````
+There is a [notebook](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/credit_card.ipynb) showing how to use these in a simple example.
 
 
 # Further Examples
