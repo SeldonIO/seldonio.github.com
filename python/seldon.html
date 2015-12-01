@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="seldon 1.0 documentation" href="index.html"/>
-        <link rel="next" title="seldon.pipeline package" href="seldon.pipeline.html"/>
+        <link rel="next" title="seldon.microservice package" href="seldon.microservice.html"/>
         <link rel="prev" title="Welcome to seldon’s documentation!" href="index.html"/> 
 
   
@@ -70,6 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.fileutil">seldon.fileutil module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.keras">seldon.keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.util">seldon.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon">Module contents</a></li>
@@ -116,6 +117,14 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="seldon.microservice.html">seldon.microservice package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="seldon.microservice.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.microservice.html#module-seldon.microservice.microservice">seldon.microservice.microservice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.microservice.html#module-seldon.microservice.predict">seldon.microservice.predict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.microservice.html#module-seldon.microservice.recommend">seldon.microservice.recommend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.microservice.html#module-seldon.microservice">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="seldon.pipeline.html">seldon.pipeline package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.auto_transforms">seldon.pipeline.auto_transforms module</a></li>
@@ -126,6 +135,12 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.sklearn_transform">seldon.pipeline.sklearn_transform module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline.tfidf_transform">seldon.pipeline.tfidf_transform module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.pipeline.html#module-seldon.pipeline">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="seldon.text.html">seldon.text package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="seldon.text.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.text.html#module-seldon.text.docsim">seldon.text.docsim</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.text.html#module-seldon.text">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -548,6 +563,119 @@ Class probability estimates.</td>
 </dd></dl>
 
 </div>
+<div class="section" id="module-seldon.util">
+<span id="seldon-util-module"></span><h2>seldon.util module<a class="headerlink" href="#module-seldon.util" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.util.Recommender">
+<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">Recommender</code><a class="reference internal" href="modules/seldon/util.html#Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>General recommendation interface</p>
+<dl class="method">
+<dt id="seldon.util.Recommender.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the model into the recommender. Allows more complex models than can easily handled via pickling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<em>str</em>) &#8211; local folder to load model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.util.Recommender.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user</em>, <em>ids</em>, <em>recent_interactions</em>, <em>client</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender.recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> (<em>long</em>) &#8211; user id</li>
+<li><strong>ids</strong> (<em>list(long)</em>) &#8211; item ids to score</li>
+<li><strong>recent_interactions</strong> (<em>list(long)</em>) &#8211; recent items the user has interacted with</li>
+<li><strong>client</strong> (<em>str</em>) &#8211; name of client to recommend for (business group, company, product..)</li>
+<li><strong>limit</strong> (<em>int</em>) &#8211; number of recommendations to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of pairs of (item_id,score)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.util.Recommender.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the recommender model. Allows more fine grained control over model state saving than pickling would allow.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<em>str</em>) &#8211; local folder to save model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seldon.util.Recommender_wrapper">
+<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">Recommender_wrapper</code><span class="sig-paren">(</span><em>work_folder='/tmp'</em>, <em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Wrapper to allow recommenders to be easily saved and loaded</p>
+<dl class="method">
+<dt id="seldon.util.Recommender_wrapper.create_work_folder">
+<code class="descname">create_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.create_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.create_work_folder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.util.Recommender_wrapper.get_work_folder">
+<code class="descname">get_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.get_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.get_work_folder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.util.Recommender_wrapper.load_recommender">
+<code class="descname">load_recommender</code><span class="sig-paren">(</span><em>recommender_folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.load_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.load_recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load scikit learn recommender from external folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recommender_folder</strong> (<em>str</em>) &#8211; external folder holding recommender</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.util.Recommender_wrapper.save_recommender">
+<code class="descname">save_recommender</code><span class="sig-paren">(</span><em>recommender</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.save_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.save_recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save recommender to external location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>recommender</strong> (<a class="reference internal" href="#seldon.util.Recommender" title="seldon.util.Recommender"><em>Recommender</em></a>) &#8211; recommender to be saved</li>
+<li><strong>location</strong> (<em>str</em>) &#8211; external folder to save recommender</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-seldon.vw">
 <span id="seldon-vw-module"></span><h2>seldon.vw module<a class="headerlink" href="#module-seldon.vw" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -741,6 +869,17 @@ Class probability estimates.</td>
 </div>
 <div class="section" id="module-seldon">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.NullHandler">
+<em class="property">class </em><code class="descclassname">seldon.</code><code class="descname">NullHandler</code><span class="sig-paren">(</span><em>level=0</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon.html#NullHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.NullHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">logging.Handler</span></code></p>
+<dl class="method">
+<dt id="seldon.NullHandler.emit">
+<code class="descname">emit</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon.html#NullHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.NullHandler.emit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -750,7 +889,7 @@ Class probability estimates.</td>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="seldon.pipeline.html" class="btn btn-neutral float-right" title="seldon.pipeline package">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="seldon.microservice.html" class="btn btn-neutral float-right" title="seldon.microservice package">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to seldon’s documentation!"><span class="fa fa-arrow-circle-left"></span> Previous</a>

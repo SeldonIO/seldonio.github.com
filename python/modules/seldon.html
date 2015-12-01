@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; seldon 1.0 documentation</title>
+  <title>seldon &mdash; seldon 1.0 documentation</title>
   
 
   
@@ -30,7 +30,8 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../index.html"/> 
+    <link rel="top" title="seldon 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -98,7 +99,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Overview: module code</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>seldon</li>
       <li class="wy-breadcrumbs-aside">
         
       </li>
@@ -107,26 +110,19 @@
 </div>
           <div role="main" class="document">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="seldon.html">seldon</a></li>
-<ul><li><a href="seldon/fileutil.html">seldon.fileutil</a></li>
-<li><a href="seldon/keras.html">seldon.keras</a></li>
-<li><a href="seldon/microservice/microservice.html">seldon.microservice.microservice</a></li>
-<li><a href="seldon/microservice/predict.html">seldon.microservice.predict</a></li>
-<li><a href="seldon/microservice/recommend.html">seldon.microservice.recommend</a></li>
-<li><a href="seldon/pipeline/auto_transforms.html">seldon.pipeline.auto_transforms</a></li>
-<li><a href="seldon/pipeline/basic_transforms.html">seldon.pipeline.basic_transforms</a></li>
-<li><a href="seldon/pipeline/bayes_optimize.html">seldon.pipeline.bayes_optimize</a></li>
-<li><a href="seldon/pipeline/cross_validation.html">seldon.pipeline.cross_validation</a></li>
-<li><a href="seldon/pipeline/pandas_pipelines.html">seldon.pipeline.pandas_pipelines</a></li>
-<li><a href="seldon/pipeline/sklearn_transform.html">seldon.pipeline.sklearn_transform</a></li>
-<li><a href="seldon/pipeline/tfidf_transform.html">seldon.pipeline.tfidf_transform</a></li>
-<li><a href="seldon/sklearn_estimator.html">seldon.sklearn_estimator</a></li>
-<li><a href="seldon/text/docsim.html">seldon.text.docsim</a></li>
-<li><a href="seldon/util.html">seldon.util</a></li>
-<li><a href="seldon/vw.html">seldon.vw</a></li>
-<li><a href="seldon/xgb.html">seldon.xgb</a></li>
-</ul></ul>
+  <h1>Source code for seldon</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">Recommender_wrapper</span><span class="p">,</span><span class="n">Recommender</span>
+
+<div class="viewcode-block" id="NullHandler"><a class="viewcode-back" href="../seldon.html#seldon.NullHandler">[docs]</a><span class="k">class</span> <span class="nc">NullHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+<div class="viewcode-block" id="NullHandler.emit"><a class="viewcode-back" href="../seldon.html#seldon.NullHandler.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="k">pass</span>
+</div></div>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span><span class="c"># To ensure reload() doesn&#39;t add another one</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">NullHandler</span><span class="p">())</span>
+</pre></div>
 
           </div>
           <footer>

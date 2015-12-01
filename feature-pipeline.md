@@ -31,7 +31,7 @@ The currently available example transforms are:
 
 ### Small Examples
 
-Several small examples can be found in `external/predictor/python/examples`
+Several small examples can be found in `python/examples`
 
 ### Use sklean's StandardScaler on a Pandas DataFrame.
 
@@ -101,7 +101,7 @@ As a final stage of any pipeline you would usually add a [sklearn Estimator](htt
  * [SKLearnClassifier](python/seldon.html#module-seldon.sklearn_estimator) : General classifier that runs any [sklearn classifier](http://scikit-learn.org/stable/supervised_learning.html) taking Pandas dataframes as input.
 
 # Simple Predictive Pipeline using Iris Dataset
-An example pipeline to do very simple extraction on the Iris dataset is contained within the code at `external/predictor/python/docker/examples/iris`. This contains pipelines that utilize Seldon's Docker pipeline and create the following python pipelines:
+An example pipeline to do very simple extraction on the Iris dataset is contained within the code at `python/docker/examples/iris`. This contains pipelines that utilize Seldon's Docker pipeline and create the following python pipelines:
 
  1. Create an id feature from the name feature
  1. Create an SVMLight feature from the four core predictive features
@@ -154,17 +154,17 @@ There are two modules for helping in testing and optimizing pipelines:
  * [cross_validation](python/seldon.pipeline.html#module-seldon.pipeline.cross_validation) : Allow cross validation to be run on pipelines that use pandas dataframes
  * [bayes_optimize](python/seldon.pipeline.html#module-seldon.pipeline.bayes_optimize) : Optimize an estimators parameters
 
-There is a [notebook](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/credit_card.ipynb) showing how to use these in a simple example.
+There is a [notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/credit_card.ipynb) showing how to use these in a simple example.
 
 
 # Further Examples
 
-Further examples can be found in ```external/predictor/python/examples```
+Further examples can be found in ```python/examples```
 
- * [wine.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/wine.ipynb) : Jupyter python notebook to run a pipeline on wine classification
- * [credit_card.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/credit_card.ipynb) : Jupyter python notebook to run a pipeline and optimize on credit card data
- * [sklearn_scaler.py](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/sklearn_scaler.py) : an example of using a sklearn scaler in a pipeline with Pandas
- * [auto_transform.py](https://github.com/SeldonIO/seldon-server/blob/master/external/predictor/python/examples/auto_transform.py) : an example of a simple auto_transform on pandas data
+ * [wine.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/wine.ipynb) : Jupyter python notebook to run a pipeline on wine classification
+ * [credit_card.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/credit_card.ipynb) : Jupyter python notebook to run a pipeline and optimize on credit card data
+ * [sklearn_scaler.py](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/sklearn_scaler.py) : an example of using a sklearn scaler in a pipeline with Pandas
+ * [auto_transform.py](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/auto_transform.py) : an example of a simple auto_transform on pandas data
 
 
 

@@ -15,7 +15,7 @@ The steps are:
  1. [Start runtime prediction microservices](#microservices)
  1. [Integrate into Seldon Server](#seldon-server)
 
-The code for creating the models and predictive pipeline can be found in `external/predictor/python/docker/examples/iris`. 
+The code for creating the models and predictive pipeline can be found in `python/docker/examples/iris`. 
 
 Prerequisites:
 
@@ -26,7 +26,7 @@ Prerequisites:
 ## Create JSON events data<a name="events"></a>
 The Iris data is provided as is and we therefore download and create a JSON dataset to allow us to get started easily. Alternatively, we could start the Seldon server and injest the data via the /events endpoint.
 
-Go to `external/predictor/python/docker/examples/iris` and run:
+Go to `python/docker/examples/iris` and run:
 
 {% highlight bash %}
    make data/iris/events/1/iris.json

@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.text package &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="index.html"/>
+        <link rel="up" title="seldon package" href="seldon.html"/>
+        <link rel="prev" title="seldon.pipeline package" href="seldon.pipeline.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="seldon.html">seldon package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="seldon.html">seldon package</a> &raquo;</li>
+      
+    <li>seldon.text package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="sources/seldon.text.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="seldon-text-package">
+<h1>seldon.text package<a class="headerlink" href="#seldon-text-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-seldon.text.docsim">
+<span id="seldon-text-docsim"></span><h2>seldon.text.docsim<a class="headerlink" href="#module-seldon.text.docsim" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.text.docsim.DefaultJsonCorpus">
+<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DefaultJsonCorpus</code><span class="sig-paren">(</span><em>input=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A default JSON corpus based on gensim TextCorpus. It assumes a file or list of JSON as input.
+The methods provided by gensim TextCorpus are needed for the GenSim training.
+Any corpus provided to DocumentSimilarity should provide the methods given in this class.</p>
+<dl class="method">
+<dt id="seldon.text.docsim.DefaultJsonCorpus.get_dictionary">
+<code class="descname">get_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DefaultJsonCorpus.get_json">
+<code class="descname">get_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DefaultJsonCorpus.get_meta">
+<code class="descname">get_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a json object with meta data for the documents. It must return:
+id - id for this document
+optional title and tags. Tags will be used as base truth used to score document similarity results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DefaultJsonCorpus.get_texts">
+<code class="descname">get_texts</code><span class="sig-paren">(</span><em>raw=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_texts" title="Permalink to this definition">¶</a></dt>
+<dd><p>yield raw text or tokenized text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DefaultJsonCorpus.getstream">
+<code class="descname">getstream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.getstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.getstream" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seldon.text.docsim.DocumentSimilarity">
+<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DocumentSimilarity</code><span class="sig-paren">(</span><em>model_type='gensim_lsi'</em>, <em>vec_size=100</em>, <em>annoy_trees=100</em>, <em>work_folder='/tmp'</em>, <em>sklearn_tfidf_args={'stop_words': 'english'}</em>, <em>sklearn_nmf_args={'alpha': 0.1</em>, <em>'random_state': 1</em>, <em>'l1_ratio': 0.5}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.html#seldon.util.Recommender" title="seldon.util.Recommender"><code class="xref py py-class docutils literal"><span class="pre">seldon.util.Recommender</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_type</strong> (<em>string</em>) &#8211; gensim_lsi,gensim_lda,gensim_rp,sklearn_nmf</li>
+<li><strong>vec_size</strong> (<em>int</em>) &#8211; vector size of model</li>
+<li><strong>annoy_trees</strong> (<em>int</em>) &#8211; number of trees to create for Annoy approx nearest neighbour</li>
+<li><strong>work_folder</strong> (<em>str</em>) &#8211; folder for tmp files</li>
+<li><strong>sklearn_tfidf_args</strong> (<em>dict, optional</em>) &#8211; args to pass to sklearn TfidfVectorizer</li>
+<li><strong>sklear_nmf_args</strong> (<em>dict, optional</em>) &#8211; args to pass to sklearn NMF model</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.__getstate__">
+<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove things that should not be pickled as they are handled in save/load</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.create_gensim_model">
+<code class="descname">create_gensim_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.create_gensim_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_gensim_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a gensim model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>corpus</strong> (<em>an object that satisfies a gensim TextCorpus</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">gensim corpus model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.create_sklearn_model">
+<code class="descname">create_sklearn_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.create_sklearn_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_sklearn_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a sklearn model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>corpus</strong> (<em>object</em>) &#8211; a corpus object that has get_text(raw=True) method</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">gensim corpus model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a document similarity model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>corpus</strong> (<em>object</em>) &#8211; a corpus object that follows DefaultJsonCorpus</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">trained DocumentSimilarity object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>load models from folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<em>str</em>) &#8211; location of models</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.nn">
+<code class="descname">nn</code><span class="sig-paren">(</span><em>doc_id</em>, <em>k=1</em>, <em>translate_id=False</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.nn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.nn" title="Permalink to this definition">¶</a></dt>
+<dd><p>nearest neighbour query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>doc_id</strong> (<em>long</em>) &#8211; internal or external document id</li>
+<li><strong>k</strong> (<em>int</em>) &#8211; number of neighbours to return</li>
+<li><strong>translate_id</strong> (<em>bool</em>) &#8211; translate doc_id into internal id</li>
+<li><strong>approx</strong> (<em>bool</em>) &#8211; run approx nearest neighbour search using Annoy</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of pairs of document id (internal or external) and similarity metric in range (0,1)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user=None</em>, <em>ids=[]</em>, <em>recent_interactions=[]</em>, <em>client=None</em>, <em>limit=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.recommend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save models to folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>folder</strong> (<em>str</em>) &#8211; saved location folder</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.score">
+<code class="descname">score</code><span class="sig-paren">(</span><em>k=1</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>score a model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>k</strong> (<em>int</em>) &#8211; number of neighbours to return</li>
+<li><strong>approx</strong> (<em>bool</em>) &#8211; run approx nearest neighbour search using Annoy</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">accuracy metric - avg jaccard distance of returned tags to ground truth tags in meta data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="seldon.text.docsim.current_milli_time">
+<code class="descclassname">seldon.text.docsim.</code><code class="descname">current_milli_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seldon.text.docsim.current_milli_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="seldon.text.docsim.jaccard">
+<code class="descclassname">seldon.text.docsim.</code><code class="descname">jaccard</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#jaccard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.jaccard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-seldon.text">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon.text" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="seldon.pipeline.html" class="btn btn-neutral" title="seldon.pipeline package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

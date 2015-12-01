@@ -69,6 +69,7 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
@@ -120,8 +121,13 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
  | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
@@ -139,6 +145,10 @@
       <dd><dl>
         
   <dt><a href="seldon.pipeline.html#seldon.pipeline.bayes_optimize.BayesOptimizer.__getstate__">(seldon.pipeline.bayes_optimize.BayesOptimizer method)</a>
+  </dt>
+
+        
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.__getstate__">(seldon.text.docsim.DocumentSimilarity method)</a>
   </dt>
 
         
@@ -216,8 +226,6 @@
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.copy">copy() (seldon.fileutil.FileUtil method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.copy_local">copy_local() (seldon.fileutil.FileUtil method)</a>
   </dt>
@@ -231,6 +239,32 @@
   </dt>
 
   </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.create_gensim_model">create_gensim_model() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.microservice.Microservices.create_prediction_microservice">create_prediction_microservice() (seldon.microservice.microservice.Microservices method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.microservice.Microservices.create_recommendation_microservice">create_recommendation_microservice() (seldon.microservice.microservice.Microservices method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.create_sklearn_model">create_sklearn_model() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.html#seldon.util.Recommender_wrapper.create_work_folder">create_work_folder() (seldon.util.Recommender_wrapper method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.current_milli_time">current_milli_time() (in module seldon.text.docsim)</a>
+  </dt>
+
+  </dl></td>
 </tr></table>
 
 <h2 id="D">D</h2>
@@ -240,8 +274,24 @@
   <dt><a href="seldon.html#seldon.keras.default_classification_model">default_classification_model() (in module seldon.keras)</a>
   </dt>
 
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus">DefaultJsonCorpus (class in seldon.text.docsim)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.predict.do_predict">do_predict() (in module seldon.microservice.predict)</a>
+  </dt>
+
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.recommend.do_recommend">do_recommend() (in module seldon.microservice.recommend)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity">DocumentSimilarity (class in seldon.text.docsim)</a>
+  </dt>
+
       
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.download_s3">download_s3() (seldon.fileutil.FileUtil method)</a>
   </dt>
@@ -252,6 +302,10 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.NullHandler.emit">emit() (seldon.NullHandler method)</a>
+  </dt>
+
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.encode_onehot">encode_onehot() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
   </dt>
@@ -266,6 +320,16 @@
   <dt><a href="seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform">Exist_features_transform (class in seldon.pipeline.basic_transforms)</a>
   </dt>
 
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.predict.extract_input">extract_input() (in module seldon.microservice.predict)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.microservice.html#seldon.microservice.recommend.extract_input">(in module seldon.microservice.recommend)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -340,6 +404,10 @@
   </dt>
 
         
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.fit">(seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+        
   <dt><a href="seldon.html#seldon.vw.VWClassifier.fit">(seldon.vw.VWClassifier method)</a>
   </dt>
 
@@ -348,6 +416,10 @@
   </dt>
 
       </dl></dd>
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.recommend.format_recs">format_recs() (in module seldon.microservice.recommend)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -373,17 +445,37 @@
 
       </dl></dd>
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_score">get_score() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
+  <dt><a href="seldon.microservice.html#seldon.microservice.recommend.get_data_set">get_data_set() (in module seldon.microservice.recommend)</a>
   </dt>
 
       
-  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_scores">get_scores() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_dictionary">get_dictionary() (seldon.text.docsim.DefaultJsonCorpus method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_json">get_json() (seldon.text.docsim.DefaultJsonCorpus method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_meta">get_meta() (seldon.text.docsim.DefaultJsonCorpus method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_score">get_score() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_scores">get_scores() (seldon.pipeline.cross_validation.Seldon_KFold method)</a>
+  </dt>
+
+      
   <dt><a href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator.get_target">get_target() (seldon.pipeline.pandas_pipelines.BasePandasEstimator method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_texts">get_texts() (seldon.text.docsim.DefaultJsonCorpus method)</a>
   </dt>
 
       
@@ -391,7 +483,15 @@
   </dt>
 
       
+  <dt><a href="seldon.html#seldon.util.Recommender_wrapper.get_work_folder">get_work_folder() (seldon.util.Recommender_wrapper method)</a>
+  </dt>
+
+      
   <dt><a href="seldon.html#seldon.fileutil.FileUtil.getFolders">getFolders() (seldon.fileutil.FileUtil method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.getstream">getstream() (seldon.text.docsim.DefaultJsonCorpus method)</a>
   </dt>
 
   </dl></td>
@@ -407,11 +507,75 @@
   </dl></td>
 </tr></table>
 
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.jaccard">jaccard() (in module seldon.text.docsim)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.html#seldon.keras.KerasClassifier">KerasClassifier (class in seldon.keras)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.load">load() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.html#seldon.util.Recommender.load">(seldon.util.Recommender method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.util.Recommender_wrapper.load_recommender">load_recommender() (seldon.util.Recommender_wrapper method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.recommend.memcache_get">memcache_get() (in module seldon.microservice.recommend)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.microservice.html#seldon.microservice.microservice.Microservices">Microservices (class in seldon.microservice.microservice)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.nn">nn() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.NullHandler">NullHandler (class in seldon)</a>
   </dt>
 
   </dl></td>
@@ -461,9 +625,59 @@
   </dl></td>
 </tr></table>
 
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.recommend">recommend() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.html#seldon.util.Recommender.recommend">(seldon.util.Recommender method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="seldon.html#seldon.util.Recommender">Recommender (class in seldon.util)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.html#seldon.util.Recommender_wrapper">Recommender_wrapper (class in seldon.util)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.save">save() (seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.html#seldon.util.Recommender.save">(seldon.util.Recommender method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="seldon.html#seldon.util.Recommender_wrapper.save_recommender">save_recommender() (seldon.util.Recommender_wrapper method)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.pipeline.html#seldon.pipeline.bayes_optimize.BayesOptimizer.score">score() (seldon.pipeline.bayes_optimize.BayesOptimizer method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="seldon.text.html#seldon.text.docsim.DocumentSimilarity.score">(seldon.text.docsim.DocumentSimilarity method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="seldon.html#module-seldon">seldon (module)</a>
   </dt>
@@ -474,6 +688,22 @@
 
       
   <dt><a href="seldon.html#module-seldon.keras">seldon.keras (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#module-seldon.microservice">seldon.microservice (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#module-seldon.microservice.microservice">seldon.microservice.microservice (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#module-seldon.microservice.predict">seldon.microservice.predict (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.microservice.html#module-seldon.microservice.recommend">seldon.microservice.recommend (module)</a>
   </dt>
 
       
@@ -512,6 +742,20 @@
   <dt><a href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator (module)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="seldon.text.html#module-seldon.text">seldon.text (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.text.html#module-seldon.text.docsim">seldon.text.docsim (module)</a>
+  </dt>
+
+      
+  <dt><a href="seldon.html#module-seldon.util">seldon.util (module)</a>
+  </dt>
+
       
   <dt><a href="seldon.html#module-seldon.vw">seldon.vw (module)</a>
   </dt>
@@ -520,8 +764,6 @@
   <dt><a href="seldon.html#module-seldon.xgb">seldon.xgb (module)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold">Seldon_KFold (class in seldon.pipeline.cross_validation)</a>
   </dt>

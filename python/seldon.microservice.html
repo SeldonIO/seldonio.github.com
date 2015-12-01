@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.microservice package &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="index.html"/>
+        <link rel="up" title="seldon package" href="seldon.html"/>
+        <link rel="next" title="seldon.pipeline package" href="seldon.pipeline.html"/>
+        <link rel="prev" title="seldon package" href="seldon.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="seldon.html">seldon package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="seldon.html">seldon package</a> &raquo;</li>
+      
+    <li>seldon.microservice package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="sources/seldon.microservice.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="seldon-microservice-package">
+<h1>seldon.microservice package<a class="headerlink" href="#seldon-microservice-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-seldon.microservice.microservice">
+<span id="seldon-microservice-microservice"></span><h2>seldon.microservice.microservice<a class="headerlink" href="#module-seldon.microservice.microservice" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.microservice.microservice.Microservices">
+<em class="property">class </em><code class="descclassname">seldon.microservice.microservice.</code><code class="descname">Microservices</code><span class="sig-paren">(</span><em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/microservice.html#Microservices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.microservice.Microservices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Allow creation of predict and recommender microservices</p>
+<dl class="docutils">
+<dt>aws_key <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>aws key</dd>
+<dt>aws_secret <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>aws secret</dd>
+</dl>
+<dl class="method">
+<dt id="seldon.microservice.microservice.Microservices.create_prediction_microservice">
+<code class="descname">create_prediction_microservice</code><span class="sig-paren">(</span><em>pipeline_folder</em>, <em>model_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/microservice.html#Microservices.create_prediction_microservice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.microservice.Microservices.create_prediction_microservice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a prediction Flask microservice app</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pipeline_folder</strong> (<em>str</em>) &#8211; location of pipeline</li>
+<li><strong>model_name</strong> (<em>str</em>) &#8211; model name to use for this pipeline</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.microservice.microservice.Microservices.create_recommendation_microservice">
+<code class="descname">create_recommendation_microservice</code><span class="sig-paren">(</span><em>recommender_folder</em>, <em>memcache_servers=None</em>, <em>memcache_pool_size=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/microservice.html#Microservices.create_recommendation_microservice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.microservice.Microservices.create_recommendation_microservice" title="Permalink to this definition">¶</a></dt>
+<dd><p>create recommedation Flask microservice app</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>recommender_folder</strong> (<em>str</em>) &#8211; location of recommender model files</li>
+<li><strong>memcache_servers</strong> (<em>comma separated string, optional</em>) &#8211; memcache server locations, e.g., 127.0.0.1:11211</li>
+<li><strong>memcache_pool_size</strong> (<em>int, optional</em>) &#8211; size of memcache pool</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.microservice.predict">
+<span id="seldon-microservice-predict"></span><h2>seldon.microservice.predict<a class="headerlink" href="#module-seldon.microservice.predict" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="seldon.microservice.predict.do_predict">
+<code class="descclassname">seldon.microservice.predict.</code><code class="descname">do_predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/predict.html#do_predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.predict.do_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>prediction endpoint</p>
+<ul class="simple">
+<li>get recommeder from Flask app config</li>
+<li>create dataframe from JSON in call</li>
+<li>call prediction pipeline</li>
+<li>get class id mapping</li>
+<li>construct result</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="seldon.microservice.predict.extract_input">
+<code class="descclassname">seldon.microservice.predict.</code><code class="descname">extract_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/predict.html#extract_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.predict.extract_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-seldon.microservice.recommend">
+<span id="seldon-microservice-recommend"></span><h2>seldon.microservice.recommend<a class="headerlink" href="#module-seldon.microservice.recommend" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="seldon.microservice.recommend.do_recommend">
+<code class="descclassname">seldon.microservice.recommend.</code><code class="descname">do_recommend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/recommend.html#do_recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.recommend.do_recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>recommendation endpoint</p>
+<ul class="simple">
+<li>extract parameters from call</li>
+<li>extract items to score from any data keys provided</li>
+<li>get recommender from Flask app config</li>
+<li>call recommender</li>
+<li>construct JSON response</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="seldon.microservice.recommend.extract_input">
+<code class="descclassname">seldon.microservice.recommend.</code><code class="descname">extract_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/recommend.html#extract_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.recommend.extract_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="seldon.microservice.recommend.format_recs">
+<code class="descclassname">seldon.microservice.recommend.</code><code class="descname">format_recs</code><span class="sig-paren">(</span><em>recs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/recommend.html#format_recs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.recommend.format_recs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="seldon.microservice.recommend.get_data_set">
+<code class="descclassname">seldon.microservice.recommend.</code><code class="descname">get_data_set</code><span class="sig-paren">(</span><em>raw_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/recommend.html#get_data_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.recommend.get_data_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="seldon.microservice.recommend.memcache_get">
+<code class="descclassname">seldon.microservice.recommend.</code><code class="descname">memcache_get</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/microservice/recommend.html#memcache_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.microservice.recommend.memcache_get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-seldon.microservice">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon.microservice" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seldon.pipeline.html" class="btn btn-neutral float-right" title="seldon.pipeline package">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="seldon.html" class="btn btn-neutral" title="seldon package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

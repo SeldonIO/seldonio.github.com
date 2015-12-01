@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="seldon 1.0 documentation" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+        <link rel="up" title="seldon" href="../seldon.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -69,6 +69,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
@@ -100,6 +101,8 @@
       
           <li><a href="../index.html">Module code</a> &raquo;</li>
       
+          <li><a href="../seldon.html">seldon</a> &raquo;</li>
+      
     <li>seldon.vw</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -126,6 +129,9 @@
 <span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_X_y</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_array</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon.vw&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="VWClassifier"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier">[docs]</a><span class="k">class</span> <span class="nc">VWClassifier</span><span class="p">(</span><span class="n">BasePandasEstimator</span><span class="p">,</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -197,10 +203,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hack to wait for vw model to finish saving. It creates a file &lt;model&gt;.writing during this process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;waiting for &quot;</span><span class="p">,</span><span class="n">fname</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;waiting for </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;sleeping until model is saved&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;sleeping until model is saved&quot;</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fname</span><span class="p">):</span>
@@ -314,7 +320,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;terminating pid &quot;</span><span class="p">,</span><span class="n">line</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;terminating pid </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -351,10 +357,8 @@
 
     <span class="k">def</span> <span class="nf">_exclude_include_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;including features &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="o">+</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;excluding features&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
 
@@ -387,10 +391,8 @@
             <span class="n">df_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">=</span><span class="s">&#39;y&#39;</span>
             <span class="n">df_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df_y</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">print</span> <span class="n">df_base</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
         <span class="n">min_target</span> <span class="o">=</span> <span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-        <span class="k">print</span> <span class="s">&quot;min target &quot;</span><span class="p">,</span><span class="n">min_target</span>
         <span class="k">if</span> <span class="n">min_target</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
@@ -399,7 +401,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">create_class_id_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-        <span class="k">print</span> <span class="s">&quot;num classes &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">)</span>
         <span class="n">df_vw</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
@@ -410,7 +411,7 @@
 </div>
     <span class="k">def</span> <span class="nf">_start_vw_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">!=</span> <span class="n">mode</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Creating vw in mode&quot;</span><span class="p">,</span><span class="n">mode</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Creating vw in mode </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">&quot;test&quot;</span><span class="p">:</span>
@@ -419,7 +420,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">server_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">29743</span><span class="p">,</span><span class="n">num_children</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span><span class="n">raw_predictions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">server_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">29742</span><span class="p">,</span><span class="n">num_children</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">oaa</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vw_args</span><span class="p">)</span>
-            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">command</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">=</span> <span class="n">mode</span>
 
 

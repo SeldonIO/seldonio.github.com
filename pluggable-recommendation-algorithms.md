@@ -17,7 +17,7 @@ Pluggable Item Recommendation algorithms allow you to add any custom recommendat
  * [Online external item recommendation](#online-recommendation-model)
    * [Microservices REST API](#recommender-internal-rest-api)
    * [Zookeeper configuration](#recommender-zookeeper-conf)
-   * [Example python recommender template](#recommender-python-template)
+   * [Python recommender microservice](#recommender-python)
 
 ## Offline Model<a name="offline-model"></a>
 
@@ -89,65 +89,15 @@ There are two config options that should be set:
  * io.seldon.algorithm.external.url : the endpoint for the REST API 
  * io.seldon.algorithm.external.name : the name of the algorithm (will appear in the logs)
 
-### External Python Recommender Template<a name="recommender-python-template"></a>
-We have provided a template for writing an external recommender in python.
+### Python Recommender<a name="recommender-python"></a>
+Recommendation microservices can easily be created in python. The recommender should extend ```seldon.Recommender``` and provide ```load``` and ```save``` methods to store its model. A wrapper is provided to create a Flask based app given a recommender. For example if the recommender model is saved into "recommender_folder" you can start a microservice for this with:
 
-To use this recommender, follow these steps:
+{% highlight python %}
+from seldon.microservice import Microservices
+m = Microservices()
+app = m.create_recommendation_microservice("recommender_folder")
+app.run(host="0.0.0.0",port=5000,debug=False)
+{% endhighlight %}
 
-1. Install python dependencies.
-
-        pip install Flask
-        apt-get install libmemcached-dev
-        pip install pylibmc
-        pip install gunicorn
-
-1. Clone the Seldon Server project.
-
-        git clone https://github.com/SeldonIO/seldon-server.git
-
-1. Navigate to the python recommender scripts.
-
-        cd seldon-server/external/recommender/python
-
-1. Copy or edit the "**example_alg.py**" script, and customize the "**get_recommendations**" function and if needed the "**init**" function.
-
-    The paramters to the "**get_recommendations**" function are as follows:
-
-    * **user_id** : a long for the user id
-    * **client** : a str for the client
-    * **recent_interactions_list** : a list of item ids of recent itms the user has interacted with
-    * **data_set** : a set of item ids to score
-    * **limit** : an int for the number of recommendations to return
-
-    Expand the "**get_recommendations**" function to return a dictionary of item_id->score for user with id **user_id**.
-
-    The parameters to the "**init**" function are as follows:
-
-    * **mc** : memcache pool from pylibmc
-    * **config** : dictionary from the load of "**recommender_config.py**", see below
-
-    Add to the init function anything your recommender needs to setup. For example, the location of a model may be taken from the config and loaded into memory.
-
-1. Modify the script "**recommender_config.py**".  
-    Example:
-
-        RECOMMENDER_ALG="example_alg"
-        MEMCACHE={
-            "servers": ["192.168.59.103:11211"],
-            "pool_size" : 1
-        }
-
-    * **RECOMMENDER_ALG** : The name of the script with the custom "get_recommendations" function, without the .py extension.
-    * **MEMCACHE** : Change to your memcache settings.
-        * **servers** : List of host:ip strings of memcache servers
-        * **pool_size** : Size of memcache pool, for the process.
-
-1. Serve the recommender for testing.
-
-        python recommender.py
-
-1. Serve the recommender using gunicorn for handling concurrent requests.  
-    Example
-
-        gunicorn -w 4 -b 127.0.0.1:5000 recommender:app
-
+The microservice will be availble on port 5000 of localhost. An example for a document similarity based recommender is shown [here](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/doc_similarity_reuters.ipynb)
+	
