@@ -8,6 +8,7 @@ title: Seldon Shell
 * [Managing Datasources](#db) [ db ]
 * [Configuring Memcache](#memcached) [ memcached ]
 * [Managing Clients](#client) [ client ]
+* [Setting up atrributes](#attr) [ attr ]
 * [Setting up and Running Offline Jobs](#model) [ model ]
 
 ## <a name="intro"></a>Introduction
@@ -114,12 +115,26 @@ Use the following to show the list of existing clients
 
 To create a new client use the following command. It requires an existing datasource that would have been created with the **db** command.
 
-    client setup <clientName> <dbName>
+    seldon> client setup <clientName> <dbName>
 
 
-##Setting up atrributes
+## <a name="attr"></a>Setting up atrributes
 
-**attr**
+Once a client is setup, the **attr** command can be used to setup the attributes for that data.
+
+Use the following command to edit the attributes for the client. If none have been setup already then a default configuration is generated with some simple attributes such as "title".
+
+    seldon> attr edit <clientName>
+
+To change the editor used for the editing process, update the **EDITOR** environment variable as necessary.
+
+At anytime the following command can be used to show the attributes for the client that have been setup.
+
+    seldon> attr show <clientName>
+
+Once the attributes have been edited, they can be used update the client using the following command.
+
+    seldon> attr apply <clientName>
 
 ##Importing static data
 
