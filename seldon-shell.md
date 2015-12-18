@@ -7,6 +7,7 @@ title: Seldon Shell
 * [Starting the Shell](#startup)
 * [Managing Datasources](#db) [ db ]
 * [Configuring Memcache](#memcached) [ memcached ]
+* [Managing Clients](#client) [ client ]
 * [Setting up and Running Offline Jobs](#model) [ model ]
 
 ## <a name="intro"></a>Introduction
@@ -102,9 +103,19 @@ Once the settings are correct, use the following to commit to zookeeper
 
     seldon> memcached commit
 
-##Managing Clients
+## <a name="client"></a>Managing Clients
 
-**client**
+Clients in the Seldon Platform can be considered as a particular datasets that you want to work with.  
+The **client** command can be used to setup these datasets.
+
+Use the following to show the list of existing clients
+
+    seldon> client
+
+To create a new client use the following command. It requires an existing datasource that would have been created with the **db** command.
+
+    client setup <clientName> <dbName>
+
 
 ##Setting up atrributes
 
