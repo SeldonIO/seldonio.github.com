@@ -72,6 +72,20 @@ Individual commands also have a help sub-command to obtain other sub-commands.
 
 The **db** command can be used for configuring MySQL datasources.
 
+Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
+
+    seldon> db
+
+To change any of the settings use
+
+    seldon> db setup <SomeDb>
+
+If the <SomeDb> name is a new datasource - then it will be created. If its an existing one - then it will be updated.
+
+Once the settings are correct, use the following to commit to zookeeper
+
+    seldon> db commit
+
 ## <a name="memcached"></a>Configuring Memcache
 
 The **memcached** command can be used for configuring memcached.
