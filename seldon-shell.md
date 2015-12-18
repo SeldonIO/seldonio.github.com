@@ -151,7 +151,38 @@ Use the following set of commands to import items, users and actions.
 
 ## <a name="alg"></a>Configuring Recommenders
 
-**alg**
+The **alg** command can be used for setting up and changing recommenders.
+
+There is a number of built in recommenders that can be configured for a particular client.
+Each client can have one or more recommenders assigned.
+
+
+To get a list of the available recommenders, use the following command
+
+    seldon> alg
+
+
+The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
+Additional recommenders can also be added this way.
+
+    seldon> alg add <clientName>
+
+The following command can be used to remove recommenders that are not required.
+
+    seldon> alg delete <clientName>
+
+To reorder the recommender list - the following command can be used by picking a recommender to promote. It will be moved up the list.
+
+    seldon> alg promote <clientName>
+
+The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
+
+    seldon> alg show <clientName>
+
+To commit the changes to zookeeper, use the following command
+
+    seldon> alg commit <clientName>
+
 
 ## <a name="model"></a>Setting up and Running Offline Jobs
 
