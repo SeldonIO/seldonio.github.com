@@ -9,6 +9,8 @@ title: Seldon Shell
 * [Configuring Memcache](#memcached) [ memcached ]
 * [Managing Clients](#client) [ client ]
 * [Setting up atrributes](#attr) [ attr ]
+* [Importing static data](#import) [ import ]
+* [Configuring Recommenders](#alg) [ alg ]
 * [Setting up and Running Offline Jobs](#model) [ model ]
 
 ## <a name="intro"></a>Introduction
@@ -136,11 +138,18 @@ Once the attributes have been edited, they can be used update the client using t
 
     seldon> attr apply <clientName>
 
-##Importing static data
+## <a name="import"></a>Importing static data
 
-**import**
+The **import** command can used to import static data into your selected client.  
+The data should be in csv format that matches the attributes configured for the client.
 
-## Configuring Recommenders
+Use the following set of commands to import items, users and actions.
+
+    seldon> import items <clientName> </path/to/items.csv>
+    seldon> import users <clientName> </path/to/users.csv>
+    seldon> import actions <clientName> </path/to/actions.csv>
+
+## <a name="alg"></a>Configuring Recommenders
 
 **alg**
 
