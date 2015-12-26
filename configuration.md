@@ -20,6 +20,8 @@ The set of available zookeeper configurations settings are shown below.
  * [Offline model creation settings](#offline)
  * [Statsd](#statsd)
  * [Airbrake](#airbrake)
+ * [Redis](#redis)
+ * [Action History](#actions)
  
 ### Memcached Settings<a name="memcached"></a>
 Seldon uses Memcached for caching data. The configuration is set in "**/config/memcached**" example:
@@ -185,4 +187,45 @@ This is **optional** and can be used for sending server exception details to the
     "env": "dev"
 }
 {% endhighlight %}
+
+### Redis Server Settings<a name="redis"></a>
+We provide the ability to use a Redis server. Presently this is used to store a user's action history only. The client specific Redis configuraton should be placed in
+
+ * /all_clients/[clientname]/redis
+
+A example value would be:
+
+{% highlight json %}
+{
+   "host":"localhost",
+   "maxTotal":10,
+   "maxIdle":4
+}
+{% endhighlight %}
+
+ * **host** : the redis host 
+ * **maxTotal** : (optional) the max number of active connections in the Redis pool
+ * **maxIdle** : (optional) the max number of idle connections in the Redis pool
+
+### Action History Settings<a name="actions"></a>
+By default user actions are stored in memcache for a short time. This allows us to see for each user their recent interactions and utilize this to create recommendations and also to ensure pages the user has already interacted with are not recommended. However, the memcache store will expire these actions so this is only adequate for situations where the near-time user session action history is acceptable. For situations where you want to have the full action history for a user we provide the ability to use Redis as an action store. You should configure the client specific location of the redis store as described [here](#redis) and then create the configuration in 
+
+ * /all_client/[clientname]/action_history
+
+ The configuration has two values
+
+ * **addActions** : boolean, whether to add actions into the Redis server from the Seldon server
+ * **type** : bean name of action history provider, valid values: redisActionHistory, memcacheActionHistory
+
+Example confguration:
+
+
+{% highlight json %}
+{
+   "addActions":true,
+    "type":"redisActionHistory"
+}
+{% endhighlight %}
+
+For Redis a scalable alternative to adding the actions from the seldon-server is to do it via fluentd as described [here](fluentd.html).
 
