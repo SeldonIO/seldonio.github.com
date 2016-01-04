@@ -15,7 +15,7 @@ Seldon server has four log files:
  * "ctr-alg.log" : Detailed Impressions and Clicks for recommendations with algorithms, and returned items
  * "actions.log" : All action calls
 
-If you have several Seldon servers running you would want to collect these logs and transfer them to a central location. The td-agent.conf configuration file for this can be found in ```seldon-server/td-agent/seldon-server-td-agent.conf.base.example``` and is shown below. You should replace <TOMCAT_HOME> by the location of Apache tomcat home:
+If you have several Seldon servers running you would want to collect these logs and transfer them to a central location. The td-agent.conf configuration file for this can be found in ```seldon-server/td-agent/seldon-server-td-agent.conf.base.example``` and is shown below. You should replace ```<TOMCAT_HOME>``` with the location of your Apache tomcat home folder:
 
 {% highlight apache %}
 <source>
@@ -102,6 +102,7 @@ If you have several Seldon servers running you would want to collect these logs 
 {% endhighlight %}
 
  The above config does the following:
+
   * tails the 4 core log files
   * forwards the logs to one of two central td-agent servers called "tdagent1" and a reserve server "tdagent2".
 
@@ -117,7 +118,7 @@ An example central config can be found at ```seldon-server/fluentd/seldon-td-age
   type copy  
   <store>
           type                kafka
-          brokers             10.75.23.170:9092
+          brokers             127.0.0.1:9092
           default_topic       seldon_ctr
           output_data_type    json
           output_include_tag  true
@@ -145,6 +146,7 @@ An example central config can be found at ```seldon-server/fluentd/seldon-td-age
 </match>
 {% endhighlight %}
 
+You should check the full docs for the [S3](http://docs.fluentd.org/articles/out_s3) and [kafka](https://github.com/htgc/fluent-plugin-kafka/). The kafka plugin is not included by default with fluentd and will need to be installed.
 
 ## Store Actions in Redis Store
 If you wish to use Redis as an action store and to store the actions using fluentd you can use our fluentd plugin which can be installed with:
@@ -159,8 +161,6 @@ You can then add to your central td-agent a match condifuration like:
 
 {% highlight apache %}
 <match actions.**>
-  flush_interval 1s
-  log_level trace
   type redis_store_seldon
   format_type json
   key_path userid

@@ -19,6 +19,7 @@ Steps involved in setting up Seldon from source to serve content recommendations
 # In Production
 
  * [Advanced recommender configuration](advanced-recommender-config.html)
+ * [Log transfer using fluentd](fluentd.html)
 
 # API Reference Docs
 
