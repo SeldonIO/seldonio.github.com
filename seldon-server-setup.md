@@ -30,7 +30,9 @@ Clone the project [seldon-server](https://github.com/SeldonIO/seldon-server).
 
 ## Configure
 
-The repository for Seldon Server settings is ZooKeeper, but we have provided a script to populate the base properties and set up the database. This is located in the scripts folder. This script consumes the settings in ```./server_config.json```. You need to specify a few things such the locations of the memcached and MySQL server. Note that you can provide more than one MySQL/memcached server if you require this. You will also need to provide a name for the client and which MySQL DB to associate it with. Once this is done, run ```./scripts/initial_setup.py```. This will store your configuration in zookeeper. For the full set of available configuration options see [here](configuration.html).
+The repository for Seldon Server settings is ZooKeeper. The [Seldon Shell](/seldon-shell.html) can be used to set/update these settings.
+Use the "Seldon Shell" tool to create settings for memcached and manage the datasources in MySQL. Also create a client to use one of these datasources.
+The settings stored in zookeeper can also be viewed/modified directly. For the full set of available configuration options see [here](configuration.html).
 
 ## Run
 
