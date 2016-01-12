@@ -186,5 +186,21 @@ To commit the changes to zookeeper, use the following command
 
 ## <a name="model"></a>Setting up and Running Offline Jobs
 
-**model**
+The **model** command can be used for setting up and running offline training jobs.
+
+Use the following command to add a particualar offline job.
+
+    seldon> model add <clientName>
+
+To check which models are already added use the following command.
+
+    seldon> model show <clientName>
+
+Once models are added, its possible to edit their settings using the following command.
+
+    seldon> model edit <clientName>
+
+An offline job for a particular model can be run using the following.
+
+    seldon> model train <clientName>
 
