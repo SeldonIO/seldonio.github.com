@@ -54,55 +54,18 @@ Let's go though these fields one by one
  1. type_attrs -> name: the name of the attribute in question
  1. type_attrs -> value_type: what type of data to expect for this attribute. Valid values are 'string', 'double', 'datetime', 'boolean', 'int' and a list. The list is a special case where the data can be one of a restricted list (an enum essentially)
 
- Once you have worked out how to put your data schema in this format, write the JSON to a file and save it for later.
-
 ## Adding the schema to the DB
 
-Now that we have this schema defined we can add it into the database. This can be acheived by running `add_attr_schema.py` in the `seldon-server/scripts` folder. For example, assuming a client client1 and example db settings:
+Now that we have this JSON schema defined we can add it into the database.
+This can be achieved using [Seldon Shell](/seldon-shell.html).
 
-{% highlight bash %}
-python add_attr_schema.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -schema-file item_attr.json
-{% endhighlight %}
-
-# Historical data
-The `seldon-server/scripts` folder also contains scripts to prepopulate and process historical data.
-
-## Add items with their meta data
-If we have a CSV with items and their meta data it can be processed with the `add_items.py` script. One column should be `id` for the item id and other columns can be as we specified in the `item_attr_schema.json`.
-
-{% highlight bash %}
-python add_items.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -items items.csv
-{% endhighlight %}
-
-### Users
- 
- At the moment, you cannot add extra attributes to a user, so there's no need for a user schema. But if you have a list of existing user ids you can add them with:
-
-{% highlight bash %}
-python add_users.py -db-host localhost -db-user user1 -db-pass mypass -client client1 -users users.csv
-{% endhighlight %}
-
-### Actions
-
- At the moment, you can only have one action type and you cannot add extra attributes to an action, so theres no need for an action schema. if you have a list of actions in csv format they can be processed. The expected fields are:
- 
- * `user_id` : the user id : should correspond to user_ids added above
- * `item_id` : the item id : should correspond to item_ids added above
- * `value` : a value associated with the action for example the rating
- * `time` : a unix timestamp
-
-You can then run
-
-{% highlight bash %}
-python create_actions_json.py -db-host localhost -db-user user1 -db-pass mypass -client client -actions actions.csv -out actions.json
-{% endhighlight %}
-
+Use the [attr](/seldon-shell.html#attr) command to edit and apply the json schema.
 
 # Importing your static data
 
 After defining your data schema in a previous step, we are now ready to add any previously collected data you have. To add data to the DB it needs to be split into users, items and actions. This data needs to be in CSV format. You should quote any data that has unicode characters in it.
 
-Scripts used for importing your data can be found in the [seldon-server](https://github.com/SeldonIO/seldon-server) project, which you would have cloned in an earlier step.
+The [Seldon Shell](/seldon-shell.html) can be used for importing your data.
 
 ### Items
 
@@ -115,18 +78,18 @@ id,name,title,artist,genre,price,is_compilation,sales_count
 3,"tune3","tune3","artist1","rock",1,30
 {% endhighlight %}
 
-Note that we have 'id' and 'name' that were not mentioned in the schema. 'id' is a required field for all items in all schemas. It can be any unique string and is your identifier for the item. 'name' is optional and should be a string that you might use to search for the item. A few other things to mention here are
+Note that we have '**id**' and '**name**' that were not mentioned in the schema. 'id' is a required field for all items in all schemas. It can be any unique string and is your identifier for the item. 'name' is optional and should be a string that you might use to search for the item. A few other things to mention here are
 
  1. Boolean fields (is_compilation for example) can be 0 or 1, 0 meaning false and 1 meaning true.
  1. Enum fields (genre for example) must be one of the values you defined in the schema
  1. You must provide a header line
  1. There is an example in /your_data/items_data/example_items.csv
 
-Load the CSV into the DB using the `add_items.py` script from the `seldon-server/scripts` folder.
+Load the CSV into the DB using the Seldon Shell [import items](/seldon-shell.html#import) command.
  
 ### Users
  
-Users are much easier as currently it is not possible to specify a schema. So we just need an id and optionally a username:
+Users are much easier as currently it is not possible to specify a schema. So we just need an **id** and optionally a username:
 
 {% highlight bash %}
 id,username
@@ -136,7 +99,7 @@ id,username
 4,alex
 {% endhighlight %}
 
-Add the CSV file to the DB using the `add_users.py` script in the `seldon-server/scripts` folder.
+Load the CSV into the DB using the Seldon Shell [import users](/seldon-shell.html#import) command.
 
 ### Actions
 
@@ -154,13 +117,15 @@ user_id,item_id,value,time
 
 The first two columns should be obvious. 'value' is a field that represents the magnitude of the action. If all actions are created equal, then you should just set this to one. 'time' is the unixtimestamp of the action.
 
-The actions are not added to the DB, but they require transformation so that the Spark jobs can consume them. Run the `create_actions_json.py` script in the `seldon-server/scripts` folder to create this.
+The actions are not added to the DB, but they require transformation so that the Spark jobs can consume them.
 
-Note: When using the `create_actions_json.py`, it`s not necessary to run the group actions job - however the  the output file needs to in the right place for the other offline jobs to find it.
+Use the Seldon Shell [import actions](/seldon-shell.html#import) command to create this.
+
+Note: When when importing actions this way, it`s not necessary to run the group actions job - however the output file needs to be in the right place for the other offline jobs to find it.
+When using the Seldon Shell, update seldon.conf file if necessary with the value for "seldon_models" directory.
+As an example when using the defaults and a client called "movielens", the created file would appear as follows:
+
 {% highlight bash %}
-${SELDON_MODELS_DIR}/${CLIENT}/actions/${DAY}/actions.json
-eg.
-~/seldon-models/movielens/actions/1/actions.json
+~/.seldon/seldon-models/movielens/actions/1/actions.json
 {% endhighlight %}
-
 
