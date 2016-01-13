@@ -30,7 +30,7 @@ If you using the Seldon virtual machine, it will already be installed.
 
 The shell can be started by using the following on the command line.
 
-    $ seldon
+    $ seldon-shell
 
 When the shell is run for the first time, it will create the "seldon.conf" file and exit.
 
@@ -54,7 +54,7 @@ One way is to modify the "seldon.conf" file and update the "zk_hosts" setting in
 
 Another way is to use a commandline line override using the --zk-hosts option. This will take precedence over the conf file setting.
 
-    $ seldon --zk-hosts 127.0.0.1
+    $ seldon-shell --zk-hosts 127.0.0.1
 
 
 On a successful launch, it will show something similar to the following
