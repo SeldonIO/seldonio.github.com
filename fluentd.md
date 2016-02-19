@@ -17,7 +17,7 @@ Seldon server has four log files:
 
 If you have several Seldon servers running you would want to collect these logs and transfer them to a central location. The td-agent.conf configuration file for this can be found in ```seldon-server/td-agent/seldon-server-td-agent.conf.base.example``` and is shown below. You should replace ```<TOMCAT_HOME>``` with the location of your Apache tomcat home folder:
 
-{% highlight apache %}
+{% highlight text %}
 <source>
   type tail
   format /^(?<time>[0-9]+\,[0-9]+\,[0-9]+\,[0-9]+\,[0-9]+\,[0-9]+)\,(?<retval>[0-9]+)\,(?<consumer>[^\,]+)\,(?<httpmethod>[^\,]+)\,(?<servlet>[^\,]+)\,(?<path>[^\,]+)\,(?<query>[^\,]+)\,(?<exectime>[^\,]+)\,(?<uuid>[^\,]+)(\,(?<bean>[^\,]+))?(\,(?<algorithm>[^\,]+))?$/
@@ -109,7 +109,7 @@ If you have several Seldon servers running you would want to collect these logs 
 At the central td-agent server you will need to set the config to forward the logs to a central backing store such as AWS S3, or HDFS.
 An example central config can be found at ```seldon-server/fluentd/seldon-td-agent.conf.central.example``` and shown below, which forwards to AWS S3 and Kafka the restapi logs:
 
-{% highlight apache %}
+{% highlight text %}
 <source>
   type forward
 </source>
@@ -159,7 +159,7 @@ The source github repo can be found [here](https://github.com/SeldonIO/fluent-pl
 
 You can then add to your central td-agent a match condifuration like:
 
-{% highlight apache %}
+{% highlight text %}
 <match actions.**>
   type redis_store_seldon
   format_type json
