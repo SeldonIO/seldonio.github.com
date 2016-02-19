@@ -14,3 +14,4 @@ You should run the Seldon AMI on at least an m3.medium sized instance.
 
 After creating a new instance of AMI and logging on, see the [Seldon VM usage](vm-usage.html) docs for getting started.
 
+
