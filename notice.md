@@ -4,7 +4,7 @@ title: Seldon License
 ---
 
 ================================================================================
-Copyright 2011-2015 Seldon Technologies Ltd, Rummble Ltd.
+Copyright 2011-2016 Seldon Technologies Ltd, Rummble Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,7 +31,12 @@ This project includes sub-components with separate copyright notices and license
 * [Grafana](http://grafana.org/) - Copyright © 2012-2013 Elasticsearch BV, Torkel Ödegaard
 * [Guava](https://code.google.com/p/guava-libraries/) - Copyright © 2014 Google
 * [word2vec](https://code.google.com/p/word2vec/) - Copyright © 2013 Google Inc.
-
+* [Apache Kafka](http://kafka.apache.org/) - Copyright © 2010 LinkedIn
+* [Docker](https://www.docker.com/) - Copyright © 2013-2016 Docker, Inc.
+* [Luigi](https://github.com/spotify/luigi) - Copyright © 2012-2016 Spotify AB
+* [Apache Flink](https://flink.apache.org/) 
+* [TensorFlow](https://www.tensorflow.org/) - Copyright © 2015, The TensorFlow Authors.
+* [Apache Giraph](http://giraph.apache.org/)  
 
 **[The BSD 3-Clause License](http://opensource.org/licenses/BSD-3-Clause)**
 
