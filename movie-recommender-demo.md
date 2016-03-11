@@ -4,7 +4,7 @@ title: Movie Recommender Demo
 ---
 
 # Movie Recommender Demo
-Seldon provides a demonstration of a movie recommender using the [Movielens 10 Million dataset](http://grouplens.org/datasets/movielens/) plus some extra data from [Hetrec 2011 dataset](http://grouplens.org/datasets/hetrec-2011/) and some data sourced from Freebase by Seldon. These data sources are used to train four different models that can be used to provide movie recommendations based on a viewing history of a user. The demo can be viewed [online](http://www.seldon.io/movie-demo/) and comes with the Seldon VM. These docs will describe the steps to create the demo from inside the VM.
+Seldon provides a demonstration of a movie recommender using the [Movielens 10 Million dataset](http://grouplens.org/datasets/movielens/) plus some extra data from [Hetrec 2011 dataset](http://grouplens.org/datasets/hetrec-2011/) and some data sourced from Freebase by Seldon. These data sources are used to train four different models that can be used to provide movie recommendations based on a viewing history of a user. The demo can be viewed [online](http://movie-demo.seldon.io/) and comes with the Seldon VM. These docs will describe the steps to create the demo from inside the VM.
 
 The dataset is of reasonable size so you will need at least 4G of RAM for creating all the recommendation models.
 
