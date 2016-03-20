@@ -57,7 +57,7 @@ The endpoint should be passed JSON containing features from which a prediction i
 
 Example
 
-A housing price predcitor based on features:
+A housing price predictor based on features:
 
 {% highlight json %}
 {
