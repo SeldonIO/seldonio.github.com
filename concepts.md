@@ -73,7 +73,7 @@ Describes how to map the client/user pair to a set of Alg/Context pairs. Usually
 given different pair based on the hash of his username.
 
  
-# Real Time Preditive Scoring
+# Real Time Predictive Scoring
 
 Runtime predictive scoring algorithms take a set of features passed in and scores those against a model that has been trained to predict a target variable supplied from the initial data sent in as events.
 
