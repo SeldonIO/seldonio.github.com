@@ -7,6 +7,7 @@ title: Seldon CLI
 * [Using the Seldon Cli](#usingthecli)
 * [Managing Datasources](#db)
 * [Configuring Memcache](#memcached)
+* [Managing Clients](#client)
 
 ## <a name="intro"></a>Introduction
 
@@ -95,11 +96,19 @@ Once the settings are correct, use the following to commit to zookeeper
     $ seldon-cli memcached --action commit
 
 
-
-
 ## <a name="client"></a>Managing Clients
 
-TODO
+Clients in the Seldon Platform can be considered as particular datasets that you want to work with.  
+The **client** command can be used to setup these datasets.
+
+Use the following to show the list of existing clients:
+
+    $ seldon-cli client --action list
+
+To create a new client use the following command. It requires an existing datasource that would have been created with the **db** command.
+
+    $ seldon-cli client --action setup --db-name <dbName> --client-name <clientName>
+
 
 ## <a name="attr"></a>Setting up atrributes
 
