@@ -6,6 +6,7 @@ title: Seldon CLI
 * [Installing Seldon Cli](#install)
 * [Using the Seldon Cli](#usingthecli)
 * [Managing Datasources](#db)
+* [Configuring Memcache](#memcached)
 
 ## <a name="intro"></a>Introduction
 
@@ -77,11 +78,24 @@ Once the settings are correct, use the following to commit to zookeeper
     $ seldon-cli db --action commit
 
 
-
-
 ## <a name="memcached"></a>Configuring Memcache
 
-TODO
+The **memcached** command can be used for configuring memcached.
+
+Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
+
+    $ seldon-cli memcached
+
+To change any of the settings use the setup action, eg.
+
+    $ seldon-cli memcached --action setup --numClients 4 --servers "localhost:11211"
+
+Once the settings are correct, use the following to commit to zookeeper
+
+    $ seldon-cli memcached --action commit
+
+
+
 
 ## <a name="client"></a>Managing Clients
 
