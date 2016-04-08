@@ -19,9 +19,13 @@ title: Install
 git clone https://github.com/seldonio/seldon-server
 {% endhighlight %}
 
+  * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
+
 # Create a Kubernetes Cluster<a name="install-kubernetes"></a>
 
 Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud.
+
+   * Add kubectl to your shell PATH environemnt variable.
 
 # Create Kubernetes Configuration<a name="configure"></a>
 
@@ -59,20 +63,25 @@ By default the Seldon API server endpoint is set to a Kubernetes NodePort at por
 
 
 # Launch Seldon<a name="launch"></a>
+Scripts ```seldon-up.sh``` and ```seldon-down.sh``` in ```kubernetes/bin``` start and stop Seldon and should be in your PATH.
+
+
 To launch seldon run
 {% highlight bash %}
-kubernetes/scripts/seldon-up.sh
+seldon-up.sh
 {% endhighlight %}
 
 To start with GlusterFS run 
 {% highlight bash %}
-SELDON_WITH_GLUSTERFS=true kubernetes/scripts/seldon-up.sh
+SELDON_WITH_GLUSTERFS=true seldon-up.sh
 {% endhighlight %}
 
 To shutdown seldon run
 {% highlight bash %}
-kubernetes/scripts/seldon-down.sh
+seldon-down.sh
 {% endhighlight %}
+
+The first time you run seldon-up it may take some time to complete as it will need to download all the images from DockerHub.
 
 # Troubleshooting<a name="troubleshooting"></a>
 

@@ -5,14 +5,14 @@ title: Prediction Example
 
 # Creating a Prediction Service
 
-This example will take you through creating a simple example prediction service to serve predictions for the Iris dataset. The predictive service will be deployed as a microservice inside Kubernetes allowing roll-back/up for scalable maintenance. It will be accessed via the Seldon server allowing you to run multiple algorithms and manage predictive services for many clients.
+This example will take you through creating a simple prediction service to serve predictions for the Iris dataset. The predictive service will be deployed as a microservice inside Kubernetes allowing roll-back/up for scalable maintenance. It will be accessed via the Seldon server allowing you to run multiple algorithms and manage predictive services for many clients.
 
  * [Create Model](#model)
  * [Start Microservice](#microservice)
  * [Serve Predictions](#predictions)
 
 # Create a Predictive Model<a name="model"></a>
-The first step is to create a predictive model based on some training data. In this case we have prepacked into 3 Docker images the process of creating a model for the Iris dataset using three popular machine learning toolkits XGBoost, Vowpal Wabbit and Keraa. Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easier. However, you can build your model using any machine learning library. 
+The first step is to create a predictive model based on some training data. In this case we have prepacked into 3 Docker images the process of creating a model for the Iris dataset using three popular machine learning toolkits XGBoost, Vowpal Wabbit and Keras. Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easy. However, you can build your model using any machine learning library. 
 
 The three images are:
 
@@ -24,25 +24,26 @@ For details on building models using our python library see here.
 
 # Start a microservice<a name="microservice"></a>
 
-At runtime Seldon required you expose your model scoring engine as a microservice API. In this example case the same image to create the models also exposes the it for runtime scoring when run. We can start our chosen microservice using ```kubernetes/scripts/run_prediction_microservice.sh```. This script takes 3 arguments
+At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example case the same image to create the models also exposes the it for runtime scoring when run. We can start our chosen microservice using ```kubernetes/bin/run_prediction_microservice.sh```. This script takes 4 arguments
 
   * A name for the microservice
   * An image to pull that can be run to start the microservice
   * A version for the image
+  * A client to connect the microservice to
 
-The script create a Kubernetes deployment for the microservice in ```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
+The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
 For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
 
 {% highlight bash %}
-kubernetes/scripts/run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost 1.0 test
+kubernetes/bin/run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost 1.0 test
 {% endhighlight %}
 
 The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. 
 
 # Serve Predictions<a name="predictions"></a>
 
-You can now call the seldon server using the client details for the test client to get predictions. We have provided an example script to do this in ```kubernetes/examples/iris/get_iris_prediction.sh```. Running this should produce an output like:
+You can now call the seldon server using the client details for the test client to get predictions. We have provided an example script to do this in ```kubernetes/examples/iris/get_iris_prediction.sh```. This example script assumes you have started kuberentes locally and the server is accessible at port 30000. You will need to [change the endpoint](install.html#endpoint) to the location of the seldon server exposed via Kubernetes if not.  Running this should produce an output like:
 
 
 {% highlight json %}

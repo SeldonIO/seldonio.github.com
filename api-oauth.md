@@ -2,9 +2,6 @@
 layout: default
 title: OAuth REST API
 ---
-##### Content Recommendation Steps
-
-[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> **realtime activity** --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> **recommendations**
 
 # Seldon REST API for Content Recommendation
 

@@ -20,7 +20,7 @@ You can install the python modules in three ways:
 A Docker image contains the python modules and all dependencies needed. 
 
 {% highlight bash %}
-   docker pull seldonio/pyseldon:1.3
+   docker pull seldonio/pyseldon:1.11
 {% endhighlight %}
 
 ## Local build software
@@ -31,17 +31,6 @@ apt-get update
 apt-get install build-essential automake autoconf libxmu-dev g++ gcc libpthread-stubs0-dev libtool libboost-program-options-dev libboost-python-dev zlib1g-dev libc6 libgcc1 libstdc++6 libblas-dev liblapack-dev git telnet procps memcached libmemcached-dev
 {% endhighlight %}
 
-## Installing XGBoost
-
-You should follow the steps outlined [here](https://github.com/dmlc/xgboost/tree/master/python-package). However, the pip/python install of xgboost fails presently on some systems. To install on debian based systems you can also try the following install commands from our [Dockerfile](https://github.com/SeldonIO/seldon-server/blob/master/python/docker/pyseldon/Dockerfile):
-
-{% highlight bash %}
-cd /usr/local/src && mkdir xgboost && cd xgboost && \
-    git clone https://github.com/dmlc/xgboost.git && cd xgboost && \
-    ./build.sh && \ 
-    cd python-package  && python setup.py install && \
-    cp -R /usr/local/src/xgboost/xgboost/wrapper/ /opt/conda/lib/python2.7/site-packages/xgboost-0.4-py2.7.egg/xgboost
-{% endhighlight %}
 
 ## Pip<a name="pip"></a>
 
