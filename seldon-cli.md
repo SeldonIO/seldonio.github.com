@@ -8,6 +8,10 @@ title: Seldon CLI
 * [Managing Datasources](#db)
 * [Configuring Memcache](#memcached)
 * [Managing Clients](#client)
+* [Setting up atrributes](#attr)
+* [Importing static data](#import)
+* [Configuring Recommenders](#alg)
+* [Setting up and Running Offline Modeling Jobs](#model)
 
 ## <a name="intro"></a>Introduction
 
@@ -122,7 +126,7 @@ TODO
 
 TODO
 
-## <a name="model"></a>Setting up and Running Offline Jobs
+## <a name="model"></a>Setting up and Running Offline Modeling Jobs
 
 TODO
 
