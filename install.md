@@ -25,7 +25,7 @@ git clone https://github.com/seldonio/seldon-server
 
 Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud.
 
-   * Add kubectl to your shell PATH environemnt variable.
+   * Add kubectl to your shell PATH environment variable.
 
 # Create Kubernetes Configuration<a name="configure"></a>
 

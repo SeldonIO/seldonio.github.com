@@ -1,12 +1,7 @@
 ---
 layout: default
-title: Feature Pipelines
+title: Predictive Pipelines
 ---
-
-##### General Prediction Steps 
-
- [setup server](/seldon-server-setup.html) --> [events](prediction-api.html) --> **feature extraction pipeline** --> [runtime scorer](/runtime-prediction.html) --> [microservice scorer](/pluggable-prediction-algorithms.html) --> [predictions](prediction-api.html)
-
 
 # Predictive Pipelines 
 Feature extraction pipelines allow you to define a repeatable process to transform a set of input features before you build a machine learning model on a final set of features. When the resulting model is put into production the feature pipeline will need to be rerun on each input feature set before being passed to the model for scoring.
@@ -144,8 +139,7 @@ if __name__ == '__main__':
     run_pipeline([args.events],args.models)
 {% endhighlight %}
 
-The example is explained in more detail [here](iris-demo.html)
-
+The code for version of this pipeline are available for [XGBoost](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost/xgb_pipeline.py), [VW](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost/vw_pipeline.py) and [Keras](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost/keras_pipeline.py).
 
 ## Testing and Optimization
 
@@ -157,7 +151,7 @@ There are two modules for helping in testing and optimizing pipelines:
 There is a [notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/credit_card.ipynb) showing how to use these in a simple example.
 
 
-# Further Examples
+## Further Examples
 
 Further examples can be found in ```python/examples```
 
@@ -165,6 +159,20 @@ Further examples can be found in ```python/examples```
  * [credit_card.ipynb](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/credit_card.ipynb) : Jupyter python notebook to run a pipeline and optimize on credit card data
  * [sklearn_scaler.py](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/sklearn_scaler.py) : an example of using a sklearn scaler in a pipeline with Pandas
  * [auto_transform.py](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/auto_transform.py) : an example of a simple auto_transform on pandas data
+
+
+# Python based Predictive microservices<a name="microservice"></a>
+
+Any Pipeline built using this package can easily be deployed as a microservice as shown below, where we assume a pipeline has been saved to "./pipeline" and we ish to call the loaded model "test_model":
+
+{% highlight python %} 
+from seldon.microservice import Microservices
+m = Microservices()
+app = m.create_prediction_microservice("./pipeline","test_model")
+app.run(host="0.0.0.0", debug=True)
+
+{% endhighlight %}
+
 
 
 

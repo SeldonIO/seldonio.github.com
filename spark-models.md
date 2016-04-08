@@ -2,16 +2,11 @@
 layout: default
 title: Spark Offline Models
 ---
-##### Content Recommendation Steps
-
-[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity](/realtime-activity-data.html) --> **offline model** --> [runtime configuration](/runtime-recommendation.html) --> [recommendations](api.html)
-
 
 # Introduction
  
 The Seldon Spark component is used to run [Apache Spark](https://spark.apache.org/) jobs that process logs and build models to be used by the Seldon Server.
 
- * [Actions Grouping Job](#actions)
  * [Matrix Factorization](#matrix-factorization)
  * [Item Activity Similarity](#item-similarity)
  * [Word2Vec](#word2vec)
@@ -19,77 +14,6 @@ The Seldon Spark component is used to run [Apache Spark](https://spark.apache.or
  * [Tag Affinity](#tag-affinity)
  * [Association Rules](#assoc-rules)
   
-# Set Up
-
-## Prerequisites
-
-To use Seldon Spark, the following need to be installed:
-
-* Java (v = 7) (Java 8 will **NOT** work at present)
-* Spark (v >= 1.3.0)
-* Maven (v >=3)
-* Git
-
-## Build the Seldon Spark app jar
-
-{% highlight bash %}
-cd ~/
-git clone https://github.com/SeldonIO/seldon-server.git
-cd seldon-server/offline-jobs/spark
-mvn -DskipTests=true clean package
-{% endhighlight %}
-
-
-# Actions Grouping Job<a name="actions"></a>
-
-To provide the core activity data needed by many modelling jobs we provide a job which collects the raw action data collected by the API and outputs into daily folders for each client. The input format is presently JSON.
-
-{% highlight json %}
-    {
-	 "client": "myapp",
-	 "client_itemid": "http://myapp.com/somepage",
-	 "client_userid": "nveof-3242-ssggsvvf",
-	 "itemid": 2301,
-	 "rectag": "default",
-	 "timestamp_utc": "1998-12-02T05:56:13Z",
-	 "type": 1,
-	 "userid": 69878,
-	 "value": 2.0
-	}
-{% endhighlight %}
-
-The predicitve modelling jobs that utilize activity will read these processed logs in and output models that use the internal user and item ids. The runtime Seldon server will request scoring using these internal ids. The client user and item ids are the client facing friendly ids and can be arbitary strings, e.g. cookie-ids for users and URLs for items.
-
-An example of running the group actions job.  
-The options to the job are as follows:  
-
-* **--input-path-pattern** - This reflects the source of the actions and how Seldon Server was setup to store them. The pattern is based on the path to the location, %y for year, %m for month, %d for day.  
-* **--input-date-string** - This is the day that will be processed in unix epoch time.
-* **--output-path-dir** - This should be the place the other jobs will use as input for their processing.
-* **--gzip-output** - Use this option to compress the output data.
-
-{% highlight bash %}
-SELDON_VERSION=0.95
-SELDON_SPARK_HOME=~/seldon-server/offline-jobs/spark
-DATE_YESTERDAY=$(perl -e 'use POSIX;print strftime "%Y%m%d",localtime time-86400;')
-INPUT_DATE_STRING=${DATE_YESTERDAY}
-JAR_FILE_PATH=${SELDON_SPARK_HOME}/target/seldon-spark-${SELDON_VERSION}-jar-with-dependencies.jar
-
-INPUT_DIR=${TOMCAT_HOME}/logs/fluentd
-OUTPUT_DIR=~/seldon-models
-
-${SPARK_HOME}/bin/spark-submit \
-    --class "io.seldon.spark.actions.GroupActionsJob" \
-    --master local[1] \
-    ${JAR_FILE_PATH} \
-        --aws-access-key-id "" \
-        --aws-secret-access-key "" \
-        --input-path-pattern "${INPUT_DIR}/actions.%y/%m%d/*/*" \
-        --input-date-string "${INPUT_DATE_STRING}" \
-        --output-path-dir "${OUTPUT_DIR}" \
-        --gzip-output
-{% endhighlight %}
-
 
 # Matrix Factorization<a name="matrix-factorization"></a>
 An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
