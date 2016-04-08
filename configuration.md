@@ -5,7 +5,7 @@ title: Seldon Configuration
 
 # Seldon Configuration
 
-Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuration. It is used to specify all settings needed by the Seldon server as well as offline model creation jobs.
+Seldon uses [Zookeeper](http://zookeeper.apache.org/) for real time configuration. It is used to specify all settings needed by the Seldon server as well as offline model creation jobs. Most tasks can be accomplished via the [Seldon CLI](seldon-cli.html). However, not all the advanced functionality is at present exposed via the CLI. This document will give the details of the Zookeeper configuration needed.
 
 ## Zookeeper Configration
 

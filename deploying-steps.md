@@ -3,25 +3,41 @@ layout: default
 title: Deploy Steps
 ---
 
-# Content Recommendation
+# Content Recommendation 
+This guide takes you through the steps to set up Seldon to serve content recommendation.
 
-Steps involved in setting up Seldon from source to serve content recommendations:
 
- 1. [Start with an understanding of Seldon concepts](/concepts.html)
- 1. [Setup Seldon Server](/seldon-server-setup.html) (*not needed if running inside VM*)
- 1. [Seldon Logging](/seldon-logging.html)
- 1. [Configure your data](/item-recommendation-data.html)
- 1. Provide [realtime activity data](/realtime-activity-data.html)
- 1. [Generate an offline model](/offline-models.html)
- 1. [Algorithm configuration](/runtime-recommendation.html) and optional [Custom microservices](pluggable-recommendation-algorithms.html) 
- 1. Start recommending using the [Seldon API](api.html)
+# Import Meta-data
 
-# In Production
+# Collect activity data
 
- * [Advanced recommender configuration](advanced-recommender-config.html)
- * [Log transfer using fluentd](fluentd.html)
+# Create a Recommendation Model
 
-# API Reference Docs
+## Built-in Spark Model
 
- * [Seldon Content Recommedation API](/api.html)
+## Microservice
+
+# Configure runtime recommendation scoring
+
+# Serve recommendations
+
+[Seldon Content Recommedation API](/api.html)
+
+# Advanced Setting
+
+##  Run A/B Tests
+When running multiple recommendation models in production you will want to A/B new models to check they perform better than existing models with live clients before you place them fully into production for all users.
+
+The ability to run A/B and multivariant tests is available within Seldon but not yet exposed via the Seldon CLI. Internally everything is controlled via Zookeeper settings. For those with an understanding of Zookeeper who wish to activiate this functionality can find the details [here](advanced-recommender-config.html#multivariate-tests)
+
+## Combine Multiple Algorithms
+
+In some setting you may wish to combine multipe algorithms together to get a combined result. Currently this is not available in the seldon CLI but those with an understanding of Zookeeper can find the details [here](advanced-recommender-config.html#cascading-algorithms)
+
+## API Controlled Variants
+
+In some more complex content recommendation installation you may want to control for a particualar single client (single API key) various different algorithms for different settings, e.g. provide in-section Sport content recommendations and cross-site general content recommendations in different parts of a web page. The changes need to implement this are discussed [here](advanced-recommender-config.html#recommendation-variants)
+
+
+
 
