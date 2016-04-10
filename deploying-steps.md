@@ -17,6 +17,14 @@ This guide takes you through the steps to set up Seldon to serve content recomme
 
 A worked example using the [Movielens 100K](http://grouplens.org/datasets/movielens/100k/) dataset is also provided [here](ml100k.html).
 
+# Overview
+The process and creating and serving content recommendation models is summarized in the diagram below:
+
+![Content Recommendation](/img/contentRecommendation.png)
+
+Live activity is sent to Seldon via the REST API. This will include user activity (e.g. which pages they viewed on a website) as well as item data (e.g. details about new articles published on a website with their metadata). Offline content recommendation models will be created. Presently Seldon provides several [Spark](http://spark.apache.org/)  based models as well as some examples in python using libraries such as [gensim](https://radimrehurek.com/gensim/)  and [scikit-learn](http://scikit-learn.org/stable/). For runtime content prediction we need a runtime scorer to take the models created and use them to provide recommendations in real time. Seldon provides several builtin runtime scorers for the various Spark based models. Optionally a microservice can be deployed to do the runtime scoring. An example microservice deployment is shown [here](content-recommendation-example.html).
+
+
 # Create client and meta-data schema<a name="client"></a>
 To serve content recommendation you first need to create a client which will have an associated consumer key.
 
@@ -146,11 +154,13 @@ The script create a Kubernetes deployment for the microservice in ```kubernetes/
 # Serve recommendations<a name="recommendations"></a>
 Recommendations can be accessed via the [Seldon API](api.html).
 
-# Advanced Settings<a name="advanced"></a>
-
 # Worked example<a name="example"></a>
 
 A worked example using the [Movielens 100K](http://grouplens.org/datasets/movielens/100k/) dataset is provided [here](ml100k.html).
+
+
+# Advanced Settings<a name="advanced"></a>
+
 
 ##  Run A/B Tests
 When running multiple recommendation models in production you will want to A/B new models to check they perform better than existing models with live clients before you place them fully into production for all users.

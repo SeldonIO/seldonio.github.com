@@ -13,7 +13,7 @@ This gudie takes you through the steps to serve general predictive models throug
  * [Serve predictions](#predict)
 
 
-# General Prediction Overview<a name="overview"></a>
+# Overview<a name="overview"></a>
 
 Seldon provides the ability to build supervised learning based predictive models and put them into production at scale. The strutcture of a general predictive pipeline is show in the diagram below:
 
