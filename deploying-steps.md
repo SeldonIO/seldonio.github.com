@@ -12,7 +12,10 @@ This guide takes you through the steps to set up Seldon to serve content recomme
  * [Create a recommendation model](#model)
  * [Configure runtime recommendation scoring](#runtime)
  * [Server recommendations](#recommendations)
+ * [Worked example](#example)
  * [Advanced settings](#advanced)
+
+A worked example using the [Movielens 100K](http://grouplens.org/datasets/movielens/100k/) dataset is also provided [here](ml100k.html).
 
 # Create client and meta-data schema<a name="client"></a>
 To serve content recommendation you first need to create a client which will have an associated consumer key.
@@ -144,6 +147,10 @@ The script create a Kubernetes deployment for the microservice in ```kubernetes/
 Recommendations can be accessed via the [Seldon API](api.html).
 
 # Advanced Settings<a name="advanced"></a>
+
+# Worked example<a name="example"></a>
+
+A worked example using the [Movielens 100K](http://grouplens.org/datasets/movielens/100k/) dataset is provided [here](ml100k.html).
 
 ##  Run A/B Tests
 When running multiple recommendation models in production you will want to A/B new models to check they perform better than existing models with live clients before you place them fully into production for all users.
