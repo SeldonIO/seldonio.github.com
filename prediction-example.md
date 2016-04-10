@@ -43,31 +43,15 @@ The script will use the seldon-cli to update the "test" client to add the micros
 
 # Serve Predictions<a name="predictions"></a>
 
-You can now call the seldon server using the client details for the test client to get predictions. We have provided an example script to do this in ```kubernetes/examples/iris/get_iris_prediction.sh```. This example script assumes you have started kuberentes locally and the server is accessible at port 30000. You will need to [change the endpoint](install.html#endpoint) to the location of the seldon server exposed via Kubernetes if not.  Running this should produce an output like:
+You can now call the seldon server using the seldon CLI to test:
 
+{% highlight bash %}
+seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
+{% endhighlight %}
 
+The respone should be like:
 {% highlight json %}
-{
-  "size": 3,
-  "requested": 0,
-  "list": [
-    {
-      "prediction": 0.00252304,
-      "predictedClass": "Iris-setosa",
-      "confidence": 0.00252304
-    },
-    {
-      "prediction": 0.00350009,
-      "predictedClass": "Iris-versicolor",
-      "confidence": 0.00350009
-    },
-    {
-      "prediction": 0.993977,
-      "predictedClass": "Iris-virginica",
-      "confidence": 0.993977
-    }
-  ]
-}
+{"size":3,"requested":0,"list":[{"prediction":0.00252304,"predictedClass":"Iris-setosa","confidence":0.00252304},{"prediction":0.00350009,"predictedClass":"Iris-versicolor","confidence":0.00350009},{"prediction":0.993977,"predictedClass":"Iris-virginica","confidence":0.993977}]}
 {% endhighlight %}
 
 

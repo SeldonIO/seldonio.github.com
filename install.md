@@ -87,6 +87,12 @@ The first time you run seldon-up it may take some time to complete as it will ne
 
  * When running ```seldon-up.sh``` the script waits for ever for all pods to be in running state.
 
+Check the reason its not finishing using: ```kubectl get all``` and ```kubectl get events``
+
+If you find there are "ErrImagePull" state for some Pods check the nodes have access to the internet.
+
+If you find that images are in "Pending" state then it may be due to a lack of resources on your Kubernetes cluster.
+
 If you plan to test Seldon on a non-local cluster you will need to ensure your cluster is large enough to run all the Seldon services or disable the **LimitRanger** plugin. In the current version of Kubernetes to disable this plugin do the following. Edit ```<kubernetes>/cluster/<provider>/config-default.sh``` and remove LimitRanger from the following line:
 {% highlight bash %}
 ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota,PersistentVolumeLabel

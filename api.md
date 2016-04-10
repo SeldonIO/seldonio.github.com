@@ -3,11 +3,6 @@ layout: default
 title: Seldon APIs
 ---
 
-##### Content Recommendation Steps
-
-[concepts](/concepts.html) --> [setup server](/seldon-server-setup.html) --> [logging](/seldon-logging.html) --> [configure data](/item-recommendation-data.html) --> [realtime activity data](/realtime-activity-data.html) --> [offline model](/offline-models.html) --> [runtime configuration](/runtime-recommendation.html) --> [microservices](pluggable-recommendation-algorithms.html) --> **recommendations**
-
-
 # Seldon Content Recommendation API
 
 ## Introduction
