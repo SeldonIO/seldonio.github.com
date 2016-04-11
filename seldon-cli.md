@@ -14,7 +14,7 @@ title: Seldon CLI
 * [**seldon-cli model** (Setting up and Running Offline Modeling Jobs)](#model)
 * [**seldon-cli rec_alg** (Configuring Recommenders)](#rec_alg)
 * [**seldon-cli predict_alg**](#predict_alg)
-* [**seldon-cli api**](#model)
+* [**seldon-cli api**](#api)
 
 ## <a name="intro"></a>Introduction
 
@@ -59,64 +59,88 @@ Another way is to use a commandline line override using the --zk-hosts option. T
     $ seldon-cli --zk-hosts 127.0.0.1
 
 
-## <a name="db"></a>Managing Datasources
+# <a name="db"></a>**seldon-cli db** (Managing Datasources)
 
-The **db** command can be used for configuring MySQL datasources.
+## Synopsis
+Create and configure MySQL datasources.
 
-Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
+{% highlight bash %}
+seldon-cli db --action ACTION --db-name DB_NAME --db-user USER --db-password PASSWORD --db-jdbc JDBC_STRING
+{% endhighlight %}
 
-    $ seldon-cli db --action show
+## Examples
 
-For just a list of the db sources use:
+{% highlight bash %}
+# Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
+seldon-cli db --action show
+{% endhighlight %}
 
-    $ seldon-cli db --action list
+{% highlight bash %}
+# For just a list of the db sources use
+seldon-cli db --action list
+{% endhighlight %}
 
-To create/update db changes use the following:
+{% highlight bash %}
+# To create/update db changes use the following.
+# If its a new datasource - then it will be created. If its an existing one - then it will be updated.
+seldon-cli db --action setup --db-name ClientDB --db-user root --db-password mypass --db-jdbc 'jdbc:mysql:replication://127.0.0.1:3306,127.0.0.1:3306/?characterEncoding=utf8&useServerPrepStmts=true&logger=com.mysql.jdbc.log.StandardLogger&roundRobinLoadBalance=true&transformedBitIsBoolean=true&rewriteBatchedStatements=true'
+{% endhighlight %}
 
-    $ seldon-cli db --action setup --db-name <SomeDb> --db-user <User> --db-password <Password> --db-jdbc <JDBC String>
-
-Here is an example:
-
-    $ seldon-cli db --action setup --db-name ClientDB --db-user root --db-password mypass --db-jdbc 'jdbc:mysql:replication://127.0.0.1:3306,127.0.0.1:3306/?characterEncoding=utf8&useServerPrepStmts=true&logger=com.mysql.jdbc.log.StandardLogger&roundRobinLoadBalance=true&transformedBitIsBoolean=true&rewriteBatchedStatements=true'
-
-If its a new datasource - then it will be created. If its an existing one - then it will be updated.
-
-Once the settings are correct, use the following to commit to zookeeper
-
-    $ seldon-cli db --action commit
-
-
-## <a name="memcached"></a>Configuring Memcache
-
-The **memcached** command can be used for configuring memcached.
-
-Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
-
-    $ seldon-cli memcached
-
-To change any of the settings use the setup action, eg.
-
-    $ seldon-cli memcached --action setup --numClients 4 --servers "localhost:11211"
-
-Once the settings are correct, use the following to commit to zookeeper
-
-    $ seldon-cli memcached --action commit
+{% highlight bash %}
+# Once the settings are correct, use the following to commit to zookeeper
+seldon-cli db --action commit
+{% endhighlight %}
 
 
-## <a name="client"></a>Managing Clients
+# <a name="memcached"></a>**seldon-cli memcached** (Configuring Memcache)
+
+## Synopsis
+Configure memcached.
+
+{% highlight bash %}
+seldon-cli memcached --action ACTION --numClients NUM_CLIENTS --servers SERVERS_LIST
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# Use the following command to check the current settings. Note these may not be committed to zookeeper yet.
+seldon-cli memcached
+{% endhighlight %}
+
+{% highlight bash %}
+# To change any of the settings use the setup action
+seldon-cli memcached --action setup --numClients 4 --servers "localhost:11211"
+{% endhighlight %}
+
+{% highlight bash %}
+# Once the settings are correct, use the following to commit to zookeeper
+seldon-cli memcached --action commit
+{% endhighlight %}
+
+
+# <a name="client"></a>**seldon-cli client** (Managing Clients)
+
+## Synopsis
 
 Clients in the Seldon Platform can be considered as particular datasets that you want to work with.  
-The **client** command can be used to setup these datasets.
+The client command can be used to setup these datasets.
 
+{% highlight bash %}
+seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME
+{% endhighlight %}
 
+## Examples
 
-Use the following to show the list of existing clients:
+{% highlight bash %}
+# Use the following to show the list of existing clients
+seldon-cli client --action list
+{% endhighlight %}
 
-    $ seldon-cli client --action list
-
-To create a new client use the following command. It requires an existing datasource that would have been created with the **db** command.
-
-    $ seldon-cli client --action setup --db-name <dbName> --client-name <clientName>
+{% highlight bash %}
+# To create a new client use the following command. It requires an existing datasource that would have been created with the db command.
+seldon-cli client --action setup --db-name ClientDB --client-name testclient
+{% endhighlight %}
 
 
 #<a name="keys"></a>seldon-cli keys
@@ -167,23 +191,34 @@ optional arguments:
 
 
 
-## <a name="attr"></a>Setting up atrributes
+# <a name="attr"></a>**seldon-cli attr** (Setting up atrributes)
 
-Once a client is setup, the **attr** command can be used to setup the attributes for that data.
+## Synopsis
 
-Use the following command to edit the attributes for the client. If none have been setup already then a default configuration is generated with some simple attributes such as "title".
+Once a client is setup, the attr command can be used to setup the attributes for that data.
 
-    $ seldon-cli attr --action edit --client-name <clientName>
+{% highlight bash %}
+seldon-cli attr --action ACTION --client-name CLIENT_NAME
+{% endhighlight %}
 
-To change the editor used for the editing process, update the **EDITOR** environment variable as necessary.
+## Examples
 
-At anytime the following command can be used to show the attributes for the client that have been setup.
+{% highlight bash %}
+# Use the following command to edit the attributes for the client. If none have been setup already then a default configuration is generated with some simple attributes such as "title".
+# To change the editor used for the editing process, update the EDITOR environment variable as necessary.
+seldon-cli attr --action edit --client-name testclient
+{% endhighlight %}
 
-    $ seldon-cli attr --action show --client-name <clientName>
+{% highlight bash %}
+# At anytime the following command can be used to show the attributes for the client that have been setup.
+seldon-cli attr --action show --client-name testclient
+{% endhighlight %}
 
-Once the attributes have been edited, they can be used update the client using the following command.
+{% highlight bash %}
+# Once the attributes have been edited, they can be used update the client using the following command.
+seldon-cli attr --action apply --client-name testclient
+{% endhighlight %}
 
-    $ seldon-cli attr --action apply --client-name <clientName>
 
 ## <a name="import"></a>Importing static data
 
