@@ -116,7 +116,21 @@ To create a new client use the following command. It requires an existing dataso
 
 ## <a name="attr"></a>Setting up atrributes
 
-TODO
+Once a client is setup, the **attr** command can be used to setup the attributes for that data.
+
+Use the following command to edit the attributes for the client. If none have been setup already then a default configuration is generated with some simple attributes such as "title".
+
+    $ seldon attr --action edit --client-name <clientName>
+
+To change the editor used for the editing process, update the **EDITOR** environment variable as necessary.
+
+At anytime the following command can be used to show the attributes for the client that have been setup.
+
+    $ seldon attr --action show --client-name <clientName>
+
+Once the attributes have been edited, they can be used update the client using the following command.
+
+    $ seldon attr --action apply --client-name <clientName>
 
 ## <a name="import"></a>Importing static data
 
