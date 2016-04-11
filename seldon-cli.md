@@ -134,7 +134,14 @@ Once the attributes have been edited, they can be used update the client using t
 
 ## <a name="import"></a>Importing static data
 
-TODO
+The **import** command can used to import static data into your selected client.  
+The data should be in csv format that matches the attributes configured for the client.
+
+Use the following set of commands to import items, users and actions.
+
+    $ seldon import items <clientName> </path/to/items.csv>
+    $ seldon import users <clientName> </path/to/users.csv>
+    $ seldon import actions <clientName> </path/to/actions.csv>
 
 ## <a name="alg"></a>Configuring Recommenders
 
