@@ -11,8 +11,9 @@ title: Seldon CLI
 * [**seldon-cli keys**](#keys)
 * [**seldon-cli attr** (Setting up atrributes)](#attr)
 * [**seldon-cli import** (Importing static data)](#import)
-* [**seldon-cli rec_alg** (Configuring Recommenders)](#rec_alg)
 * [**seldon-cli model** (Setting up and Running Offline Modeling Jobs)](#model)
+* [**seldon-cli rec_alg** (Configuring Recommenders)](#rec_alg)
+* [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#model)
 
 ## <a name="intro"></a>Introduction
@@ -196,33 +197,6 @@ Use the following set of commands to import items, users and actions.
     $ seldon-cli import actions <clientName> </path/to/actions.csv>
 
 
-## <a name="rec_alg"></a>Configuring Recommenders
-
-There is a number of built in recommenders that can be configured for a particular client.
-Each client can have one or more recommenders assigned.
-
-To list the names of the available recommenders, use the following command
-
-    $ seldon-cli rec_alg --action list
-
-The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
-Additional recommenders can also be added this way.
-
-    $ seldon-cli rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
-
-The following command can be used to remove recommenders that are not required.
-
-    $ seldon-cli rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
-
-The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
-
-    $ seldon-cli rec_alg --action show --client-name <clientName>
-
-To commit the changes to zookeeper, use the following command
-
-    $ seldon-cli rec_alg --action commit --client-name <clientName>
-
-
 ## <a name="model"></a>Setting up and Running Offline Modeling Jobs
 
 The **model** command can be used for setting up and running offline training jobs.
@@ -248,7 +222,73 @@ An offline job for a particular model can be run using the following.
     $ seldon-cli model --action train --client-name <clientName> --model-name <modelName>
 
 
+## <a name="rec_alg"></a>Configuring Recommendation Runtime Scoring
 
+There is a number of built in recommenders that can be configured for a particular client.
+Each client can have one or more recommenders assigned.
+
+To list the names of the available recommenders, use the following command
+
+    $ seldon-cli rec_alg --action list
+
+The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
+Additional recommenders can also be added this way.
+
+    $ seldon-cli rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
+
+The following command can be used to remove recommenders that are not required.
+
+    $ seldon-cli rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
+
+The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
+
+    $ seldon-cli rec_alg --action show --client-name <clientName>
+
+To commit the changes to zookeeper, use the following command
+
+    $ seldon-cli rec_alg --action commit --client-name <clientName>
+
+# <a name="predict_alg"></a>seldon-cli predict_alg
+Configure the Seldon server runtime scoring algorithms for prediction. 
+
+## Synopsis
+Configure the server for prediction runtime scorer for a client. At present this is restricted to externalPredictionServer which is an internal microservice.
+
+{% highlight bash %}
+seldon-cli predict_alg  --action ACTION --client-name CLIENT --predictor-name PREDICTOR-NAME
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# add a microserice endpoint for the client iris running at given url and having given name
+seldon-cli predict_alg  --action add --client-name iris --predictor-name externalPredictionServer --config io.seldon.algorithm.external.url=http://iris-example:5000/predict --config io.seldon.algorithm.external.name=iris-demo
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli predict_alg [-h] --action {list,show,add,delete,commit}
+                              [--client-name CLIENT_NAME]
+                              [--predictor-name PREDICTOR_NAME]
+                              [--config CONFIG]
+                              ...
+
+Seldon CLI
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {list,show,add,delete,commit}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --predictor-name PREDICTOR_NAME
+                        the name of predictor
+  --config CONFIG       algorithm specific config in the form x=y
+{% endhighlight %}
 
 # <a name="api"></a>seldon-cli api
 You can call the Seldon API via the Seldon CLI to test the various endpoints.
