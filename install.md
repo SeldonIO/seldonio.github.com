@@ -11,6 +11,7 @@ title: Install
      * [Persistent Storage](#storage)
      * [Seldon API Endpoint](#endpoint)
  * [Launch Seldon](#launch)
+ * [Next Steps](#next-steps)
  * [Troubleshooting](#troubleshooting)
 
 # Download Seldon<a name="clone"></a>
@@ -29,10 +30,13 @@ Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to f
 
 # Create Kubernetes Configuration<a name="configure"></a>
 
-Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you to to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf```
+Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you have to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf``` You will need to configure:
+
+ * Persistent Storage (Kubernetes HostPath by default)
+ * Seldon API Endpoint (Kubernetes NodePort by default)
 
 ## Persistent Storage<a name="storage"></a>
-Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. The Makefile allows you to create the Kuberenetes configuration with HostPath and GlusterFS example persistent volumes. You can modify it to use other possible volumes, such as NFS, as allowed by kubernetes.
+Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. The Makefile allows you to create the Kuberenetes configuration with [HostPath](http://kubernetes.io/docs/user-guide/volumes/#hostpath) or [GlusterFS](http://kubernetes.io/docs/user-guide/volumes/#glusterfs) persistent volumes. You can modify it to use other possible volumes, such as NFS, as allowed by Kubernetes.
 
 ### HostPath
 To create the default HostPath kubernetes conf files set for /seldon-date do the following:
@@ -45,7 +49,7 @@ To create the default HostPath kubernetes conf files set for /seldon-date do the
    **Note** : HostPath only makes sense for demo/testing where you have a Kubernetes cluster with a single minion where all containers can share the location on the host. You will need to create the host path folder on your single kubernetes minion.
 
 ### GlusterFS
-GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. The Makefile assumes there is a vaolume called gs0. You will need to provide two ip addresses of two nodes in your GlusterFS cluster.
+GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. The Makefile assumes there is a volume called gs0. You will need to provide two ip addresses of two nodes in your GlusterFS cluster, e.g.:
 
 {% highlight bash %}
  cd kubernetes/conf
@@ -81,19 +85,26 @@ To shutdown seldon run
 seldon-down.sh
 {% endhighlight %}
 
-The first time you run seldon-up it may take some time to complete as it will need to download all the images from DockerHub.
+The first time you run ```seldon-up.sh``` it may take some time to complete as it will need to download all the images from DockerHub.
+
+On successful completion you will have a standard Seldon installation with mysql, memcache and zookeeper running with the cluster as well as a single Seldon API server and Spark cluster. The appropriate seldon-cli commands would have be run to set up the deault settings and a "test" client.
+
+# Next Steps<a name="next-steps"></a>
+
+ * [Look at a simple content recommendation example](content-recommendation-example.html)
+ * [Look at a simple prediction example](prediction-example.html)
 
 # Troubleshooting<a name="troubleshooting"></a>
 
  * When running ```seldon-up.sh``` the script waits for ever for all pods to be in running state.
 
-Check the reason its not finishing using: ```kubectl get all``` and ```kubectl get events``
+Check the reason its not finishing using: ```kubectl get all``` and ```kubectl get events```
 
-If you find there are "ErrImagePull" state for some Pods check the nodes have access to the internet.
+ * If you find there are "ErrImagePull" states for some Pods check the nodes have access to the internet.
 
-If you find that images are in "Pending" state then it may be due to a lack of resources on your Kubernetes cluster.
+ * If you find that images are in "Pending" state then it may be due to a lack of resources on your Kubernetes cluster.
 
-If you plan to test Seldon on a non-local cluster you will need to ensure your cluster is large enough to run all the Seldon services or disable the **LimitRanger** plugin. In the current version of Kubernetes to disable this plugin do the following. Edit ```<kubernetes>/cluster/<provider>/config-default.sh``` and remove LimitRanger from the following line:
+If you plan to test Seldon on a non-local cluster you will need to ensure your cluster is large enough to run all the Seldon services or disable the Kubernetes **LimitRanger** plugin. In the current version of Kubernetes to disable this plugin do the following. Edit ```<kubernetes>/cluster/<provider>/config-default.sh``` and remove LimitRanger from the following line:
 {% highlight bash %}
 ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota,PersistentVolumeLabel
 {% endhighlight %}

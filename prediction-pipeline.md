@@ -11,6 +11,8 @@ Seldon feature pipelines are presently available in python. We plan to provide S
 ## Python modules
 Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon. We use [scikit-learn](http://scikit-learn.org/stable/) pipelines and [Pandas](http://pandas.pydata.org/). For feature extraction and transformation we provide a starter set of python scikit-learn Tranformers that take Pandas dataframes as input apply some transformations and output Pandas dataframes. There is also the ability to use any existing [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) on Pandas dataframes with [sklearn_transform](python/seldon.pipeline.html#module-seldon.pipeline.sklearn_transform).
 
+Installation instructions can be found [here](python-package.html).
+
 The currently available example transforms are:
 
  * [Include_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Include_features_transform) : include a subset of features
