@@ -8,10 +8,12 @@ title: Seldon CLI
 * [Managing Datasources](#db)
 * [Configuring Memcache](#memcached)
 * [Managing Clients](#client)
+* [seldon-cli keys](#keys)
 * [Setting up atrributes](#attr)
 * [Importing static data](#import)
 * [Configuring Recommenders](#rec_alg)
 * [Setting up and Running Offline Modeling Jobs](#model)
+* [seldon-cli api](#api)
 
 ## <a name="intro"></a>Introduction
 
@@ -105,6 +107,8 @@ Once the settings are correct, use the following to commit to zookeeper
 Clients in the Seldon Platform can be considered as particular datasets that you want to work with.  
 The **client** command can be used to setup these datasets.
 
+
+
 Use the following to show the list of existing clients:
 
     $ seldon-cli client --action list
@@ -112,6 +116,54 @@ Use the following to show the list of existing clients:
 To create a new client use the following command. It requires an existing datasource that would have been created with the **db** command.
 
     $ seldon-cli client --action setup --db-name <dbName> --client-name <clientName>
+
+
+#<a name="keys"></a>seldon-cli keys
+Display Oauth or JS authenetication keys for a client.
+
+## Synopsis
+Show the keys for a client, either every key or just js or oauth keys.
+
+{% highlight bash %}
+seldon-cli keys --action list --client-name CLIENT --scope SCOPE {js|all}
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# Show keys for client test
+seldon-cli keys --client-name test
+{% endhighlight %}
+
+{% highlight bash %}
+# Show keys for client test
+# show js key for client test in quiet mode
+seldon-cli --quiet keys --client-name test --scope js
+{% endhighlight %}
+
+
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli keys [-h] [--action {list}] [--client-name CLIENT_NAME]
+                       [--scope {js,all}]
+                       ...
+
+Seldon CLI
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {list}       the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --scope {js,all}      the key scope
+{% endhighlight %}
+
+
 
 
 ## <a name="attr"></a>Setting up atrributes
@@ -194,4 +246,93 @@ Once models are added, its possible to edit their settings using the following c
 An offline job for a particular model can be run using the following.
 
     $ seldon model --action train --client-name <clientName> --model-name <modelName>
+
+
+
+
+# <a name="api"></a>seldon-cli api
+You can call the Seldon API via the Seldon CLI to test the various endpoints.
+
+## Synopsis
+Call the javascript or OAuth APIs for a particular client. Specify the endpoint and attributes apparopriate for the endpoint.
+
+{% highlight bash %}
+seldon-cli api --client-name CLIENT --endpoint ENDPOINT
+{% endhighlight %}
+
+## Examples
+
+### Content Recommendation
+Some example content recommendation examples are shown below:
+
+{% highlight bash %}
+# Send a new action using javascript API for user 22 for item 10 for client movielnes
+seldon-cli api --client-name ml100k --endpoint /js/action/new --user 22 --item 10
+{% endhighlight %}
+
+
+{% highlight bash %}
+# Send a new action using OAuth API for user 22 for item 10 for client reuters
+seldon-cli api --client-name ml100k --endpoint "/actions" --user 23 --item 10
+{% endhighlight %}
+
+{% highlight bash %}
+# Get recommendations using the javascript API for user 1 passing item 50 as the current item they are interacting with
+seldon-cli api --client-name ml100k --endpoint /js/recommendations --user 1 --item 50 --limit 5
+{% endhighlight %}
+
+{% highlight bash %}
+# Get recommendations using oauth API for the reuters client for user 1
+seldon-cli api --client-name reuters --endpoint "/users/recommendations" --user 1 
+{% endhighlight %}
+
+### General Prediction
+
+{% highlight bash %}
+# Send a new event to client test with the given JSON using the javascipt API
+seldon-cli  api --client-name test --endpoint "/js/event/new" --json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9,"target":1}'
+{% endhighlight %}
+
+{% highlight bash %}
+# Get predictions for client test sending the given JSON
+seldon-cli  api --client-name test --endpoint /js/predict --json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
+{% endhighlight %}
+
+### Options
+
+{% highlight bash %}
+usage: seldon-cli api [-h] [--action {call}] --client-name CLIENT_NAME
+                      --endpoint
+                      {/js/action/new,/js/recommendations,/js/predict,/js/event/new,/actions,/users/recommendations,/predict,/events,/items}
+                      [--method {GET,POST}] [--user USER] [--item ITEM]
+                      [--type TYPE] [--limit LIMIT] [--json JSON]
+                      [--dimensions DIMENSIONS] [--full FULL]
+                      [--attributes ATTRIBUTES]
+                      ...
+
+Seldon CLI
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {call}       the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --endpoint {/js/action/new,/js/recommendations,/js/predict,/js/event/new,/actions,/users/recommendations,/predict,/events,/items}
+                        api to use
+  --method {GET,POST}   http method
+  --user USER           user
+  --item ITEM           item
+  --type TYPE           type
+  --limit LIMIT         limit
+  --json JSON           json
+  --dimensions DIMENSIONS
+                        dimensions
+  --full FULL           whether to return full attributes true|false
+  --attributes ATTRIBUTES
+                        attributes
+
+{% endhighlight %}
 
