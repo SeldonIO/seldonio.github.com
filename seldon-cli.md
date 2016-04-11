@@ -10,7 +10,7 @@ title: Seldon CLI
 * [Managing Clients](#client)
 * [Setting up atrributes](#attr)
 * [Importing static data](#import)
-* [Configuring Recommenders](#alg)
+* [Configuring Recommenders](#rec_alg)
 * [Setting up and Running Offline Modeling Jobs](#model)
 
 ## <a name="intro"></a>Introduction
@@ -143,9 +143,33 @@ Use the following set of commands to import items, users and actions.
     $ seldon import users <clientName> </path/to/users.csv>
     $ seldon import actions <clientName> </path/to/actions.csv>
 
-## <a name="alg"></a>Configuring Recommenders
 
-TODO
+## <a name="rec_alg"></a>Configuring Recommenders
+
+There is a number of built in recommenders that can be configured for a particular client.
+Each client can have one or more recommenders assigned.
+
+To list the names of the available recommenders, use the following command
+
+    $ seldon rec_alg --action list
+
+The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
+Additional recommenders can also be added this way.
+
+    $ seldon rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
+
+The following command can be used to remove recommenders that are not required.
+
+    $ seldon rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
+
+The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
+
+    $ seldon rec_alg --action show --client-name <clientName>
+
+To commit the changes to zookeeper, use the following command
+
+    $ seldon rec_alg --action commit --client-name <clientName>
+
 
 ## <a name="model"></a>Setting up and Running Offline Modeling Jobs
 
