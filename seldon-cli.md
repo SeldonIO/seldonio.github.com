@@ -220,17 +220,21 @@ seldon-cli attr --action apply --client-name testclient
 {% endhighlight %}
 
 
-## <a name="import"></a>Importing static data
+# <a name="import"></a>seldon-cli import
 
-The **import** command can used to import static data into your selected client.  
+## Synopsis
+
+The import command can used to import static data into your selected client.  
 The data should be in csv format that matches the attributes configured for the client.
 
-Use the following set of commands to import items, users and actions.
+## Examples
 
-    $ seldon-cli import items <clientName> </path/to/items.csv>
-    $ seldon-cli import users <clientName> </path/to/users.csv>
-    $ seldon-cli import actions <clientName> </path/to/actions.csv>
-
+{% highlight bash %}
+# Use the following set of commands to import items, users and actions.
+seldon-cli import items testclient /path/to/items.csv
+seldon-cli import users testclient /path/to/users.csv
+seldon-cli import actions testclient /path/to/actions.csv
+{% endhighlight %}
 
 ## <a name="model"></a>Setting up and Running Offline Modeling Jobs
 
