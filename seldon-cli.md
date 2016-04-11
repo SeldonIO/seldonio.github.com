@@ -5,13 +5,13 @@ title: Seldon CLI
 * [Introduction](#intro)
 * [Installing Seldon Cli](#install)
 * [Using the Seldon Cli](#usingthecli)
-* [Managing Datasources](#db)
-* [Configuring Memcache](#memcached)
-* [Managing Clients](#client)
-* [Setting up atrributes](#attr)
-* [Importing static data](#import)
-* [Configuring Recommenders](#rec_alg)
-* [Setting up and Running Offline Modeling Jobs](#model)
+* [**seldon-cli db** (Managing Datasources)](#db)
+* [**seldon-cli memcached** (Configuring Memcache)](#memcached)
+* [**seldon-cli client** (Managing Clients)](#client)
+* [**seldon-cli attr** (Setting up atrributes)](#attr)
+* [**seldon-cli import** (Importing static data)](#import)
+* [**seldon-cli rec_alg** (Configuring Recommenders)](#rec_alg)
+* [**seldon-cli model** (Setting up and Running Offline Modeling Jobs)](#model)
 
 ## <a name="intro"></a>Introduction
 
@@ -120,17 +120,17 @@ Once a client is setup, the **attr** command can be used to setup the attributes
 
 Use the following command to edit the attributes for the client. If none have been setup already then a default configuration is generated with some simple attributes such as "title".
 
-    $ seldon attr --action edit --client-name <clientName>
+    $ seldon-cli attr --action edit --client-name <clientName>
 
 To change the editor used for the editing process, update the **EDITOR** environment variable as necessary.
 
 At anytime the following command can be used to show the attributes for the client that have been setup.
 
-    $ seldon attr --action show --client-name <clientName>
+    $ seldon-cli attr --action show --client-name <clientName>
 
 Once the attributes have been edited, they can be used update the client using the following command.
 
-    $ seldon attr --action apply --client-name <clientName>
+    $ seldon-cli attr --action apply --client-name <clientName>
 
 ## <a name="import"></a>Importing static data
 
@@ -139,9 +139,9 @@ The data should be in csv format that matches the attributes configured for the 
 
 Use the following set of commands to import items, users and actions.
 
-    $ seldon import items <clientName> </path/to/items.csv>
-    $ seldon import users <clientName> </path/to/users.csv>
-    $ seldon import actions <clientName> </path/to/actions.csv>
+    $ seldon-cli import items <clientName> </path/to/items.csv>
+    $ seldon-cli import users <clientName> </path/to/users.csv>
+    $ seldon-cli import actions <clientName> </path/to/actions.csv>
 
 
 ## <a name="rec_alg"></a>Configuring Recommenders
@@ -151,24 +151,24 @@ Each client can have one or more recommenders assigned.
 
 To list the names of the available recommenders, use the following command
 
-    $ seldon rec_alg --action list
+    $ seldon-cli rec_alg --action list
 
 The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
 Additional recommenders can also be added this way.
 
-    $ seldon rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
+    $ seldon-cli rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
 
 The following command can be used to remove recommenders that are not required.
 
-    $ seldon rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
+    $ seldon-cli rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
 
 The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
 
-    $ seldon rec_alg --action show --client-name <clientName>
+    $ seldon-cli rec_alg --action show --client-name <clientName>
 
 To commit the changes to zookeeper, use the following command
 
-    $ seldon rec_alg --action commit --client-name <clientName>
+    $ seldon-cli rec_alg --action commit --client-name <clientName>
 
 
 ## <a name="model"></a>Setting up and Running Offline Modeling Jobs
@@ -177,21 +177,21 @@ The **model** command can be used for setting up and running offline training jo
 
 Use the following command to get a list of names for the available models
 
-    $ seldon model --action list
+    $ seldon-cli model --action list
 
 Use the following command to add a particualar offline job.
 
-    $ seldon model --action add --client-name <clientName> --model-name <modelName>
+    $ seldon-cli model --action add --client-name <clientName> --model-name <modelName>
 
 To check which models are already added use the following command.
 
-    $ seldon model --action show --client-name <clientName>
+    $ seldon-cli model --action show --client-name <clientName>
 
 Once models are added, its possible to edit their settings using the following command.
 
-    $ seldon model --action edit --client-name <clientName> --model-name <modelName>
+    $ seldon-cli model --action edit --client-name <clientName> --model-name <modelName>
 
 An offline job for a particular model can be run using the following.
 
-    $ seldon model --action train --client-name <clientName> --model-name <modelName>
+    $ seldon-cli model --action train --client-name <clientName> --model-name <modelName>
 
