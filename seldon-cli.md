@@ -3,8 +3,8 @@ layout: default
 title: Seldon CLI
 ---
 * [Introduction](#intro)
-* [Installing Seldon Cli](#install)
-* [Using the Seldon Cli](#usingthecli)
+* [Installing Seldon CLI](#install)
+* [Using the Seldon CLI](#usingthecli)
 * [**seldon-cli db**](#db)
 * [**seldon-cli memcached**](#memcached)
 * [**seldon-cli client**](#client)
@@ -18,18 +18,18 @@ title: Seldon CLI
 
 # <a name="intro"></a>**Introduction**
 
-The Seldon Cli is a tool for configuring and managing the Seldon Platform.
+The Seldon CLI is a tool for configuring and managing the Seldon Platform.
 
 It manages zookeeper configuration data for Seldon Server.
 
 
-# <a name="install"></a>**Installing Seldon Cli**
+# <a name="install"></a>**Installing Seldon CLI**
 
 The cli tool comes bundled with the [Seldon python package](/python-package.html)  
 If using the Seldon virtual machine, it will already be installed.
 
 
-# <a name="usingthecli"></a>**Using the Seldon Cli**
+# <a name="usingthecli"></a>**Using the Seldon CLI**
 
 To setup the configuration that the cli needs, run the following command:
 
