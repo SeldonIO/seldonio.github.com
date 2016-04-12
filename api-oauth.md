@@ -390,19 +390,4 @@ This user would be in the dimension2 and dimension4:
 * gender = male
 * age = 23 years
 
-## Best Practices
-There are a set of best practices we recommend when using the Seldon API:
-           
-* Provide both curated content and recommendations
-
-    Try to mix curated content links with recommended links so a user of the site has opportunities to explore new content as well as have a set of personalised links provided by the API. This allows users to explore areas and subjects they may not have expressed opinions about in the past, and therefore helps the API provide better personalisations in future.
-* Cache API responses
-  
-    Where possible, cache API responses for a limited time so as not to call the API when 
-the cached response is appropriate. Seldon can provide advice on appropriate 
-caching times for each endpoint given the particular user and content activity of your 
-site.
-* Prefetch data
-
-    Whenever it is possible, call the API methods trying to predict the information the service is likely to need in advance. In this way page load time will be minimized.
 

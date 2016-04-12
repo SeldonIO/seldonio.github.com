@@ -16,9 +16,9 @@ This guide takes you through the detailed steps to set up Seldon to serve conten
  * [Worked example](#example)
  * [Advanced settings](#advanced)
 
-A worked example using the [Movielens 100K](http://grouplens.org/datasets/movielens/100k/) dataset is also provided [here](ml100k.html).
+A worked step-by-step example using the [Movielens 100K](ml100k.html) dataset is provided.
 
-# Overview<a name="overview"></a>
+# **Overview**<a name="overview"></a>
 The process of creating and serving content recommendation models is summarized in the diagram below:
 
 ![Content Recommendation](/img/contentRecommendation.png)
@@ -26,7 +26,7 @@ The process of creating and serving content recommendation models is summarized 
 Live activity is sent to Seldon via the [Seldon API](api.html). This will include user activity (e.g. which pages they viewed on a website) as well as item data (e.g. details about new articles published on a website with their metadata). Offline content recommendation models will be created. Presently Seldon provides several [Spark](http://spark.apache.org/)  based models as well as some examples in python using libraries such as [gensim](https://radimrehurek.com/gensim/)  and [scikit-learn](http://scikit-learn.org/stable/). For runtime content prediction we need a runtime scorer to take the models created and use them to provide recommendations in real time. Seldon provides several builtin runtime scorers for the various Spark based models. Optionally, a microservice can be deployed to do the runtime scoring. An example microservice deployment is shown [here](content-recommendation-example.html).
 
 
-# Create client and meta-data schema<a name="client"></a>
+# **Create client and meta-data schema**<a name="client"></a>
 To serve content recommendation you first need to create a client which will have an associated consumer key.
 
 You can create this via with [```seldon-cli client```](seldon-cli#client).
@@ -61,7 +61,7 @@ Let's go though these fields one by one
 
 One you have created the attributes JSON file you can associate it to your client using [```seldon-cli attr```](seldon-cli.html#attr).
 
-# Import historical Data<a name="historical"></a>
+# **Import historical Data**<a name="historical"></a>
 
 If you have historical data you will to use with the built in Seldon Spark jobs then you need to convert it into JSON format with references to the internal IDs used by seldon for the users and items. This can be done using the Seldon CLI as described below..
 
@@ -120,10 +120,10 @@ The actions are not added to the DB, but they require transformation so that the
 
 Use [```seldon-cli import```](/seldon-cli.html#import) to ingest the actions data.
 
-# Ingest activity via API<a name="api"></a>
+# **Ingest activity via API**<a name="api"></a>
 In production (or if you have no historical data) you would send new user activity and item meta data to Seldon via its [REST and JS API](api.html).
 
-# Create a recommendation model<a name="model"></a>
+# **Create a recommendation model**<a name="model"></a>
 Recommendation models can be built using an available technology that can be Dockerized and run inside Kubernetes. However, we provide some pre-packaged Spark based models and associated runtime scorers for those models. We also provide a python library which allows you to build and create models and runtime scorers exposed as microservices.
 
 ## Built-in Spark models
@@ -137,7 +137,7 @@ Spark modeling can be run via [```seldon-cli model```](seldon-cli.html#model)
 
 Models can also be built and packaged via our python library. At present we provide an wrapper for gensim document similarity models. An example using this is described [here](content-recommendation-example.html) which has an associated [Jupyter notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/doc_similarity_reuters.ipynb). The docsim class used is detailed [here](python/seldon.text.html#module-seldon.text.docsim).
 
-# Configure runtime recommendation scoring<a name="runtime"></a>
+# **Configure runtime recommendation scoring**<a name="runtime"></a>
 
 Once a model is built the final step is to provide a runtime scorer for the model. You should choose an associated runtime scorer for your particular model as outlined, so for example if you built a Matrix Factorization model you should use an associated scorer, e.g. recentMfRecommender or mfRecommender. 
 
@@ -155,15 +155,15 @@ If your runtime scrorer will be exposed as an internal microservice you need to 
 The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
 
-# Serve recommendations<a name="recommendations"></a>
+# **Serve recommendations**<a name="recommendations"></a>
 Recommendations can be accessed via the [Seldon API](api.html). For initial testing you can use [```seldon-cli api```](seldon-cli.html#api)
 
-# Worked example<a name="example"></a>
+# **Worked example**<a name="example"></a>
 
 A worked step-by-step example using the [Movielens 100K](ml100k.html) dataset is provided.
 
 
-# Advanced Settings<a name="advanced"></a>
+# **Advanced Settings**<a name="advanced"></a>
 
 
 ##  Run A/B Tests

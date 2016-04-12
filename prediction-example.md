@@ -63,5 +63,5 @@ The respone should be like:
 
 # Next Steps<a name="next-steps"></a>
 
- * [Detailed Guide for General prediction](prediction-deployment.html)
+ * [Detailed Guide for General prediction](prediction-guide.html)
 
