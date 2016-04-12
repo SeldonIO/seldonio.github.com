@@ -28,7 +28,7 @@ At runtime as prediction calls come in the same set of transformations performed
 Setup a client in Seldon with [```seldon-cli client```](seldon-cli.html#client). This will create consumer keys that can be used in the next section.
 
 # **Collect Data**<a name="data"></a>
-Events can be sent to Seldon via the [prediction API](api-prediction.html). They will be transfered from the Seldon Server(s) to a central store using Fluentd and stored at ```/seldon-data/logs/events.<year>/<month>/<day/<hour>/file.gz``` as JSON if the default Fluentd configuration is kept. These files contain events for all the clients setup as many clients can use the same API via different JS and Oauth consumer keys. To separate out the events for each client into individual files we provide a spark job that processes these files and separates them into separate folders for processing by modelling jobs, see example ["seldon-cli client --action processevents"](/seldon-cli.html#client).
+Events can be sent to Seldon via the [prediction API](api-prediction.html). They will be transfered from the Seldon Server(s) to a central store using Fluentd and stored at ```/seldon-data/logs/events.<year>/<month>/<day/<hour>/file.gz``` as JSON if the default Fluentd configuration is kept. These files contain events for all the clients setup as many clients can use the same API via different JS and Oauth consumer keys. To separate out the events for each client into individual files we provide a spark job that processes these files and separates them into separate folders for processing by modelling jobs, usinf [```seldon-cli client --action processevents```](/seldon-cli.html#client).
 
 You have other custom options for integration if needed:
 
