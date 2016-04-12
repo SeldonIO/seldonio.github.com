@@ -5,35 +5,37 @@ title: Seldon CLI
 * [Introduction](#intro)
 * [Installing Seldon Cli](#install)
 * [Using the Seldon Cli](#usingthecli)
-* [**seldon-cli db** (Managing Datasources)](#db)
-* [**seldon-cli memcached** (Configuring Memcache)](#memcached)
-* [**seldon-cli client** (Managing Clients)](#client)
+* [**seldon-cli db**](#db)
+* [**seldon-cli memcached**](#memcached)
+* [**seldon-cli client**](#client)
 * [**seldon-cli keys**](#keys)
-* [**seldon-cli attr** (Setting up atrributes)](#attr)
-* [**seldon-cli import** (Importing static data)](#import)
-* [**seldon-cli model** (Setting up and Running Offline Modeling Jobs)](#model)
-* [**seldon-cli rec_alg** (Configuring Recommenders)](#rec_alg)
+* [**seldon-cli attr**](#attr)
+* [**seldon-cli import**](#import)
+* [**seldon-cli model**](#model)
+* [**seldon-cli rec_alg**](#rec_alg)
 * [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#api)
 
-## <a name="intro"></a>Introduction
+# <a name="intro"></a>**Introduction**
 
 The Seldon Cli is a tool for configuring and managing the Seldon Platform.
 
 It manages zookeeper configuration data for Seldon Server.
 
 
-## <a name="install"></a>Installing Seldon Cli
+# <a name="install"></a>**Installing Seldon Cli**
 
 The cli tool comes bundled with the [Seldon python package](/python-package.html)  
 If using the Seldon virtual machine, it will already be installed.
 
 
-## <a name="usingthecli"></a>Using the Seldon Cli
+# <a name="usingthecli"></a>**Using the Seldon Cli**
 
 To setup the configuration that the cli needs, run the following command:
 
-    $ seldon-cli --setup-config
+{% highlight bash %}
+$ seldon-cli --setup-config
+{% endhighlight %}
 
 This will create the "seldon.conf" file and indicate where its located.  
 The "seldon.conf" will contain default values that can be changed as needed.
@@ -59,7 +61,7 @@ Another way is to use a commandline line override using the --zk-hosts option. T
     $ seldon-cli --zk-hosts 127.0.0.1
 
 
-# <a name="db"></a>**seldon-cli db** (Managing Datasources)
+# <a name="db"></a>**seldon-cli db**
 
 ## Synopsis
 Create and configure MySQL datasources.
@@ -119,7 +121,7 @@ seldon-cli memcached --action commit
 {% endhighlight %}
 
 
-# <a name="client"></a>**seldon-cli client** (Managing Clients)
+# <a name="client"></a>**seldon-cli client**
 
 ## Synopsis
 
@@ -143,7 +145,7 @@ seldon-cli client --action setup --db-name ClientDB --client-name testclient
 {% endhighlight %}
 
 
-#<a name="keys"></a>seldon-cli keys
+# <a name="keys"></a>**seldon-cli keys**
 Display Oauth or JS authenetication keys for a client.
 
 ## Synopsis
@@ -191,7 +193,7 @@ optional arguments:
 
 
 
-# <a name="attr"></a>**seldon-cli attr** (Setting up atrributes)
+# <a name="attr"></a>**seldon-cli attr**
 
 ## Synopsis
 
@@ -237,7 +239,7 @@ seldon-cli import actions testclient /path/to/actions.csv
 {% endhighlight %}
 
 
-# <a name="model"></a>seldon-cli model
+# <a name="model"></a>**seldon-cli model**
 
 
 ## Synopsis
@@ -276,33 +278,43 @@ seldon-cli model --action train --client-name testclient --model-name matrix-fac
 {% endhighlight %}
 
 
-## <a name="rec_alg"></a>Configuring Recommendation Runtime Scoring
+# <a name="rec_alg"></a>**seldon-cli rec_alg**
+
+## Synopsis
 
 There is a number of built in recommenders that can be configured for a particular client.
 Each client can have one or more recommenders assigned.
 
-To list the names of the available recommenders, use the following command
+## Examples
 
-    $ seldon-cli rec_alg --action list
+{% highlight bash %}
+# List the names of the available recommenders
+seldon-cli rec_alg --action list
+{% endhighlight %}
 
-The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
-Additional recommenders can also be added this way.
+{% highlight bash %}
+# The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
+# Additional recommenders can also be added this way.
+seldon-cli rec_alg --action add --client-name testclient --recommender-name recentMfRecommender
+{% endhighlight %}
 
-    $ seldon-cli rec_alg --action add --client-name <clientName> --recommender-name <recommenderName>
+{% highlight bash %}
+# The following command can be used to remove recommenders that are not required.
+seldon-cli rec_alg --action delete --client-name testclient --recommender-name recentMfRecommender
+{% endhighlight %}
 
-The following command can be used to remove recommenders that are not required.
+{% highlight bash %}
+# The following command can be used to check the current list of recommenders for the client.
+# If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
+seldon-cli rec_alg --action show --client-name testclient
+{% endhighlight %}
 
-    $ seldon-cli rec_alg --action delete --client-name <clientName> --recommender-name <recommenderName>
+{% highlight bash %}
+# Commit the changes to zookeeper
+seldon-cli rec_alg --action commit --client-name testclient
+{% endhighlight %}
 
-The following command can be used to check the current list of recommenders for the client. If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
-
-    $ seldon-cli rec_alg --action show --client-name <clientName>
-
-To commit the changes to zookeeper, use the following command
-
-    $ seldon-cli rec_alg --action commit --client-name <clientName>
-
-# <a name="predict_alg"></a>seldon-cli predict_alg
+# <a name="predict_alg"></a>**seldon-cli predict_alg**
 Configure the Seldon server runtime scoring algorithms for prediction. 
 
 ## Synopsis
@@ -344,7 +356,7 @@ optional arguments:
   --config CONFIG       algorithm specific config in the form x=y
 {% endhighlight %}
 
-# <a name="api"></a>seldon-cli api
+# <a name="api"></a>**seldon-cli api**
 You can call the Seldon API via the Seldon CLI to test the various endpoints.
 
 ## Synopsis
