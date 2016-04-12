@@ -302,26 +302,74 @@ seldon-cli attr --action show --client-name testclient
 seldon-cli attr --action apply --client-name testclient
 {% endhighlight %}
 
+## Options
 
-# <a name="import"></a>seldon-cli import
+{% highlight bash %}
+usage: seldon-cli attr [-h] [--action {edit,show,apply}]
+                       [--client-name CLIENT_NAME] [--json JSON]
+                       ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {edit,show,apply}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --json JSON           the file containing attr json
+{% endhighlight %}
+
+
+# <a name="import"></a>**seldon-cli import**
 
 ## Synopsis
 
 The import command can used to import static data into your selected client.  
 The data should be in csv format that matches the attributes configured for the client.
 
+{% highlight bash %}
+seldon-cli import --action ACTION --client-name CLIENT_NAME --file-path PATH_TO_FILE
+{% endhighlight %}
+
+
 ## Examples
 
 {% highlight bash %}
 # Use the following set of commands to import items, users and actions.
-seldon-cli import items testclient /path/to/items.csv
-seldon-cli import users testclient /path/to/users.csv
-seldon-cli import actions testclient /path/to/actions.csv
+seldon-cli import --action items --client-name testclient --file-path /path/to/items.csv
+seldon-cli import --action users --client-name testclient --file-path /path/to/users.csv
+seldon-cli import --action actions --client-name testclient --file-path /path/to/actions.csv
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli import [-h] --action {items,users,actions} --client-name
+                         CLIENT_NAME --file-path FILE_PATH
+                         ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {items,users,actions}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --file-path FILE_PATH
+                        path to the data file
 {% endhighlight %}
 
 
-# <a name="model"></a>**seldon-cli model**
 
+# <a name="model"></a>**seldon-cli model**
 
 ## Synopsis
 
@@ -357,6 +405,29 @@ seldon-cli model --action edit --client-name testclient --model-name matrix-fact
 # An offline job for a particular model can be run using the following.
 seldon-cli model --action train --client-name testclient --model-name matrix-factorization
 {% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli model [-h] [--action {list,add,show,edit,train}]
+                        [--client-name CLIENT_NAME] [--model-name MODEL_NAME]
+                        ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {list,add,show,edit,train}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --model-name MODEL_NAME
+                        the name of the client
+{% endhighlight %}
+
 
 
 # <a name="rec_alg"></a>**seldon-cli rec_alg**
@@ -394,6 +465,36 @@ seldon-cli rec_alg --action show --client-name testclient
 # Commit the changes to zookeeper
 seldon-cli rec_alg --action commit --client-name testclient
 {% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli rec_alg [-h] --action {list,add,delete,show,commit}
+                          [--alg-type {recommendation,prediction}]
+                          [--client-name CLIENT_NAME]
+                          [--recommender-name RECOMMENDER_NAME]
+                          [--config CONFIG]
+                          ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {list,add,delete,show,commit}
+                        the action to use
+  --alg-type {recommendation,prediction}
+                        type of algorithm
+  --client-name CLIENT_NAME
+                        the name of the client
+  --recommender-name RECOMMENDER_NAME
+                        the name of recommender
+  --config CONFIG       algorithm specific config in the form x=y
+{% endhighlight %}
+
+
 
 # <a name="predict_alg"></a>**seldon-cli predict_alg**
 Configure the Seldon server runtime scoring algorithms for prediction. 
