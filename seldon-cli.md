@@ -2,8 +2,8 @@
 layout: default
 title: Seldon CLI
 ---
-* [**Introduction**](#intro)
-* [**Using the Seldon CLI**](#usingthecli)
+* [Introduction](#intro)
+* [Prerequisites](#prerequisites)
 * [**seldon-cli db**](#db)
 * [**seldon-cli memcached**](#memcached)
 * [**seldon-cli client**](#client)
@@ -14,47 +14,16 @@ title: Seldon CLI
 * [**seldon-cli rec_alg**](#rec_alg)
 * [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#api)
+* [Manual install outside Kubernetes](#manual)
 
 # <a name="intro"></a>**Introduction**
 
 The Seldon CLI is a tool for configuring and managing the Seldon Platform.
 
-The cli tool comes bundled with the [Seldon python package](/python-package.html)  
-When using the Seldon Platform on Kubernetes, the Seldon CLI will available as "seldon-server/kubernetes/bin/seldon-cli".
+# **Prerequisites**<a name="prerequisites"></a>
 
-
-# <a name="usingthecli"></a>**Using the Seldon CLI**
-
-To setup the configuration that the cli needs, run the following command:
-
-{% highlight bash %}
-seldon-cli --setup-config
-{% endhighlight %}
-
-This will create the "seldon.conf" file and indicate where its located.  
-The "seldon.conf" will contain default values that can be changed as needed.
-
-To successfully use the cli, it will need to connect to a zookeeper host. This can also be a zookeeper cluster - in which it needs the list of hosts.
-
-There are two ways in which the cli can find the correct zookeeper host.
-
-One way is to modify the "seldon.conf" file and update the "zk_hosts" setting in the json configuration.
-
-{% highlight json %}
-{
-    ...
-
-    "zk_hosts": "localhost:2181",
-
-    ...
-}
-{% endhighlight %}
-
-Another way is to use a commandline line override using the --zk-hosts option. This will take precedence over the conf file setting.
-
-{% highlight bash %}
-seldon-cli --zk-hosts 127.0.0.1
-{% endhighlight %}
+ * [You have installed Seldon on a Kubernetes cluster](install.html)
+ * You haved added ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
 
 
 # <a name="db"></a>**seldon-cli db**
@@ -623,4 +592,43 @@ optional arguments:
                         attributes
 
 {% endhighlight %}
+
+
+# <a name="manual"></a>**Manual install outside Kubernetes**
+
+You can ignore this section if you are running Seldon inside Kubernetes.
+
+The seldon-cli program comes packaged in the [Seldon python package](python-package.html). If you want to do a custom install of Seldon outside Kubernetes you will need to install this package. 
+
+To setup the configuration that the cli needs, run the following command:
+
+{% highlight bash %}
+seldon-cli --setup-config
+{% endhighlight %}
+
+This will create the "seldon.conf" file and indicate where its located.  
+The "seldon.conf" will contain default values that can be changed as needed.
+
+To successfully use the cli, it will need to connect to a zookeeper host. This can also be a zookeeper cluster - in which it needs the list of hosts.
+
+There are two ways in which the cli can find the correct zookeeper host.
+
+One way is to modify the "seldon.conf" file and update the "zk_hosts" setting in the json configuration.
+
+{% highlight json %}
+{
+    ...
+
+    "zk_hosts": "localhost:2181",
+
+    ...
+}
+{% endhighlight %}
+
+Another way is to use a commandline line override using the --zk-hosts option. This will take precedence over the conf file setting.
+
+{% highlight bash %}
+seldon-cli --zk-hosts 127.0.0.1
+{% endhighlight %}
+
 
