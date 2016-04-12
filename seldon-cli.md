@@ -34,7 +34,7 @@ If using the Seldon virtual machine, it will already be installed.
 To setup the configuration that the cli needs, run the following command:
 
 {% highlight bash %}
-$ seldon-cli --setup-config
+seldon-cli --setup-config
 {% endhighlight %}
 
 This will create the "seldon.conf" file and indicate where its located.  
@@ -58,7 +58,9 @@ One way is to modify the "seldon.conf" file and update the "zk_hosts" setting in
 
 Another way is to use a commandline line override using the --zk-hosts option. This will take precedence over the conf file setting.
 
-    $ seldon-cli --zk-hosts 127.0.0.1
+{% highlight bash %}
+seldon-cli --zk-hosts 127.0.0.1
+{% endhighlight %}
 
 
 # <a name="db"></a>**seldon-cli db**
@@ -129,7 +131,7 @@ Clients in the Seldon Platform can be considered as particular datasets that you
 The client command can be used to setup these datasets.
 
 {% highlight bash %}
-seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME
+seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME --input-date-string INPUT_DATE
 {% endhighlight %}
 
 ## Examples
@@ -142,6 +144,16 @@ seldon-cli client --action list
 {% highlight bash %}
 # To create a new client use the following command. It requires an existing datasource that would have been created with the db command.
 seldon-cli client --action setup --db-name ClientDB --client-name testclient
+{% endhighlight %}
+
+{% highlight bash %}
+# Run a job to collect actions data for a particular day (in YYYYMMDD format)
+seldon-cli client --action processactions --client-name testclient --input-date-string 20160216
+{% endhighlight %}
+
+{% highlight bash %}
+# Run a job to collect events data for a particular day (in YYYYMMDD format)
+seldon-cli client --action processevents --client-name mytest1 --input-date-string 20160216
 {% endhighlight %}
 
 
