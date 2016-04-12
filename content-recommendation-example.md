@@ -7,23 +7,30 @@ title: Recomendation Example
 
 This example will take you through creating a simple recommendation service for the the [Reuters-21578](http://www.daviddlewis.com/resources/testcollections/reuters21578/) newswire dataset. It will create a simple static document similarity algorithm run as a microservice through the Seldon API server.
 
+ * [Prerequisites](#prerequisites)
  * [Create Reuters client and meta-data](#meta-data)
  * [Create recommendation model](#model)
  * [Create microservice](#microservice)
  * [Serve recommendations](#recommendations)
+ * [Next Steps](#next-steps)
+
+# Prerequisites<a name="prerequisites"></a>
+
+ * [You have installed Seldon on a Kubernetes cluster](install.html)
+ * You haved added ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
 
 
 # Create Reuters client<a name="meta-data"></a>
 The first step is to create a Reuters Seldon client and import the meta-data for the items we want to recommend into the Seldon database. These tasks are all packaged into a Docker container ```seldonio/examples-reuters-data``` whose source can be found in ```docker/examples/reuters/data```. The tasks run are:
 
  * Create a JSON file describing the meta-data attributes
- * Create a csv of the meta data from the downloaded Reuters data
+ * Create a CSV of the meta data from the downloaded Reuters data
  * Use the seldon-cli to:
     * Create a client "reuters"
     * Upload its meta-data definitions into the db
     * Load the meta-data itself into the db
 
-The Docker container can be run as a on-off Kubernetes job to carry out the tasks:
+The Docker container can be run as a one-off Kubernetes job to carry out the tasks:
 
 {% highlight bash %}
 cd kubernetes/conf/examples/reuters/
@@ -44,7 +51,7 @@ For this simple example we will build a document similarity model to provide rec
 In general, Seldon provides several content recommendation models in Spark as well as python based modules.
 
 # Create Microservice<a name="microservice"></a>
-To serve predictions from our model we need to run the repackaged container which exposes a miroservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/run_recommendation_microservice.sh``` which takes 4 arguments:
+To serve predictions from our model we need to run the prepackaged docker image which exposes a miroservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/run_recommendation_microservice.sh``` which takes 4 arguments:
 
   * A name for the microservice
   * An image to pull that can be run to start the microservice
@@ -72,3 +79,23 @@ The response should be like:
 {% highlight json %}
 {"size":5,"requested":5,"list":[{"id":"5762","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"AERO SERVICES <AEROE> IN PACT FOR NOMINATIONS","body":"Aero Services International Inc\nsaid it signed an agreement with Dibo Attar, who controls about\n39 pct of its common stock, under which three nominees to\nAero's board have been selected by Attar.\n    In addition to Attar, the nominees are Stephen L. Peistner,\nchairman and chief executive officer of <McCrory Corp> and\nJames N.C. Moffat III, vice president and secretary of\n<Eastover Corp>.\n Reuter\n\u0003"}},{"id":"8571","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"AVALON <AVL> STAKE SOLD BY DELTEC","body":"Avalon Corp said that <Deltec\nPanamerica SA> has arranged to sell its 23 pct stake in Avalon\nand that Deltec's three representatives on Avalon's board had\nresigned.\n    An Avalon spokeswoman declined to indentify the buyer of\nDeltec's stake or give terms of the sale.\n    In addition, Avalon said three other directors resigned. It\nsaid Benjamin W. Macdonald, a director of <TMOC Resources Ltd>,\nthe principal holder of Avalon stock, and Hardwick Simmons, a\nvice chairman of Shearson Lehman Bros Inc, were then named to\nthe board.\n Reuter\n\u0003"}},{"id":"7816","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"CELINA <CELNA> SHAREHOLDERS APPROVE SALE","body":"Celina Financial Corp said\nshareholders at a special meeting approved a transaction in\nwhich the company transferred its interest in three insurance\ncompanies to a wholly owned subsidiary which then sold the\nthree companies to an affiliated subsidiary.\n    It said the company's interests in West Virginia Fire and\nCasualty Co, Congregation Insurance co and National Term Life\nInsurance Co had been transferred to First National Indemnity\nCo, which sold the three to Celina Mutual for cash, an office\nbuilding and related real estate.\n Reuter\n\u0003"}},{"id":"18963","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"ALLEGHENY <AI> SELLS THREE INDUSTRIAL UNITS","body":"Allegheny International Inc said it\nsold three of its industrial units which served the railroad\nindustry to <Chemetron Railway Products Inc>, a senior\nmanagement group of Allegheny.\n    Terms of the transaction were not disclosed.\n    Included in the sale were Chemetron Railway Products, True\nTemper Railway Appliances Inc and Allegheny Axle Co, the\ncompany said.\n    The three units include 12 plants throughout the U.S., the\ncompany said.\n Reuter\n\u0003"}},{"id":"9431","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"SYNALLOY <SYO> ENDS PLANS TO SELL UNIT","body":"Synalloy Corp said it has\nended talks on the sale of its Blackman Uhler Chemical Division\nto Intex Products Inc because agreement could not be reached.\n    The company said it does not intend to seek another buyer.\n Reuter\n\u0003"}}]}
 {% endhighlight %}
+
+# Troubleshooting
+
+ * No results are returned by the seldon-cli api call above
+
+Check your Kuberentes DNS is working correctly and the reuters-example hostname can be found. Open a bash terminal into the seldon-control container and check using nslookup.:
+
+{% highlight bash %}
+kubectl exec -ti seldon-control -- /bin/bash
+root@seldon-control:/home/seldon# nslookup reuters-example
+Server:				  	   10.0.0.10
+Address:				   10.0.0.10#53
+
+Name:					   reuters-example.default.svc.cluster.local
+Address: 10.0.0.25
+{% endhighlight %}
+
+# Next Steps<a name="next-steps"></a>
+
+ * [Detailed Guide for Content Recomemdation](content-recommendation-guide.html)

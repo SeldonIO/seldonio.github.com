@@ -13,7 +13,7 @@ This gudie takes you through the steps to serve general predictive models throug
  * [Serve predictions](#predict)
 
 
-# Overview<a name="overview"></a>
+# **Overview**<a name="overview"></a>
 
 Seldon provides the ability to build supervised learning based predictive models and put them into production at scale. The strutcture of a general predictive pipeline is show in the diagram below:
 
@@ -24,19 +24,23 @@ There are offline and realtime components. Raw data to be used for creating a pr
 At runtime as prediction calls come in the same set of transformations performed offline will need to be repeated to create the same set of final features to test against the model. Once the transformations have been done the features can be scored and a predictive result returned to the client in real time.
 
 
-# Create a client<a name="client"></a>
-Setup a client in Seldon using the [seldon-cli](seldon-cli.html#client). This will create consumer keys that can be used in the next section.
+# **Create a Client**<a name="client"></a>
+Setup a client in Seldon with [```seldon-cli client```](seldon-cli.html#client). This will create consumer keys that can be used in the next section.
 
-# Collect data<a name="data"></a>
-Events can be sent to Seldon via the [prediction API](api-prediction.html). They will be transfered from the Seldon Server(s) to a central store using Fluentd and store at ```/seldon-data/logs/events.<year>/<month>/<day/<hour>/file.gz``` as JSON. These files contain events for all the clients setup as many clients can use the same API via different JS and Oauth consumer keys. To separate out the events for each client into individual files we provide a spark job that processes these files and separates them into separate folders.
+# **Collect Data**<a name="data"></a>
+Events can be sent to Seldon via the [prediction API](api-prediction.html). They will be transfered from the Seldon Server(s) to a central store using Fluentd and stored at ```/seldon-data/logs/events.<year>/<month>/<day/<hour>/file.gz``` as JSON if the default Fluentd configuration is kept. These files contain events for all the clients setup as many clients can use the same API via different JS and Oauth consumer keys. To separate out the events for each client into individual files we provide a spark job that processes these files and separates them into separate folders for processing by modelling jobs.
 
-See the [seldon-cli](seldon-cli.html#client).
+You have other custom options for integration if needed:
 
-# Create a prediction model<a name="model"></a>
+  * You can also place any historical data you may have into ```/seldon-data/seldon-models/<client>/events/<year>/<month>/<day>``` as JSON.
+  * You can change the Fluentd configuration to push the data to a custom location
+  * You can bypass this section an use your own events datastore to build predictive models and serve them through Seldon
+
+# **Create a prediction model**<a name="model"></a>
 
 You can create your machine learning model using the toolkit of your choice. However, to make building predictive pipelines easier and to allow them to be used at runtime as well as during modeling we presently provide a python library that allows you to create pandas and scikit-learn compatable predictive pipelines. For details on using these see [here](prediction-pipeline.html).
 
-# Serve Predictions<a name="predict"></a>
+# **Serve Predictions**<a name="predict"></a>
 To serve predictions for your model you need to provide a runtime microservice that conforms to the [microserice prediction API](/api-prediction.html) packaged as a Docker container. If your model is built using our python predictive pipelines you can easily package it as a [microservice](prediction-pipeline.html#microservice).
 
 Once packaged as a Docker container the microservice can be started and connected to your client using ```kubernetes/bin/run_prediction_microservice.sh```. This script takes 4 arguments
@@ -46,7 +50,7 @@ Once packaged as a Docker container the microservice can be started and connecte
   * A version for the image
   * A client to connect the microservice to
 
-The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
+The script creates a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
 For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
 

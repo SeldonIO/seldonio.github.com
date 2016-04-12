@@ -6,7 +6,8 @@ title: python module
 # Python modules
 Seldon provides a set of python modules to help construct feature pipelines for use inside Seldon.
 
- * [Seldon Package Reference](/python/index.html)
+ * [Package overview](prediction-pipeline.html)
+ * [Seldon package reference](/python/index.html)
 
 You can install the python modules in three ways:
 

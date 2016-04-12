@@ -75,7 +75,6 @@ The possible values follow the availble configuration parameters for Apache DBCP
 }
  {% endhighlight %}
 
-There should always be at least 1 provided datastore with name "ClientDB". The special "api" database catalog should be found in this datastore. See how to set this up [here](db-build-and-deploy.html)
 
 ### Client datastore<a name="client"></a>
 Each client needs to connect to a datastore which holds the Seldon database for that client. The name of the DBCP datasource to use should be placed in `/all_clients/[clientname]` node in Zookeeper. If there is no value in this node it will try to default to "ClientDB" as the name of the datasource. Example:
