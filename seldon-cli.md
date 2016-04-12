@@ -3,7 +3,6 @@ layout: default
 title: Seldon CLI
 ---
 * [**Introduction**](#intro)
-* [**Installing Seldon CLI**](#install)
 * [**Using the Seldon CLI**](#usingthecli)
 * [**seldon-cli db**](#db)
 * [**seldon-cli memcached**](#memcached)
@@ -20,13 +19,8 @@ title: Seldon CLI
 
 The Seldon CLI is a tool for configuring and managing the Seldon Platform.
 
-It manages zookeeper configuration data for Seldon Server.
-
-
-# <a name="install"></a>**Installing Seldon CLI**
-
 The cli tool comes bundled with the [Seldon python package](/python-package.html)  
-If using the Seldon virtual machine, it will already be installed.
+When using the Seldon Platform on Kubernetes, the Seldon CLI will available as "seldon-server/kubernetes/bin/seldon-cli".
 
 
 # <a name="usingthecli"></a>**Using the Seldon CLI**
@@ -95,8 +89,32 @@ seldon-cli db --action setup --db-name ClientDB --db-user root --db-password myp
 seldon-cli db --action commit
 {% endhighlight %}
 
+## Options
 
-# <a name="memcached"></a>**seldon-cli memcached** (Configuring Memcache)
+{% highlight bash %}
+usage: seldon-cli db [-h] [--action {show,list,setup,commit}]
+                     [--db-name DB_NAME] [--db-user DB_USER]
+                     [--db-password DB_PASSWORD] [--db-jdbc DB_JDBC]
+                     ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {show,list,setup,commit}
+                        the action to use
+  --db-name DB_NAME     the name of the db
+  --db-user DB_USER     the user
+  --db-password DB_PASSWORD
+                        the password for the user
+  --db-jdbc DB_JDBC     the jdbc string
+{% endhighlight %}
+
+
+# <a name="memcached"></a>**seldon-cli memcached**
 
 ## Synopsis
 Configure memcached.
