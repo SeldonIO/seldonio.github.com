@@ -71,13 +71,63 @@ The script will create the Kubernetes Deployment and use the seldon-cli to updat
 # Serve Recommendations<a name="recommendations"></a>
 You can now call the Seldon server using the Seldon CLI to test recommendations:
 {% highlight bash %}
-seldon-cli --quiet api --client-name reuters --endpoint  /js/recommendations --item 6020 --limit 5
+seldon-cli --quiet api --client-name reuters --endpoint  /js/recommendations --item 6020 --limit 3
 {% endhighlight %}
 
 The response should be like:
 
 {% highlight json %}
-{"size":5,"requested":5,"list":[{"id":"5762","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"AERO SERVICES <AEROE> IN PACT FOR NOMINATIONS","body":"Aero Services International Inc\nsaid it signed an agreement with Dibo Attar, who controls about\n39 pct of its common stock, under which three nominees to\nAero's board have been selected by Attar.\n    In addition to Attar, the nominees are Stephen L. Peistner,\nchairman and chief executive officer of <McCrory Corp> and\nJames N.C. Moffat III, vice president and secretary of\n<Eastover Corp>.\n Reuter\n\u0003"}},{"id":"8571","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"AVALON <AVL> STAKE SOLD BY DELTEC","body":"Avalon Corp said that <Deltec\nPanamerica SA> has arranged to sell its 23 pct stake in Avalon\nand that Deltec's three representatives on Avalon's board had\nresigned.\n    An Avalon spokeswoman declined to indentify the buyer of\nDeltec's stake or give terms of the sale.\n    In addition, Avalon said three other directors resigned. It\nsaid Benjamin W. Macdonald, a director of <TMOC Resources Ltd>,\nthe principal holder of Avalon stock, and Hardwick Simmons, a\nvice chairman of Shearson Lehman Bros Inc, were then named to\nthe board.\n Reuter\n\u0003"}},{"id":"7816","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"CELINA <CELNA> SHAREHOLDERS APPROVE SALE","body":"Celina Financial Corp said\nshareholders at a special meeting approved a transaction in\nwhich the company transferred its interest in three insurance\ncompanies to a wholly owned subsidiary which then sold the\nthree companies to an affiliated subsidiary.\n    It said the company's interests in West Virginia Fire and\nCasualty Co, Congregation Insurance co and National Term Life\nInsurance Co had been transferred to First National Indemnity\nCo, which sold the three to Celina Mutual for cash, an office\nbuilding and related real estate.\n Reuter\n\u0003"}},{"id":"18963","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"ALLEGHENY <AI> SELLS THREE INDUSTRIAL UNITS","body":"Allegheny International Inc said it\nsold three of its industrial units which served the railroad\nindustry to <Chemetron Railway Products Inc>, a senior\nmanagement group of Allegheny.\n    Terms of the transaction were not disclosed.\n    Included in the sale were Chemetron Railway Products, True\nTemper Railway Appliances Inc and Allegheny Axle Co, the\ncompany said.\n    The three units include 12 plants throughout the U.S., the\ncompany said.\n Reuter\n\u0003"}},{"id":"9431","name":"","type":1,"first_action":1460104099000,"last_action":1460104099000,"popular":false,"demographics":[],"attributes":{},"attributesName":{"recommendationUuid":"21","title":"SYNALLOY <SYO> ENDS PLANS TO SELL UNIT","body":"Synalloy Corp said it has\nended talks on the sale of its Blackman Uhler Chemical Division\nto Intex Products Inc because agreement could not be reached.\n    The company said it does not intend to seek another buyer.\n Reuter\n\u0003"}}]}
+{
+  "size": 3,
+  "requested": 3,
+  "list": [
+    {
+      "id": "5762",
+      "name": "",
+      "type": 1,
+      "first_action": 1460480919000,
+      "last_action": 1460480919000,
+      "popular": false,
+      "demographics": [],
+      "attributes": {},
+      "attributesName": {
+        "recommendationUuid": "3",
+        "title": "AERO SERVICES <AEROE> IN PACT FOR NOMINATIONS",
+        "body": "Aero Services International Inc\nsaid it signed an agreement with Dibo Attar, who controls about\n39 pct of its common stock, under which three nominees to\nAero's board have been selected by Attar.\n    In addition to Attar, the nominees are Stephen L. Peistner,\nchairman and chief executive officer of <McCrory Corp> and\nJames N.C. Moffat III, vice president and secretary of\n<Eastover Corp>.\n Reuter\n\u0003"
+      }
+    },
+    {
+      "id": "11348",
+      "name": "",
+      "type": 1,
+      "first_action": 1460480919000,
+      "last_action": 1460480919000,
+      "popular": false,
+      "demographics": [],
+      "attributes": {},
+      "attributesName": {
+        "recommendationUuid": "3",
+        "title": "GANDALF <GANDF> ACQUIRES STAKE IN DATA/VOICE",
+        "body": "Gandalf Technologies Inc said it\nacquired a significant minority equity interest in privately\nheld Data/Voice Solutions Corp, of Newport Beach, Calif., for\nundisclosed terms.\n    Gandalf did not specify the size of the interest.\n    Data/Voice is a three-year-old designer and manufacturer of\na multiprocessor, multiuser MS-DOS computing system that\nGandalf plans to integrate with its private automatic computer\nexchange information system, Gandalf said.\n Reuter\n\u0003"
+      }
+    },
+    {
+      "id": "7816",
+      "name": "",
+      "type": 1,
+      "first_action": 1460480919000,
+      "last_action": 1460480919000,
+      "popular": false,
+      "demographics": [],
+      "attributes": {},
+      "attributesName": {
+        "recommendationUuid": "3",
+        "title": "CELINA <CELNA> SHAREHOLDERS APPROVE SALE",
+        "body": "Celina Financial Corp said\nshareholders at a special meeting approved a transaction in\nwhich the company transferred its interest in three insurance\ncompanies to a wholly owned subsidiary which then sold the\nthree companies to an affiliated subsidiary.\n    It said the company's interests in West Virginia Fire and\nCasualty Co, Congregation Insurance co and National Term Life\nInsurance Co had been transferred to First National Indemnity\nCo, which sold the three to Celina Mutual for cash, an office\nbuilding and related real estate.\n Reuter\n\u0003"
+      }
+    }
+  ]
+}
 {% endhighlight %}
 
 # Troubleshooting

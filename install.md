@@ -87,7 +87,7 @@ seldon-down.sh
 
 The first time you run ```seldon-up.sh``` it may take some time to complete as it will need to download all the images from DockerHub.
 
-On successful completion you will have a standard Seldon installation with mysql, memcache and zookeeper running with the cluster as well as a single Seldon API server and Spark cluster. The appropriate seldon-cli commands would have be run to set up the deault settings and a "test" client.
+On successful completion you will have a standard Seldon installation with mysql, memcache and zookeeper running within the cluster as well as a single Seldon API server and Spark cluster. The appropriate seldon-cli commands would have be run to set up the default settings and a "test" client.
 
 # Next Steps<a name="next-steps"></a>
 

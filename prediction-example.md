@@ -58,7 +58,27 @@ seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"f1":1
 
 The respone should be like:
 {% highlight json %}
-{"size":3,"requested":0,"list":[{"prediction":0.00252304,"predictedClass":"Iris-setosa","confidence":0.00252304},{"prediction":0.00350009,"predictedClass":"Iris-versicolor","confidence":0.00350009},{"prediction":0.993977,"predictedClass":"Iris-virginica","confidence":0.993977}]}
+{
+  "size": 3,
+  "requested": 0,
+  "list": [
+    {
+      "prediction": 0.00252304,
+      "predictedClass": "Iris-setosa",
+      "confidence": 0.00252304
+    },
+    {
+      "prediction": 0.00350009,
+      "predictedClass": "Iris-versicolor",
+      "confidence": 0.00350009
+    },
+    {
+      "prediction": 0.993977,
+      "predictedClass": "Iris-virginica",
+      "confidence": 0.993977
+    }
+  ]
+}
 {% endhighlight %}
 
 # Next Steps<a name="next-steps"></a>
