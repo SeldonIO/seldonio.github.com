@@ -123,6 +123,10 @@ Use [```seldon-cli import```](/seldon-cli.html#import) to ingest the actions dat
 # **Ingest activity via API**<a name="api"></a>
 In production (or if you have no historical data) you would send new user activity and item meta data to Seldon via its [REST and JS API](api.html).
 
+This activity (actions) data - is then transformed and re-located to a central location by Fluentd.  
+The actions data can be for multiple clients if necessary.
+The Seldon CLI tool can then be used to process this data to separate it for each client via a spark job, see example ["seldon-cli client --action processactions"](/seldon-cli.html#client).
+
 # **Create a recommendation model**<a name="model"></a>
 Recommendation models can be built using an available technology that can be Dockerized and run inside Kubernetes. However, we provide some pre-packaged Spark based models and associated runtime scorers for those models. We also provide a python library which allows you to build and create models and runtime scorers exposed as microservices.
 
