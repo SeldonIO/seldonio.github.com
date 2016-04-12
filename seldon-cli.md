@@ -140,6 +140,27 @@ seldon-cli memcached --action setup --numClients 4 --servers "localhost:11211"
 seldon-cli memcached --action commit
 {% endhighlight %}
 
+## Options
+
+{% highlight bash %}
+usage: seldon-cli memcached [-h] [--action {setup,commit}]
+                            [--numClients NUMCLIENTS] [--servers SERVERS]
+                            ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {setup,commit}
+                        the action to use
+  --numClients NUMCLIENTS
+                        number of clients
+  --servers SERVERS     the server list
+{% endhighlight %}
+
 
 # <a name="client"></a>**seldon-cli client**
 
@@ -180,6 +201,30 @@ seldon-cli client --action processevents --client-name mytest1 --input-date-stri
 seldon-cli client --action processevents --input-date-string 20160216
 {% endhighlight %}
 
+## Options
+
+{% highlight bash %}
+usage: seldon-cli client [-h]
+                         [--action {list,setup,processactions,processevents}]
+                         [--db-name DB_NAME] [--client-name CLIENT_NAME]
+                         [--input-date-string INPUT_DATE_STRING]
+                         ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {list,setup,processactions,processevents}
+                        the action to use
+  --db-name DB_NAME     the name of the db
+  --client-name CLIENT_NAME
+                        the name of the client
+  --input-date-string INPUT_DATE_STRING
+                        The date to process in YYYYMMDD format
+{% endhighlight %}
 
 # <a name="keys"></a>**seldon-cli keys**
 Display Oauth or JS authenetication keys for a client.
