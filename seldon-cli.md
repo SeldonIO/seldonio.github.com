@@ -2,9 +2,9 @@
 layout: default
 title: Seldon CLI
 ---
-* [Introduction](#intro)
-* [Installing Seldon CLI](#install)
-* [Using the Seldon CLI](#usingthecli)
+* [**Introduction**](#intro)
+* [**Installing Seldon CLI**](#install)
+* [**Using the Seldon CLI**](#usingthecli)
 * [**seldon-cli db**](#db)
 * [**seldon-cli memcached**](#memcached)
 * [**seldon-cli client**](#client)
@@ -147,13 +147,19 @@ seldon-cli client --action setup --db-name ClientDB --client-name testclient
 {% endhighlight %}
 
 {% highlight bash %}
-# Run a job to collect actions data for a particular day (in YYYYMMDD format)
+# Run a job to collect actions data for a particular day (in YYYYMMDD format), for one client
 seldon-cli client --action processactions --client-name testclient --input-date-string 20160216
+
+# Run a job to collect actions data for a particular day (in YYYYMMDD format), for all clients
+seldon-cli client --action processactions --input-date-string 20160216
 {% endhighlight %}
 
 {% highlight bash %}
-# Run a job to collect events data for a particular day (in YYYYMMDD format)
+# Run a job to collect events data for a particular day (in YYYYMMDD format), for one client
 seldon-cli client --action processevents --client-name mytest1 --input-date-string 20160216
+
+# Run a job to collect events data for a particular day (in YYYYMMDD format), for all clients
+seldon-cli client --action processevents --input-date-string 20160216
 {% endhighlight %}
 
 
