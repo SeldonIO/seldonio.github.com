@@ -236,29 +236,44 @@ seldon-cli import users testclient /path/to/users.csv
 seldon-cli import actions testclient /path/to/actions.csv
 {% endhighlight %}
 
-## <a name="model"></a>Setting up and Running Offline Modeling Jobs
 
-The **model** command can be used for setting up and running offline training jobs.
+# <a name="model"></a>seldon-cli model
 
-Use the following command to get a list of names for the available models
 
-    $ seldon-cli model --action list
+## Synopsis
 
-Use the following command to add a particualar offline job.
+The model command can be used for setting up and running offline training jobs.
 
-    $ seldon-cli model --action add --client-name <clientName> --model-name <modelName>
+{% highlight bash %}
+seldon-cli model --action ACTION --client-name CLIENT_NAME --model-name MODEL_NAME
+{% endhighlight %}
 
-To check which models are already added use the following command.
+## Examples
 
-    $ seldon-cli model --action show --client-name <clientName>
+{% highlight bash %}
+# Use the following command to get a list of names for the available models
+seldon-cli model --action list
+{% endhighlight %}
 
-Once models are added, its possible to edit their settings using the following command.
+{% highlight bash %}
+# Use the following command to add a particualar offline job.
+seldon-cli model --action add --client-name testclient --model-name matrix-factorization
+{% endhighlight %}
 
-    $ seldon-cli model --action edit --client-name <clientName> --model-name <modelName>
+{% highlight bash %}
+# To check which models are already added use the following command.
+seldon-cli model --action show --client-name testclient
+{% endhighlight %}
 
-An offline job for a particular model can be run using the following.
+{% highlight bash %}
+# Once models are added, its possible to edit their settings using the following command.
+seldon-cli model --action edit --client-name testclient --model-name matrix-factorization
+{% endhighlight %}
 
-    $ seldon-cli model --action train --client-name <clientName> --model-name <modelName>
+{% highlight bash %}
+# An offline job for a particular model can be run using the following.
+seldon-cli model --action train --client-name testclient --model-name matrix-factorization
+{% endhighlight %}
 
 
 ## <a name="rec_alg"></a>Configuring Recommendation Runtime Scoring
