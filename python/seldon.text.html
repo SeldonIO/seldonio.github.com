@@ -122,24 +122,24 @@
 <span id="seldon-text-docsim"></span><h2>seldon.text.docsim<a class="headerlink" href="#module-seldon.text.docsim" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="seldon.text.docsim.DefaultJsonCorpus">
-<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DefaultJsonCorpus</code><span class="sig-paren">(</span><em>input=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DefaultJsonCorpus</code><span class="sig-paren">(</span><em>input=None</em>, <em>create_dictionary=True</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>A default JSON corpus based on gensim TextCorpus. It assumes a file or list of JSON as input.
 The methods provided by gensim TextCorpus are needed for the GenSim training.
 Any corpus provided to DocumentSimilarity should provide the methods given in this class.</p>
 <dl class="method">
 <dt id="seldon.text.docsim.DefaultJsonCorpus.get_dictionary">
-<code class="descname">get_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_dictionary" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus.get_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_dictionary" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seldon.text.docsim.DefaultJsonCorpus.get_json">
-<code class="descname">get_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_json" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus.get_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_json" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seldon.text.docsim.DefaultJsonCorpus.get_meta">
-<code class="descname">get_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_meta" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus.get_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_meta" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a json object with meta data for the documents. It must return:
 id - id for this document
 optional title and tags. Tags will be used as base truth used to score document similarity results.</p>
@@ -147,20 +147,20 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DefaultJsonCorpus.get_texts">
-<code class="descname">get_texts</code><span class="sig-paren">(</span><em>raw=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.get_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_texts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_texts</code><span class="sig-paren">(</span><em>raw=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus.get_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.get_texts" title="Permalink to this definition">¶</a></dt>
 <dd><p>yield raw text or tokenized text</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="seldon.text.docsim.DefaultJsonCorpus.getstream">
-<code class="descname">getstream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DefaultJsonCorpus.getstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.getstream" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getstream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DefaultJsonCorpus.getstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DefaultJsonCorpus.getstream" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="seldon.text.docsim.DocumentSimilarity">
-<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DocumentSimilarity</code><span class="sig-paren">(</span><em>model_type='gensim_lsi'</em>, <em>vec_size=100</em>, <em>annoy_trees=100</em>, <em>work_folder='/tmp'</em>, <em>sklearn_tfidf_args={'stop_words': 'english'}</em>, <em>sklearn_nmf_args={'alpha': 0.1</em>, <em>'random_state': 1</em>, <em>'l1_ratio': 0.5}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">seldon.text.docsim.</code><code class="descname">DocumentSimilarity</code><span class="sig-paren">(</span><em>model_type='gensim_lsi'</em>, <em>vec_size=100</em>, <em>annoy_trees=100</em>, <em>work_folder='/tmp'</em>, <em>sklearn_tfidf_args={'stop_words': 'english'}</em>, <em>sklearn_nmf_args={'alpha': 0.1</em>, <em>'random_state': 1</em>, <em>'l1_ratio': 0.5}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="seldon.html#seldon.util.Recommender" title="seldon.util.Recommender"><code class="xref py py-class docutils literal"><span class="pre">seldon.util.Recommender</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -180,13 +180,13 @@ optional title and tags. Tags will be used as base truth used to score document 
 </table>
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.__getstate__">
-<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.__getstate__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.__getstate__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove things that should not be pickled as they are handled in save/load</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.create_gensim_model">
-<code class="descname">create_gensim_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.create_gensim_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_gensim_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_gensim_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.create_gensim_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_gensim_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a gensim model</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -204,7 +204,7 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.create_sklearn_model">
-<code class="descname">create_sklearn_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.create_sklearn_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_sklearn_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_sklearn_model</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.create_sklearn_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.create_sklearn_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a sklearn model</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -222,7 +222,7 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit a document similarity model</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -239,8 +239,13 @@ optional title and tags. Tags will be used as base truth used to score document 
 </dd></dl>
 
 <dl class="method">
+<dt id="seldon.text.docsim.DocumentSimilarity.get_meta">
+<code class="descname">get_meta</code><span class="sig-paren">(</span><em>doc_id</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.get_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.get_meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.load" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>load models from folder</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -254,7 +259,7 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.nn">
-<code class="descname">nn</code><span class="sig-paren">(</span><em>doc_id</em>, <em>k=1</em>, <em>translate_id=False</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.nn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.nn" title="Permalink to this definition">¶</a></dt>
+<code class="descname">nn</code><span class="sig-paren">(</span><em>doc_id</em>, <em>k=1</em>, <em>translate_id=False</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.nn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.nn" title="Permalink to this definition">¶</a></dt>
 <dd><p>nearest neighbour query</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -280,12 +285,12 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.recommend">
-<code class="descname">recommend</code><span class="sig-paren">(</span><em>user=None</em>, <em>ids=[]</em>, <em>recent_interactions=[]</em>, <em>client=None</em>, <em>limit=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.recommend" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user=None</em>, <em>ids=[]</em>, <em>recent_interactions=[]</em>, <em>client=None</em>, <em>limit=1</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.recommend" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>save models to folder</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -299,7 +304,7 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="method">
 <dt id="seldon.text.docsim.DocumentSimilarity.score">
-<code class="descname">score</code><span class="sig-paren">(</span><em>k=1</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#DocumentSimilarity.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.score" title="Permalink to this definition">¶</a></dt>
+<code class="descname">score</code><span class="sig-paren">(</span><em>k=1</em>, <em>approx=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#DocumentSimilarity.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.DocumentSimilarity.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>score a model</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -330,8 +335,131 @@ optional title and tags. Tags will be used as base truth used to score document 
 
 <dl class="function">
 <dt id="seldon.text.docsim.jaccard">
-<code class="descclassname">seldon.text.docsim.</code><code class="descname">jaccard</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seldon/text/docsim.html#jaccard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.jaccard" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">seldon.text.docsim.</code><code class="descname">jaccard</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/docsim.html#jaccard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.docsim.jaccard" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</div>
+<div class="section" id="module-seldon.text.tagrecommend">
+<span id="seldon-text-tagrecommend"></span><h2>seldon.text.tagrecommend<a class="headerlink" href="#module-seldon.text.tagrecommend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.text.tagrecommend.Tag_Recommender">
+<em class="property">class </em><code class="descclassname">seldon.text.tagrecommend.</code><code class="descname">Tag_Recommender</code><span class="sig-paren">(</span><em>max_s2_size=0.1</em>, <em>min_s2_size=25</em>, <em>min_score=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<dl class="method">
+<dt id="seldon.text.tagrecommend.Tag_Recommender.asymmetric_occur">
+<code class="descname">asymmetric_occur</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em>, <em>min_s2_size=25</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender.asymmetric_occur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender.asymmetric_occur" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return asymmetric occurrence of set s1 against s2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s1</strong> (<em>set</em>) &#8211; set (of document ids)</li>
+<li><strong>s2</strong> (<em>set</em>) &#8211; set (of document ids)</li>
+<li><strong>min_s2_size</strong> (<em>int, optional</em>) &#8211; the absolute min number of documents in s2. Increase to stop very unlikely tags being recommended.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.tagrecommend.Tag_Recommender.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus</em>, <em>split_char='</em>, <em>'</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a corpus and fir data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>corpus</strong> (<em>object</em>) &#8211; a corpus object that follows seldon.text.DefaultJsonCorpus</li>
+<li><strong>split_char</strong> (<em>str</em>) &#8211; character to split tags</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">trained Tag_Recommender object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.tagrecommend.Tag_Recommender.jaccard">
+<code class="descname">jaccard</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em>, <em>max_s2_size=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender.jaccard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender.jaccard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return jaccard distance between two sets (of documents)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s1</strong> (<em>set</em>) &#8211; set (of document ids)</li>
+<li><strong>s2</strong> (<em>set</em>) &#8211; set (of document ids)</li>
+<li><strong>max_s2_size</strong> (<em>int, optional</em>) &#8211; the max percentage size of s2 for a result to be returned. Can be set to ignore very popular tags returning non-zero scores</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.tagrecommend.Tag_Recommender.knn">
+<code class="descname">knn</code><span class="sig-paren">(</span><em>tag</em>, <em>k=5</em>, <em>metric='jaccard'</em>, <em>exclusions=[]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender.knn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender.knn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get k nearest neighbours of a tag</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; query tag</li>
+<li><strong>k</strong> (<em>int</em>) &#8211; number of neighbours to return</li>
+<li><strong>metric</strong> (<em>str</em>) &#8211; metric to use, &#8216;jaccard&#8217; or &#8216;asym&#8217;</li>
+<li><strong>excclusions</strong> (<em>list of str</em>) &#8211; tags to exclude</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of tuples of tag,score</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.text.tagrecommend.Tag_Recommender.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>tags</em>, <em>k=5</em>, <em>knn_k=5</em>, <em>metric='both'</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/text/tagrecommend.html#Tag_Recommender.recommend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.text.tagrecommend.Tag_Recommender.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>recommend tags for a given set of tags</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tags</strong> (<em>str</em>) &#8211; query tags</li>
+<li><strong>k</strong> (<em>int</em>) &#8211; number of tags to return</li>
+<li><strong>knn_k</strong> (<em>int</em>) &#8211; number of nearest neighbours for each tag to collect</li>
+<li><strong>metric</strong> (<em>str</em>) &#8211; metric to use, &#8216;jaccard&#8217; or &#8216;asym&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">sorted list of tuples of tag,score</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-seldon.text">

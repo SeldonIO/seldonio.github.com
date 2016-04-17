@@ -118,8 +118,9 @@
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon.pipeline.cross_validation&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Seldon_KFold"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold">[docs]</a><span class="k">class</span> <span class="nc">Seldon_KFold</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -132,11 +133,14 @@
 <span class="sd">       Pandas compatible scikit learn Estimator to apply to data splits</span>
 <span class="sd">    k : int, optional</span>
 <span class="sd">       number of folds</span>
+<span class="sd">    save_folder_folder : str, optional</span>
+<span class="sd">       a folder to save prediction results from each fold</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">clf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">clf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">save_folds_folder</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_folds_folder</span><span class="o">=</span><span class="n">save_folds_folder</span>
 
 <div class="viewcode-block" id="Seldon_KFold.get_scores"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.cross_validation.Seldon_KFold.get_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scores</span>
@@ -163,6 +167,7 @@
         <span class="n">df_len</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">df_len</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
                 <span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">]</span>
@@ -175,6 +180,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
             <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_folds_folder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_folds_folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;_correct.txt&quot;</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%1.3f</span><span class="s">&#39;</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_folds_folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;_predictions.txt&quot;</span><span class="p">,</span><span class="n">y_pred</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%1.3f</span><span class="s">&#39;</span><span class="p">)</span>
+                <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_folds_folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;_predictions_proba.txt&quot;</span><span class="p">,</span><span class="n">y_pred_proba</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%1.3f</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;accuracy scores </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>

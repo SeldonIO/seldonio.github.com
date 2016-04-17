@@ -132,7 +132,7 @@
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon.keras&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="default_classification_model"><a class="viewcode-back" href="../../seldon.html#seldon.keras.default_classification_model">[docs]</a><span class="k">def</span> <span class="nf">default_classification_model</span><span class="p">(</span><span class="n">input_width</span><span class="p">,</span><span class="n">num_classes</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Default classification model</span>

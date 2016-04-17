@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.cli.attr_schema_utils &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="seldon.cli" href="../cli.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../seldon.html">seldon</a> &raquo;</li>
+      
+          <li><a href="../cli.html">seldon.cli</a> &raquo;</li>
+      
+    <li>seldon.cli.attr_schema_utils</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for seldon.cli.attr_schema_utils</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">MySQLdb</span>
+<span class="kn">import</span> <span class="nn">getopt</span><span class="o">,</span> <span class="nn">argparse</span>
+
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</div>
+<span class="n">valid_value_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;double&#39;</span><span class="p">,</span> <span class="s">&#39;string&#39;</span><span class="p">,</span> <span class="s">&#39;date&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">,</span> <span class="s">&#39;int&#39;</span><span class="p">,</span><span class="s">&#39;boolean&#39;</span><span class="p">])</span>
+<span class="n">value_types_to_db_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">double</span><span class="o">=</span><span class="s">&#39;DOUBLE&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s">&#39;VARCHAR&#39;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="s">&#39;DATETIME&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="o">=</span><span class="s">&#39;INT&#39;</span><span class="p">,</span> <span class="n">boolean</span><span class="o">=</span><span class="s">&#39;BOOLEAN&#39;</span><span class="p">,</span>
+	<span class="n">text</span><span class="o">=</span><span class="s">&#39;TEXT&#39;</span><span class="p">,</span> <span class="n">enum</span><span class="o">=</span><span class="s">&#39;ENUM&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="addAttrsToDb"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.addAttrsToDb">[docs]</a><span class="k">def</span> <span class="nf">addAttrsToDb</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">item_type</span><span class="p">):</span>
+	<span class="n">attrs</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="s">&quot;content_type&quot;</span><span class="p">,</span> <span class="s">&quot;value_type&quot;</span><span class="p">:[</span><span class="s">&quot;article&quot;</span><span class="p">]})</span>
+	<span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+		<span class="n">attrValType</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s">&#39;value_type&#39;</span><span class="p">]</span>
+		<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">attrValType</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+			<span class="n">attrValType</span> <span class="o">=</span> <span class="s">&#39;enum&#39;</span>
+		<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO ITEM_ATTR (name, type, item_type) &quot;</span>
+			<span class="o">+</span> <span class="s">&quot; VALUES (</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">value_types_to_db_map</span><span class="p">[</span><span class="n">attrValType</span><span class="p">],</span> <span class="n">item_type</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">attrValType</span> <span class="ow">is</span> <span class="s">&#39;enum&#39;</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">enum</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s">&#39;value_type&#39;</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+				<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+				<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT attr_id FROM ITEM_ATTR WHERE NAME = </span><span class="si">%s</span><span class="s"> and ITEM_TYPE = </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span><span class="n">item_type</span><span class="p">))</span>
+				<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+				<span class="n">attrId</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+				<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+				<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO ITEM_ATTR_ENUM (attr_id, value_id, value_name) VALUES (</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&quot;</span><span class="p">,(</span><span class="n">attrId</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">enum</span><span class="p">))</span>
+	<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+	<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT attr_id, value_id, value_name FROM ITEM_ATTR_ENUM&quot;</span><span class="p">)</span>
+	<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+	<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+		<span class="n">enum_attr_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">enum_value_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">enum_value_name</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO DIMENSION (item_type, attr_id, value_id) VALUES&quot;</span>
+			<span class="o">+</span> <span class="s">&quot; (</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">enum_attr_id</span><span class="p">,</span> <span class="n">enum_value_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="doDbChecks"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.doDbChecks">[docs]</a><span class="k">def</span> <span class="nf">doDbChecks</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+	<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+	<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT COUNT(*) FROM ITEM_TYPE&quot;</span><span class="p">)</span>
+	<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">&quot;ITEM_TYPE table was not empty, it had&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;rows&#39;</span>
+		<span class="n">doExitBecauseDbNotEmpty</span><span class="p">()</span>
+	<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+	<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT COUNT(*) FROM ITEM_ATTR&quot;</span><span class="p">)</span>
+	<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">&quot;ITEM_ATTR table was not empty, it had&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;rows&#39;</span>
+		<span class="n">doExitBecauseDbNotEmpty</span><span class="p">()</span>
+	<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+	<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT COUNT(*) FROM ITEM_ATTR_ENUM&quot;</span><span class="p">)</span>
+	<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">&quot;ITEM_ATTR_ENUM table was not empty, it had&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;rows&#39;</span>
+		<span class="n">doExitBecauseDbNotEmpty</span><span class="p">()</span>
+	<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+	<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT COUNT(*) FROM DIMENSION&quot;</span><span class="p">)</span>
+	<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">&quot;DIMENSION table was not empty, it had&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;rows&#39;</span>
+		<span class="n">doExitBecauseDbNotEmpty</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="doExitBecauseDbNotEmpty"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.doExitBecauseDbNotEmpty">[docs]</a><span class="k">def</span> <span class="nf">doExitBecauseDbNotEmpty</span><span class="p">():</span>
+	<span class="k">print</span> <span class="s">&quot;To run this script, the relevant DB tables must be empty. Please rerun this script with the -clean option to delete these entries.&quot;</span>
+	<span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="addToDb"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.addToDb">[docs]</a><span class="k">def</span> <span class="nf">addToDb</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+	<span class="k">with</span> <span class="n">db</span><span class="p">:</span>
+		<span class="n">doDbChecks</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">theType</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+			<span class="n">cur</span><span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+			<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;INSERT INTO ITEM_TYPE (type_id, name)&quot;</span><span class="o">+</span>
+				<span class="s">&quot; values (</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&quot;</span><span class="p">,(</span><span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">],</span><span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_name&#39;</span><span class="p">]))</span>
+			<span class="n">addAttrsToDb</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_attrs&#39;</span><span class="p">],</span> <span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="validateValueType"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.validateValueType">[docs]</a><span class="k">def</span> <span class="nf">validateValueType</span><span class="p">(</span><span class="n">valType</span><span class="p">):</span>
+    <span class="n">theType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">valType</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">theType</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">enum</span> <span class="ow">in</span> <span class="n">valType</span><span class="p">:</span>
+            <span class="n">theEnumType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">enum</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">theEnumType</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">unicode</span> <span class="ow">and</span> <span class="n">theEnumType</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;enum objects must be strings:&quot;</span><span class="p">,</span> <span class="n">theEnumType</span>
+                <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">theType</span> <span class="ow">is</span> <span class="nb">unicode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">valType</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_value_types</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;the value type must be one of &#39;double&#39;, &#39;string&#39;, &#39;date&#39; or an object&quot;</span>
+            <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;the type of the field value_type must be a string or a list where as it was&quot;</span><span class="p">,</span><span class="n">theType</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="validateAttr"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.validateAttr">[docs]</a><span class="k">def</span> <span class="nf">validateAttr</span><span class="p">(</span><span class="n">theAttr</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">&#39;name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theAttr</span> <span class="ow">or</span> <span class="s">&#39;value_type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theAttr</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;couldn&#39;t find one of (name, value_type) for attr &quot;</span>
+        <span class="n">pp</span><span class="p">(</span><span class="n">theAttr</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">validateValueType</span><span class="p">(</span><span class="n">theAttr</span><span class="p">[</span><span class="s">&#39;value_type&#39;</span><span class="p">]);</span>
+</div>
+<div class="viewcode-block" id="validateType"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.validateType">[docs]</a><span class="k">def</span> <span class="nf">validateType</span><span class="p">(</span><span class="n">theType</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">&#39;type_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theType</span> <span class="ow">or</span> <span class="s">&#39;type_name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theType</span> <span class="ow">or</span> <span class="s">&#39;type_attrs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theType</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;couldn&#39;t find one of (type_id, type_name, type_attrs) for object&quot;</span>
+        <span class="n">pp</span><span class="p">(</span><span class="n">theType</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">theAttr</span> <span class="ow">in</span> <span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_attrs&#39;</span><span class="p">]:</span>
+        <span class="n">validateAttr</span><span class="p">(</span><span class="n">theAttr</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="validateNumbering"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.validateNumbering">[docs]</a><span class="k">def</span> <span class="nf">validateNumbering</span><span class="p">(</span><span class="n">types</span><span class="p">):</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">theType</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;found a repeated type_id&quot;</span><span class="p">,</span> <span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">]</span>
+                <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;type_id s must be integers but one was&quot;</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span><span class="n">theType</span><span class="p">[</span><span class="s">&#39;type_id&#39;</span><span class="p">],</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span>
+            <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="outputDimensionsToFile"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.outputDimensionsToFile">[docs]</a><span class="k">def</span> <span class="nf">outputDimensionsToFile</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+
+	<span class="k">with</span> <span class="n">db</span><span class="p">:</span>
+		<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT d.dim_id, e.value_name from DIMENSION d, ITEM_ATTR_ENUM e where d.attr_id = e.attr_id and d.value_id = e.value_id and e.value_name != </span><span class="se">\&#39;</span><span class="s">article</span><span class="se">\&#39;</span><span class="s">&quot;</span><span class="p">)</span>
+		<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+		<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="readTypes"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.readTypes">[docs]</a><span class="k">def</span> <span class="nf">readTypes</span><span class="p">(</span><span class="n">types</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">theType</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+        <span class="n">validateType</span><span class="p">(</span><span class="n">theType</span><span class="p">)</span>
+    <span class="n">validateNumbering</span><span class="p">(</span><span class="n">types</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">types</span>
+</div>
+<div class="viewcode-block" id="clearUp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.clearUp">[docs]</a><span class="k">def</span> <span class="nf">clearUp</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+	<span class="k">with</span> <span class="n">db</span><span class="p">:</span>
+		<span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;TRUNCATE TABLE ITEMS&quot;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;TRUNCATE TABLE DIMENSION&quot;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;TRUNCATE TABLE ITEM_ATTR_ENUM&quot;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;TRUNCATE TABLE ITEM_ATTR&quot;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;TRUNCATE TABLE ITEM_TYPE&quot;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table users&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table items&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_varchar&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_double&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_datetime&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_int&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_boolean&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_enum&#39;</span><span class="p">)</span>
+		<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;truncate table item_map_text&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="create_schema"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.attr_schema_utils.create_schema">[docs]</a><span class="k">def</span> <span class="nf">create_schema</span><span class="p">(</span><span class="n">client_name</span><span class="p">,</span> <span class="n">dbSettings</span><span class="p">,</span> <span class="n">scheme_file_path</span><span class="p">,</span> <span class="n">clean</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">clean</span> <span class="o">!=</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">json_data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">scheme_file_path</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">&#39;types&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;couldn&#39;t find types object in json&quot;</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="n">readTypes</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;types&#39;</span><span class="p">])</span>
+
+    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">],</span><span class="n">db</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">passwd</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">],</span> <span class="n">host</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">clean</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">clearUp</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Finished cleaning attributes successfully&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">addToDb</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">types</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;dimensions.json&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">outputDimensionsToFile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">db</span><span class="p">)</span>
+
+        <span class="k">print</span> <span class="s">&#39;Finished applying attributes successfully&#39;</span>
+
+        <span class="n">json_data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../static/jquery.js"></script>
+      <script type="text/javascript" src="../../../static/underscore.js"></script>
+      <script type="text/javascript" src="../../../static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

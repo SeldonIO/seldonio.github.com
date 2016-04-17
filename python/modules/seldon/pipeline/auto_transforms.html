@@ -124,7 +124,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon.pipeline.auto_transforms&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Auto_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform">[docs]</a><span class="k">class</span> <span class="nc">Auto_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -154,7 +154,7 @@
 <span class="sd">    cat_missing_value : str, optional</span>
 <span class="sd">       string to use for missing categorical values</span>
 <span class="sd">    date_transforms : list bool, optional</span>
-<span class="sd">       which date transforms to apply [hour,day_of_week,month,year], default is all</span>
+<span class="sd">       which date transforms to apply [hour,month,day_of_week,year], default is all</span>
 <span class="sd">    create_date_differences : bool, optional</span>
 <span class="sd">       whether to create differences between all date variables</span>
 <span class="sd">    nan_threshold : float, optional</span>
@@ -212,7 +212,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_missing_val</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_cat_percent</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_cat_percent</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                     <span class="n">val</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>

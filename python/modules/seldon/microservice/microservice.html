@@ -116,6 +116,7 @@
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="kn">from</span> <span class="nn">seldon.microservice.predict</span> <span class="kn">import</span> <span class="n">predict_blueprint</span>
 <span class="kn">from</span> <span class="nn">seldon.microservice.recommend</span> <span class="kn">import</span> <span class="n">recommend_blueprint</span>
+<span class="kn">from</span> <span class="nn">seldon.microservice.extension</span> <span class="kn">import</span> <span class="n">extension_blueprint</span>
 <span class="kn">import</span> <span class="nn">seldon</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">import</span> <span class="nn">seldon.pipeline.util</span> <span class="kn">as</span> <span class="nn">sutl</span>
@@ -183,11 +184,39 @@
             <span class="n">_mc_pool</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">ClientPool</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">memcache_pool_size</span><span class="p">)</span>
             <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_memcache&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mc_pool</span>
             
-        <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Recommender_wrapper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">:</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Recommender_wrapper</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Recommender_wrapper</span><span class="p">()</span>
         <span class="n">recommender</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">load_recommender</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">)</span>
         <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_recommender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recommender</span>
  
         <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">recommend_blueprint</span><span class="p">)</span>
+
+        <span class="c"># other setup tasks</span>
+        <span class="k">return</span> <span class="n">app</span>
+
+</div>
+<div class="viewcode-block" id="Microservices.create_extension_microservice"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.microservice.Microservices.create_extension_microservice">[docs]</a>    <span class="k">def</span> <span class="nf">create_extension_microservice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a prediction Flask microservice app</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        extension_folder : str</span>
+<span class="sd">           location of extension</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+                   
+        <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
+        <span class="n">ew</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Extension_wrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">ew</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">)</span>
+
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_extension_wrapper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ew</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span>
+ 
+        <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">extension_blueprint</span><span class="p">)</span>
 
         <span class="c"># other setup tasks</span>
         <span class="k">return</span> <span class="n">app</span>

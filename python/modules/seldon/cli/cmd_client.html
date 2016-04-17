@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.cli.cmd_client &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="seldon.cli" href="../cli.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../seldon.html">seldon</a> &raquo;</li>
+      
+          <li><a href="../cli.html">seldon.cli</a> &raquo;</li>
+      
+    <li>seldon.cli.cmd_client</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for seldon.cli.cmd_client</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">zk_utils</span>
+<span class="kn">import</span> <span class="nn">seldon_utils</span>
+<span class="kn">import</span> <span class="nn">spark_utils</span>
+
+<span class="n">gdata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;all_clients_node_path&#39;</span><span class="p">:</span> <span class="s">&quot;/all_clients&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="getOpts"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.getOpts">[docs]</a><span class="k">def</span> <span class="nf">getOpts</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">&#39;seldon-cli client&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">&#39;Seldon Cli&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;list&#39;</span><span class="p">,</span><span class="s">&#39;setup&#39;</span><span class="p">,</span><span class="s">&#39;processactions&#39;</span><span class="p">,</span><span class="s">&#39;processevents&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--db-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the db&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--client-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--input-date-string&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;The date to process in YYYYMMDD format&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c"># catch rest (non-options) as args</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">opts</span>
+</div>
+<div class="viewcode-block" id="get_data_fpath"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.get_data_fpath">[docs]</a><span class="k">def</span> <span class="nf">get_data_fpath</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">client</span> <span class="o">+</span> <span class="s">&quot;/_data_&quot;</span>
+</div>
+<div class="viewcode-block" id="json_to_dict"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.json_to_dict">[docs]</a><span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="dict_to_json"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.dict_to_json">[docs]</a><span class="k">def</span> <span class="nf">dict_to_json</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="s">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;:&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="mkdir_p"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.mkdir_p">[docs]</a><span class="k">def</span> <span class="nf">mkdir_p</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c"># Python &gt;2.5</span>
+        <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span>
+</div>
+<div class="viewcode-block" id="write_data_to_file"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.write_data_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">mkdir_p</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">))</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="is_existing_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.is_existing_client">[docs]</a><span class="k">def</span> <span class="nf">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
+    <span class="n">client_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">client_name</span> <span class="ow">in</span> <span class="n">client_names</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="add_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.add_client">[docs]</a><span class="k">def</span> <span class="nf">add_client</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">consumer_details</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="s">&quot;/config/dbcp/_data_&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">db_info</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">db_info_entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dbs&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">db_info_entry</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">db_name</span><span class="p">:</span>
+            <span class="n">db_info</span> <span class="o">=</span> <span class="n">db_info_entry</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">db_info</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Invalid db name[{db_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">dbSettings</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;://(.*?):(.*?),&#39;</span><span class="p">,</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;jdbc&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span>
+    <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span>
+    <span class="n">seldon_utils</span><span class="o">.</span><span class="n">addApiDb</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="n">dbSettings</span><span class="p">)</span>
+    <span class="n">seldon_utils</span><span class="o">.</span><span class="n">addClientDb</span><span class="p">(</span><span class="n">client_name</span><span class="p">,</span> <span class="n">dbSettings</span><span class="p">,</span> <span class="n">consumer_details</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+    <span class="c"># write to local file</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">get_data_fpath</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;DB_JNDI_NAME&#39;</span><span class="p">:</span> <span class="n">db_name</span><span class="p">}</span>
+    <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="c"># write to zookeeper</span>
+    <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">client_name</span>
+    <span class="n">data_json</span> <span class="o">=</span> <span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">data_json</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="action_list"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.action_list">[docs]</a><span class="k">def</span> <span class="nf">action_list</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+
+    <span class="n">all_clients_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">all_clients_fpath</span><span class="p">):</span>
+        <span class="c"># the dir for all_clients doesnt exist</span>
+        <span class="k">if</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]):</span>
+            <span class="n">client_nodes</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">])</span>
+            <span class="k">def</span> <span class="nf">write_node_value_to_file</span><span class="p">(</span><span class="n">node_path</span><span class="p">):</span>
+                <span class="n">node_value</span> <span class="o">=</span> <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_get</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">)</span>
+                <span class="n">node_value</span> <span class="o">=</span> <span class="n">node_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">zk_utils</span><span class="o">.</span><span class="n">is_json_data</span><span class="p">(</span><span class="n">node_value</span><span class="p">):</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span>
+                <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">node_path</span> <span class="o">+</span> <span class="s">&quot;/_data_&quot;</span>
+                <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">client_node</span> <span class="ow">in</span> <span class="n">client_nodes</span><span class="p">:</span>
+                <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">client_node</span>
+                <span class="n">write_node_value_to_file</span><span class="p">(</span><span class="n">node_path</span><span class="p">)</span>
+                <span class="n">client_child_nodes</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">client_node</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">client_child_node</span> <span class="ow">in</span> <span class="n">client_child_nodes</span><span class="p">:</span>
+                    <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">client_node</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">client_child_node</span>
+                    <span class="n">write_node_value_to_file</span><span class="p">(</span><span class="n">node_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">all_clients_fpath</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;No clients found!&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">]):</span>
+            <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">get_data_fpath</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
+            <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&quot;client[{client}]:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="n">DB_JNDI_NAME</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;DB_JNDI_NAME&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;DB_JNDI_NAME&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+            <span class="k">print</span> <span class="s">&quot;    DB_JNDI_NAME: &quot;</span><span class="o">+</span><span class="n">DB_JNDI_NAME</span>
+</div>
+<div class="viewcode-block" id="action_setup"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.action_setup">[docs]</a><span class="k">def</span> <span class="nf">action_setup</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+    <span class="n">db_name_to_use</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_name</span>
+    <span class="n">client_name_to_setup</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
+    <span class="k">if</span> <span class="n">db_name_to_use</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Need db name to use&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">client_name_to_setup</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Need client name to setup&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># check if this client exists</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">get_data_fpath</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name_to_setup</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Trying to create the client&quot;</span>
+        <span class="n">add_client</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name_to_setup</span><span class="p">,</span> <span class="n">db_name_to_use</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Client already exists!&quot;</span>
+</div>
+<div class="viewcode-block" id="action_processactions"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.action_processactions">[docs]</a><span class="k">def</span> <span class="nf">action_processactions</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">get_valid_client</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">client_name</span>
+
+    <span class="k">def</span> <span class="nf">get_valid_input_date_string</span><span class="p">():</span>
+        <span class="n">input_date_string</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">input_date_string</span>
+        <span class="k">if</span> <span class="n">input_date_string</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Need input date string!&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">input_date_string</span>
+
+    <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
+    <span class="k">if</span> <span class="n">client_name</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">client_name</span> <span class="o">=</span> <span class="n">get_valid_client</span><span class="p">()</span>
+
+    <span class="n">job_info</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;processactions&quot;</span><span class="p">][</span><span class="s">&quot;job_info&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">client_name</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;--single-client&quot;</span><span class="p">)</span>
+        <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;%CLIENT_NAME%&quot;</span><span class="p">)</span>
+
+    <span class="n">input_date_string</span> <span class="o">=</span> <span class="n">get_valid_input_date_string</span><span class="p">()</span>
+    <span class="n">replacements</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s">&quot;%INPUT_DATE_STRING%&quot;</span><span class="p">,</span> <span class="n">input_date_string</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">appy_replacements</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">rpair</span> <span class="ow">in</span> <span class="n">replacements</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rpair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">rpair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rpair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+
+    <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span>
+    <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">appy_replacements</span><span class="p">,</span> <span class="n">cmd_args</span><span class="p">)</span>
+
+    <span class="n">spark_utils</span><span class="o">.</span><span class="n">run_spark_job</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">job_info</span><span class="p">,</span> <span class="n">client_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="action_processevents"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.action_processevents">[docs]</a><span class="k">def</span> <span class="nf">action_processevents</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">get_valid_client</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">client_name</span>
+
+    <span class="k">def</span> <span class="nf">get_valid_input_date_string</span><span class="p">():</span>
+        <span class="n">input_date_string</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">input_date_string</span>
+        <span class="k">if</span> <span class="n">input_date_string</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Need input date string!&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">input_date_string</span>
+
+    <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
+    <span class="k">if</span> <span class="n">client_name</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">client_name</span> <span class="o">=</span> <span class="n">get_valid_client</span><span class="p">()</span>
+
+    <span class="n">job_info</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;processevents&quot;</span><span class="p">][</span><span class="s">&quot;job_info&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">client_name</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;--single-client&quot;</span><span class="p">)</span>
+        <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;%CLIENT_NAME%&quot;</span><span class="p">)</span>
+
+    <span class="n">input_date_string</span> <span class="o">=</span> <span class="n">get_valid_input_date_string</span><span class="p">()</span>
+    <span class="n">replacements</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s">&quot;%INPUT_DATE_STRING%&quot;</span><span class="p">,</span> <span class="n">input_date_string</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">appy_replacements</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">rpair</span> <span class="ow">in</span> <span class="n">replacements</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rpair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">rpair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rpair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+
+    <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span>
+    <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">appy_replacements</span><span class="p">,</span> <span class="n">cmd_args</span><span class="p">)</span>
+
+    <span class="n">spark_utils</span><span class="o">.</span><span class="n">run_spark_job</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">job_info</span><span class="p">,</span> <span class="n">client_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="cmd_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_client.cmd_client">[docs]</a><span class="k">def</span> <span class="nf">cmd_client</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">command_args</span><span class="p">):</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
+        <span class="s">&quot;list&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
+        <span class="s">&quot;setup&quot;</span> <span class="p">:</span> <span class="n">action_setup</span><span class="p">,</span>
+        <span class="s">&quot;processactions&quot;</span> <span class="p">:</span> <span class="n">action_processactions</span><span class="p">,</span>
+        <span class="s">&quot;processevents&quot;</span> <span class="p">:</span> <span class="n">action_processevents</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">getOpts</span><span class="p">(</span><span class="n">command_args</span><span class="p">)</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">action</span>
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">actions</span><span class="p">[</span><span class="s">&quot;default&quot;</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">actions</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+            <span class="n">actions</span><span class="p">[</span><span class="n">action</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../static/jquery.js"></script>
+      <script type="text/javascript" src="../../../static/underscore.js"></script>
+      <script type="text/javascript" src="../../../static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

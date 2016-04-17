@@ -13,6 +13,14 @@ seldon.text.docsim
     :undoc-members:
     :show-inheritance:
 
+seldon.text.tagrecommend
+------------------------
+
+.. automodule:: seldon.text.tagrecommend
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 
 Module contents

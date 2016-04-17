@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.luigi package &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="index.html"/>
+        <link rel="up" title="seldon package" href="seldon.html"/>
+        <link rel="next" title="seldon.microservice package" href="seldon.microservice.html"/>
+        <link rel="prev" title="seldon.cli package" href="seldon.cli.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="seldon.html">seldon package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="seldon.html">seldon package</a> &raquo;</li>
+      
+    <li>seldon.luigi package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="sources/seldon.luigi.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="seldon-luigi-package">
+<h1>seldon.luigi package<a class="headerlink" href="#seldon-luigi-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-seldon.luigi.spark">
+<span id="seldon-luigi-spark"></span><h2>seldon.luigi.spark<a class="headerlink" href="#module-seldon.luigi.spark" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob">
+<em class="property">class </em><code class="descclassname">seldon.luigi.spark.</code><code class="descname">ItemSimilaritySparkJob</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#ItemSimilaritySparkJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Spark job for running item similarity model</p>
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.client">
+<code class="descname">client</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.days">
+<code class="descname">days</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.days" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.dimsumThreshold">
+<code class="descname">dimsumThreshold</code><em class="property"> = &lt;luigi.parameter.FloatParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.dimsumThreshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.inputPath">
+<code class="descname">inputPath</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.inputPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.itemType">
+<code class="descname">itemType</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.itemType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.limit">
+<code class="descname">limit</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.maxUsersPerItem">
+<code class="descname">maxUsersPerItem</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.maxUsersPerItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.minItemsPerUser">
+<code class="descname">minItemsPerUser</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.minItemsPerUser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.minUsersPerItem">
+<code class="descname">minUsersPerItem</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.minUsersPerItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#ItemSimilaritySparkJob.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.outputPath">
+<code class="descname">outputPath</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.outputPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#ItemSimilaritySparkJob.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.sample">
+<code class="descname">sample</code><em class="property"> = &lt;luigi.parameter.FloatParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.sample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.startDay">
+<code class="descname">startDay</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.startDay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.ItemSimilaritySparkJob.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#seldon.luigi.spark.ItemSimilaritySparkJob.task_namespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity">
+<em class="property">class </em><code class="descclassname">seldon.luigi.spark.</code><code class="descname">SeldonItemSimilarity</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonItemSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Item similarity model. Depends on spark job. Writes results to mysql db.</p>
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.client">
+<code class="descname">client</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.db_host">
+<code class="descname">db_host</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.db_host" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.db_pass">
+<code class="descname">db_pass</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.db_pass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.db_user">
+<code class="descname">db_user</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.db_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonItemSimilarity.requires"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.requires" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonItemSimilarity.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.startDay">
+<code class="descname">startDay</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.startDay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonItemSimilarity.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#seldon.luigi.spark.SeldonItemSimilarity.task_namespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization">
+<em class="property">class </em><code class="descclassname">seldon.luigi.spark.</code><code class="descname">SeldonMatrixFactorization</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonMatrixFactorization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Matrix factorization using Spark</p>
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.alpha">
+<code class="descname">alpha</code><em class="property"> = &lt;luigi.parameter.FloatParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.client">
+<code class="descname">client</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.days">
+<code class="descname">days</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.days" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.inputPath">
+<code class="descname">inputPath</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.inputPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.iterations">
+<code class="descname">iterations</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.iterations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.mf_lambda">
+<code class="descname">mf_lambda</code><em class="property"> = &lt;luigi.parameter.FloatParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.mf_lambda" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonMatrixFactorization.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.outputPath">
+<code class="descname">outputPath</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.outputPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.rank">
+<code class="descname">rank</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.rank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/luigi/spark.html#SeldonMatrixFactorization.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.startDay">
+<code class="descname">startDay</code><em class="property"> = &lt;luigi.parameter.IntParameter object&gt;</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.startDay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seldon.luigi.spark.SeldonMatrixFactorization.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#seldon.luigi.spark.SeldonMatrixFactorization.task_namespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.luigi">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon.luigi" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seldon.microservice.html" class="btn btn-neutral float-right" title="seldon.microservice package">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="seldon.cli.html" class="btn btn-neutral" title="seldon.cli package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

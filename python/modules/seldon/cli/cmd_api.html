@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.cli.cmd_api &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="seldon.cli" href="../cli.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../seldon.html">seldon</a> &raquo;</li>
+      
+          <li><a href="../cli.html">seldon.cli</a> &raquo;</li>
+      
+    <li>seldon.cli.cmd_api</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for seldon.cli.cmd_api</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">MySQLdb</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">db_utils</span>
+
+<span class="n">gdata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;all_clients_node_path&#39;</span><span class="p">:</span> <span class="s">&quot;/all_clients&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="getOpts"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.getOpts">[docs]</a><span class="k">def</span> <span class="nf">getOpts</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">&#39;seldon-cli api&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">&#39;Seldon CLI&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;call&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--client-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--endpoint&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;api to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;/js/action/new&#39;</span><span class="p">,</span><span class="s">&#39;/js/recommendations&#39;</span><span class="p">,</span><span class="s">&#39;/js/predict&#39;</span><span class="p">,</span><span class="s">&#39;/js/event/new&#39;</span><span class="p">,</span><span class="s">&#39;/actions&#39;</span><span class="p">,</span><span class="s">&#39;/users/recommendations&#39;</span><span class="p">,</span><span class="s">&#39;/predict&#39;</span><span class="p">,</span><span class="s">&#39;/events&#39;</span><span class="p">,</span><span class="s">&quot;/items&quot;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--method&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;http method&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span><span class="s">&#39;POST&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--user&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--item&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--type&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;type&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--limit&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;limit&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;5&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--json&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;json&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;{}&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--dimensions&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;dimensions&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;append&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--full&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;whether to return full attributes true|false&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--attributes&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;attributes&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;append&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c"># catch rest (non-options) as args</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">opts</span>
+</div>
+<div class="viewcode-block" id="json_to_dict"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.json_to_dict">[docs]</a><span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_auth"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_auth">[docs]</a><span class="k">def</span> <span class="nf">get_auth</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">):</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="s">&quot;/config/dbcp/_data_&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
+    <span class="n">jsonStr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">jsonStr</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/js/&quot;</span><span class="p">):</span>
+        <span class="n">scope</span> <span class="o">=</span> <span class="s">&quot;js&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scope</span> <span class="o">=</span> <span class="s">&quot;all&quot;</span>
+
+    <span class="n">db_info</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">db_info</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dbs&#39;</span><span class="p">]:</span>
+        <span class="n">dbSettings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;://(.*?):(.*?),&#39;</span><span class="p">,</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;jdbc&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span>
+        <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">db_info</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span>
+        <span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_info</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">db_utils</span><span class="o">.</span><span class="n">get_keys</span><span class="p">(</span><span class="n">dbSettings</span><span class="p">,</span><span class="n">opts</span><span class="o">.</span><span class="n">client_name</span><span class="p">,</span><span class="n">scope</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Failed to find single auth key&quot;</span>
+        <span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="get_action_params"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_action_params">[docs]</a><span class="k">def</span> <span class="nf">get_action_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;item&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;item&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">return</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="get_js_recommend_params"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_js_recommend_params">[docs]</a><span class="k">def</span> <span class="nf">get_js_recommend_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;item&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">dimensions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">dimensions</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">limit</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">attributes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">attributes</span>
+    <span class="k">return</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="get_oauth_recommend_params"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_oauth_recommend_params">[docs]</a><span class="k">def</span> <span class="nf">get_oauth_recommend_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;item&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">item</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">dimensions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">dimensions</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">limit</span>
+    <span class="k">return</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="get_js_predict_params"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_js_predict_params">[docs]</a><span class="k">def</span> <span class="nf">get_js_predict_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;json&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">json</span>
+    <span class="k">return</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="get_oauth_items_params"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_oauth_items_params">[docs]</a><span class="k">def</span> <span class="nf">get_oauth_items_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">full</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;full&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">full</span>
+    <span class="k">return</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="call_js"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.call_js">[docs]</a><span class="k">def</span> <span class="nf">call_js</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">auth</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;consumer_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="s">&#39;key&#39;</span><span class="p">]</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;jsonpCallback&quot;</span><span class="p">]</span><span class="o">=</span> <span class="s">&quot;j&quot;</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/js/action/new&quot;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_action_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/js/recommendations&quot;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_js_recommend_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/js/predict&quot;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_js_predict_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&#39;/js/event/new&#39;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_js_predict_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gopts</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;response code&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;^j\(&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\)$&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">res</span>
+</div>
+<div class="viewcode-block" id="call_oauth"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.call_oauth">[docs]</a><span class="k">def</span> <span class="nf">call_oauth</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">token</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&#39;oauth_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span><span class="p">[</span><span class="s">&quot;content-type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;application/json&quot;</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/actions&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">get_action_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/users/recommendations&quot;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_oauth_recommend_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;/users/&quot;</span><span class="o">+</span><span class="n">opts</span><span class="o">.</span><span class="n">user</span><span class="o">+</span><span class="s">&quot;/recommendations&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/predict&quot;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">json</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/events&quot;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">json</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/items&quot;</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;GET&#39;</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">get_oauth_items_params</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span> <span class="o">==</span> <span class="s">&quot;/items&quot;</span> <span class="ow">and</span> <span class="n">opts</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">json</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;unknown endpoint and method&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gopts</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;response code&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;^j\(&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\)$&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">res</span>
+    
+</div>
+<div class="viewcode-block" id="get_token"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.get_token">[docs]</a><span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">auth</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;consumer_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="s">&quot;key&quot;</span><span class="p">]</span>
+    <span class="n">params</span><span class="p">[</span><span class="s">&quot;consumer_secret&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="s">&quot;secret&quot;</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&quot;server_endpoint&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;/token&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gopts</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;response code&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;^j\(&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\)$&#39;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">res</span><span class="p">)[</span><span class="s">&#39;access_token&#39;</span><span class="p">]</span>
+        
+</div>
+<div class="viewcode-block" id="action_call"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.action_call">[docs]</a><span class="k">def</span> <span class="nf">action_call</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">):</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">endpoint</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/js&quot;</span><span class="p">):</span>
+        <span class="n">call_js</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">auth</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">get_token</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">auth</span><span class="p">)</span>
+        <span class="n">call_oauth</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span><span class="n">opts</span><span class="p">,</span><span class="n">token</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="cmd_api"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_api.cmd_api">[docs]</a><span class="k">def</span> <span class="nf">cmd_api</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">command_args</span><span class="p">):</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_call</span><span class="p">,</span>
+        <span class="s">&quot;call&quot;</span> <span class="p">:</span> <span class="n">action_call</span>
+    <span class="p">}</span>
+
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">getOpts</span><span class="p">(</span><span class="n">command_args</span><span class="p">)</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">action</span>
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">actions</span><span class="p">[</span><span class="s">&quot;default&quot;</span><span class="p">](</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">actions</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+            <span class="n">actions</span><span class="p">[</span><span class="n">action</span><span class="p">](</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../static/jquery.js"></script>
+      <script type="text/javascript" src="../../../static/underscore.js"></script>
+      <script type="text/javascript" src="../../../static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

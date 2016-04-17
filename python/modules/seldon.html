@@ -113,13 +113,15 @@
   <h1>Source code for seldon</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">Recommender_wrapper</span><span class="p">,</span><span class="n">Recommender</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="kn">import</span> <span class="n">Recommender_wrapper</span><span class="p">,</span><span class="n">Recommender</span><span class="p">,</span><span class="n">Extension</span><span class="p">,</span><span class="n">Extension_wrapper</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&#39;1.4.20&#39;</span>
 
 <div class="viewcode-block" id="NullHandler"><a class="viewcode-back" href="../seldon.html#seldon.NullHandler">[docs]</a><span class="k">class</span> <span class="nc">NullHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
 <div class="viewcode-block" id="NullHandler.emit"><a class="viewcode-back" href="../seldon.html#seldon.NullHandler.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
         <span class="k">pass</span>
 </div></div>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span><span class="c"># To ensure reload() doesn&#39;t add another one</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">NullHandler</span><span class="p">())</span>
 </pre></div>

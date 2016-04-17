@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.luigi.spark &mdash; seldon 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="seldon" href="../../seldon.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> seldon</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../seldon.html">seldon</a> &raquo;</li>
+      
+    <li>seldon.luigi.spark</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for seldon.luigi.spark</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">luigi</span>
+<span class="kn">from</span> <span class="nn">luigi.s3</span> <span class="kn">import</span> <span class="n">S3FlagTarget</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">seldon.misc.item_similarity</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c">#</span>
+<span class="c"># Item Similarity</span>
+<span class="c">#</span>
+
+<div class="viewcode-block" id="ItemSimilaritySparkJob"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.ItemSimilaritySparkJob">[docs]</a><span class="k">class</span> <span class="nc">ItemSimilaritySparkJob</span><span class="p">(</span><span class="n">luigi</span><span class="o">.</span><span class="n">Task</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spark job for running item similarity model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inputPath</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;/seldon-data/seldon-models/&quot;</span><span class="p">)</span>
+    <span class="n">outputPath</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;/seldon-data/seldon-models/&quot;</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+    <span class="n">startDay</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">itemType</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">minItemsPerUser</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">minUsersPerItem</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>    
+    <span class="n">maxUsersPerItem</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">2000000</span><span class="p">)</span>
+    <span class="n">dimsumThreshold</span> <span class="o">=</span><span class="n">luigi</span><span class="o">.</span><span class="n">FloatParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">FloatParameter</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ItemSimilaritySparkJob.output"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.ItemSimilaritySparkJob.output">[docs]</a>    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">luigi</span><span class="o">.</span><span class="n">LocalTarget</span><span class="p">(</span><span class="s">&quot;{}/{}/item-similarity/{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">startDay</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="ItemSimilaritySparkJob.run"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.ItemSimilaritySparkJob.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;seldon-cli&quot;</span><span class="p">,</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="s">&quot;--action&quot;</span><span class="p">,</span><span class="s">&quot;add&quot;</span><span class="p">,</span><span class="s">&quot;--client-name&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="s">&quot;--model-name&quot;</span><span class="p">,</span><span class="s">&quot;similar-items&quot;</span><span class="p">,</span><span class="s">&quot;--inputPath&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span><span class="p">,</span><span class="s">&quot;--outputPath&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span><span class="s">&quot;--startDay&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startDay</span><span class="p">),</span><span class="s">&quot;--days&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">),</span><span class="s">&quot;--sample&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">),</span><span class="s">&quot;--itemType&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itemType</span><span class="p">),</span><span class="s">&quot;--limit&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">),</span><span class="s">&quot;--minItemsPerUser&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minItemsPerUser</span><span class="p">),</span><span class="s">&quot;--minUsersPerItem&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minUsersPerItem</span><span class="p">),</span><span class="s">&quot;--maxUsersPerItem&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxUsersPerItem</span><span class="p">),</span><span class="s">&quot;--dimsumthreshold&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimsumThreshold</span><span class="p">)]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;seldon-cli&quot;</span><span class="p">,</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="s">&quot;--action&quot;</span><span class="p">,</span><span class="s">&quot;train&quot;</span><span class="p">,</span><span class="s">&quot;--client-name&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="s">&quot;--model-name&quot;</span><span class="p">,</span><span class="s">&quot;similar-items&quot;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+</div></div>
+<div class="viewcode-block" id="SeldonItemSimilarity"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonItemSimilarity">[docs]</a><span class="k">class</span> <span class="nc">SeldonItemSimilarity</span><span class="p">(</span><span class="n">luigi</span><span class="o">.</span><span class="n">Task</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Item similarity model. Depends on spark job. Writes results to mysql db.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">startDay</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+    <span class="n">db_host</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;mysql&quot;</span><span class="p">)</span>
+    <span class="n">db_user</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;root&quot;</span><span class="p">)</span>
+    <span class="n">db_pass</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;mypass&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SeldonItemSimilarity.requires"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonItemSimilarity.requires">[docs]</a>    <span class="k">def</span> <span class="nf">requires</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ItemSimilaritySparkJob</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="n">startDay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">startDay</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="SeldonItemSimilarity.run"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonItemSimilarity.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">ItemSimilarityUploadMysql</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">db_host</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">db_user</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">db_pass</span><span class="p">)</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">stream_and_upload</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">()</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+
+<span class="c">#</span>
+<span class="c"># MF</span>
+<span class="c">#</span>
+</div></div>
+<div class="viewcode-block" id="SeldonMatrixFactorization"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonMatrixFactorization">[docs]</a><span class="k">class</span> <span class="nc">SeldonMatrixFactorization</span><span class="p">(</span><span class="n">luigi</span><span class="o">.</span><span class="n">Task</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Matrix factorization using Spark</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inputPath</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;/seldon-data/seldon-models/&quot;</span><span class="p">)</span>
+    <span class="n">outputPath</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;/seldon-data/seldon-models/&quot;</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+    <span class="n">startDay</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">rank</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">mf_lambda</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">FloatParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">FloatParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="n">luigi</span><span class="o">.</span><span class="n">IntParameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SeldonMatrixFactorization.output"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonMatrixFactorization.output">[docs]</a>    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">luigi</span><span class="o">.</span><span class="n">LocalTarget</span><span class="p">(</span><span class="s">&quot;{}/{}/matrix-factorization/{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">startDay</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="SeldonMatrixFactorization.run"><a class="viewcode-back" href="../../../seldon.luigi.html#seldon.luigi.spark.SeldonMatrixFactorization.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;seldon-cli&quot;</span><span class="p">,</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="s">&quot;--action&quot;</span><span class="p">,</span><span class="s">&quot;add&quot;</span><span class="p">,</span><span class="s">&quot;--client-name&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="s">&quot;--model-name&quot;</span><span class="p">,</span><span class="s">&quot;matrix-factorization&quot;</span><span class="p">,</span><span class="s">&quot;--inputPath&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">inputPath</span><span class="p">,</span><span class="s">&quot;--outputPath&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span><span class="s">&quot;--startDay&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startDay</span><span class="p">),</span><span class="s">&quot;--days&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">),</span><span class="s">&quot;--rank&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">),</span><span class="s">&quot;--lambda&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mf_lambda</span><span class="p">),</span><span class="s">&quot;--alpha&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">),</span><span class="s">&quot;--iterations&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">)]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;seldon-cli&quot;</span><span class="p">,</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="s">&quot;--action&quot;</span><span class="p">,</span><span class="s">&quot;train&quot;</span><span class="p">,</span><span class="s">&quot;--client-name&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span><span class="s">&quot;--model-name&quot;</span><span class="p">,</span><span class="s">&quot;matrix-factorization&quot;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../static/jquery.js"></script>
+      <script type="text/javascript" src="../../../static/underscore.js"></script>
+      <script type="text/javascript" src="../../../static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

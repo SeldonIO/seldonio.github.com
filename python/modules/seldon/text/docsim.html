@@ -134,7 +134,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;seldon.text&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="jaccard"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.jaccard">[docs]</a><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">s2</span><span class="p">)))</span>
@@ -147,12 +147,13 @@
 <span class="sd">    The methods provided by gensim TextCorpus are needed for the GenSim training.</span>
 <span class="sd">    Any corpus provided to DocumentSimilarity should provide the methods given in this class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">create_dictionary</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DefaultJsonCorpus</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="nb">input</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">Dictionary</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_texts</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">create_dictionary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_texts</span><span class="p">())</span>
 
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -302,7 +303,7 @@
 <span class="sd">        gensim corpus model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span><span class="p">,</span><span class="n">CountVectorizer</span>
-        <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">NMF</span><span class="p">,</span> <span class="n">LatentDirichletAllocation</span>
+        <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">NMF</span>
         <span class="c">#make tfidf and NMF args configurable</span>
         <span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_tfidf_args</span><span class="p">)</span>
         <span class="n">tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="o">.</span><span class="n">get_texts</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
@@ -377,6 +378,8 @@
 <span class="sd">           location of models</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span>  <span class="n">similarities</span><span class="o">.</span><span class="n">Similarity</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">output_prefix</span><span class="o">=</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/gensim_index&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">check_moved</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span> <span class="o">=</span> <span class="n">annoy</span><span class="o">.</span><span class="n">AnnoyIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span> <span class="o">=</span> <span class="p">{}</span>
@@ -455,7 +458,10 @@
             <span class="k">return</span> <span class="n">res</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_query_doc</span><span class="p">(</span><span class="n">doc_id_internal</span><span class="p">,</span><span class="n">sims</span><span class="p">)</span>
-            
+            </div>
+<div class="viewcode-block" id="DocumentSimilarity.get_meta"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.get_meta">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">doc_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span>
+
 </div>
 <div class="viewcode-block" id="DocumentSimilarity.score"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">approx</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -498,8 +504,8 @@
         <span class="n">duration_per_call</span> <span class="o">=</span> <span class="n">duration_secs</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">num_docs</span><span class="p">)</span>
         <span class="n">accuracy</span> <span class="o">=</span> <span class="n">score_sum</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">num_docs</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;accuracy: </span><span class="si">%f</span><span class="s"> time: </span><span class="si">%d</span><span class="s"> secs avg_call_time: </span><span class="si">%f</span><span class="s">&quot;</span><span class="p">,</span><span class="n">accuracy</span><span class="p">,</span><span class="n">duration_secs</span><span class="p">,</span><span class="n">duration_per_call</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">accuracy</span></div></div>
-</pre></div>
+        <span class="k">return</span> <span class="n">accuracy</span>
+</pre></div></div></div>
 
           </div>
           <footer>
