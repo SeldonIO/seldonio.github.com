@@ -46,7 +46,7 @@ For example to start the XGBoost Iris microservice on the client  "test" (create
 run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost 1.0 test
 {% endhighlight %}
 
-The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. 
+The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=iris-xgboost-example``` that the pod running the mircroservice is running.  
 
 # Serve Predictions<a name="predictions"></a>
 

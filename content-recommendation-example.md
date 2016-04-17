@@ -66,7 +66,7 @@ To start the Reuters gensim model serving run:
 run_recommendation_microservice.sh reuters-example seldonio/reuters-example 1.0 reuters
 {% endhighlight %}
 
-The script will create the Kubernetes Deployment and use the seldon-cli to update the "reuters" client to add the microservice as a runtime algorithm. 
+The script will create the Kubernetes Deployment and use the seldon-cli to update the "reuters" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=reuters-example``` that the pod running the mircroservice is running.  
 
 # Serve Recommendations<a name="recommendations"></a>
 You can now call the Seldon server using the Seldon CLI to test recommendations:
