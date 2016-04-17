@@ -342,7 +342,7 @@ optional arguments:
 
 ## Synopsis
 
-The model command can be used for setting up and running offline training jobs.
+The model command can be used for setting up and running offline training jobs. At present we suggest for production you package your modeling steps as luigi Tasks as discussed [here](content-recommendation-guide.html#model) which in turn may use the modelling exposed by the seldon-cli as component steps in the process.
 
 {% highlight bash %}
 seldon-cli model --action ACTION --client-name CLIENT_NAME --model-name MODEL_NAME

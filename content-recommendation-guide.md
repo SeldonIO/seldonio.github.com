@@ -130,14 +130,53 @@ The actions data can be for multiple clients if necessary.
 The Seldon CLI tool can then be used to process this data to separate it for each client via a spark job, see example [```seldon-cli client --action processactions```](/seldon-cli.html#client).
 
 # **Create a recommendation model**<a name="model"></a>
-Recommendation models can be built using an available technology that can be Dockerized and run inside Kubernetes. However, we provide some pre-packaged Spark based models and associated runtime scorers for those models. We also provide a python library which allows you to build and create models and runtime scorers exposed as microservices.
+Recommendation models can be built using any available technology that can be Dockerized and run inside Kubernetes. However, we provide some pre-packaged Spark based models and associated runtime scorers for those models. We also provide a python library which allows you to build and create models and runtime scorers exposed as microservices.
+
+We use [luigi](https://github.com/spotify/luigi) to package the offline model creation process. The luigi task can be run as a Kubernetes Job. In production you might run the modelling process each day to update your models with newly ingested data. We provide Make process to create Kubernetes Jobs in ```kubernetes/conf/models```. Call the Makefile with client and start day variables to create a Kubernetes job. Som examples are shown below.
+
+You can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
+{% highlight bash %}
+cd kubernetes/conf/models
+make matrix-factorization DAY=16907 CLIENT=test
+{% endhighlight %}
+
+This will create a Kubernetes Job file in the ```jobs``` folder called matrix-factorization-test-16907.json. Looking  inside this JSON you will find a definiton of an image which calls the luigi command to run the matrix factorization job:
+
+{% highlight json %}
+{
+
+"name": "matrix-factorization",
+"image": "seldonio/seldon-control:1.3_v4",
+"command": ["luigi","--module","seldon.luigi.spark","SeldonMatrixFactorization","--local-schedule","--client","test","--startDay","16907"],
+
+}
+{% endhighlight %}
+
+The luigi Task definition can be found in our [pyseldon](python-package.html) library in ```seldon.luigi.spark.SeldonMatrixFactorization```. In this case it simply calls the seldon-cli to run a matrix factorization job. Other cases might have more complex luigi jobs.
+
+You can provide your own custom configuration either by changing the luigi.cfg or supplying further parameters to the call to luigi.
 
 ## Built-in Spark models
-We provide several Spark based models. At present only a few are fully exposed via the Seldon CLI. 
+We provide several Spark based models. At present only a few are fully exposed via the Seldon CLI and luigi.
 
- * Matrix Factorization : An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
+ * **Matrix Factorization** : An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
 
-Spark modeling can be run via [```seldon-cli model```](seldon-cli.html#model)
+You can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
+
+{% highlight bash %}
+cd kubernetes/conf/models
+make matrix-factorization DAY=16907 CLIENT=test
+{% endhighlight %}
+
+ * **Item Similarity** : Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
+
+You can create an item similarity modelling job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
+
+{% highlight bash %}
+cd kubernetes/conf/models
+make item-similarity DAY=16907 CLIENT=test
+{% endhighlight %}
+
 
 ## Python based models
 
