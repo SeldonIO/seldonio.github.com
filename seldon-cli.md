@@ -164,7 +164,7 @@ seldon-cli client --action processactions --input-date-string 20160216
 
 {% highlight bash %}
 # Run a job to collect events data for a particular day (in YYYYMMDD format), for one client
-seldon-cli client --action processevents --client-name mytest1 --input-date-string 20160216
+seldon-cli client --action processevents --client-name testclient --input-date-string 20160216
 
 # Run a job to collect events data for a particular day (in YYYYMMDD format), for all clients
 seldon-cli client --action processevents --input-date-string 20160216
@@ -414,20 +414,80 @@ seldon-cli rec_alg --action list
 {% endhighlight %}
 
 {% highlight bash %}
-# The following command can be used to add a recommender from the available list. The first time this command is used the "recentItemsRecommender" is added by default.
-# Additional recommenders can also be added this way.
-seldon-cli rec_alg --action add --client-name testclient --recommender-name recentMfRecommender
-{% endhighlight %}
-
-{% highlight bash %}
-# The following command can be used to remove recommenders that are not required.
-seldon-cli rec_alg --action delete --client-name testclient --recommender-name recentMfRecommender
-{% endhighlight %}
-
-{% highlight bash %}
-# The following command can be used to check the current list of recommenders for the client.
-# If there are no recommenders setup - this command will add "recentItemsRecommender" by default.
+# The following command can be used to check the current recommenders definition for the client.
 seldon-cli rec_alg --action show --client-name testclient
+{% endhighlight %}
+
+{% highlight bash %}
+# To configure a set of recommenders for a client, use the "create" action.
+# The json configuration for defining the recommenders can be given from stdin
+# eg.
+
+cat <<EOF | seldon-cli rec_alg --action create --client-name testclient -f -
+{
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                "config": [],
+                "includers": [],
+                "name": "dynamicClusterCountsRecommender"
+            },
+            {
+                "config": [],
+                "includers": [],
+                "name": "recentItemsRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner",
+        "diversityLevel": 3
+    },
+    "recTagToStrategy": {}
+}
+EOF
+
+# or from a file
+seldon-cli rec_alg --action create --client-name testclient -f recommenders.json
+
+# For defining an AB test, use variations as follows
+cat <<EOF | seldon-cli rec_alg --action create --client-name testclient -f -
+{
+    "defaultStrategy": {
+        "variations": [
+            {
+                "config": {
+                    "algorithms": [
+                        {
+                            "config": [],
+                            "includers": [],
+                            "name": "dynamicClusterCountsRecommender"
+                        }
+                    ],
+                    "combiner": "firstSuccessfulCombiner",
+                    "diversityLevel": 3
+                },
+                "label": "firstSucesComb",
+                "ratio": 0.8
+            },
+            {
+                "config": {
+                    "algorithms": [
+                        {
+                            "config": [],
+                            "includers": [],
+                            "name": "mostPopularRecommender"
+                        }
+                    ],
+                    "combiner": "firstSuccessfulCombiner",
+                    "diversityLevel": 3
+                },
+                "label": "base",
+                "ratio": 0.2
+            }
+        ]
+    },
+    "recTagToStrategy": {}
+}
+EOF
 {% endhighlight %}
 
 {% highlight bash %}
@@ -438,11 +498,8 @@ seldon-cli rec_alg --action commit --client-name testclient
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli rec_alg [-h] --action {list,add,delete,show,commit}
-                          [--alg-type {recommendation,prediction}]
-                          [--client-name CLIENT_NAME]
-                          [--recommender-name RECOMMENDER_NAME]
-                          [--config CONFIG]
+usage: seldon-cli rec_alg [-h] --action {list,show,create,commit}
+                          [--client-name CLIENT_NAME] [-f JSON_FILE]
                           ...
 
 Seldon Cli
@@ -452,15 +509,13 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list,add,delete,show,commit}
+  --action {list,show,create,commit}
                         the action to use
-  --alg-type {recommendation,prediction}
-                        type of algorithm
   --client-name CLIENT_NAME
                         the name of the client
-  --recommender-name RECOMMENDER_NAME
-                        the name of recommender
-  --config CONFIG       algorithm specific config in the form x=y
+  -f JSON_FILE, --json-file JSON_FILE
+                        the json file to use for creating algs or '-' for
+                        stdin
 {% endhighlight %}
 
 
