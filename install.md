@@ -39,7 +39,7 @@ Once you have a Kubernetes cluster Seldon can be started as a series of containe
 Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. The Makefile allows you to create the Kuberenetes configuration with [HostPath](http://kubernetes.io/docs/user-guide/volumes/#hostpath) or [GlusterFS](http://kubernetes.io/docs/user-guide/volumes/#glusterfs) persistent volumes. You can modify it to use other possible volumes, such as NFS, as allowed by Kubernetes.
 
 ### HostPath
-To create the default HostPath kubernetes conf files set for /seldon-date do the following:
+To create the default HostPath kubernetes conf files set for /seldon-data do the following:
 
 {% highlight bash %}
  cd kubernetes/conf
