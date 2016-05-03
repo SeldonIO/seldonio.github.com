@@ -28,6 +28,8 @@ Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to f
 
    * Add kubectl to your shell PATH environment variable.
 
+If you are testing Seldon on a single machine you will need at least 4G of memory for your Kubernetes cluster.
+
 # Create Kubernetes Configuration<a name="configure"></a>
 
 Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you have to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf``` You will need to configure:
@@ -39,7 +41,7 @@ Once you have a Kubernetes cluster Seldon can be started as a series of containe
 Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. The Makefile allows you to create the Kuberenetes configuration with [HostPath](http://kubernetes.io/docs/user-guide/volumes/#hostpath) or [GlusterFS](http://kubernetes.io/docs/user-guide/volumes/#glusterfs) persistent volumes. You can modify it to use other possible volumes, such as NFS, as allowed by Kubernetes.
 
 ### HostPath
-To create the default HostPath kubernetes conf files set for /seldon-date do the following:
+To create the default HostPath kubernetes conf files set for /seldon-data do the following:
 
 {% highlight bash %}
  cd kubernetes/conf
@@ -96,7 +98,7 @@ On successful completion you will have a standard Seldon installation with mysql
 
 # Troubleshooting<a name="troubleshooting"></a>
 
- * When running ```seldon-up.sh``` the script waits for ever for all pods to be in running state.
+ * ***When running ```seldon-up.sh``` the script waits for ever for all pods to be in running state.***
 
 Check the reason its not finishing using: ```kubectl get all``` and ```kubectl get events```
 
@@ -109,6 +111,9 @@ If you plan to test Seldon on a non-local cluster you will need to ensure your c
 ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota,PersistentVolumeLabel
 {% endhighlight %}
 
+ * ***Testing on a single node or laptop things are running very slowly.***
+
+Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
 
 
 
