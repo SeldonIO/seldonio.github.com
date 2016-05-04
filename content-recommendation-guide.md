@@ -186,7 +186,8 @@ Models can also be built and packaged via our python library. At present we prov
 
 Once a model is built the final step is to provide a runtime scorer for the model. You should choose an associated runtime scorer for your particular model as outlined, so for example if you built a Matrix Factorization model you should use an associated scorer, e.g. recentMfRecommender or mfRecommender. 
 
-Runtime scoring can be set with [```seldon-cli rec_alg```](seldon-cli.html#rec_alg).
+  * The runtime scoring configuration can be found [here](runtime-recommendation.html).
+  * Runtime scoring can be set with [```seldon-cli rec_alg```](seldon-cli.html#rec_alg).
 
 ## Microservices
 

@@ -4,7 +4,7 @@ title: Advanced Recommender Configuration
 ---
 
 # Advanced Recommender Configuration
-The basic configuration for providing recommendation is discused [here](http://docs.seldon.io/runtime-recommendation.html). However, Seldon allows much more complex scenarios to be configured which are discussed in the following sections:
+The basic configuration for providing recommendation is discused [here](runtime-recommendation.html). However, Seldon allows much more complex scenarios to be configured which are discussed in the following sections:
 
  * [Cascading algorithms](#cascading-algorithms) : try and/or combine several recommendation algorithms in 1 API call
  * [Multivariate testing](#multivariate-tests) : start and stop A/B tests or multivariate tests
@@ -15,34 +15,38 @@ Not all recommender algorithms may be applicable to all users. For example a mat
 
 {% highlight json %}
 {
-  "algorithms":
-  [
-   {"name":"mfRecommender","filters":[],"includers":[],"config":[]},
-   {"name":"globalClusterCountsRecommender","filters":[],"includers":[],"config":[]}
-  ],
-  "combiner":"firstSuccessfulCombiner"
-  }
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                "config": [],
+                "filters": [],
+                "includers": [],
+                "name": "mfRecommender"
+            },
+            {
+                "config": [],
+                "filters": [],
+                "includers": [],
+                "name": "recentItemsRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner"
+    },
+    "recTagToStrategy": {}
+}
 {% endhighlight %}
 
-In the above example, we will try the mfRecommender and if that fails to return recommendations we will try a recommender that returns global most popular items from the cluster algorithm.
+In the above example, we will try the mfRecommender and if that fails to return recommendations we will return recent items.
 
 Another scenario is that you may wish to combine the results of several recommenders. This can be accomplished by changing the ***combiner*** to one of the following choices:
 
  * rankSumCombiner : combine multiple recommendations using the rank of each item returned in each recommenders list of recommendations. The number of algorithms combined defaults to two but can be configured with the config option combiner.maxResultSets
  * scoreOrderCombiner : combine multipe recommendations using the scores returned from each item in each individual recommender.
 
+You can apply the A/B test configuration to a client using the [seldon-cli](seldon-cli.html#rec_alg).
+
 ## Multi Variant Tests<a name="multivariate-tests"></a>
-It is common practice when testing algorithms in live environments to run A/B tests to evaluate the success of different strategies. A test can be defined in zookeeper by setting the path 
-
-{% highlight bash %}
-/all_clients/<clientname>/alg_test
-{% endhighlight %}
-
-For example, for a client "acme":
-
-{% highlight bash %}
-/all_clients/acme/alg_test
-{% endhighlight %}
+It is common practice when testing algorithms in live environments to run A/B tests to evaluate the success of different strategies. 
 
 The configuration should provide the algorithm settings for each variant. This includes:
   
@@ -54,24 +58,33 @@ A template for an A/B test is shown below, with the algorithm sections missing:
 
 {% highlight json %}
 {
-    "variations": [
-        {
-            "config": {
+    "defaultStrategy": {
+        "variations": [
+            {
+                "config": {
+                    "algorithms": [],
+                    "combiner": "firstSuccessfulCombiner",
+                    "diversityLevel": 3
+                },
+                "label": "A",
+                "ratio": 0.5
             },
-            "label": "A",
-            "ratio": 0.5
-        },
-        {
-            "config": {
-            },
-            "label": "B",
-            "ratio": 0.5
-        }
-    ]
+            {
+                "config": {
+                    "algorithms": [],
+                    "combiner": "firstSuccessfulCombiner",
+                    "diversityLevel": 3
+                },
+                "label": "B",
+                "ratio": 0.5
+            }
+        ]
+    },
+    "recTagToStrategy": {}
 }
 {% endhighlight %}
 
-To switch on the test you set the zookeeper path ```/all_clients/<client_name>/alg_test_switch``` to contain the value ```true```. Similarly to stop a test you set this zookeeper node to contain ```false```.
+You can apply the A/B test configuration to a client using the [seldon-cli](seldon-cli.html#rec_alg).
 
 Multivariate tests can be set up in the same manner by simply extending the number of variations and changing the ratios as appropriate. The results of impressions and clicks will appear in the ctr-alg.log in the Seldon log folder. Seldon's codebase contains Spark algorithms to process these logs once they have been pushed to a central location by fluentd and produce CTR analytics.
 
@@ -85,19 +98,14 @@ There are many situations where you want to control the algorithms run via the A
 These cases can be handled by passing a recommendation tag in the API call. The added parameter is ```recTag``` and it should contain a string keyword. This tag is matched against the configuration for a client and the apporpriate set of algorithms is run. If no match is found then a default set of algorihtms is run. An example configuration for this is shown in outline below:
 
 {% highlight json %}
-
 {
-    "defaultStrategy": {
-    },
+    "defaultStrategy": {},
     "recTagToStrategy": {
-        "insection": {	
-	}
-        "mobile": {
-	}
-        "sitewide": {
-        }
+        "category": {},
+        "mobile": {},
+        "sitewide": {}
     }
-}
+}    
 {% endhighlight %}
 
 In this example there is a default strategy in case a rec tag is not found and 3 other strategies, one for "mobile", one for "sitewide" and one for "insection". The config (not shown) within each of these can be an algorithms configuration or a test variant. This means quite complex configurations can be created. For example, a baseline and normal test running for in-section and sitewide recommendations but a fixed set of algorithms always for mobile. To expand this example out some more this would look like:
@@ -147,6 +155,6 @@ In this example there is a default strategy in case a rec tag is not found and 3
 
 In the above example we have baseline algorithms running for 5% of the traffic for sitewide and insection recommendations while 95% of the traffic for these recommandation tags gets the "normal" recommendations. For mobile there is a fixed set of algorithms. 
 
-
+You can apply the configuration to a client using the [seldon-cli](seldon-cli.html#rec_alg).
 
 

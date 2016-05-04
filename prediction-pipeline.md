@@ -3,7 +3,7 @@ layout: default
 title: Predictive Pipelines
 ---
 
-# Predictive Pipelines 
+# Predictive Pipelines in Python
 Feature extraction pipelines allow you to define a repeatable process to transform a set of input features before you build a machine learning model on a final set of features. When the resulting model is put into production the feature pipeline will need to be rerun on each input feature set before being passed to the model for scoring.
 
 Seldon feature pipelines are presently available in python. We plan to provide Spark based pipelines in the future.
