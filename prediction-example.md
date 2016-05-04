@@ -85,7 +85,7 @@ The respone should be like:
 
 # **Detailed Steps**<a name="detailed-steps"></a>
 
-The models for the Iris dataset are created using out pyseldon library to wrap calls to XGBoost and use Pandas along with a transoform to normalise the features. The XGBoost version is shown below:
+The models for the Iris dataset are created using our [pyseldon](python-package.html) library to wrap calls to XGBoost and use Pandas along with a feature transform to normalise the features. The XGBoost version is shown below:
 
 {% highlight python %}
 import sys, getopt, argparse
