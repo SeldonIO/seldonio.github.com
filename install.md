@@ -24,7 +24,7 @@ git clone https://github.com/seldonio/seldon-server
 
 # Create a Kubernetes Cluster<a name="install-kubernetes"></a>
 
-Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud.
+Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud. We support kubernetes >= 1.2.
 
    * Add kubectl to your shell PATH environment variable.
 
@@ -115,5 +115,8 @@ ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAcco
 
 Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
 
+ * ***Pods are going into CrashLoopBackoff***
+
+Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
 
 
