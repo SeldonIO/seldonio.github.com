@@ -21,15 +21,22 @@ You can install the python modules in three ways:
 A Docker image contains the python modules and all dependencies needed. 
 
 {% highlight bash %}
-   docker pull seldonio/pyseldon:1.11
+   docker pull seldonio/pyseldon:1.17
 {% endhighlight %}
 
-## Local build software
+## Local build software<a name="local-build"></a>
 
- * There are dependencies for local software for the python/pip install to run successfully as well as dependencies for the libraries such as vowpal wabbit. For debian based systems these would be satisfied with:
+There are dependencies for local software for the python/pip install to run successfully as well as dependencies for the libraries such as vowpal wabbit. For debian based systems these would be satisfied with:
+
 {% highlight bash %}
 apt-get update
 apt-get install build-essential automake autoconf libxmu-dev g++ gcc libpthread-stubs0-dev libtool libboost-program-options-dev libboost-python-dev zlib1g-dev libc6 libgcc1 libstdc++6 libblas-dev liblapack-dev git telnet procps memcached libmemcached-dev
+{% endhighlight %}
+
+For OSX you will need at least:
+
+{% highlight bash %}
+brew install libmemcached mysql
 {% endhighlight %}
 
 
@@ -37,15 +44,17 @@ apt-get install build-essential automake autoconf libxmu-dev g++ gcc libpthread-
 
 Two custom libraries are needed - a Seldon fork of wabbit_wappa and BayesianOptimization if you wish to optimize hyper parameters in pipeline estimators.
 
- 1. check you have the local software needed as given above
- 1. ```pip install -e git+git://github.com/SeldonIO/wabbit_wappa#egg=wabbit-wappa-3.0.2```
- 1. ```pip install -e git+git://github.com/fmfn/BayesianOptimization#egg=bayes_opt```
- 1. ```pip install seldon```
+ * **Check you have the local software needed as given [above](#local-build)**
+ * We suggest you install [Anaconda](http://continuum.io/downloads) which will provide many of the [dependencies](#dependencies) needed.
+ * ```pip install -e git+git://github.com/SeldonIO/wabbit_wappa#egg=wabbit-wappa-3.0.2```
+ * ```pip install -e git+git://github.com/fmfn/BayesianOptimization#egg=bayes_opt```
+ * ```pip install seldon```
 
 
 ## Python install<a name="python-setup"></a>
 
- * check you have the local software needed as given above
+ * **Check you have the local software needed as given [above](#local-build)**
+ * We suggest you install [Anaconda](http://continuum.io/downloads) which will provide many of the [dependencies](#dependencies) needed.
  * If you want to use the module bayes_opt then 
     {% highlight bash %}
       pip install -e git+git://github.com/fmfn/BayesianOptimization#egg=bayes_opt
@@ -55,7 +64,7 @@ Two custom libraries are needed - a Seldon fork of wabbit_wappa and BayesianOpti
  python setup.py install
 {% endhighlight %}
 
-### Module Dependencies
+### Module Dependencies<a name="dependencies"></a>
 
 The core module dependencies are:
 
