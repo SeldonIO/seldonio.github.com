@@ -17,7 +17,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.3.1
+git clone https://github.com/seldonio/seldon-server -b v1.3.2
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -71,8 +71,9 @@ By default the Seldon API server endpoint is set to a Kubernetes NodePort at por
 # Launch Seldon<a name="launch"></a>
 Scripts ```seldon-up.sh``` and ```seldon-down.sh``` in ```kubernetes/bin``` start and stop Seldon and should be in your PATH.
 
+***Seldon with Spark running and the Spark streaming jobs to process real-time analytics of the API requires the Spark workers to have access to at least 8 virtual cores. If you run Seldon on a restricted kubernetes cluster you may wish to skip the analytics, see below.***
 
-To launch seldon run
+To launch seldon with all components run
 {% highlight bash %}
 seldon-up.sh
 {% endhighlight %}
@@ -80,6 +81,11 @@ seldon-up.sh
 To start with GlusterFS run 
 {% highlight bash %}
 SELDON_WITH_GLUSTERFS=true seldon-up.sh
+{% endhighlight %}
+
+To start without Spark streaming analytics run
+{% highlight bash %}
+SELDON_WITH_ANALYTICS=false seldon-up.sh
 {% endhighlight %}
 
 To shutdown seldon run
@@ -119,4 +125,9 @@ Check you have enough memory. At least 4G is needed to run everything locally on
 
 Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
 
+ * ***Spark job are not starting due to lack of resources***
 
+Seldon with Spark running and the Spark streaming jobs to process real-time analytics of the API requires the Spark workers to have access to at least 8 virtual cores. If you run Seldon on a restricted kubernetes cluster you may wish to skip the analytics by starting Seldon with:
+{% highlight bash %}
+SELDON_WITH_ANALYTICS=false seldon-up.sh
+{% endhighlight %}
