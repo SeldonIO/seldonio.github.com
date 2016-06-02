@@ -15,12 +15,16 @@ The dahsboards currently show:
    * Overal Impression and Click count along with CTR
    * Impressions and Clicks by rectag and variation. 
    * CTR by rectag and variation. You would use this to monitor running A/B tests.
+ * Predcition Stats
+   * Counts for each predicted class
 
 An example dashboard is show below:
 
 ![Seldon Analytics Dashboard](/img/grafana.png)
 
-We will extend the dashboard with more analytics to include the predictive endpoints in the coming releases.
+An example dashboard showing prediction stats for the Iris demo running is show below:
+
+![Preditive Stats](/img/grafana-prediction.png)
 
 ## Internals
 
