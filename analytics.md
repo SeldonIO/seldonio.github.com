@@ -7,15 +7,15 @@ title: Analytics
 
 Seldon provides a Grafana dashboard for each client showing real-time analytics. Depending on how you created the seldon kubermetes conf this will be exposed as a NodePort (port 30002) on the cluster or as a LoadBalancer.
 
-The dahsboards currently show:
+The dashboards currently show:
 
  * API Request Time by REST endpoint
  * API Request count by REST endpoint
  * Content Recommendation Stats
-   * Overal Impression and Click count along with CTR
+   * Overall Impression and Click count along with CTR
    * Impressions and Clicks by rectag and variation. 
    * CTR by rectag and variation. You would use this to monitor running A/B tests.
- * Predcition Stats
+ * Prediction Stats
    * Counts for each predicted class
 
 An example dashboard is show below:
@@ -24,7 +24,7 @@ An example dashboard is show below:
 
 An example dashboard showing prediction stats for the Iris demo running is show below:
 
-![Preditive Stats](/img/grafana-prediction.png)
+![Predictive Stats](/img/grafana-prediction.png)
 
 ## Internals
 
