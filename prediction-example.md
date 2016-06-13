@@ -3,7 +3,7 @@ layout: default
 title: Prediction Example
 ---
 
-# Creating a Prediction Service
+# Iris Classification
 
 This example will take you through creating a simple prediction service to serve predictions for the [Iris dataset](http://archive.ics.uci.edu/ml/datasets/Iris). The predictive service will be deployed as a microservice inside Kubernetes allowing roll-back/up for scalable maintenance. It will be accessed via the Seldon server allowing you to run multiple algorithms and manage predictive services for many clients.
 

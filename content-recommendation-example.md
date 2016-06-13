@@ -3,7 +3,7 @@ layout: default
 title: Recomendation Example
 ---
 
-# Creating a Recommendation Service
+# Reuters Newswire Recommendation
 
 This example will take you through creating a simple recommendation service for the the [Reuters-21578](http://www.daviddlewis.com/resources/testcollections/reuters21578/) newswire dataset. It will create a simple static document similarity algorithm run as a microservice through the Seldon API server.
 
