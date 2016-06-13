@@ -97,36 +97,38 @@ You can view iago stats on its UI. A loadbalancer would have been created. The u
 http://<iago-ui-loadbalncer>:9994/graph/?g=metric:client/request_latency_ms
 {% endhighlight %}
 
-After some peaks at the start the 75% percentile settles down to below 100ms, 90% percentile to below 250ms, and the 95% to below 500ms.
+After some peaks at the start the 95% percentile settles down to around 100ms.
 
 ![loadtest 95% percentile](/img/ml10m-loadtest-1.png)
 
-Looking at the 99% percentile shows there are some outliers which would suggest further optimization and increased infrastructure size would be necessary to get this within acceptable limits.
+Looking at the 99% percentile shows there are some outliers which would suggest further optimization and increased infrastructure size would be necessary to further decrease these spikes.
 
 ![loadtest 99% percentile](/img/ml10m-loadtest-2.png)
+
+You can also view analytics on the Seldon Grafana dashboard which should be exposed as a LoadBalancer on AWS. You will need to find the hostname at which point you can go to the url:
+{% highlight bash %}
+http://<grafana-ui-loadbalancer>/dashboard/db/ml10m
+{% endhighlight %}
+
+An example display of the dashboard from during the loadtest is shown below:
+
+![Grafana ml10m dashboard](/img/ml10m-loadtest-3.png)
+
 
 ## Further Optimization
 For this benchmark item-similarity is mainly using the Mysql DB to get the similarities created from the Spark modelling job so further optimization should focus on Mysql read optimization and the front end servers cpu and memory. In general to get further decreases in latency and to handle higher loads the further optimizations shown below could be investigated:
  
+ * Provide dedicated Kubernetes nodes for key parts of the infrastructure to guarantee more consistent performance.
  * Increase AWS instance sizes to provide more CPU and memory.
  * Increase the number and memory settings for the Seldon API servers. 
    * The seldon-server docker image can be rebuilt with changed Apache Tomcat settings. The Tomcat settings are in ```seldon-server/docker/seldon-server/scripts/start-server.sh```. 
-   * The resource request for the server Pod can be changed in ```seldon-server/kubernetes/conf/Makefile```:
-{% highlight bash %}
-   SELDON_SERVER_RESOURCES="requests":{ "memory" : "3Gi" }
-{% endhighlight %}
+   * The resource request for the server Pod can be changed in ```seldon-server/kubernetes/conf/Makefile```: Change SELDON_SERVER_RESOURCES
  * Increase the Mysql memory and optimize Innodb settings.
    * The mysql docker container is in ```seldon-server/docker/mysql```. The my.cnf file can be modified and the image rebuilt for your own use case.
-   * The Kubernetes conf Makefile ```seldon-server/kubernetes/conf/Makefile``` has resource setting for mysql which can be increased, change:
-{% highlight bash %}
-   MYSQL_RESOURCES="requests":{ "memory" : "5Gi" }
-{% endhighlight %}
+   * The Kubernetes conf Makefile ```seldon-server/kubernetes/conf/Makefile``` has resource setting for mysql which can be increased, change: MYSQL_RESOURCES
  * Run Mysql on SSD disks.
  * Run Mysql with replication to spread database load over several read replicas.
- * Increase Memcache size and CPU. Change the memcache.json.in file in ```seldon-server/kubernetes/conf/``` and modify ```seldon-server/kubernetes/conf/Makefile``` by changing the resource request:
-{% highlight bash %}
-   MEMCACHE_RESOURCES="requests":{ "memory" : "550Mi" }
-{% endhighlight %}
+ * Increase Memcache size and CPU. Change the memcache.json.in file in ```seldon-server/kubernetes/conf/``` and modify ```seldon-server/kubernetes/conf/Makefile``` by change : MEMCACHE_RESOURCES
 
 
 
