@@ -65,14 +65,15 @@ This guide will go through detailed steps to show how a Seldon setup can be benc
    cd seldon-server/docker/iago
    ./create_recommendation_replay.sh ml10m /seldon-data/loadtests/example.ml10m.replay.txt 10000 50000
 {% endhighlight %}
-* Upload to Kubernetes master, mount glusterfs and place in /seldon-data/loadtest, the steps are illustrated below:
+* Upload to Kubernetes master, mount glusterfs and place in /seldon-data/loadtest, the steps are illustrated below, you would need to change for your use:
 {% highlight bash %}
    ssh <kubernetes master>
    apt-get install glusterfs-client
    mkdir /mnt/glusterfs
    mount.glusterfs 192.168.0.149:/gv0 /mnt/glusterfs
-   sftp <replay-file> /mnt/glusterfs/loadtest
 {% endhighlight %}
+  Then sftp the replay file to /mnt/glusterfs/loadtest on the master node so it can be found by iago.
+
   * Uncordon the iago node so we can start the iago loadtest service in it.
 {% highlight bash %}
    kubectl uncordon ip-172-20-0-71.eu-west-1.compute.internal
