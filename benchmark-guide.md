@@ -15,7 +15,7 @@ This guide will go through detailed steps to show how a Seldon setup can be benc
 ## Create Kubernetes cluster on AWS
 
  * [Create a GlusterFS cluster in an AWS VPC](glusterfs.html).
- * [Create a Kubernetes AWS cluster](http://kubernetes.io/docs/getting-started-guides/aws/). The configuration used is shown below. You will need to change as appropriate with desired key, secret, region and bucket name.
+ * [Create a Kubernetes AWS cluster](http://kubernetes.io/docs/getting-started-guides/aws/). The configuration used is shown below. You will need to change as appropriate with desired key, secret, region and bucket name. We will create a cluster of 4 nodes, so that 1 can be used exclusively for the load tester and the other 3 for Seldon.
 {% highlight bash %}
    export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY>
    export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_KEY>
@@ -30,7 +30,7 @@ This guide will go through detailed steps to show how a Seldon setup can be benc
    export KUBERNETES_PROVIDER=aws
 {% endhighlight %}
  * Update Seldon Kubernetes configuration
-    * Update ```seldon-server/kubernetes/conf/Makefile```, setting the glusterfs ip addresses as appropriate for your glusterfs configuration.
+    * Update ```seldon-server/kubernetes/conf/Makefile```, setting the glusterfs ip addresses as appropriate for your glusterfs configuration. Also, change the SELDON_SERVICE_TYPE to LoadBalancer.
 {% highlight bash %}
    DATA_VOLUME="glusterfs": {"endpoints": "glusterfs-cluster","path": "gv0","readOnly": false}
    SELDON_SERVICE_TYPE=LoadBalancer
