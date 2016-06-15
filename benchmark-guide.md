@@ -60,7 +60,7 @@ This guide will go through detailed steps to show how a Seldon setup can be benc
    [Run the Movielens 10 Million training and check the API is providing recommendations](ml10m.html).
 
 ## Run Iago Load Test 
-  * Create iago replay script. Details of the the scripts available to create iago replay scripts are described [here](iago.html). In ths case we will create a replay script using 10,000 random users with 50,000 recommendation (and action) API calls using seldon-server as the endpoint.
+  * Create iago replay script. Details of the the scripts available to create iago replay scripts are described [here](iago.html). In ths case we will create a replay script using 10,000 random users with 50,000 recommendation (and action) API calls.
 {% highlight bash %}
    cd seldon-server/docker/iago
    ./create_recommendation_replay.sh ml10m /seldon-data/loadtests/example.ml10m.replay.txt 10000 50000
