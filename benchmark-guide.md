@@ -122,10 +122,10 @@ For this benchmark item-similarity is mainly using the Mysql DB to get the simil
  * Provide dedicated Kubernetes nodes for key parts of the infrastructure to guarantee more consistent performance.
  * Increase AWS instance sizes to provide more CPU and memory.
  * Increase the number and memory settings for the Seldon API servers. 
-   * The seldon-server docker image can be rebuilt with changed Apache Tomcat settings. The Tomcat settings are in ```seldon-server/docker/seldon-server/scripts/start-server.sh```. 
+   * The seldon-server Tomcat startup runs the script in ```/seldon-data/server/settings.sh``` where default settings for Apache Tomcat can be overriden. In particular ```XMX_MEMORY```
    * The resource request for the server Pod can be changed in ```seldon-server/kubernetes/conf/Makefile```: Change SELDON_SERVER_RESOURCES
  * Increase the Mysql memory and optimize Innodb settings.
-   * The mysql docker container is in ```seldon-server/docker/mysql```. The my.cnf file can be modified and the image rebuilt for your own use case.
+   * The mysql startup includes ```/seldon-data/mysql/seldon.cnf``` which can be modified for your particular use case.
    * The Kubernetes conf Makefile ```seldon-server/kubernetes/conf/Makefile``` has resource setting for mysql which can be increased, change: MYSQL_RESOURCES
  * Run Mysql on SSD disks.
  * Run Mysql with replication to spread database load over several read replicas.
