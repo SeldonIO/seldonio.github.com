@@ -17,7 +17,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.3.4
+git clone https://github.com/seldonio/seldon-server -b v1.3.5
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -28,7 +28,7 @@ Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to f
 
    * Add kubectl to your shell PATH environment variable.
 
-If you are testing Seldon on a single machine you will need at least 4G of memory for your Kubernetes cluster.
+If you are testing Seldon on a single machine you will need at least 6G of memory for your Kubernetes cluster. For single machine exploration we suggest using [minikube](https://github.com/kubernetes/minikube). 
 
 # Create Kubernetes Configuration<a name="configure"></a>
 
@@ -59,7 +59,7 @@ GlusterFS works well for a production setting. For this you will need to have se
 {% endhighlight %}
 
 ## Seldon API Endpoint<a name="endpoint"></a>
-By default the Seldon API server endpoint is set to a Kubernetes NodePort at port 30000. If you run in the cloud you can change this to LoadBalancer, e.g.
+By default the Seldon API server endpoint is set to a Kubernetes NodePort at port 30015. If you run in the cloud you can change this to LoadBalancer, e.g.
 
 {% highlight bash %}
  cd kubernetes/conf
@@ -112,9 +112,13 @@ ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAcco
 
  * ***Testing on a single node or laptop things are running very slowly.***
 
-Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
+Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
+
+
+If you are using a Vagrant VM to run your kubernetes cluster ensure it has 6G of memory available from the host machine.
 
  * ***Pods are going into CrashLoopBackoff***
 
-Check you have enough memory. At least 4G is needed to run everything locally on a single node. If you are using a Vagrant VM to run your kubernetes cluster ensure it has 4G of memory available from the host machine.
+Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
+
 
