@@ -63,7 +63,7 @@ This guide will go through detailed steps to show how a Seldon setup can be benc
   * Create iago replay script. Details of the the scripts available to create iago replay scripts are described [here](iago.html). In ths case we will create a replay script using 10,000 random users with 50,000 recommendation (and action) API calls.
 {% highlight bash %}
    cd seldon-server/docker/iago
-   ./create_recommendation_replay.sh ml10m /seldon-data/loadtests/example.ml10m.replay.txt 10000 50000
+   ./create_recommendation_replay.sh ml10m example.ml10m.replay.txt 10000 50000
 {% endhighlight %}
 * Upload to Kubernetes master, mount glusterfs and place in /seldon-data/loadtest, the steps are illustrated below, you would need to change for your use:
 {% highlight bash %}
