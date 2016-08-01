@@ -17,7 +17,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.3.7
+git clone https://github.com/seldonio/seldon-server -b v1.3.8
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -120,5 +120,9 @@ If you are using a Vagrant VM to run your kubernetes cluster ensure it has 6G of
  * ***Pods are going into CrashLoopBackoff***
 
 Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
+
+ * ***Its taking a long time to start after running seldon-up.sh for the first time***
+
+The first time you run seldon-up.sh it will need to pull all the container images from Docker Hub. This may take some time on a slow internet connection.
 
 
