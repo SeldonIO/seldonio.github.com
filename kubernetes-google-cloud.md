@@ -3,7 +3,7 @@ layout: default
 title: Kubernetes on Google Cloud
 ---
 
-# Installing a Kubernetes Cluster on Google Cloud
+# Creating a Kubernetes Cluster on Google Cloud
 
 First of all you need to create a google account, then sign in to Google Cloud Platform Console ([console.cloud.google.com](http://console.cloud.google.com/)).
 
