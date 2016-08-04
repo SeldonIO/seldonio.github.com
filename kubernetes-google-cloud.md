@@ -1,3 +1,8 @@
+---
+layout: default
+title: Kubernetes on Google Cloud
+---
+
 # Kubernetes on Google Cloud
 
 
@@ -35,6 +40,13 @@ Configure kubectl to use the cluster you just created by running:
 ```shell
 gcloud container clusters get-credentials seldon-server-cluster
 ```
+
+
+## Installing Seldon on your Cluster
+
+At this point the process is identical to the [regular seldon installation](http://docs.seldon.io/install.html).
+kubectl is now linked to your cluster on google cloud so all commands can be used as usual.
+
 
 ## Deleting a cluster
 
