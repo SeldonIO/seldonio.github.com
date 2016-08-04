@@ -30,6 +30,8 @@ Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to f
 
 If you are testing Seldon on a single machine you will need at least 6G of memory for your Kubernetes cluster. For single machine exploration we suggest using [minikube](https://github.com/kubernetes/minikube). 
 
+To create a Kubernetes cluster on Google Cloud you can follow our [guidelines](http://docs.seldon.io/kubernetes-google-cloud.html).
+
 # Create Kubernetes Configuration<a name="configure"></a>
 
 Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you have to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf``` You will need to configure:
