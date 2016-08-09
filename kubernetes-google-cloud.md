@@ -30,7 +30,7 @@ gcloud components install kubectl
 
 Go to the developers console. On the left hand side menu select Container Engine.
 
-Click on New Container Cluster. Set the name to seldon-server-cluster. Select a cluster size of 1 and a Machine type 4 vCPU with 15GB of memory.
+Click on New Container Cluster. Set the name to seldon-server-cluster. Select a cluster size of 1 and a Machine type 4 vCPU with 15GB of memory (this is purely for testing but you can use the size of cluster that fits your needs).
 
 Configure kubectl to use the cluster you just created by running:
 
