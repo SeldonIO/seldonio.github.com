@@ -271,10 +271,15 @@ seldon-cli attr --action show --client-name testclient
 seldon-cli attr --action apply --client-name testclient
 {% endhighlight %}
 
+{% highlight bash %}
+# After applying attributes - view dimensions using the following command.
+seldon-cli attr --action dimensions --client-name testclient
+{% endhighlight %}
+
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli attr [-h] [--action {edit,show,apply}]
+usage: seldon-cli attr [-h] [--action {edit,show,apply,dimensions}]
                        [--client-name CLIENT_NAME] [--json JSON]
                        ...
 
@@ -285,7 +290,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {edit,show,apply}
+  --action {edit,show,apply,dimensions}
                         the action to use
   --client-name CLIENT_NAME
                         the name of the client
