@@ -159,16 +159,16 @@ The script:
 The model creation in create_model.py  uses the pyseldon package to build a sklearn pipeline as show below:
 
 {% highlight python %}
-        tTfidf = ptfidf.Tfidf_transform(input_feature="review",output_feature="tfidf",target_feature="sentiment",min_df=10,max_df=0.7,select_features=False,topn_features=50000,stop_words="english",ngram_range=[1,2])
+        tTfidf = ptfidf.TfidfTransform(input_feature="review",output_feature="tfidf",target_feature="sentiment",min_df=10,max_df=0.7,select_features=False,topn_features=50000,stop_words="english",ngram_range=[1,2])
 
 
-        tFilter2 = bt.Include_features_transform(included=["tfidf","sentiment"])
+        tFilter2 = bt.IncludeFeaturesTransform(included=["tfidf","sentiment"])
 
-        svmTransform = bt.Svmlight_transform(output_feature="svmfeatures",excluded=["sentiment"],zero_based=False)
+        svmTransform = bt.SvmlightTransform(output_feature="svmfeatures",excluded=["sentiment"],zero_based=False)
 
         classifier_xg = xg.XGBoostClassifier(target="sentiment",svmlight_feature="svmfeatures",silent=1,max_depth=5,n_estimators=200,objective='binary:logistic',scale_pos_weight=0.2)
 
-        cv = cf.Seldon_KFold(classifier_xg,metric='auc',save_folds_folder="./folds")
+        cv = cf.SeldonKFold(classifier_xg,metric='auc',save_folds_folder="./folds")
     
         transformers = [("tTfidf",tTfidf),("tFilter2",tFilter2),("svmTransform",svmTransform),("cv",cv)]
 

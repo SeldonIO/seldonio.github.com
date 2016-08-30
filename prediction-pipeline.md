@@ -9,22 +9,22 @@ Feature extraction pipelines allow you to define a repeatable process to transfo
 Seldon feature pipelines are presently available in python. We plan to provide Spark based pipelines in the future.
 
 ## Python modules
-Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon. We use [scikit-learn](http://scikit-learn.org/stable/) pipelines and [Pandas](http://pandas.pydata.org/). For feature extraction and transformation we provide a starter set of python scikit-learn Tranformers that take Pandas dataframes as input apply some transformations and output Pandas dataframes. There is also the ability to use any existing [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) on Pandas dataframes with [sklearn_transform](python/seldon.pipeline.html#module-seldon.pipeline.sklearn_transform).
+Seldon provides a set of [python modules](python-package.html) to help construct feature pipelines for use inside Seldon. We use [scikit-learn](http://scikit-learn.org/stable/) pipelines and [Pandas](http://pandas.pydata.org/). For feature extraction and transformation we provide a starter set of python scikit-learn Tranformers that take Pandas dataframes as input apply some transformations and output Pandas dataframes. There is also the ability to use any existing [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) on Pandas dataframes with [SklearnTransform](python/seldon.pipeline.html#module-seldon.pipeline.SklearnTransform).
 
 Installation instructions can be found [here](python-package.html).
 
 The currently available example transforms are:
 
- * [Include_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Include_features_transform) : include a subset of features
- * [Exclude_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Exclude_features_transform) : exclude some subset of features
- * [Binary_transform](python/modules/seldon/pipeline/basic_transforms.html#Binary_transform) : create a binary feature based on existence of a feature
- * [Split_transform](python/modules/seldon/pipeline/basic_transforms.html#Split_transform) : split a series of textual features into tokens
- * [Exist_features_transform](python/modules/seldon/pipeline/basic_transforms.html#Exist_features_transform) : filter data to only those containing a set of features
- * [Svmlight_transform](python/modules/seldon/pipeline/basic_transforms.html#Svmlight_transform) : create a feature that contains SVMLight numeric features from some input set of features
- * [Feature_id_transform](python/modules/seldon/pipeline/basic_transforms.html#Feature_id_transform) : create an id feature from some input feature
- * [Tfidf_transform](python/seldon.pipeline.html#module-seldon.pipeline.tfidf_transform) : create TFIDF features from an input feature
- * [Auto_transform](python/seldon.pipeline.html#module-seldon.pipeline.auto_transforms) : attempt to automatically normalize and create numeric, categorical and date features
- * [sklearn_transform](python/seldon.pipeline.html#module-seldon.pipeline.sklearn_transform) : apply a [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) to a Pandas Dataframe
+ * [IncludeFeaturesTransform](python/modules/seldon/pipeline/basic_transforms.html#IncludeFeaturesTransform) : include a subset of features
+ * [ExcludeFeaturesTransform](python/modules/seldon/pipeline/basic_transforms.html#ExcludeFeaturesTransform) : exclude some subset of features
+ * [BinaryTransform](python/modules/seldon/pipeline/basic_transforms.html#BinaryTransform) : create a binary feature based on existence of a feature
+ * [SplitTransform](python/modules/seldon/pipeline/basic_transforms.html#SplitTransform) : split a series of textual features into tokens
+ * [ExistFeaturesTransform](python/modules/seldon/pipeline/basic_transforms.html#ExistFeaturesTransform) : filter data to only those containing a set of features
+ * [SvmlightTransform](python/modules/seldon/pipeline/basic_transforms.html#SvmlightTransform) : create a feature that contains SVMLight numeric features from some input set of features
+ * [FeatureIdTransform](python/modules/seldon/pipeline/basic_transforms.html#FeatureIdTransform) : create an id feature from some input feature
+ * [TfidfTransform](python/seldon.pipeline.html#module-seldon.pipeline.tfidf_transform) : create TFIDF features from an input feature
+ * [AutoTransform](python/seldon.pipeline.html#module-seldon.pipeline.auto_transforms) : attempt to automatically normalize and create numeric, categorical and date features
+ * [SklearnTransform](python/seldon.pipeline.html#module-seldon.pipeline.SklearnTransform) : apply a [sklearn Transformer](http://scikit-learn.org/stable/data_transforms.html) to a Pandas Dataframe
 
 ### Small Examples
 
@@ -38,7 +38,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 df = pd.DataFrame.from_dict([{"a":1.0,"b":2.0},{"a":2.0,"b":3.0}])
-t = ssk.sklearn_transform(input_features=["a"],output_features=["a_scaled"],transformer=StandardScaler())
+t = ssk.SklearnTransform(input_features=["a"],output_features=["a_scaled"],transformer=StandardScaler())
 t.fit(df)
 df_2 = t.transform(df)
 print df_2
@@ -60,7 +60,7 @@ import seldon.pipeline.auto_transforms as auto
 import pandas as pd
 
 df = pd.DataFrame([{"a":10,"b":1,"c":"cat"},{"a":5,"b":2,"c":"dog","d":"Nov 13 08:36:29 2015"},{"a":10,"b":3,"d":"Oct 13 10:50:12 2015"}])
-t = auto.Auto_transform(max_values_numeric_categorical=2,date_cols=["d"])
+t = auto.AutoTransform(max_values_numeric_categorical=2,date_cols=["d"])
 t.fit(df)
 df2 = t.transform(df)
 print df2
@@ -117,14 +117,14 @@ import sys
 
 def run_pipeline(events,models):
 
-    tNameId = bt.Feature_id_transform(min_size=0,exclude_missing=True,zero_based=True,input_feature="name",output_feature="nameId")
-    tAuto = pauto.Auto_transform(max_values_numeric_categorical=2,exclude=["nameId","name"])
+    tNameId = bt.FeatureIdTransform(min_size=0,exclude_missing=True,zero_based=True,input_feature="name",output_feature="nameId")
+    tAuto = pauto.AutoTransform(max_values_numeric_categorical=2,exclude=["nameId","name"])
     xgb = xg.XGBoostClassifier(target="nameId",target_readable="name",excluded=["name"],learning_rate=0.1,silent=0)
 
     transformers = [("tName",tNameId),("tAuto",tAuto),("xgb",xgb)]
     p = Pipeline(transformers)
 
-    pw = sutl.Pipeline_wrapper()
+    pw = sutl.PipelineWrapper()
     df = pw.create_dataframe(events)
     df2 = p.fit(df)
     pw.save_pipeline(p,models)
