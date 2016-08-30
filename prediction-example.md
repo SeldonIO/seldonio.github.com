@@ -57,7 +57,7 @@ You can now call the seldon server using the seldon CLI to test:
 seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
 {% endhighlight %}
 
-The respone should be like:
+The response should be like:
 {% highlight json %}
 {
   "size": 3,

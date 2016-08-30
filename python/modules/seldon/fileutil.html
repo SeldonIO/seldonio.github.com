@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.fileutil &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon" href="../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.fileutil</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.fileutil</h1><div class="highlight"><pre>
-<span class="n">__authour__</span> <span class="o">=</span> <span class="s">&#39;Clive Cox&#39;</span>
+<span></span><span class="n">__authour__</span> <span class="o">=</span> <span class="s1">&#39;Clive Cox&#39;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">zlib</span>
 <span class="kn">import</span> <span class="nn">boto</span>
@@ -142,19 +158,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span> <span class="o">=</span> <span class="n">aws_secret</span>
 
 
-    <span class="c">#</span>
-    <span class="c"># Streaming</span>
-    <span class="c">#</span>
+    <span class="c1">#</span>
+    <span class="c1"># Streaming</span>
+    <span class="c1">#</span>
 
 <div class="viewcode-block" id="FileUtil.stream_decompress"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream_decompress">[docs]</a>    <span class="k">def</span> <span class="nf">stream_decompress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">stream</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;decompress a stream</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dec</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">(</span><span class="mi">16</span><span class="o">+</span><span class="n">zlib</span><span class="o">.</span><span class="n">MAX_WBITS</span><span class="p">)</span>  <span class="c"># same as gzip module</span>
+        <span class="n">dec</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">(</span><span class="mi">16</span><span class="o">+</span><span class="n">zlib</span><span class="o">.</span><span class="n">MAX_WBITS</span><span class="p">)</span>  <span class="c1"># same as gzip module</span>
         <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
             <span class="n">rv</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">rv</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">rv</span>
-</div>
+                <span class="k">yield</span> <span class="n">rv</span></div>
+
 <div class="viewcode-block" id="FileUtil.stream_gzip"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream_gzip">[docs]</a>    <span class="k">def</span> <span class="nf">stream_gzip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;stream from gzip file and call function for each line</span>
 <span class="sd">        </span>
@@ -162,14 +178,14 @@
 <span class="sd">            k (file): input gziped file</span>
 <span class="sd">            fn (function): function to call for each line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">unfinished</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">unfinished</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_decompress</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">unfinished</span> <span class="o">+</span> <span class="n">data</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
             <span class="n">unfinished</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-                <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</div>
+                <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FileUtil.stream_other"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream_other">[docs]</a>    <span class="k">def</span> <span class="nf">stream_other</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;stream from local folders call a function</span>
 
@@ -178,14 +194,14 @@
 <span class="sd">            fn (function): function to call</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parsed_uri</span> <span class="o">=</span> <span class="n">smart_open</span><span class="o">.</span><span class="n">ParseUri</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">parsed_uri</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;file&quot;</span><span class="p">,</span> <span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span> <span class="c"># stream each file from directory</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&quot;/*&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">parsed_uri</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span> <span class="c1"># stream each file from directory</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;/*&quot;</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">smart_open</span><span class="o">.</span><span class="n">smart_open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
                     <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span> <span class="c">#let smart_open handle streaming of file from location </span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#let smart_open handle streaming of file from location </span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">smart_open</span><span class="o">.</span><span class="n">smart_open</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-                <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</div>
+                <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FileUtil.stream_s3"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream_s3">[docs]</a>    <span class="k">def</span> <span class="nf">stream_s3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">prefix</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;stream from an AWS S3 bucket all files under a prefix and call a function</span>
 
@@ -200,12 +216,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">boto</span><span class="o">.</span><span class="n">connect_s3</span><span class="p">()</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">get_bucket</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.gz&quot;</span><span class="p">):</span> <span class="c">#smart_open can&#39;t currently handle gzip on s3...</span>
+            <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.gz&quot;</span><span class="p">):</span> <span class="c1">#smart_open can&#39;t currently handle gzip on s3...</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">stream_gzip</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">smart_open</span><span class="o">.</span><span class="n">smart_open</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
-                    <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</div>
+                    <span class="n">fn</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FileUtil.stream_multi"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream_multi">[docs]</a>    <span class="k">def</span> <span class="nf">stream_multi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputPaths</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; stream multilple paths calling a function on each line</span>
 
@@ -214,8 +230,8 @@
 <span class="sd">            fn (function): function to call</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">inputPaths</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FileUtil.stream"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.stream">[docs]</a>    <span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputPath</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;stream from an inputpath calling function</span>
 
@@ -223,28 +239,28 @@
 <span class="sd">            inputPath (str): input path to stream from</span>
 <span class="sd">            fn (function): function to call</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3n://&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3n://&quot;</span><span class="p">):</span>
             <span class="n">isS3</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="n">inputPath</span> <span class="o">=</span> <span class="n">inputPath</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
             <span class="n">isS3</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="n">inputPath</span> <span class="o">=</span> <span class="n">inputPath</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">isS3</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">if</span> <span class="n">isS3</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;AWS S3 input path </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">inputPath</span><span class="p">)</span>
-            <span class="n">parts</span> <span class="o">=</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;AWS S3 input path </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">inputPath</span><span class="p">)</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">inputPath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
             <span class="n">bucket</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">prefix</span> <span class="o">=</span> <span class="n">inputPath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stream_s3</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span><span class="n">prefix</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stream_other</span><span class="p">(</span><span class="n">inputPath</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream_other</span><span class="p">(</span><span class="n">inputPath</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span></div>
 
 
-    <span class="c">#</span>
-    <span class="c"># Copying</span>
-    <span class="c">#</span>
-</div>
+    <span class="c1">#</span>
+    <span class="c1"># Copying</span>
+    <span class="c1">#</span>
+
 <div class="viewcode-block" id="FileUtil.copy_local"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.copy_local">[docs]</a>    <span class="k">def</span> <span class="nf">copy_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;copy local folders</span>
 
@@ -252,7 +268,7 @@
 <span class="sd">            fromPath (str): local from path to copy all files under</span>
 <span class="sd">            toPath (str): local destination folder (will be created if does not exist)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;copy </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;copy </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fromPath</span><span class="p">):</span>
             <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">toPath</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
@@ -261,13 +277,13 @@
         <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">fromPath</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">toPath</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">toPath</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">fromPath</span><span class="o">+</span><span class="s">&quot;/*&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">fromPath</span><span class="o">+</span><span class="s2">&quot;/*&quot;</span><span class="p">):</span>
                 <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-                <span class="n">fnew</span> <span class="o">=</span> <span class="n">toPath</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;copying </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
-                <span class="n">copyfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
+                <span class="n">fnew</span> <span class="o">=</span> <span class="n">toPath</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;copying </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
+                <span class="n">copyfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span></div>
 
-            </div>
+            
 <div class="viewcode-block" id="FileUtil.copy_s3_file"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.copy_s3_file">[docs]</a>    <span class="k">def</span> <span class="nf">copy_s3_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;copy from local file to S3 </span>
 
@@ -282,24 +298,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">boto</span><span class="o">.</span><span class="n">connect_s3</span><span class="p">()</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">get_bucket</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
         <span class="n">source_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">fromPath</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span>
-        <span class="c"># Create a multipart upload request</span>
+        <span class="c1"># Create a multipart upload request</span>
         <span class="n">uploadPath</span> <span class="o">=</span> <span class="n">path</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;uploading to bucket </span><span class="si">%s</span><span class="s"> path </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">uploadPath</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;uploading to bucket </span><span class="si">%s</span><span class="s2"> path </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">uploadPath</span><span class="p">)</span>
         <span class="n">mp</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">initiate_multipart_upload</span><span class="p">(</span><span class="n">uploadPath</span><span class="p">)</span>
         <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">10485760</span>
         <span class="n">chunk_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">source_size</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">)))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunk_count</span><span class="p">):</span>
             <span class="n">offset</span> <span class="o">=</span> <span class="n">chunk_size</span> <span class="o">*</span> <span class="n">i</span>
             <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">source_size</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">FileChunkIO</span><span class="p">(</span><span class="n">fromPath</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span><span class="nb">bytes</span><span class="o">=</span><span class="nb">bytes</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;uploading to s3 chunk </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">chunk_count</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">FileChunkIO</span><span class="p">(</span><span class="n">fromPath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span><span class="nb">bytes</span><span class="o">=</span><span class="nb">bytes</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;uploading to s3 chunk </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">chunk_count</span><span class="p">)</span>
                 <span class="n">mp</span><span class="o">.</span><span class="n">upload_part_from_file</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">part_num</span><span class="o">=</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="c"># Finish the upload</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;completing transfer to s3&quot;</span><span class="p">)</span>
-        <span class="n">mp</span><span class="o">.</span><span class="n">complete_upload</span><span class="p">()</span>
+        <span class="c1"># Finish the upload</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;completing transfer to s3&quot;</span><span class="p">)</span>
+        <span class="n">mp</span><span class="o">.</span><span class="n">complete_upload</span><span class="p">()</span></div>
 
     
-</div>
+
 <div class="viewcode-block" id="FileUtil.upload_s3"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.upload_s3">[docs]</a>    <span class="k">def</span> <span class="nf">upload_s3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;upload from local path to S3</span>
 
@@ -307,22 +323,22 @@
 <span class="sd">            fromPath (str): folder to copy from</span>
 <span class="sd">            toPath (str): S3 URL</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3n://&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3n://&quot;</span><span class="p">):</span>
             <span class="n">noSchemePath</span> <span class="o">=</span> <span class="n">toPath</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
             <span class="n">noSchemePath</span> <span class="o">=</span> <span class="n">toPath</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
-        <span class="n">parts</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
         <span class="n">bucket</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">opath</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fromPath</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">copy_s3_file</span><span class="p">(</span><span class="n">fromPath</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">opath</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">fromPath</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">fromPath</span><span class="o">+</span><span class="s">&quot;/*&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">fromPath</span><span class="o">+</span><span class="s2">&quot;/*&quot;</span><span class="p">):</span>
                 <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-                <span class="n">fnew</span> <span class="o">=</span> <span class="n">opath</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;copying </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">copy_s3_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
-</div>
+                <span class="n">fnew</span> <span class="o">=</span> <span class="n">opath</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;copying </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">copy_s3_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">bucket</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FileUtil.download_s3"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.download_s3">[docs]</a>    <span class="k">def</span> <span class="nf">download_s3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;download from S3 to local folder</span>
 
@@ -330,11 +346,11 @@
 <span class="sd">            fromPath (str): S3 URL</span>
 <span class="sd">            toPath (str): local folder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3n://&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3n://&quot;</span><span class="p">):</span>
             <span class="n">noSchemePath</span> <span class="o">=</span> <span class="n">fromPath</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
             <span class="n">noSchemePath</span> <span class="o">=</span> <span class="n">fromPath</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
-        <span class="n">parts</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
         <span class="n">bucket</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">s3path</span> <span class="o">=</span> <span class="n">noSchemePath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">:</span>
@@ -343,13 +359,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">boto</span><span class="o">.</span><span class="n">connect_s3</span><span class="p">()</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">get_bucket</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">s3path</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
                 <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                <span class="n">fnew</span> <span class="o">=</span> <span class="n">toPath</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;copying </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
-                <span class="n">k</span><span class="o">.</span><span class="n">get_contents_to_filename</span><span class="p">(</span><span class="n">fnew</span><span class="p">)</span>
+                <span class="n">fnew</span> <span class="o">=</span> <span class="n">toPath</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">basename</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;copying </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">k</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">fnew</span><span class="p">)</span>
+                <span class="n">k</span><span class="o">.</span><span class="n">get_contents_to_filename</span><span class="p">(</span><span class="n">fnew</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="FileUtil.copy"><a class="viewcode-back" href="../../seldon.html#seldon.fileutil.FileUtil.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;copy files. local-&gt;local, S3-&gt;local, local-&gt;S3 (S3-&gt;S3 not supported)</span>
 <span class="sd">        </span>
@@ -357,11 +373,11 @@
 <span class="sd">            fromPath (str): local or S3 URL</span>
 <span class="sd">            toPath (str): local or S3 URL</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3n://&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3n://&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">fromPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
             <span class="n">fromS3</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fromS3</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">if</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3n://&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3n://&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">toPath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
             <span class="n">toS3</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">toS3</span> <span class="o">=</span> <span class="bp">False</span>
@@ -373,14 +389,15 @@
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">toPath</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">download_s3</span><span class="p">(</span><span class="n">fromPath</span><span class="p">,</span><span class="n">toPath</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Local destination folder must exist :</span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">toPath</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Local destination folder must exist :</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">toPath</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;can&#39;t copy from s3 to s3&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;can&#39;t copy from s3 to s3&quot;</span><span class="p">)</span></div></div>
             
 
-        </div></div>
+        
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -390,12 +407,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

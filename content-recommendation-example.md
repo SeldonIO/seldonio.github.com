@@ -45,7 +45,7 @@ reuters-import-data   1         1            1m
 
 You can delete the job once its run with ```kubectl delete -f import-data-job.json```
 
-# Create Recommendaton Model<a name="model"></a>
+# Create Recommendation Model<a name="model"></a>
 For this simple example we will build a document similarity model to provide recommendations for newswire article given the current newswire article a user is reading. For this we will build a [gensim](https://radimrehurek.com/gensim/) document similarity model. The detailed steps to build the model can be followed in a [Jupyter notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/doc_similarity_reuters.ipynb). These have been packaged into a docker container ```seldonio/reuters-example```.
 
 In general, Seldon provides several content recommendation models in Spark as well as python based modules.

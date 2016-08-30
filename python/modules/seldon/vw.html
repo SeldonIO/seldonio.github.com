@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.vw &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon" href="../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.vw</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.vw</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">fileutil</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">wabbit_wappa</span> <span class="kn">import</span> <span class="o">*</span>
@@ -161,13 +177,13 @@
 <span class="sd">    vw_args : optional dict </span>
 <span class="sd">       extra args to pass to vw</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">raw_predictions_file</span><span class="o">=</span><span class="s">&quot;/tmp/raw_predictions&quot;</span><span class="p">,</span><span class="n">model_file</span><span class="o">=</span><span class="s">&quot;/tmp/model&quot;</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="s">&#39;/tmp/vw_pid_file&#39;</span><span class="p">,</span><span class="o">**</span><span class="n">vw_args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">raw_predictions_file</span><span class="o">=</span><span class="s2">&quot;/tmp/raw_predictions&quot;</span><span class="p">,</span><span class="n">model_file</span><span class="o">=</span><span class="s2">&quot;/tmp/model&quot;</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="s1">&#39;/tmp/vw_pid_file&#39;</span><span class="p">,</span><span class="o">**</span><span class="n">vw_args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">VWClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">target_readable</span><span class="p">,</span><span class="n">included</span><span class="p">,</span><span class="n">excluded</span><span class="p">,</span><span class="n">id_map</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="o">=</span><span class="s">&quot;/tmp/model&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">param_suffix</span><span class="o">=</span><span class="s">&quot;_params&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_suffix</span><span class="o">=</span><span class="s">&quot;_model&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="o">=</span><span class="s2">&quot;/tmp/model&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_suffix</span><span class="o">=</span><span class="s2">&quot;_params&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_suffix</span><span class="o">=</span><span class="s2">&quot;_model&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="o">=</span><span class="n">raw_predictions_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>         
@@ -178,18 +194,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="bp">False</span>
 
-<div class="viewcode-block" id="VWClassifier.__getstate__"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.__getstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove things that should not be pickled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;model_saved&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;vw&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;tailq&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;raw_predictions_thread_running&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;model_saved&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;vw&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;tailq&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;raw_predictions_thread_running&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span>
-</div>
-<div class="viewcode-block" id="VWClassifier.__setstate__"><a class="viewcode-back" href="../../seldon.html#seldon.vw.VWClassifier.__setstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add thread based variables when creating</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -198,15 +214,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>      
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_thread_running</span><span class="o">=</span><span class="bp">False</span>
-            </div>
+            
     <span class="k">def</span> <span class="nf">_wait_model_saved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fname</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hack to wait for vw model to finish saving. It creates a file &lt;model&gt;.writing during this process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;waiting for </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">fname</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;sleeping until model is saved&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sleeping until model is saved&quot;</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fname</span><span class="p">):</span>
@@ -214,15 +230,15 @@
 <span class="sd">        Save vw model from running vw instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_model_saved</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s">&quot;.writing&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_model_saved</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s2">&quot;.writing&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span> <span class="c1"># b is important -&gt; binary</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_write_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write the vw model to file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelfile</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelfile</span><span class="p">:</span> <span class="c1"># b is important -&gt; binary</span>
             <span class="n">modelfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="bp">True</span>
 
@@ -246,7 +262,7 @@
                     <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">val</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">val</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">return</span> <span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -257,7 +273,7 @@
         <span class="sd">&quot;&quot;&quot;Convert a dataframe row into a vw line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ns</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">ns</span><span class="p">[</span><span class="s">&quot;def&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ns</span><span class="p">[</span><span class="s2">&quot;def&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">:</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
@@ -265,7 +281,7 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">basestring</span><span class="p">):</span>
                     <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                        <span class="n">ns</span><span class="p">[</span><span class="s">&quot;def&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                        <span class="n">ns</span><span class="p">[</span><span class="s2">&quot;def&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
                         <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
@@ -275,7 +291,7 @@
                             <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
-                        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+                        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
                                 <span class="n">ns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -289,9 +305,9 @@
             <span class="n">target</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">namespaces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="o">==</span> <span class="s">&#39;def&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;def&#39;</span><span class="p">:</span>
                 <span class="n">namespaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Namespace</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">make_line</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">target</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="s">&#39;def&#39;</span><span class="p">],</span><span class="n">namespaces</span><span class="o">=</span><span class="n">namespaces</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">make_line</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">target</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">ns</span><span class="p">[</span><span class="s1">&#39;def&#39;</span><span class="p">],</span><span class="n">namespaces</span><span class="o">=</span><span class="n">namespaces</span><span class="p">)</span>
     
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -320,17 +336,17 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;terminating pid </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;terminating pid </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span> <span class="bp">None</span></div>
 
-</div>
+
     <span class="k">def</span> <span class="nf">_tail_forever</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Tail the raw predictions file so we can get class probabilities when doing predictions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&quot;tail&quot;</span><span class="p">,</span> <span class="s">&quot;-f&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;tail&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -341,11 +357,11 @@
         <span class="sd">&quot;&quot;&quot;Get the predictions from the vw raw predictions and normalise them</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rawLine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailq</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="n">parts</span> <span class="o">=</span> <span class="n">rawLine</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">rawLine</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="n">tagScores</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> 
         <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
-            <span class="p">(</span><span class="n">classId</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">classId</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
             <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sigmoid</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">score</span><span class="p">)))</span>
         <span class="n">nscores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
         <span class="n">fscores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -388,8 +404,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-            <span class="n">df_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">=</span><span class="s">&#39;y&#39;</span>
+            <span class="n">df_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
             <span class="n">df_base</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df_y</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">min_target</span> <span class="o">=</span> <span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
@@ -401,20 +417,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">create_class_id_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">target_readable</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_base</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
         <span class="n">df_vw</span> <span class="o">=</span> <span class="n">df_base</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_row</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">df_vw</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vw</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">parse_result</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">)</span>        
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
     <span class="k">def</span> <span class="nf">_start_vw_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw_mode</span> <span class="o">!=</span> <span class="n">mode</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Creating vw in mode </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating vw in mode </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">&quot;test&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_write_model</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vw</span> <span class="o">=</span>  <span class="n">VW</span><span class="p">(</span><span class="n">server_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">pid_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pid_file</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">29743</span><span class="p">,</span><span class="n">num_children</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_file</span><span class="p">,</span><span class="n">raw_predictions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_predictions_file</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -439,7 +455,7 @@
 <span class="sd">        Caveats : </span>
 <span class="sd">        1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https://github.com/JohnLangford/vowpal_wabb#it/issues/262</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_vw_if_needed</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">X</span>
             <span class="n">df_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exclude_include_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -460,6 +476,7 @@
         <span class="k">return</span> <span class="n">predictions</span></div></div>
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -469,12 +486,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

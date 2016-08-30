@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.cli.cli_main &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon.cli" href="../cli.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -108,20 +121,24 @@
     <li>seldon.cli.cli_main</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.cli.cli_main</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">kazoo.client</span> <span class="kn">import</span> <span class="n">KazooClient</span>
 <span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">cmd_memcached</span>
 <span class="kn">import</span> <span class="nn">cmd_db</span>
@@ -135,294 +152,296 @@
 <span class="kn">import</span> <span class="nn">cmd_api</span>
 
 <span class="n">gdata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;zk_client&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="s">&#39;conf_data&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="s">&#39;conf_path&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~/.seldon/seldon.conf&quot;</span><span class="p">),</span>
-    <span class="s">&#39;cmds&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&#39;memcached&#39;</span> <span class="p">:</span> <span class="n">cmd_memcached</span><span class="o">.</span><span class="n">cmd_memcached</span><span class="p">,</span>
-        <span class="s">&#39;db&#39;</span> <span class="p">:</span> <span class="n">cmd_db</span><span class="o">.</span><span class="n">cmd_db</span><span class="p">,</span>
-        <span class="s">&#39;client&#39;</span> <span class="p">:</span> <span class="n">cmd_client</span><span class="o">.</span><span class="n">cmd_client</span><span class="p">,</span>
-        <span class="s">&#39;attr&#39;</span> <span class="p">:</span> <span class="n">cmd_attr</span><span class="o">.</span><span class="n">cmd_attr</span><span class="p">,</span>
-        <span class="s">&#39;import&#39;</span> <span class="p">:</span> <span class="n">cmd_import</span><span class="o">.</span><span class="n">cmd_import</span><span class="p">,</span>
-        <span class="s">&#39;rec_alg&#39;</span> <span class="p">:</span> <span class="n">cmd_alg</span><span class="o">.</span><span class="n">cmd_alg</span><span class="p">,</span>
-        <span class="s">&#39;predict_alg&#39;</span> <span class="p">:</span> <span class="n">cmd_pred</span><span class="o">.</span><span class="n">cmd_pred</span><span class="p">,</span>
-        <span class="s">&#39;keys&#39;</span> <span class="p">:</span> <span class="n">cmd_keys</span><span class="o">.</span><span class="n">cmd_keys</span><span class="p">,</span>
-        <span class="s">&#39;model&#39;</span><span class="p">:</span> <span class="n">cmd_model</span><span class="o">.</span><span class="n">cmd_model</span><span class="p">,</span>
-        <span class="s">&#39;api&#39;</span><span class="p">:</span> <span class="n">cmd_api</span><span class="o">.</span><span class="n">cmd_api</span><span class="p">,</span>
+    <span class="s1">&#39;zk_client&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s1">&#39;conf_data&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s1">&#39;conf_path&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.seldon/seldon.conf&quot;</span><span class="p">),</span>
+    <span class="s1">&#39;cmds&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;memcached&#39;</span> <span class="p">:</span> <span class="n">cmd_memcached</span><span class="o">.</span><span class="n">cmd_memcached</span><span class="p">,</span>
+        <span class="s1">&#39;db&#39;</span> <span class="p">:</span> <span class="n">cmd_db</span><span class="o">.</span><span class="n">cmd_db</span><span class="p">,</span>
+        <span class="s1">&#39;client&#39;</span> <span class="p">:</span> <span class="n">cmd_client</span><span class="o">.</span><span class="n">cmd_client</span><span class="p">,</span>
+        <span class="s1">&#39;attr&#39;</span> <span class="p">:</span> <span class="n">cmd_attr</span><span class="o">.</span><span class="n">cmd_attr</span><span class="p">,</span>
+        <span class="s1">&#39;import&#39;</span> <span class="p">:</span> <span class="n">cmd_import</span><span class="o">.</span><span class="n">cmd_import</span><span class="p">,</span>
+        <span class="s1">&#39;rec_alg&#39;</span> <span class="p">:</span> <span class="n">cmd_alg</span><span class="o">.</span><span class="n">cmd_alg</span><span class="p">,</span>
+        <span class="s1">&#39;predict_alg&#39;</span> <span class="p">:</span> <span class="n">cmd_pred</span><span class="o">.</span><span class="n">cmd_pred</span><span class="p">,</span>
+        <span class="s1">&#39;keys&#39;</span> <span class="p">:</span> <span class="n">cmd_keys</span><span class="o">.</span><span class="n">cmd_keys</span><span class="p">,</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">cmd_model</span><span class="o">.</span><span class="n">cmd_model</span><span class="p">,</span>
+        <span class="s1">&#39;api&#39;</span><span class="p">:</span> <span class="n">cmd_api</span><span class="o">.</span><span class="n">cmd_api</span><span class="p">,</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="get_default_conf"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.get_default_conf">[docs]</a><span class="k">def</span> <span class="nf">get_default_conf</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">&#39;&#39;&#39;</span><span class="se">\</span>
-<span class="s">{</span>
-<span class="s">    &quot;default_predictors&quot;: {</span>
-<span class="s">        &quot;externalPredictionServer&quot;: {</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        }</span>
-<span class="s">    },</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
+<span class="s1">{</span>
+<span class="s1">    &quot;default_predictors&quot;: {</span>
+<span class="s1">        &quot;externalPredictionServer&quot;: {</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        }</span>
+<span class="s1">    },</span>
 
-<span class="s">    &quot;default_algorithms&quot;: {</span>
-<span class="s">        &quot;assocRuleRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/assocrules&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;dynamicClusterCountsRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;externalItemRecommendationAlgorithm&quot;: {</span>
-<span class="s">            &quot;config&quot;: [</span>
-<span class="s">                {</span>
-<span class="s">                    &quot;name&quot;: &quot;io.seldon.algorithm.inclusion.itemsperincluder&quot;,</span>
-<span class="s">                    &quot;value&quot;: 1000</span>
-<span class="s">                }</span>
-<span class="s">            ],</span>
-<span class="s">            &quot;includers&quot;: [</span>
-<span class="s">                &quot;recentItemsIncluder&quot;</span>
-<span class="s">            ]</span>
-<span class="s">        },</span>
-<span class="s">        &quot;globalClusterCountsRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;itemCategoryClusterCountsRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;itemClusterCountsRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;itemSimilarityRecommender&quot;: {</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;mfRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/mf&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;mostPopularRecommender&quot;: {</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;recentItemsRecommender&quot;: {</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;recentMfRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/mf&quot;,</span>
-<span class="s">            &quot;config&quot;: [</span>
-<span class="s">                {</span>
-<span class="s">                    &quot;name&quot;: &quot;io.seldon.algorithm.general.numrecentactionstouse&quot;,</span>
-<span class="s">                    &quot;value&quot;: &quot;1&quot;</span>
-<span class="s">                }</span>
-<span class="s">            ]</span>
-<span class="s">        },</span>
-<span class="s">        &quot;semanticVectorsRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/svtext&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        },</span>
-<span class="s">        &quot;userTagAffinityRecommender&quot;: {</span>
-<span class="s">            &quot;zk_activate_node&quot; : &quot;/config/tagaffinity&quot;,</span>
-<span class="s">            &quot;config&quot;: []</span>
-<span class="s">        }</span>
-<span class="s">    },</span>
-<span class="s">    &quot;default_models&quot;: {</span>
-<span class="s">        &quot;cluster-by-dimension&quot;: {},</span>
-<span class="s">        &quot;matrix-factorization&quot;: {</span>
-<span class="s">            &quot;config&quot;: {</span>
-<span class="s">                &quot;activate&quot;: true,</span>
-<span class="s">                &quot;alpha&quot;: 1,</span>
-<span class="s">                &quot;days&quot;: 1,</span>
-<span class="s">                &quot;inputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;iterations&quot;: 5,</span>
-<span class="s">                &quot;lambda&quot;: 0.01,</span>
-<span class="s">                &quot;outputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;rank&quot;: 30,</span>
-<span class="s">                &quot;startDay&quot;: 1</span>
-<span class="s">            },</span>
-<span class="s">            &quot;training&quot;: {</span>
-<span class="s">                &quot;job_info&quot;: {</span>
-<span class="s">                    &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
-<span class="s">                    &quot;cmd_args&quot;: [</span>
-<span class="s">                        &quot;--class&quot;,</span>
-<span class="s">                        &quot;io.seldon.spark.mllib.MfModelCreation&quot;,</span>
-<span class="s">                        &quot;--master&quot;,</span>
-<span class="s">                        &quot;local[1]&quot;,</span>
-<span class="s">                        &quot;%SELDON_SPARK_HOME%/target/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
-<span class="s">                        &quot;--client&quot;,</span>
-<span class="s">                        &quot;%CLIENT_NAME%&quot;,</span>
-<span class="s">                        &quot;--zookeeper&quot;,</span>
-<span class="s">                        &quot;%ZK_HOSTS%&quot;</span>
-<span class="s">                    ]</span>
-<span class="s">                },</span>
-<span class="s">                &quot;job_type&quot;: &quot;spark&quot;</span>
-<span class="s">            }</span>
-<span class="s">        },</span>
-<span class="s">        &quot;semvec&quot;: {},</span>
-<span class="s">        &quot;similar-items&quot;: {</span>
-<span class="s">            &quot;config&quot;: {</span>
-<span class="s">                &quot;activate&quot;: true,</span>
-<span class="s">                &quot;days&quot;: 1,</span>
-<span class="s">                &quot;inputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;outputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;startDay&quot;: 1,</span>
-<span class="s">		&quot;itemType&quot; : -1,</span>
-<span class="s">		&quot;limit&quot; : 100,</span>
-<span class="s">		&quot;minItemsPerUser&quot; : 0,</span>
-<span class="s">		&quot;minUsersPerItem&quot; : 0,    </span>
-<span class="s">		&quot;maxUsersPerItem&quot; : 2000000,    </span>
-<span class="s">		&quot;dimsumThreshold&quot; : 0.1,</span>
-<span class="s">		&quot;sample&quot; : 1.0</span>
-<span class="s">            },</span>
-<span class="s">            &quot;training&quot;: {</span>
-<span class="s">                &quot;job_info&quot;: {</span>
-<span class="s">                    &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
-<span class="s">                    &quot;cmd_args&quot;: [</span>
-<span class="s">                        &quot;--class&quot;,</span>
-<span class="s">                        &quot;io.seldon.spark.mllib.SimilarItems&quot;,</span>
-<span class="s">                        &quot;--master&quot;,</span>
-<span class="s">                        &quot;spark://spark-master:7077&quot;,</span>
-<span class="s">                        &quot;%SELDON_SPARK_HOME%/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
-<span class="s">                        &quot;--client&quot;,</span>
-<span class="s">                        &quot;%CLIENT_NAME%&quot;,</span>
-<span class="s">                        &quot;--zookeeper&quot;,</span>
-<span class="s">                        &quot;%ZK_HOSTS%&quot;</span>
-<span class="s">                    ]</span>
-<span class="s">                },</span>
-<span class="s">                &quot;job_type&quot;: &quot;spark&quot;</span>
-<span class="s">		}</span>
-<span class="s">	},</span>
-<span class="s">        &quot;tagaffinity&quot;: {},</span>
-<span class="s">        &quot;tagcluster&quot;: {}</span>
-<span class="s">    },</span>
-<span class="s">    &quot;processactions&quot;: {</span>
-<span class="s">        &quot;job_info&quot;: {</span>
-<span class="s">            &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
-<span class="s">            &quot;cmd_args&quot;: [</span>
-<span class="s">                &quot;--class&quot;,</span>
-<span class="s">                &quot;io.seldon.spark.actions.GroupActionsJob&quot;,</span>
-<span class="s">                &quot;--master&quot;,</span>
-<span class="s">                &quot;local[1]&quot;,</span>
-<span class="s">                &quot;%SELDON_SPARK_HOME%/target/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
-<span class="s">                &quot;--input-path-pattern&quot;,</span>
-<span class="s">                &quot;%SELDON_LOGS%/actions.%y/%m</span><span class="si">%d</span><span class="s">/*/*&quot;,</span>
-<span class="s">                &quot;--output-path-dir&quot;,</span>
-<span class="s">                &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;--input-date-string&quot;,</span>
-<span class="s">                &quot;%INPUT_DATE_STRING%&quot;,</span>
-<span class="s">                &quot;--gzip-output&quot;</span>
-<span class="s">            ]</span>
-<span class="s">        },</span>
-<span class="s">        &quot;job_type&quot;: &quot;spark&quot;</span>
-<span class="s">    },</span>
-<span class="s">    &quot;processevents&quot;: {</span>
-<span class="s">        &quot;job_info&quot;: {</span>
-<span class="s">            &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
-<span class="s">            &quot;cmd_args&quot;: [</span>
-<span class="s">                &quot;--class&quot;,</span>
-<span class="s">                &quot;io.seldon.spark.events.ProcessEventsJob&quot;,</span>
-<span class="s">                &quot;--master&quot;,</span>
-<span class="s">                &quot;local[1]&quot;,</span>
-<span class="s">                &quot;%SELDON_SPARK_HOME%/target/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
-<span class="s">                &quot;--input-path-pattern&quot;,</span>
-<span class="s">                &quot;%SELDON_LOGS%/events.%y/%m</span><span class="si">%d</span><span class="s">/*/*&quot;,</span>
-<span class="s">                &quot;--output-path-dir&quot;,</span>
-<span class="s">                &quot;%SELDON_MODELS%&quot;,</span>
-<span class="s">                &quot;--input-date-string&quot;,</span>
-<span class="s">                &quot;%INPUT_DATE_STRING%&quot;,</span>
-<span class="s">                &quot;--gzip-output&quot;</span>
-<span class="s">            ]</span>
-<span class="s">        },</span>
-<span class="s">        &quot;job_type&quot;: &quot;spark&quot;</span>
-<span class="s">    },</span>
-<span class="s">    &quot;seldon_logs&quot;: &quot;/seldon-data/logs&quot;,</span>
-<span class="s">    &quot;seldon_models&quot;: &quot;~/.seldon/seldon-models&quot;,</span>
-<span class="s">    &quot;seldon_spark_home&quot;: &quot;~/seldon-server/offline-jobs/spark&quot;,</span>
-<span class="s">    &quot;seldon_version&quot;: &quot;1.2.3&quot;,</span>
-<span class="s">    &quot;spark_home&quot;: &quot;~/apps/spark&quot;,</span>
-<span class="s">    &quot;zk_hosts&quot;: &quot;localhost:2181&quot;,</span>
-<span class="s">    &quot;zkroot&quot;: &quot;~/.seldon/zkroot&quot;,</span>
-<span class="s">    &quot;server_endpoint&quot; :  &quot;http://seldon-server:80&quot;</span>
-<span class="s">}</span>
-<span class="s">&#39;&#39;&#39;</span>
-</div>
+<span class="s1">    &quot;default_algorithms&quot;: {</span>
+<span class="s1">        &quot;assocRuleRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/assocrules&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;dynamicClusterCountsRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;externalItemRecommendationAlgorithm&quot;: {</span>
+<span class="s1">            &quot;config&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;name&quot;: &quot;io.seldon.algorithm.inclusion.itemsperincluder&quot;,</span>
+<span class="s1">                    &quot;value&quot;: 1000</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;includers&quot;: [</span>
+<span class="s1">                &quot;recentItemsIncluder&quot;</span>
+<span class="s1">            ]</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;globalClusterCountsRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;itemCategoryClusterCountsRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;itemClusterCountsRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/userclusters&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;itemSimilarityRecommender&quot;: {</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;mfRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/mf&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;mostPopularRecommender&quot;: {</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;recentItemsRecommender&quot;: {</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;recentMfRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/mf&quot;,</span>
+<span class="s1">            &quot;config&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;name&quot;: &quot;io.seldon.algorithm.general.numrecentactionstouse&quot;,</span>
+<span class="s1">                    &quot;value&quot;: &quot;1&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ]</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;semanticVectorsRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/svtext&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;userTagAffinityRecommender&quot;: {</span>
+<span class="s1">            &quot;zk_activate_node&quot; : &quot;/config/tagaffinity&quot;,</span>
+<span class="s1">            &quot;config&quot;: []</span>
+<span class="s1">        }</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;default_models&quot;: {</span>
+<span class="s1">        &quot;cluster-by-dimension&quot;: {},</span>
+<span class="s1">        &quot;matrix-factorization&quot;: {</span>
+<span class="s1">            &quot;config&quot;: {</span>
+<span class="s1">                &quot;activate&quot;: true,</span>
+<span class="s1">                &quot;alpha&quot;: 1,</span>
+<span class="s1">                &quot;days&quot;: 1,</span>
+<span class="s1">                &quot;inputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;iterations&quot;: 5,</span>
+<span class="s1">                &quot;lambda&quot;: 0.01,</span>
+<span class="s1">                &quot;outputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;rank&quot;: 30,</span>
+<span class="s1">                &quot;startDay&quot;: 1</span>
+<span class="s1">            },</span>
+<span class="s1">            &quot;training&quot;: {</span>
+<span class="s1">                &quot;job_info&quot;: {</span>
+<span class="s1">                    &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
+<span class="s1">                    &quot;cmd_args&quot;: [</span>
+<span class="s1">                        &quot;--class&quot;,</span>
+<span class="s1">                        &quot;io.seldon.spark.mllib.MfModelCreation&quot;,</span>
+<span class="s1">                        &quot;--master&quot;,</span>
+<span class="s1">                        &quot;spark://spark-master:7077&quot;,</span>
+<span class="s1">                        &quot;%SELDON_SPARK_HOME%/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
+<span class="s1">                        &quot;--client&quot;,</span>
+<span class="s1">                        &quot;%CLIENT_NAME%&quot;,</span>
+<span class="s1">                        &quot;--zookeeper&quot;,</span>
+<span class="s1">                        &quot;%ZK_HOSTS%&quot;</span>
+<span class="s1">                    ]</span>
+<span class="s1">                },</span>
+<span class="s1">                &quot;job_type&quot;: &quot;spark&quot;</span>
+<span class="s1">            }</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;semvec&quot;: {},</span>
+<span class="s1">        &quot;similar-items&quot;: {</span>
+<span class="s1">            &quot;config&quot;: {</span>
+<span class="s1">                &quot;activate&quot;: true,</span>
+<span class="s1">                &quot;days&quot;: 1,</span>
+<span class="s1">                &quot;inputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;outputPath&quot;: &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;startDay&quot;: 1,</span>
+<span class="s1">		&quot;itemType&quot; : -1,</span>
+<span class="s1">		&quot;limit&quot; : 100,</span>
+<span class="s1">		&quot;minItemsPerUser&quot; : 0,</span>
+<span class="s1">		&quot;minUsersPerItem&quot; : 0,</span>
+<span class="s1">		&quot;maxUsersPerItem&quot; : 2000000,</span>
+<span class="s1">		&quot;dimsumThreshold&quot; : 0.1,</span>
+<span class="s1">		&quot;sample&quot; : 1.0</span>
+<span class="s1">            },</span>
+<span class="s1">            &quot;training&quot;: {</span>
+<span class="s1">                &quot;job_info&quot;: {</span>
+<span class="s1">                    &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
+<span class="s1">                    &quot;cmd_args&quot;: [</span>
+<span class="s1">                        &quot;--class&quot;,</span>
+<span class="s1">                        &quot;io.seldon.spark.mllib.SimilarItems&quot;,</span>
+<span class="s1">                        &quot;--master&quot;,</span>
+<span class="s1">                        &quot;spark://spark-master:7077&quot;,</span>
+<span class="s1">                        &quot;%SELDON_SPARK_HOME%/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
+<span class="s1">                        &quot;--client&quot;,</span>
+<span class="s1">                        &quot;%CLIENT_NAME%&quot;,</span>
+<span class="s1">                        &quot;--zookeeper&quot;,</span>
+<span class="s1">                        &quot;%ZK_HOSTS%&quot;</span>
+<span class="s1">                    ]</span>
+<span class="s1">                },</span>
+<span class="s1">                &quot;job_type&quot;: &quot;spark&quot;</span>
+<span class="s1">		}</span>
+<span class="s1">	},</span>
+<span class="s1">        &quot;tagaffinity&quot;: {},</span>
+<span class="s1">        &quot;tagcluster&quot;: {}</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;processactions&quot;: {</span>
+<span class="s1">        &quot;job_info&quot;: {</span>
+<span class="s1">            &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
+<span class="s1">            &quot;cmd_args&quot;: [</span>
+<span class="s1">                &quot;--class&quot;,</span>
+<span class="s1">                &quot;io.seldon.spark.actions.GroupActionsJob&quot;,</span>
+<span class="s1">                &quot;--master&quot;,</span>
+<span class="s1">                &quot;spark://spark-master:7077&quot;,</span>
+<span class="s1">                &quot;%SELDON_SPARK_HOME%/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
+<span class="s1">                &quot;--input-path-pattern&quot;,</span>
+<span class="s1">                &quot;%SELDON_LOGS%/actions.%y/%m</span><span class="si">%d</span><span class="s1">/*/*&quot;,</span>
+<span class="s1">                &quot;--output-path-dir&quot;,</span>
+<span class="s1">                &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;--input-date-string&quot;,</span>
+<span class="s1">                &quot;%INPUT_DATE_STRING%&quot;,</span>
+<span class="s1">                &quot;--gzip-output&quot;</span>
+<span class="s1">            ]</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;job_type&quot;: &quot;spark&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;processevents&quot;: {</span>
+<span class="s1">        &quot;job_info&quot;: {</span>
+<span class="s1">            &quot;cmd&quot;: &quot;%SPARK_HOME%/bin/spark-submit&quot;,</span>
+<span class="s1">            &quot;cmd_args&quot;: [</span>
+<span class="s1">                &quot;--class&quot;,</span>
+<span class="s1">                &quot;io.seldon.spark.events.ProcessEventsJob&quot;,</span>
+<span class="s1">                &quot;--master&quot;,</span>
+<span class="s1">                &quot;spark://spark-master:7077&quot;,</span>
+<span class="s1">                &quot;%SELDON_SPARK_HOME%/seldon-spark-%SELDON_VERSION%-jar-with-dependencies.jar&quot;,</span>
+<span class="s1">                &quot;--input-path-pattern&quot;,</span>
+<span class="s1">                &quot;%SELDON_LOGS%/events.%y/%m</span><span class="si">%d</span><span class="s1">/*/*&quot;,</span>
+<span class="s1">                &quot;--output-path-dir&quot;,</span>
+<span class="s1">                &quot;%SELDON_MODELS%&quot;,</span>
+<span class="s1">                &quot;--input-date-string&quot;,</span>
+<span class="s1">                &quot;%INPUT_DATE_STRING%&quot;,</span>
+<span class="s1">                &quot;--gzip-output&quot;</span>
+<span class="s1">            ]</span>
+<span class="s1">        },</span>
+<span class="s1">        &quot;job_type&quot;: &quot;spark&quot;</span>
+<span class="s1">    },</span>
+<span class="s1">    &quot;seldon_logs&quot;: &quot;/seldon-data/logs&quot;,</span>
+<span class="s1">    &quot;seldon_models&quot;: &quot;/seldon-data/seldon-models&quot;,</span>
+<span class="s1">    &quot;seldon_spark_home&quot;: &quot;/home/seldon/libs&quot;,</span>
+<span class="s1">    &quot;seldon_version&quot;: &quot;__SELDON_VERSION__&quot;,</span>
+<span class="s1">    &quot;server_endpoint&quot;: &quot;http://seldon-server&quot;,</span>
+<span class="s1">    &quot;spark_home&quot;: &quot;/opt/spark&quot;,</span>
+<span class="s1">    &quot;zk_hosts&quot;: &quot;zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181&quot;,</span>
+<span class="s1">    &quot;zkroot&quot;: &quot;/seldon-data/conf/zkroot&quot;,</span>
+<span class="s1">    &quot;grafana_endpoint&quot; : &quot;http://monitoring-grafana&quot;</span>
+<span class="s1">}</span>
+<span class="s1">&#39;&#39;&#39;</span></div>
+
 <div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-</div>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="mkdir_p"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.mkdir_p">[docs]</a><span class="k">def</span> <span class="nf">mkdir_p</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c"># Python &gt;2.5</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c1"># Python &gt;2.5</span>
         <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span>
-</div>
+        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span></div>
+
 <div class="viewcode-block" id="dict_to_json"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.dict_to_json">[docs]</a><span class="k">def</span> <span class="nf">dict_to_json</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="s">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;:&#39;</span><span class="p">))</span>
-</div>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="json_to_dict"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.json_to_dict">[docs]</a><span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
-</div>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="getOpts"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.getOpts">[docs]</a><span class="k">def</span> <span class="nf">getOpts</span><span class="p">():</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">&#39;seldon-cli&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">&#39;Seldon Cli&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;print the version&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;debugging flag&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--zk-hosts&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the zookeeper hosts&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--setup-config&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;setup the config and exit&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--print-default-config&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;print the default config and exit&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-q&#39;</span><span class="p">,</span> <span class="s">&quot;--quiet&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;only display important messages, useful in non-interactive mode&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c"># catch rest (non-options) as args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;seldon-cli&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Seldon Cli&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print the version&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;debugging flag&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--zk-hosts&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the zookeeper hosts&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--setup-config&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;setup the config and exit&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--print-default-config&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print the default config and exit&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-q&#39;</span><span class="p">,</span> <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;only display important messages, useful in non-interactive mode&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c1"># catch rest (non-options) as args</span>
     <span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">opts</span>
-</div>
+    <span class="k">return</span> <span class="n">opts</span></div>
+
 <div class="viewcode-block" id="expand_conf"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.expand_conf">[docs]</a><span class="k">def</span> <span class="nf">expand_conf</span><span class="p">():</span>
-    <span class="n">conf_data</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">]</span>
+    <span class="n">conf_data</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_data&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">conf_data</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">expansion_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zkroot&quot;</span><span class="p">,</span><span class="s">&quot;seldon_models&quot;</span><span class="p">,</span><span class="s">&quot;spark_home&quot;</span><span class="p">,</span><span class="s">&quot;seldon_spark_home&quot;</span><span class="p">]</span>
+        <span class="n">expansion_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;zkroot&quot;</span><span class="p">,</span><span class="s2">&quot;seldon_models&quot;</span><span class="p">,</span><span class="s2">&quot;spark_home&quot;</span><span class="p">,</span><span class="s2">&quot;seldon_spark_home&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">expansion_item</span> <span class="ow">in</span> <span class="n">expansion_list</span><span class="p">:</span>
-            <span class="n">conf_data</span><span class="p">[</span><span class="n">expansion_item</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">conf_data</span><span class="p">[</span><span class="n">expansion_item</span><span class="p">])</span>
-</div>
+            <span class="n">conf_data</span><span class="p">[</span><span class="n">expansion_item</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">conf_data</span><span class="p">[</span><span class="n">expansion_item</span><span class="p">])</span></div>
+
 <div class="viewcode-block" id="create_default_conf"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.create_default_conf">[docs]</a><span class="k">def</span> <span class="nf">create_default_conf</span><span class="p">():</span>
-    <span class="n">fpath</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_path&#39;</span><span class="p">]</span>
+    <span class="n">fpath</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_path&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
         <span class="n">default_conf</span> <span class="o">=</span> <span class="n">get_default_conf</span><span class="p">()</span>
         <span class="n">mkdir_p</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fpath</span><span class="p">))</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">default_conf</span><span class="p">)</span>
-        <span class="n">zkroot</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;zkroot&quot;</span><span class="p">])</span>
+        <span class="n">zkroot</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;zkroot&quot;</span><span class="p">])</span>
         <span class="n">mkdir_p</span><span class="p">(</span><span class="n">zkroot</span><span class="p">)</span>
-        <span class="n">seldon_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;seldon_models&quot;</span><span class="p">])</span>
+        <span class="n">seldon_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;seldon_models&quot;</span><span class="p">])</span>
         <span class="n">mkdir_p</span><span class="p">(</span><span class="n">seldon_models</span><span class="p">)</span>
-        <span class="n">default_conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="s">&#39;: &#39;</span><span class="p">))</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">default_conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">default_conf</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">print</span> <span class="s">&quot;Created conf file [{fpath}] with default settings.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;Created conf file [{fpath}] with default settings.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Existing conf file [{fpath}] found.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+        <span class="k">print</span> <span class="s2">&quot;Existing conf file [{fpath}] found.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="check_conf"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.check_conf">[docs]</a><span class="k">def</span> <span class="nf">check_conf</span><span class="p">():</span>
-    <span class="n">fpath</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_path&#39;</span><span class="p">]</span>
+    <span class="n">fpath</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_path&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span>
-            <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
-</div>
+            <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="start_zk_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.start_zk_client">[docs]</a><span class="k">def</span> <span class="nf">start_zk_client</span><span class="p">(</span><span class="n">opts</span><span class="p">):</span>
     <span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;connecting to &quot;</span><span class="o">+</span><span class="n">zk_hosts</span><span class="p">)</span>
-    <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">KazooClient</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="n">zk_hosts</span><span class="p">)</span>
-    <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;SUCCEEDED&quot;</span> <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connected</span> <span class="k">else</span> <span class="s">&quot;FAILED&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;connecting to &quot;</span><span class="o">+</span><span class="n">zk_hosts</span><span class="p">)</span>
+    <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">KazooClient</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="n">zk_hosts</span><span class="p">)</span>
+    <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;SUCCEEDED&quot;</span> <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connected</span> <span class="k">else</span> <span class="s2">&quot;FAILED&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot; [{res}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+        <span class="k">print</span> <span class="s2">&quot; [{res}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="stop_zk_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.stop_zk_client">[docs]</a><span class="k">def</span> <span class="nf">stop_zk_client</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-        <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-</div>
+    <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+        <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cli_main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
     <span class="n">check_conf</span><span class="p">()</span>
     <span class="n">expand_conf</span><span class="p">()</span>
     <span class="n">opts</span> <span class="o">=</span> <span class="n">getOpts</span><span class="p">()</span>
@@ -430,12 +449,12 @@
         <span class="n">create_default_conf</span><span class="p">()</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">print_default_config</span><span class="p">:</span>
-        <span class="k">print</span> <span class="n">get_default_conf</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">dict_to_json</span><span class="p">(</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">get_default_conf</span><span class="p">()),</span> <span class="bp">True</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="c"># is the conf still not setup</span>
-    <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;No config found, run with &#39;--setup-config&#39; to set it up.&quot;</span>
+    <span class="c1"># is the conf still not setup</span>
+    <span class="k">if</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_data&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;No config found, run with &#39;--setup-config&#39; to set it up.&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
@@ -444,34 +463,36 @@
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Need command&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Need command&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;zk_hosts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span>
+        <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;zk_hosts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;zk_hosts&quot;</span><span class="p">]</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;zk_hosts&quot;</span><span class="p">]</span>
 
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">command_args</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-    <span class="n">cmds</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;cmds&#39;</span><span class="p">]</span>
+    <span class="n">cmds</span> <span class="o">=</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;cmds&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">cmds</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
         <span class="n">start_zk_client</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
         <span class="n">command_data</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&#39;conf_data&#39;</span> <span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">],</span>
-                <span class="s">&#39;zkdetails&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;zkroot&#39;</span><span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;conf_data&#39;</span><span class="p">][</span><span class="s">&#39;zkroot&#39;</span><span class="p">],</span> <span class="s">&#39;zk_client&#39;</span><span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;zk_client&#39;</span><span class="p">]},</span>
+                <span class="s1">&#39;conf_data&#39;</span> <span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_data&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;zkdetails&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;zkroot&#39;</span><span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;conf_data&#39;</span><span class="p">][</span><span class="s1">&#39;zkroot&#39;</span><span class="p">],</span> <span class="s1">&#39;zk_client&#39;</span><span class="p">:</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;zk_client&#39;</span><span class="p">]},</span>
         <span class="p">}</span>
         <span class="n">cmds</span><span class="p">[</span><span class="n">cmd</span><span class="p">](</span><span class="n">opts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">command_args</span><span class="p">)</span>
         <span class="n">stop_zk_client</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Invalid command[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;Invalid command[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
+
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -481,12 +502,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.pipeline package &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -36,7 +36,7 @@
         <link rel="prev" title="seldon.misc package" href="seldon.misc.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -46,11 +46,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -58,15 +74,36 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
-              <ul class="current">
+            
+            
+                <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="seldon.html">seldon package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="seldon.cli.html">seldon.cli package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.luigi.html">seldon.luigi package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.microservice.html">seldon.microservice package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.misc.html">seldon.misc package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">seldon.pipeline package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.auto_transforms">seldon.pipeline.auto_transforms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.basic_transforms">seldon.pipeline.basic_transforms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.bayes_optimize">seldon.pipeline.bayes_optimize module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.cross_validation">seldon.pipeline.cross_validation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.pandas_pipelines">seldon.pipeline.pandas_pipelines module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.sklearn_transform">seldon.pipeline.sklearn_transform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline.tfidf_transform">seldon.pipeline.tfidf_transform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.pipeline">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.text.html">seldon.text package</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
@@ -74,15 +111,16 @@
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.tensorflow_wrapper">seldon.tensorflow_wrapper module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
 </ul>
 </li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -97,7 +135,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
@@ -106,13 +150,16 @@
     <li>seldon.pipeline package</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="sources/seldon.pipeline.txt" rel="nofollow"> View page source</a>
+          
+            <a href="sources/seldon.pipeline.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="seldon-pipeline-package">
 <h1>seldon.pipeline package<a class="headerlink" href="#seldon-pipeline-package" title="Permalink to this headline">¶</a></h1>
@@ -122,8 +169,8 @@
 <div class="section" id="module-seldon.pipeline.auto_transforms">
 <span id="seldon-pipeline-auto-transforms-module"></span><h2>seldon.pipeline.auto_transforms module<a class="headerlink" href="#module-seldon.pipeline.auto_transforms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.pipeline.auto_transforms.Auto_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.auto_transforms.</code><code class="descname">Auto_transform</code><span class="sig-paren">(</span><em>exclude=[], include=None, max_values_numeric_categorical=0, date_cols=[], custom_date_formats=None, ignore_vals=None, force_categorical=[], min_cat_percent=0.0, max_cat_percent=1.0, bool_map={'1': 1, '0': 0, 'false': 0, 'no': 0, '1.0': 1, 'yes': 1, 'true': 1, '0.0': 0}, cat_missing_val='UKN', date_transforms=[True, True, True, True], create_date_differences=False, nan_threshold=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#Auto_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.Auto_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.auto_transforms.AutoTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.auto_transforms.</code><code class="descname">AutoTransform</code><span class="sig-paren">(</span><em>exclude=[], include=None, max_values_numeric_categorical=0, date_cols=[], custom_date_formats=None, ignore_vals=None, force_categorical=[], min_cat_percent=0.0, max_cat_percent=1.0, bool_map={'1': 1, '0': 0, 'false': 0, 'no': 0, '1.0': 1, 'yes': 1, 'true': 1, '0.0': 0}, cat_missing_val='UKN', date_transforms=[True, True, True, True], create_date_differences=False, nan_threshold=None, drop_constant_features=True, drop_duplicate_cols=True, min_max_limit=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#AutoTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.AutoTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Automatically transform a set of features into normalzied numeric or categorical features or dates</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -144,14 +191,17 @@
 <li><strong>date_transforms</strong> (<em>list bool, optional</em>) &#8211; which date transforms to apply [hour,month,day_of_week,year], default is all</li>
 <li><strong>create_date_differences</strong> (<em>bool, optional</em>) &#8211; whether to create differences between all date variables</li>
 <li><strong>nan_threshold</strong> (<em>float, optional</em>) &#8211; featurs to drop if too many nan, threshold is between 0-1 as percent</li>
+<li><strong>drop_constant_features</strong> (<em>bool, optional</em>) &#8211; drop a column if its value is constant</li>
+<li><strong>duplicate columns</strong> (<em>drop</em>) &#8211; drop duplicate columns</li>
+<li><strong>min_max_limit</strong> (<em>bool, optional</em>) &#8211; limit numeric cols to min and max seen in fit</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.auto_transforms.Auto_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#Auto_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.Auto_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.auto_transforms.AutoTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#AutoTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.AutoTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit models against an input pandas dataframe</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -168,8 +218,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.auto_transforms.Auto_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#Auto_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.Auto_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.auto_transforms.AutoTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/auto_transforms.html#AutoTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.auto_transforms.AutoTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>transform a datframe with fitted models</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -191,8 +241,8 @@
 <div class="section" id="module-seldon.pipeline.basic_transforms">
 <span id="seldon-pipeline-basic-transforms-module"></span><h2>seldon.pipeline.basic_transforms module<a class="headerlink" href="#module-seldon.pipeline.basic_transforms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Binary_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Binary_transform</code><span class="sig-paren">(</span><em>input_feature=None</em>, <em>output_feature=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Binary_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Binary_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.BinaryTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">BinaryTransform</code><span class="sig-paren">(</span><em>input_feature=None</em>, <em>output_feature=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#BinaryTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.BinaryTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Create a binary feature based on existence of another feature</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -208,21 +258,21 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Binary_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Binary_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Binary_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.BinaryTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#BinaryTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.BinaryTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>nothing to do in fit</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Binary_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Binary_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Binary_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.BinaryTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#BinaryTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.BinaryTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Exclude_features_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Exclude_features_transform</code><span class="sig-paren">(</span><em>excluded=[]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exclude_features_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exclude_features_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExcludeFeaturesTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">ExcludeFeaturesTransform</code><span class="sig-paren">(</span><em>excluded=[]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExcludeFeaturesTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Filter a dataset and exclude specided set of features</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -234,14 +284,14 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Exclude_features_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exclude_features_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exclude_features_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExcludeFeaturesTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>nothing to do in fit</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Exclude_features_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exclude_features_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exclude_features_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExcludeFeaturesTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Trasform dataframe to include specified features only</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -260,8 +310,8 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Exist_features_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Exist_features_transform</code><span class="sig-paren">(</span><em>included=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exist_features_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exist_features_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExistFeaturesTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">ExistFeaturesTransform</code><span class="sig-paren">(</span><em>included=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExistFeaturesTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExistFeaturesTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Filter rows based on whether a specified set of features exists</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -273,13 +323,13 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Exist_features_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>objs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exist_features_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exist_features_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExistFeaturesTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>objs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExistFeaturesTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExistFeaturesTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Exist_features_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Exist_features_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Exist_features_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.ExistFeaturesTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#ExistFeaturesTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.ExistFeaturesTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform by returning input feature set if required features exist in it</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -298,8 +348,8 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Feature_id_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Feature_id_transform</code><span class="sig-paren">(</span><em>input_feature=None</em>, <em>output_feature=None</em>, <em>min_size=0</em>, <em>max_classes=1000</em>, <em>exclude_missing=False</em>, <em>zero_based=False</em>, <em>id_map={}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Feature_id_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Feature_id_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.FeatureIdTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">FeatureIdTransform</code><span class="sig-paren">(</span><em>input_feature=None</em>, <em>output_feature=None</em>, <em>min_size=0</em>, <em>max_classes=1000</em>, <em>exclude_missing=False</em>, <em>zero_based=False</em>, <em>id_map={}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#FeatureIdTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.FeatureIdTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>create a numeric feature id</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -317,8 +367,8 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Feature_id_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Feature_id_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Feature_id_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.FeatureIdTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#FeatureIdTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.FeatureIdTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create map of ids for each feature value</p>
 <p>create counts of occurrences of each feature value. Exclude features with not enough counds. Create id map.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -336,8 +386,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Feature_id_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Feature_id_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Feature_id_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.FeatureIdTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#FeatureIdTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.FeatureIdTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform features creating a new id and exluding rows if needed</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -356,8 +406,8 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Include_features_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Include_features_transform</code><span class="sig-paren">(</span><em>included=[]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Include_features_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Include_features_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.IncludeFeaturesTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">IncludeFeaturesTransform</code><span class="sig-paren">(</span><em>included=[]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#IncludeFeaturesTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.IncludeFeaturesTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Filter a dataset and include only specided set of features</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -369,14 +419,14 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Include_features_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Include_features_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Include_features_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.IncludeFeaturesTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#IncludeFeaturesTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.IncludeFeaturesTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>nothing to do in fit</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Include_features_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Include_features_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Include_features_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.IncludeFeaturesTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#IncludeFeaturesTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.IncludeFeaturesTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>transform a dataframe to include given features</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -395,8 +445,8 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Split_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Split_transform</code><span class="sig-paren">(</span><em>split_expression=' '</em>, <em>ignore_numbers=False</em>, <em>input_features=[]</em>, <em>output_feature=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Split_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Split_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SplitTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">SplitTransform</code><span class="sig-paren">(</span><em>split_expression=' '</em>, <em>ignore_numbers=False</em>, <em>input_features=[]</em>, <em>output_feature=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SplitTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SplitTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Split a set of string input features on an expression and create a new feature which has a list of values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -414,13 +464,13 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Split_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Split_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Split_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SplitTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SplitTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SplitTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Split_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Split_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Split_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SplitTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SplitTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SplitTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform text features by splitting them and creating a list of feature as result</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -439,8 +489,8 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.pipeline.basic_transforms.Svmlight_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">Svmlight_transform</code><span class="sig-paren">(</span><em>included=None</em>, <em>zero_based=False</em>, <em>excluded=[]</em>, <em>id_map={}</em>, <em>output_feature=None</em>, <em>id_map_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Svmlight_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Svmlight_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SvmlightTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.basic_transforms.</code><code class="descname">SvmlightTransform</code><span class="sig-paren">(</span><em>included=None</em>, <em>zero_based=False</em>, <em>excluded=[]</em>, <em>id_map={}</em>, <em>output_feature=None</em>, <em>id_map_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SvmlightTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SvmlightTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Take a set of features and transform into a sorted dictionary of numeric id:value features</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -457,8 +507,8 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Svmlight_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Svmlight_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Svmlight_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SvmlightTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SvmlightTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SvmlightTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>create ids for each feature to be included</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -475,8 +525,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.basic_transforms.Svmlight_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#Svmlight_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.Svmlight_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.basic_transforms.SvmlightTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/basic_transforms.html#SvmlightTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.basic_transforms.SvmlightTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform features by getting id and numeric value</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -516,12 +566,6 @@
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.__getstate__">
-<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.__getstate__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove things that should not be pickled</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="seldon.pipeline.bayes_optimize.BayesOptimizer.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/bayes_optimize.html#BayesOptimizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.bayes_optimize.BayesOptimizer.fit" title="Permalink to this definition">¶</a></dt>
@@ -578,8 +622,8 @@
 <div class="section" id="module-seldon.pipeline.cross_validation">
 <span id="seldon-pipeline-cross-validation-module"></span><h2>seldon.pipeline.cross_validation module<a class="headerlink" href="#module-seldon.pipeline.cross_validation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.cross_validation.</code><code class="descname">Seldon_KFold</code><span class="sig-paren">(</span><em>clf=None</em>, <em>k=5</em>, <em>save_folds_folder=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.cross_validation.</code><code class="descname">SeldonKFold</code><span class="sig-paren">(</span><em>clf=None</em>, <em>k=5</em>, <em>save_folds_folder=None</em>, <em>metric='accuracy'</em>, <em>random_state=1</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>Simple wrapper to provide cross validation test using estimator with input from pandas dataframe</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -596,8 +640,8 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Split dataframe into k folds and train test classifier on each. Finally train classifier on all data.
 :param X:
 :type X: pandas dataframe</p>
@@ -614,33 +658,38 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.get_class_id_map">
-<code class="descname">get_class_id_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.get_class_id_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.get_class_id_map" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.get_class_id_map">
+<code class="descname">get_class_id_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.get_class_id_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.get_class_id_map" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.get_score">
-<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.get_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.get_score" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.get_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.get_score" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.get_scores">
-<code class="descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.get_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.get_scores" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.get_scores">
+<code class="descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.get_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.get_scores" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.predict_proba">
-<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.predict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.set_params">
-<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.set_params" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.cross_validation.Seldon_KFold.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#Seldon_KFold.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.Seldon_KFold.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.set_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.pipeline.cross_validation.SeldonKFold.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/cross_validation.html#SeldonKFold.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.cross_validation.SeldonKFold.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do nothing and pass input back</p>
 </dd></dl>
 
@@ -744,8 +793,8 @@ NaNs are filled with zeros</p>
 <div class="section" id="module-seldon.pipeline.sklearn_transform">
 <span id="seldon-pipeline-sklearn-transform-module"></span><h2>seldon.pipeline.sklearn_transform module<a class="headerlink" href="#module-seldon.pipeline.sklearn_transform" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.pipeline.sklearn_transform.sklearn_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.sklearn_transform.</code><code class="descname">sklearn_transform</code><span class="sig-paren">(</span><em>input_features=None</em>, <em>output_features=None</em>, <em>output_features_prefix=None</em>, <em>transformer=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#sklearn_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.sklearn_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.sklearn_transform.SklearnTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.sklearn_transform.</code><code class="descname">SklearnTransform</code><span class="sig-paren">(</span><em>input_features=None</em>, <em>output_features=None</em>, <em>output_features_prefix=None</em>, <em>transformer=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#SklearnTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.SklearnTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Allow sklearn transformers to be run on Pandas dataframes.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -762,8 +811,8 @@ NaNs are filled with zeros</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.sklearn_transform.sklearn_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#sklearn_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.sklearn_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.sklearn_transform.SklearnTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#SklearnTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.SklearnTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -779,8 +828,8 @@ NaNs are filled with zeros</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.sklearn_transform.sklearn_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#sklearn_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.sklearn_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.sklearn_transform.SklearnTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/sklearn_transform.html#SklearnTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.sklearn_transform.SklearnTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>transform the input columns and merge result into input dataframe using column names if provided</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -802,8 +851,8 @@ NaNs are filled with zeros</p>
 <div class="section" id="module-seldon.pipeline.tfidf_transform">
 <span id="seldon-pipeline-tfidf-transform-module"></span><h2>seldon.pipeline.tfidf_transform module<a class="headerlink" href="#module-seldon.pipeline.tfidf_transform" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="seldon.pipeline.tfidf_transform.Tfidf_transform">
-<em class="property">class </em><code class="descclassname">seldon.pipeline.tfidf_transform.</code><code class="descname">Tfidf_transform</code><span class="sig-paren">(</span><em>input_feature=None, output_feature=None, min_df=0, max_df=1.0, select_features=False, topn_features=50000, stop_words=None, target_feature=None, vectorizer=None, tfidf_transformer=None, ch2=None, fnames=None, feature_names_support=[], ngram_range=[1, 1]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#Tfidf_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.Tfidf_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.tfidf_transform.TfidfTransform">
+<em class="property">class </em><code class="descclassname">seldon.pipeline.tfidf_transform.</code><code class="descname">TfidfTransform</code><span class="sig-paren">(</span><em>input_feature=None, output_feature=None, min_df=0, max_df=1.0, select_features=False, topn_features=50000, stop_words=None, target_feature=None, vectorizer=None, TfidfTransformer=None, ch2=None, fnames=None, feature_names_support=[], ngram_range=[1, 1]</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#TfidfTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.TfidfTransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
 <p>Create TF-IDF (term frequency - inverse document frequency) features.</p>
 <p>can use chi-squared test to limit features. Assumes string based input feature that can be split.
@@ -825,8 +874,8 @@ Uses scikit-learn based transformers internally</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.pipeline.tfidf_transform.Tfidf_transform.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#Tfidf_transform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.Tfidf_transform.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.tfidf_transform.TfidfTransform.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#TfidfTransform.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.TfidfTransform.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit tfidf transform</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -843,14 +892,14 @@ Uses scikit-learn based transformers internally</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.tfidf_transform.Tfidf_transform.get_tokens">
-<code class="descname">get_tokens</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#Tfidf_transform.get_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.Tfidf_transform.get_tokens" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.tfidf_transform.TfidfTransform.get_tokens">
+<code class="descname">get_tokens</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#TfidfTransform.get_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.TfidfTransform.get_tokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>basic method to get &#8220;document&#8221; string from feature</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.pipeline.tfidf_transform.Tfidf_transform.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#Tfidf_transform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.Tfidf_transform.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.pipeline.tfidf_transform.TfidfTransform.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/pipeline/tfidf_transform.html#TfidfTransform.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.pipeline.tfidf_transform.TfidfTransform.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>transform features with tfidf transform</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -875,15 +924,16 @@ Uses scikit-learn based transformers internally</p>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="seldon.text.html" class="btn btn-neutral float-right" title="seldon.text package">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="seldon.text.html" class="btn btn-neutral float-right" title="seldon.text package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="seldon.misc.html" class="btn btn-neutral" title="seldon.misc package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="seldon.misc.html" class="btn btn-neutral" title="seldon.misc package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -893,12 +943,13 @@ Uses scikit-learn based transformers internally</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.microservice.recommend &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,73 +119,76 @@
     <li>seldon.microservice.recommend</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.microservice.recommend</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">current_app</span>
+<span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">current_app</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="n">recommend_blueprint</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s">&#39;recommend&#39;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+<span class="n">recommend_blueprint</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s1">&#39;recommend&#39;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="extract_input"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.recommend.extract_input">[docs]</a><span class="k">def</span> <span class="nf">extract_input</span><span class="p">():</span>
-    <span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;user_id&#39;</span><span class="p">))</span>
-    <span class="n">client</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;client&#39;</span><span class="p">)</span>
-    <span class="n">limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;limit&#39;</span><span class="p">))</span>
-    <span class="n">exclusion_items</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;exclusion_items&#39;</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">))</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="p">)</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;limit&#39;</span><span class="p">))</span>
+    <span class="n">exclusion_items</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;exclusion_items&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">exclusion_items</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">exclusion_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">exclusion_items_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">long</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">exclusion_items</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
+        <span class="n">exclusion_items_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">long</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">exclusion_items</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">exclusion_items_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">recent_interactions</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;recent_interactions&#39;</span><span class="p">)</span>
+    <span class="n">recent_interactions</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recent_interactions&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">recent_interactions</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_interactions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">recent_interactions_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">long</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">recent_interactions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
+        <span class="n">recent_interactions_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">long</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">recent_interactions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">recent_interactions_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">data_keys</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;data_key&#39;</span><span class="p">)</span>
+    <span class="n">data_keys</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_key&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">data_keys</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">data_keys_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">data_keys</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
+        <span class="n">data_keys_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">data_keys</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data_keys_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;user_id&quot;</span> <span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
-        <span class="s">&quot;client&quot;</span> <span class="p">:</span> <span class="n">client</span><span class="p">,</span>
-        <span class="s">&quot;limit&quot;</span> <span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
-        <span class="s">&quot;exclusion_items_list&quot;</span> <span class="p">:</span> <span class="n">exclusion_items_list</span><span class="p">,</span>
-        <span class="s">&quot;recent_interactions_list&quot;</span><span class="p">:</span> <span class="n">recent_interactions_list</span><span class="p">,</span>
-        <span class="s">&quot;data_keys_list&quot;</span><span class="p">:</span> <span class="n">data_keys_list</span>
+        <span class="s2">&quot;user_id&quot;</span> <span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+        <span class="s2">&quot;client&quot;</span> <span class="p">:</span> <span class="n">client</span><span class="p">,</span>
+        <span class="s2">&quot;limit&quot;</span> <span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+        <span class="s2">&quot;exclusion_items_list&quot;</span> <span class="p">:</span> <span class="n">exclusion_items_list</span><span class="p">,</span>
+        <span class="s2">&quot;recent_interactions_list&quot;</span><span class="p">:</span> <span class="n">recent_interactions_list</span><span class="p">,</span>
+        <span class="s2">&quot;data_keys_list&quot;</span><span class="p">:</span> <span class="n">data_keys_list</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">input</span>
-</div>
+    <span class="k">return</span> <span class="nb">input</span></div>
+
 <div class="viewcode-block" id="format_recs"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.recommend.format_recs">[docs]</a><span class="k">def</span> <span class="nf">format_recs</span><span class="p">(</span><span class="n">recs</span><span class="p">):</span>
     <span class="n">formatted_recs_list</span><span class="o">=</span><span class="p">[]</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="n">recs</span><span class="p">:</span>
         <span class="n">formatted_recs_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-            <span class="s">&quot;item&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">,</span>
-            <span class="s">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span>
+            <span class="s2">&quot;item&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">,</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span>
         <span class="p">})</span>
-    <span class="k">return</span> <span class="p">{</span> <span class="s">&quot;recommended&quot;</span><span class="p">:</span> <span class="n">formatted_recs_list</span> <span class="p">}</span>
-</div>
+    <span class="k">return</span> <span class="p">{</span> <span class="s2">&quot;recommended&quot;</span><span class="p">:</span> <span class="n">formatted_recs_list</span> <span class="p">}</span></div>
+
 <div class="viewcode-block" id="get_data_set"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.recommend.get_data_set">[docs]</a><span class="k">def</span> <span class="nf">get_data_set</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span>
-</div>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="memcache_get"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.recommend.memcache_get">[docs]</a><span class="k">def</span> <span class="nf">memcache_get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
     <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="n">value</span><span class="o">=</span><span class="bp">None</span>
-    <span class="n">_mc_pool</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;seldon_memcache&quot;</span><span class="p">)</span>
+    <span class="n">_mc_pool</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;seldon_memcache&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_mc_pool</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">_mc_pool</span><span class="o">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">mc</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
 
-</div>
-<span class="nd">@recommend_blueprint.route</span><span class="p">(</span><span class="s">&#39;/recommend&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span><span class="s">&#39;POST&#39;</span><span class="p">])</span>
+
+<span class="nd">@recommend_blueprint.route</span><span class="p">(</span><span class="s1">&#39;/recommend&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="do_recommend"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.recommend.do_recommend">[docs]</a><span class="k">def</span> <span class="nf">do_recommend</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    recommendation endpoint</span>
@@ -186,21 +202,24 @@
     <span class="nb">input</span> <span class="o">=</span> <span class="n">extract_input</span><span class="p">()</span>
 
     <span class="n">data_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">[</span><span class="s">&#39;data_keys_list&#39;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">[</span><span class="s1">&#39;data_keys_list&#39;</span><span class="p">]:</span>
         <span class="n">raw_data</span> <span class="o">=</span> <span class="n">memcache_get</span><span class="p">(</span><span class="n">data_key</span><span class="p">)</span>
-        <span class="n">raw_data</span> <span class="o">=</span> <span class="n">raw_data</span> <span class="k">if</span> <span class="n">raw_data</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="s">&#39;[]&#39;</span>
+        <span class="n">raw_data</span> <span class="o">=</span> <span class="n">raw_data</span> <span class="k">if</span> <span class="n">raw_data</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="s1">&#39;[]&#39;</span>
         <span class="n">data_set</span> <span class="o">|=</span> <span class="n">get_data_set</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
 
-    <span class="n">data_set</span> <span class="o">-=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s">&#39;exclusion_items_list&#39;</span><span class="p">])</span>
+    <span class="n">data_set</span> <span class="o">-=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;exclusion_items_list&#39;</span><span class="p">])</span>
 
-    <span class="n">recommender</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_recommender&quot;</span><span class="p">]</span>
-    <span class="n">recs</span> <span class="o">=</span> <span class="n">recommender</span><span class="o">.</span><span class="n">recommend</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s">&#39;user_id&#39;</span><span class="p">],</span><span class="n">ids</span><span class="o">=</span><span class="n">data_set</span><span class="p">,</span><span class="n">recent_interactions</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s">&#39;recent_interactions_list&#39;</span><span class="p">],</span><span class="n">limit</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s">&#39;limit&#39;</span><span class="p">],</span><span class="n">client</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s">&#39;client&#39;</span><span class="p">])</span>
+    <span class="n">recommender</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_recommender&quot;</span><span class="p">]</span>
+    <span class="n">recs</span> <span class="o">=</span> <span class="n">recommender</span><span class="o">.</span><span class="n">recommend</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span><span class="n">ids</span><span class="o">=</span><span class="n">data_set</span><span class="p">,</span><span class="n">recent_interactions</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;recent_interactions_list&#39;</span><span class="p">],</span><span class="n">limit</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">],</span><span class="n">client</span><span class="o">=</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;client&#39;</span><span class="p">])</span>
 
     <span class="n">f</span><span class="o">=</span><span class="n">format_recs</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">json</span>
-</pre></div></div>
+    <span class="k">return</span> <span class="n">json</span></div>
 
+
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -210,12 +229,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

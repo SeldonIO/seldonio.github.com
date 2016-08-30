@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.keras &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon" href="../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.keras</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.keras</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
 <span class="kn">from</span> <span class="nn">keras.layers.core</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span>
 <span class="kn">from</span> <span class="nn">keras.layers.normalization</span> <span class="kn">import</span> <span class="n">BatchNormalization</span>
@@ -138,19 +154,18 @@
     <span class="sd">&quot;&quot;&quot;Default classification model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>                         
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;input width=</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">input_width</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s">&#39;uniform&#39;</span><span class="p">,</span><span class="n">input_dim</span><span class="o">=</span><span class="n">input_width</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">&#39;tanh&#39;</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;input width=</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">input_width</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span><span class="n">input_dim</span><span class="o">=</span><span class="n">input_width</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;tanh&#39;</span><span class="p">))</span>
 
     <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s">&#39;softmax&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">model</span>
+    <span class="k">return</span> <span class="n">model</span></div>
 
-</div>
+
 <div class="viewcode-block" id="KerasClassifier"><a class="viewcode-back" href="../../seldon.html#seldon.keras.KerasClassifier">[docs]</a><span class="k">class</span> <span class="nc">KerasClassifier</span><span class="p">(</span><span class="n">BasePandasEstimator</span><span class="p">,</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_create</span><span class="o">=</span><span class="n">default_classification_model</span><span class="p">,</span><span class="n">tmp_model</span><span class="o">=</span><span class="s">&quot;/tmp/model&quot;</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">optimizer</span><span class="o">=</span><span class="s">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_accuracy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_create</span><span class="o">=</span><span class="n">default_classification_model</span><span class="p">,</span><span class="n">tmp_model</span><span class="o">=</span><span class="s2">&quot;/tmp/model&quot;</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_readable</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">test_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_accuracy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Wrapper for keras with pandas support</span>
 <span class="sd">        Derived from https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py</span>
@@ -218,25 +233,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="o">=</span><span class="n">tmp_model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span> <span class="o">=</span> <span class="bp">None</span>
 
-<div class="viewcode-block" id="KerasClassifier.__getstate__"><a class="viewcode-back" href="../../seldon.html#seldon.keras.KerasClassifier.__getstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove parts of class that cause issue in pickling. Can recreate them in setstate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;compiled_model_&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;model_create&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;compiled_model_&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;model_create&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span>
-</div>
-<div class="viewcode-block" id="KerasClassifier.__setstate__"><a class="viewcode-back" href="../../seldon.html#seldon.keras.KerasClassifier.__setstate__">[docs]</a>    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create compiled model from parameters. saving model to file and loading it back in</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_create</span><span class="o">=</span><span class="bp">None</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelfile</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">modelfile</span><span class="p">:</span> <span class="c1"># b is important -&gt; binary</span>
             <span class="n">modelfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span> <span class="o">=</span> <span class="n">model_from_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">)</span>
-</div>
+
 <div class="viewcode-block" id="KerasClassifier.fit"><a class="viewcode-back" href="../../seldon.html#seldon.keras.KerasClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Derived from https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py</span>
 <span class="sd">        Adds:</span>
@@ -264,14 +279,14 @@
 
         <span class="n">input_width</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;input_width </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">input_width</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num_classes </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">num_classes</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;input_width </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">input_width</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num_classes </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">num_classes</span><span class="p">)</span>
         <span class="n">train_y</span> <span class="o">=</span> <span class="n">np_utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_create</span><span class="p">(</span><span class="n">input_width</span><span class="p">,</span><span class="n">num_classes</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">==</span> <span class="s">&#39;categorical_crossentropy&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">==</span> <span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">:</span>
                 <span class="n">y</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -287,10 +302,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">config_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span> <span class="c"># b is important -&gt; binary</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span> <span class="c1"># b is important -&gt; binary</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model_saved</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
 <div class="viewcode-block" id="KerasClassifier.predict_proba"><a class="viewcode-back" href="../../seldon.html#seldon.keras.KerasClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns class probability estimates for the given test data.</span>
@@ -309,9 +324,11 @@
             <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_numpy</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compiled_model_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span></div></div>
 
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -321,12 +338,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

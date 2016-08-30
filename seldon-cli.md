@@ -578,7 +578,7 @@ seldon-cli api --client-name CLIENT --endpoint ENDPOINT
 Some example content recommendation examples are shown below:
 
 {% highlight bash %}
-# Send a new action using javascript API for user 22 for item 10 for client movielnes
+# Send a new action using javascript API for user 22 for item 10 for client movielens
 seldon-cli api --client-name ml100k --endpoint /js/action/new --user 22 --item 10
 {% endhighlight %}
 

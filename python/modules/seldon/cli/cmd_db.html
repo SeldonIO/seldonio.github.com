@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.cli.cmd_db &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon.cli" href="../cli.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -108,14 +121,17 @@
     <li>seldon.cli.cmd_db</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.cli.cmd_db</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">pprint</span>
+<span></span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -126,15 +142,17 @@
 <span class="kn">import</span> <span class="nn">zk_utils</span>
 
 <span class="n">gdata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;data_path&#39;</span><span class="p">:</span> <span class="s">&quot;/config/dbcp/_data_&quot;</span><span class="p">,</span>
-    <span class="s">&#39;node_path&#39;</span><span class="p">:</span> <span class="s">&quot;/config/dbcp&quot;</span><span class="p">,</span>
-    <span class="s">&#39;default_data&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&#39;dbs&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s1">&#39;data_path&#39;</span><span class="p">:</span> <span class="s2">&quot;/config/dbcp/_data_&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;node_path&#39;</span><span class="p">:</span> <span class="s2">&quot;/config/dbcp&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;default_data&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;dbs&#39;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
-                <span class="s">&#39;jdbc&#39;</span><span class="p">:</span> <span class="s">&quot;jdbc:mysql:replication://127.0.0.1:3306,127.0.0.1:3306/?characterEncoding=utf8&amp;useServerPrepStmts=true&amp;logger=com.mysql.jdbc.log.StandardLogger&amp;roundRobinLoadBalance=true&amp;transformedBitIsBoolean=true&amp;rewriteBatchedStatements=true&quot;</span><span class="p">,</span>
-                <span class="s">&#39;password&#39;</span><span class="p">:</span> <span class="s">&quot;mypass&quot;</span><span class="p">,</span>
-                <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;ClientDB&quot;</span><span class="p">,</span>
-                <span class="s">&#39;user&#39;</span><span class="p">:</span> <span class="s">&quot;root&quot;</span>
+                <span class="s1">&#39;jdbc&#39;</span><span class="p">:</span> <span class="s2">&quot;jdbc:mysql:replication://127.0.0.1:3306,127.0.0.1:3306/?characterEncoding=utf8&amp;useServerPrepStmts=true&amp;logger=com.mysql.jdbc.log.StandardLogger&amp;roundRobinLoadBalance=true&amp;transformedBitIsBoolean=true&amp;rewriteBatchedStatements=true&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s2">&quot;mypass&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ClientDB&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;maxIdle&quot;</span> <span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+                <span class="s2">&quot;minIdle&quot;</span> <span class="p">:</span> <span class="mi">20</span>
             <span class="p">}</span>
          <span class="p">]</span>
     <span class="p">},</span>
@@ -142,77 +160,77 @@
 
 <div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-</div>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="getOpts"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.getOpts">[docs]</a><span class="k">def</span> <span class="nf">getOpts</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">&#39;seldon-cli db&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">&#39;Seldon Cli&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;show&#39;</span><span class="p">,</span><span class="s">&#39;list&#39;</span><span class="p">,</span><span class="s">&#39;setup&#39;</span><span class="p">,</span><span class="s">&#39;commit&#39;</span><span class="p">])</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--db-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the db&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--db-user&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the user&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--db-password&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the password for the user&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--db-jdbc&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the jdbc string&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c"># catch rest (non-options) as args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;seldon-cli db&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Seldon Cli&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">,</span><span class="s1">&#39;list&#39;</span><span class="p">,</span><span class="s1">&#39;setup&#39;</span><span class="p">,</span><span class="s1">&#39;commit&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the name of the db&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db-user&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the user&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db-password&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the password for the user&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--db-jdbc&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the jdbc string&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">REMAINDER</span><span class="p">)</span> <span class="c1"># catch rest (non-options) as args</span>
     <span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">opts</span>
-</div>
+    <span class="k">return</span> <span class="n">opts</span></div>
+
 <div class="viewcode-block" id="mkdir_p"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.mkdir_p">[docs]</a><span class="k">def</span> <span class="nf">mkdir_p</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c"># Python &gt;2.5</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c1"># Python &gt;2.5</span>
         <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span>
-</div>
+        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span></div>
+
 <div class="viewcode-block" id="json_to_dict"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.json_to_dict">[docs]</a><span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
-</div>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="dict_to_json"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.dict_to_json">[docs]</a><span class="k">def</span> <span class="nf">dict_to_json</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="s">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;:&#39;</span><span class="p">))</span>
-</div>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="write_data_to_file"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.write_data_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
     <span class="n">mkdir_p</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">))</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+    <span class="k">print</span> <span class="s2">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="ensure_local_data_file_exists"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.ensure_local_data_file_exists">[docs]</a><span class="k">def</span> <span class="nf">ensure_local_data_file_exists</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">):</span>
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;data_path&#39;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;data_path&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">):</span>
-        <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;node_path&quot;</span><span class="p">]</span>
+        <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;node_path&quot;</span><span class="p">]</span>
         <span class="n">node_value</span> <span class="o">=</span> <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_get</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;default_data&quot;</span><span class="p">]</span>
-        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</div>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;default_data&quot;</span><span class="p">]</span>
+        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="action_list"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.action_list">[docs]</a><span class="k">def</span> <span class="nf">action_list</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
     <span class="n">ensure_local_data_file_exists</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">)</span>
 
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;data_path&#39;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;data_path&#39;</span><span class="p">]</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="n">db_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dbs&#39;</span><span class="p">]]</span>
-    <span class="n">list_str</span> <span class="o">=</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_list</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">list_str</span>
-</div>
+    <span class="n">db_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dbs&#39;</span><span class="p">]]</span>
+    <span class="n">list_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_list</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">list_str</span></div>
+
 <div class="viewcode-block" id="action_setup"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.action_setup">[docs]</a><span class="k">def</span> <span class="nf">action_setup</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
     <span class="n">db_to_setup</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_name</span>
     <span class="k">if</span> <span class="n">db_to_setup</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Need db-name to setup!&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Need db-name to setup!&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
     <span class="n">ensure_local_data_file_exists</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;Setting up Databases&quot;</span>
+    <span class="k">print</span> <span class="s2">&quot;Setting up Databases&quot;</span>
 
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;data_path&#39;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;data_path&#39;</span><span class="p">]</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
@@ -220,85 +238,87 @@
 
     <span class="n">has_any_value_changed</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="n">db_entries_found</span> <span class="o">=</span> <span class="p">[</span><span class="n">db_entry</span> <span class="k">for</span> <span class="n">db_entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;dbs&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span><span class="o">==</span><span class="n">db_to_setup</span><span class="p">]</span>
+    <span class="n">db_entries_found</span> <span class="o">=</span> <span class="p">[</span><span class="n">db_entry</span> <span class="k">for</span> <span class="n">db_entry</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;dbs&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">==</span><span class="n">db_to_setup</span><span class="p">]</span>
     <span class="n">db_entry</span> <span class="o">=</span> <span class="n">db_entries_found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">db_entries_found</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="bp">None</span>
 
     <span class="k">if</span> <span class="n">db_entry</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">db_entry</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;default_data&quot;</span><span class="p">][</span><span class="s">&quot;dbs&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_to_setup</span>
-        <span class="n">data</span><span class="p">[</span><span class="s">&quot;dbs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">db_entry</span><span class="p">)</span>
+        <span class="n">db_entry</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;default_data&quot;</span><span class="p">][</span><span class="s2">&quot;dbs&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_to_setup</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;dbs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">db_entry</span><span class="p">)</span>
         <span class="n">has_any_value_changed</span> <span class="o">=</span> <span class="bp">True</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_user</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_user</span><span class="p">):</span>
-        <span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_user</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_user</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_user</span><span class="p">):</span>
+        <span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_user</span>
         <span class="n">has_any_value_changed</span> <span class="o">=</span> <span class="bp">True</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_password</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_password</span><span class="p">):</span>
-        <span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_password</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_password</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_password</span><span class="p">):</span>
+        <span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_password</span>
         <span class="n">has_any_value_changed</span> <span class="o">=</span> <span class="bp">True</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;jdbc&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span><span class="p">):</span>
-        <span class="n">db_entry</span><span class="p">[</span><span class="s">&quot;jdbc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;jdbc&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span><span class="p">):</span>
+        <span class="n">db_entry</span><span class="p">[</span><span class="s2">&quot;jdbc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">db_jdbc</span>
         <span class="n">has_any_value_changed</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">if</span> <span class="n">has_any_value_changed</span><span class="p">:</span>
-        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</div>
+        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="action_show"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.action_show">[docs]</a><span class="k">def</span> <span class="nf">action_show</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
     <span class="n">ensure_local_data_file_exists</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">)</span>
 
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;data_path&#39;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;data_path&#39;</span><span class="p">]</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">dbs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;dbs&#39;</span><span class="p">]</span>
+    <span class="n">dbs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dbs&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">dbs</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
-        <span class="n">jdbc</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s">&quot;jdbc&quot;</span><span class="p">]</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span>
-        <span class="n">password</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">]</span>
-        <span class="k">print</span> <span class="s">&quot;db[{name}]:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-        <span class="k">print</span> <span class="s">&quot;    jdbc: {jdbc}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-        <span class="k">print</span> <span class="s">&quot;    user: {user}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-        <span class="k">print</span> <span class="s">&quot;    password: {password}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">jdbc</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;jdbc&quot;</span><span class="p">]</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s2">&quot;db[{name}]:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;    jdbc: {jdbc}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;    user: {user}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;    password: {password}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="action_commit"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.action_commit">[docs]</a><span class="k">def</span> <span class="nf">action_commit</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&#39;data_path&#39;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s1">&#39;data_path&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">):</span>
-        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;default_data&quot;</span><span class="p">])</span>
+        <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;default_data&quot;</span><span class="p">])</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
     <span class="n">data_json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-    <span class="n">zk_client</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
-    <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;node_path&quot;</span><span class="p">]</span>
-    <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">data_json</span><span class="p">)</span>
-</div>
+    <span class="n">zk_client</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;node_path&quot;</span><span class="p">]</span>
+    <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">data_json</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="cmd_db"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_db.cmd_db">[docs]</a><span class="k">def</span> <span class="nf">cmd_db</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">command_args</span><span class="p">):</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
-        <span class="s">&quot;show&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
-        <span class="s">&quot;list&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
-        <span class="s">&quot;setup&quot;</span> <span class="p">:</span> <span class="n">action_setup</span><span class="p">,</span>
-        <span class="s">&quot;commit&quot;</span> <span class="p">:</span> <span class="n">action_commit</span><span class="p">,</span>
+        <span class="s2">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
+        <span class="s2">&quot;show&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
+        <span class="s2">&quot;list&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
+        <span class="s2">&quot;setup&quot;</span> <span class="p">:</span> <span class="n">action_setup</span><span class="p">,</span>
+        <span class="s2">&quot;commit&quot;</span> <span class="p">:</span> <span class="n">action_commit</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">opts</span> <span class="o">=</span> <span class="n">getOpts</span><span class="p">(</span><span class="n">command_args</span><span class="p">)</span>
 
     <span class="n">action</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">action</span>
     <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">actions</span><span class="p">[</span><span class="s">&quot;default&quot;</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+        <span class="n">actions</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">actions</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
             <span class="n">actions</span><span class="p">[</span><span class="n">action</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</pre></div></div>
+            <span class="k">print</span> <span class="s2">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
 
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -308,12 +328,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

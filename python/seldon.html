@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon package &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -35,7 +35,7 @@
         <link rel="prev" title="Welcome to seldon’s documentation!" href="index.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -45,11 +45,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -57,15 +73,25 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
-              <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">seldon package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="seldon.cli.html">seldon.cli package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.luigi.html">seldon.luigi package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.microservice.html">seldon.microservice package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.misc.html">seldon.misc package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.pipeline.html">seldon.pipeline package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.text.html">seldon.text package</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.fileutil">seldon.fileutil module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.keras">seldon.keras module</a></li>
@@ -73,15 +99,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.util">seldon.util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.vw">seldon.vw module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-seldon.tensorflow_wrapper">seldon.tensorflow_wrapper module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seldon">Module contents</a></li>
 </ul>
 </li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -96,20 +123,29 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
     <li>seldon package</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="sources/seldon.txt" rel="nofollow"> View page source</a>
+          
+            <a href="sources/seldon.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="seldon-package">
 <h1>seldon package<a class="headerlink" href="#seldon-package" title="Permalink to this headline">¶</a></h1>
@@ -197,8 +233,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>[Optional(str)]</strong> (<em>secret</em>) &#8211; aws key</li>
-<li><strong>[Optional(str)]</strong> &#8211; aws secret</li>
+<li><strong>[Optional</strong> (<em>secret</em>) &#8211; aws key</li>
+<li><strong>[Optional</strong> &#8211; aws secret</li>
 </ul>
 </td>
 </tr>
@@ -402,18 +438,6 @@
 <em class="property">class </em><code class="descclassname">seldon.keras.</code><code class="descname">KerasClassifier</code><span class="sig-paren">(</span><em>model_create=&lt;function default_classification_model&gt;</em>, <em>tmp_model='/tmp/model'</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em>, <em>optimizer='adam'</em>, <em>loss='categorical_crossentropy'</em>, <em>train_batch_size=128</em>, <em>test_batch_size=128</em>, <em>nb_epoch=100</em>, <em>shuffle=True</em>, <em>show_accuracy=False</em>, <em>validation_split=0</em>, <em>validation_data=None</em>, <em>callbacks=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <dl class="method">
-<dt id="seldon.keras.KerasClassifier.__getstate__">
-<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.__getstate__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove parts of class that cause issue in pickling. Can recreate them in setstate</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.keras.KerasClassifier.__setstate__">
-<code class="descname">__setstate__</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.__setstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.__setstate__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create compiled model from parameters. saving model to file and loading it back in</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="seldon.keras.KerasClassifier.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference external" href="https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py">https://github.com/fchollet/keras/blob/master/keras/wrappers/scikit_learn.py</a>
@@ -445,15 +469,14 @@ Saving of model into the class to allow for easy pickling</p>
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/keras.html#KerasClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.keras.KerasClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns class probability estimates for the given test data.</p>
 <dl class="docutils">
-<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
-<dd>Test samples</dd>
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
-Class probability estimates.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211; Class probability estimates.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
 </tr>
@@ -479,20 +502,20 @@ Class probability estimates.</td>
 <p>Wrapper for XGBoost classifier with pandas support
 XGBoost specific arguments follow <a class="reference external" href="https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py">https://github.com/dmlc/xgboost/blob/master/python-package/xgboost/sklearn.py</a></p>
 <dl class="docutils">
-<dt>clf <span class="classifier-delimiter">:</span> <span class="classifier">sklearn estimator</span></dt>
-<dd>sklearn estimator to run</dd>
-<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>Target column</dd>
-<dt>target_readable <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>More descriptive version of target variable</dd>
-<dt>included <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
-<dd>columns to include</dd>
-<dt>excluded <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span></dt>
-<dd>columns to exclude</dd>
-<dt>id_map <span class="classifier-delimiter">:</span> <span class="classifier">dict (int,str), optional</span></dt>
-<dd>map of class ids to high level names</dd>
-<dt>sk_args <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
-<dd>extra args for sklearn classifier</dd>
+<dt>clf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">sklearn estimator</span><dd>sklearn estimator to run</dd>
+<dt>target</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>Target column</dd>
+<dt>target_readable</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>More descriptive version of target variable</dd>
+<dt>included</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span><dd>columns to include</dd>
+<dt>excluded</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">list str, optional</span><dd>columns to exclude</dd>
+<dt>id_map</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">dict (int,str), optional</span><dd>map of class ids to high level names</dd>
+<dt>sk_args</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span><dd>extra args for sklearn classifier</dd>
 </dl>
 <dl class="method">
 <dt id="seldon.sklearn_estimator.SKLearnClassifier.fit">
@@ -523,15 +546,14 @@ XGBoost specific arguments follow <a class="reference external" href="https://gi
 <code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns class predictions</p>
 <dl class="docutils">
-<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
-<dd>Test samples</dd>
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
-Class predictions</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211; Class predictions</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
 </tr>
@@ -544,15 +566,14 @@ Class predictions</td>
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/sklearn_estimator.html#SKLearnClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.sklearn_estimator.SKLearnClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns class probability estimates for the given test data.</p>
 <dl class="docutils">
-<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
-<dd>Test samples</dd>
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
-Class probability estimates.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211; Class probability estimates.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
 </tr>
@@ -565,6 +586,12 @@ Class probability estimates.</td>
 </div>
 <div class="section" id="module-seldon.util">
 <span id="seldon-util-module"></span><h2>seldon.util module<a class="headerlink" href="#module-seldon.util" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.util.DeprecationHelper">
+<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">DeprecationHelper</code><span class="sig-paren">(</span><em>new_target</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#DeprecationHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.DeprecationHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
 <dl class="class">
 <dt id="seldon.util.Extension">
 <em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">Extension</code><a class="reference internal" href="modules/seldon/util.html#Extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension" title="Permalink to this definition">¶</a></dt>
@@ -606,27 +633,27 @@ Class probability estimates.</td>
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.util.Extension_wrapper">
-<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">Extension_wrapper</code><span class="sig-paren">(</span><em>work_folder='/tmp'</em>, <em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Extension_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension_wrapper" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.ExtensionWrapper">
+<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">ExtensionWrapper</code><span class="sig-paren">(</span><em>work_folder='/tmp'</em>, <em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#ExtensionWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.ExtensionWrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
-<dt id="seldon.util.Extension_wrapper.create_work_folder">
-<code class="descname">create_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Extension_wrapper.create_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension_wrapper.create_work_folder" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.ExtensionWrapper.create_work_folder">
+<code class="descname">create_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#ExtensionWrapper.create_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.ExtensionWrapper.create_work_folder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Extension_wrapper.get_work_folder">
-<code class="descname">get_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Extension_wrapper.get_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension_wrapper.get_work_folder" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.ExtensionWrapper.get_work_folder">
+<code class="descname">get_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#ExtensionWrapper.get_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.ExtensionWrapper.get_work_folder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Extension_wrapper.load_extension">
-<code class="descname">load_extension</code><span class="sig-paren">(</span><em>extension_folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Extension_wrapper.load_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension_wrapper.load_extension" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.ExtensionWrapper.load_extension">
+<code class="descname">load_extension</code><span class="sig-paren">(</span><em>extension_folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#ExtensionWrapper.load_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.ExtensionWrapper.load_extension" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Extension_wrapper.save_extension">
-<code class="descname">save_extension</code><span class="sig-paren">(</span><em>extension</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Extension_wrapper.save_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Extension_wrapper.save_extension" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.ExtensionWrapper.save_extension">
+<code class="descname">save_extension</code><span class="sig-paren">(</span><em>extension</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#ExtensionWrapper.save_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.ExtensionWrapper.save_extension" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -694,23 +721,23 @@ Class probability estimates.</td>
 </dd></dl>
 
 <dl class="class">
-<dt id="seldon.util.Recommender_wrapper">
-<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">Recommender_wrapper</code><span class="sig-paren">(</span><em>work_folder='/tmp'</em>, <em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.RecommenderWrapper">
+<em class="property">class </em><code class="descclassname">seldon.util.</code><code class="descname">RecommenderWrapper</code><span class="sig-paren">(</span><em>work_folder='/tmp'</em>, <em>aws_key=None</em>, <em>aws_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#RecommenderWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.RecommenderWrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Wrapper to allow recommenders to be easily saved and loaded</p>
 <dl class="method">
-<dt id="seldon.util.Recommender_wrapper.create_work_folder">
-<code class="descname">create_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.create_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.create_work_folder" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.RecommenderWrapper.create_work_folder">
+<code class="descname">create_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#RecommenderWrapper.create_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.RecommenderWrapper.create_work_folder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Recommender_wrapper.get_work_folder">
-<code class="descname">get_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.get_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.get_work_folder" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.RecommenderWrapper.get_work_folder">
+<code class="descname">get_work_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#RecommenderWrapper.get_work_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.RecommenderWrapper.get_work_folder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Recommender_wrapper.load_recommender">
-<code class="descname">load_recommender</code><span class="sig-paren">(</span><em>recommender_folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.load_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.load_recommender" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.RecommenderWrapper.load_recommender">
+<code class="descname">load_recommender</code><span class="sig-paren">(</span><em>recommender_folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#RecommenderWrapper.load_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.RecommenderWrapper.load_recommender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load scikit learn recommender from external folder</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -723,8 +750,8 @@ Class probability estimates.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="seldon.util.Recommender_wrapper.save_recommender">
-<code class="descname">save_recommender</code><span class="sig-paren">(</span><em>recommender</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#Recommender_wrapper.save_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.Recommender_wrapper.save_recommender" title="Permalink to this definition">¶</a></dt>
+<dt id="seldon.util.RecommenderWrapper.save_recommender">
+<code class="descname">save_recommender</code><span class="sig-paren">(</span><em>recommender</em>, <em>location</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/util.html#RecommenderWrapper.save_recommender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.util.RecommenderWrapper.save_recommender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save recommender to external location</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -771,18 +798,6 @@ Class probability estimates.</td>
 </tbody>
 </table>
 <dl class="method">
-<dt id="seldon.vw.VWClassifier.__getstate__">
-<code class="descname">__getstate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.__getstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.__getstate__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove things that should not be pickled</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seldon.vw.VWClassifier.__setstate__">
-<code class="descname">__setstate__</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.__setstate__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.__setstate__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add thread based variables when creating</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="seldon.vw.VWClassifier.close">
 <code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/vw.html#VWClassifier.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.vw.VWClassifier.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shutdown the vw process</p>
@@ -820,16 +835,15 @@ Class probability estimates.</td>
 <dd><p>Create predictions. Start a vw process. Convert data to vw format and send.
 Returns class probability estimates for the given test data.</p>
 <dl class="docutils">
-<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
-<dd>Test samples</dd>
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li><strong>proba</strong> (<em>array-like, shape = (n_samples, n_outputs)</em>) &#8211;
-Class probability estimates.</li>
+<li><strong>proba</strong> (<em>array-like, shape = (n_samples, n_outputs)</em>) &#8211; Class probability estimates.</li>
 <li><em>Caveats</em></li>
 <li><strong>1. A seldon specific fork of wabbit_wappa is needed to allow vw to run in server mode without save_resume. Save_resume seems to cause issues with the scores returned. Maybe connected to https</strong> (<em>//github.com/JohnLangford/vowpal_wabb#it/issues/262</em>)</li>
 </ul>
@@ -874,8 +888,8 @@ XGBoost specific arguments follow <a class="reference external" href="https://gi
 <li><strong>subsample</strong> (<em>float</em>) &#8211; Subsample ratio of the training instance.</li>
 <li><strong>colsample_bytree</strong> (<em>float</em>) &#8211; Subsample ratio of columns when constructing each tree.</li>
 <li><strong>colsample_bylevel</strong> (<em>float</em>) &#8211; Subsample ratio of columns for each split, in each level.</li>
-<li><strong>reg_alpha</strong> (<em>float (xgb&#8217;s alpha)</em>) &#8211; L2 regularization term on weights</li>
-<li><strong>reg_lambda</strong> (<em>float (xgb&#8217;s lambda)</em>) &#8211; L1 regularization term on weights</li>
+<li><strong>reg_alpha</strong> (<em>float (xgb's alpha)</em>) &#8211; L2 regularization term on weights</li>
+<li><strong>reg_lambda</strong> (<em>float (xgb's lambda)</em>) &#8211; L1 regularization term on weights</li>
 <li><strong>scale_pos_weight</strong> (<em>float</em>) &#8211; Balancing of positive and negative weights.</li>
 <li><strong>base_score</strong> &#8211; The initial prediction score of all instances, global bias.</li>
 <li><strong>seed</strong> (<em>int</em>) &#8211; Random number seed.</li>
@@ -915,20 +929,85 @@ None, defaults to np.nan.</li>
 <code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/xgb.html#XGBoostClassifier.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.xgb.XGBoostClassifier.predict_proba" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns class probability estimates for the given test data.</p>
 <dl class="docutils">
-<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span></dt>
-<dd>Test samples</dd>
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211;
-Class probability estimates.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211; Class probability estimates.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.tensorflow_wrapper">
+<span id="seldon-tensorflow-wrapper-module"></span><h2>seldon.tensorflow_wrapper module<a class="headerlink" href="#module-seldon.tensorflow_wrapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.tensorflow_wrapper.TensorFlowWrapper">
+<em class="property">class </em><code class="descclassname">seldon.tensorflow_wrapper.</code><code class="descname">TensorFlowWrapper</code><span class="sig-paren">(</span><em>session</em>, <em>tf_input</em>, <em>tf_output</em>, <em>tf_constants=()</em>, <em>tmp_model='/tmp'</em>, <em>target=None</em>, <em>target_readable=None</em>, <em>included=None</em>, <em>excluded=None</em>, <em>id_map={}</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/tensorflow_wrapper.html#TensorFlowWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.tensorflow_wrapper.TensorFlowWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seldon.pipeline.html#seldon.pipeline.pandas_pipelines.BasePandasEstimator" title="seldon.pipeline.pandas_pipelines.BasePandasEstimator"><code class="xref py py-class docutils literal"><span class="pre">seldon.pipeline.pandas_pipelines.BasePandasEstimator</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
+<p>Wrapper for tensorflow with pandas support</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> (<em>tensorflow session</em>) &#8211; Contains the tensorflow model</li>
+<li><strong>tf_input</strong> (<em>tensorflow variable</em>) &#8211; Variable used as the model input</li>
+<li><strong>tf_output</strong> (<em>tensorflow variable</em>) &#8211; Variable used as the model output</li>
+<li><strong>tf_constant</strong> (<em>iterable</em>) &#8211; List of tuples (tensorflow variable, value) to be used as constant for the model when doing predictions</li>
+<li><strong>tmp_model</strong> (<em>string</em>) &#8211; url to folder where the model will be temporarily saved</li>
+<li><strong>target</strong> (<em>str</em>) &#8211; Target column</li>
+<li><strong>target_readable</strong> (<em>str</em>) &#8211; More descriptive version of target variable</li>
+<li><strong>included</strong> (<em>list str, optional</em>) &#8211; columns to include</li>
+<li><strong>excluded</strong> (<em>list str, optional</em>) &#8211; columns to exclude</li>
+<li><strong>id_map</strong> (<em>dict (int,str), optional</em>) &#8211; map of class ids to high level names</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.tensorflow_wrapper.TensorFlowWrapper.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/tensorflow_wrapper.html#TensorFlowWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.tensorflow_wrapper.TensorFlowWrapper.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.tensorflow_wrapper.TensorFlowWrapper.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/tensorflow_wrapper.html#TensorFlowWrapper.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.tensorflow_wrapper.TensorFlowWrapper.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seldon.tensorflow_wrapper.TensorFlowWrapper.predict_proba">
+<code class="descname">predict_proba</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/tensorflow_wrapper.html#TensorFlowWrapper.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.tensorflow_wrapper.TensorFlowWrapper.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns class probability estimates for the given test data.</p>
+<dl class="docutils">
+<dt>X</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">pandas dataframe or array-like</span><dd>Test samples</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>proba</strong> &#8211; Class probability estimates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array-like, shape = (n_samples, n_outputs)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.tensorflow_wrapper.TensorFlowWrapper.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/tensorflow_wrapper.html#TensorFlowWrapper.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.tensorflow_wrapper.TensorFlowWrapper.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports tensorflow model</p>
 </dd></dl>
 
 </dd></dl>
@@ -951,15 +1030,16 @@ Class probability estimates.</td>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="seldon.cli.html" class="btn btn-neutral float-right" title="seldon.cli package">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="seldon.cli.html" class="btn btn-neutral float-right" title="seldon.cli package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to seldon’s documentation!"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Welcome to seldon’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -969,12 +1049,13 @@ Class probability estimates.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

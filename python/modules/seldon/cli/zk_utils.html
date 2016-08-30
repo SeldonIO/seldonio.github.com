@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.cli.zk_utils &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon.cli" href="../cli.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -108,25 +121,97 @@
     <li>seldon.cli.zk_utils</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.cli.zk_utils</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">json</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">walk</span>
+<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+
+<div class="viewcode-block" id="mkdir_p"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.mkdir_p">[docs]</a><span class="k">def</span> <span class="nf">mkdir_p</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c1"># Python &gt;2.5</span>
+        <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span> <span class="k">raise</span></div>
+
 
 <div class="viewcode-block" id="is_json_data"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.is_json_data">[docs]</a><span class="k">def</span> <span class="nf">is_json_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;{&#39;</span> <span class="ow">or</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;[&#39;</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;{&#39;</span> <span class="ow">or</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">False</span>
-</div>
+        <span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="push_all_nodes"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.push_all_nodes">[docs]</a><span class="k">def</span> <span class="nf">push_all_nodes</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span><span class="n">zkroot</span><span class="p">):</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span><span class="p">)</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="n">zkroot</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">dirpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">node_path</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/_data_&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span><span class="n">node_path</span><span class="p">,</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_all_nodes_list"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.get_all_nodes_list">[docs]</a><span class="k">def</span> <span class="nf">get_all_nodes_list</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">start_node</span><span class="p">,</span> <span class="n">all_nodes_list</span><span class="p">):</span>
+    <span class="c1">#print &quot;processing: {}&quot;.format(start_node)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">start_node</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="n">node_path</span> <span class="o">=</span> <span class="n">start_node</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">child</span> <span class="k">if</span> <span class="n">start_node</span> <span class="o">!=</span> <span class="s1">&#39;/&#39;</span> <span class="k">else</span> <span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">child</span>
+            <span class="n">all_nodes_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node_path</span><span class="p">)</span>
+            <span class="n">get_all_nodes_list</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">all_nodes_list</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">kazoo</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">NoNodeError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="write_data_to_file"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.write_data_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">mkdir_p</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">))</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s2">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="dict_to_json"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.dict_to_json">[docs]</a><span class="k">def</span> <span class="nf">dict_to_json</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">expand</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="json_to_dict"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.json_to_dict">[docs]</a><span class="k">def</span> <span class="nf">json_to_dict</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="pull_all_nodes"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.pull_all_nodes">[docs]</a><span class="k">def</span> <span class="nf">pull_all_nodes</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span><span class="n">zkroot</span><span class="p">):</span>
+    <span class="n">all_nodes_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;/config&quot;</span><span class="p">,</span><span class="s2">&quot;/all_clients&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="n">start_node</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="n">get_all_nodes_list</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">start_node</span><span class="p">,</span> <span class="n">all_nodes_list</span><span class="p">)</span>
+    <span class="n">all_nodes_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_nodes_list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node_path</span> <span class="ow">in</span> <span class="n">all_nodes_list</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;trying to sync &quot;</span><span class="p">,</span><span class="n">node_path</span>
+        <span class="n">node_value</span> <span class="o">=</span> <span class="n">node_get</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span><span class="n">node_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">node_value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">node_value</span> <span class="o">=</span> <span class="n">node_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">is_json_data</span><span class="p">(</span><span class="n">node_value</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span>
+            <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">node_path</span> <span class="o">+</span> <span class="s2">&quot;/_data_&quot;</span>
+            <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="json_compress"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.json_compress">[docs]</a><span class="k">def</span> <span class="nf">json_compress</span><span class="p">(</span><span class="n">json_data</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;:&#39;</span><span class="p">))</span>
-</div>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="node_set"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.node_set">[docs]</a><span class="k">def</span> <span class="nf">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">node_value</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">is_json_data</span><span class="p">(</span><span class="n">node_value</span><span class="p">):</span>
         <span class="n">node_value</span> <span class="o">=</span> <span class="n">json_compress</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span>
@@ -136,16 +221,18 @@
         <span class="n">retVal</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">node_path</span><span class="p">,</span><span class="n">node_value</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">retVal</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">node_path</span><span class="p">,</span><span class="n">node_value</span><span class="p">,</span><span class="n">makepath</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;updated zk node[{node_path}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_path</span><span class="o">=</span><span class="n">node_path</span><span class="p">)</span>
-</div>
+    <span class="k">print</span> <span class="s2">&quot;updated zk node[{node_path}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_path</span><span class="o">=</span><span class="n">node_path</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="node_get"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.zk_utils.node_get">[docs]</a><span class="k">def</span> <span class="nf">node_get</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">):</span>
     <span class="n">theValue</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">node_path</span><span class="p">):</span>
         <span class="n">theValue</span> <span class="o">=</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node_path</span><span class="p">)</span>
         <span class="n">theValue</span> <span class="o">=</span> <span class="n">theValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">theValue</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">theValue</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">theValue</span>
-</pre></div></div>
+    <span class="k">return</span> <span class="n">theValue</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">theValue</span> <span class="o">!=</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">theValue</span></div>
 
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -155,12 +242,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 

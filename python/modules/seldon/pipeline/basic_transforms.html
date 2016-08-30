@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>seldon.pipeline.basic_transforms &mdash; seldon 1.0 documentation</title>
@@ -14,7 +15,6 @@
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.pipeline.basic_transforms</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.pipeline.basic_transforms</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span>  <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">operator</span>
@@ -122,10 +138,11 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">seldon.util</span> <span class="kn">import</span> <span class="n">DeprecationHelper</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Binary_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform">[docs]</a><span class="k">class</span> <span class="nc">Binary_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="BinaryTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.BinaryTransform">[docs]</a><span class="k">class</span> <span class="nc">BinaryTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a binary feature based on existence of another feature</span>
 <span class="sd">    </span>
@@ -140,13 +157,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="o">=</span><span class="n">input_feature</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="o">=</span><span class="n">output_feature</span>
 
-<div class="viewcode-block" id="Binary_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="BinaryTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.BinaryTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;nothing to do in fit</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Binary_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Binary_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Binary transform&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="BinaryTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.BinaryTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Binary transform&quot;</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform a dataframe creating a new binary feature</span>
 
@@ -161,12 +178,14 @@
 <span class="sd">        Transformed pandas dataframe</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]))</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;0&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]))</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_feature</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
-<span class="c">################</span>
-</div></div>
-<div class="viewcode-block" id="Include_features_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Include_features_transform">[docs]</a><span class="k">class</span> <span class="nc">Include_features_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="n">Binary_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">BinaryTransform</span><span class="p">)</span>
+
+<span class="c1">################</span>
+
+<div class="viewcode-block" id="IncludeFeaturesTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.IncludeFeaturesTransform">[docs]</a><span class="k">class</span> <span class="nc">IncludeFeaturesTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter a dataset and include only specided set of features</span>
 
@@ -180,12 +199,12 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="p">[]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="o">=</span> <span class="n">included</span>
 
-<div class="viewcode-block" id="Include_features_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Include_features_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="IncludeFeaturesTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.IncludeFeaturesTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;nothing to do in fit</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Include_features_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Include_features_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="IncludeFeaturesTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.IncludeFeaturesTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        transform a dataframe to include given features</span>
 
@@ -200,11 +219,13 @@
 <span class="sd">        Transformed pandas dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span>  <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
-<span class="c">################</span>
-</div></div>
-<div class="viewcode-block" id="Exclude_features_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform">[docs]</a><span class="k">class</span> <span class="nc">Exclude_features_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="n">Include_features_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">IncludeFeaturesTransform</span><span class="p">)</span>
+
+<span class="c1">################</span>
+
+<div class="viewcode-block" id="ExcludeFeaturesTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform">[docs]</a><span class="k">class</span> <span class="nc">ExcludeFeaturesTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter a dataset and exclude specided set of features</span>
 
@@ -217,12 +238,12 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="p">[]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span> <span class="o">=</span> <span class="n">excluded</span>
 
-<div class="viewcode-block" id="Exclude_features_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="ExcludeFeaturesTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;nothing to do in fit</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Exclude_features_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exclude_features_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="ExcludeFeaturesTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExcludeFeaturesTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Trasform dataframe to include specified features only</span>
 
@@ -236,13 +257,14 @@
 <span class="sd">        </span>
 <span class="sd">        Transformed pandas dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">errors</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
+<span class="n">Exclude_features_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">ExcludeFeaturesTransform</span><span class="p">)</span>
 
-<span class="c">#############</span>
-</div></div>
-<div class="viewcode-block" id="Split_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform">[docs]</a><span class="k">class</span> <span class="nc">Split_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="c1">#############</span>
+
+<div class="viewcode-block" id="SplitTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SplitTransform">[docs]</a><span class="k">class</span> <span class="nc">SplitTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Split a set of string input features on an expression and create a new feature which has a list of values</span>
 
@@ -258,8 +280,8 @@
 <span class="sd">    output_feature : str</span>
 <span class="sd">       output feature </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">split_expression</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="n">ignore_numbers</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">input_features</span><span class="o">=</span><span class="p">[],</span><span class="n">output_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Split_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">split_expression</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">ignore_numbers</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">input_features</span><span class="o">=</span><span class="p">[],</span><span class="n">output_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SplitTransform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">split_expression</span><span class="o">=</span><span class="n">split_expression</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ignore_numbers</span><span class="o">=</span><span class="n">ignore_numbers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_features</span><span class="o">=</span><span class="n">input_features</span>
@@ -272,9 +294,9 @@
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
-<div class="viewcode-block" id="Split_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
+<div class="viewcode-block" id="SplitTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SplitTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
     <span class="k">def</span> <span class="nf">_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row</span><span class="p">):</span>
         <span class="n">ftokens</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_features</span><span class="p">:</span>
@@ -284,9 +306,9 @@
                     <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_numbers</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_numbers</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">token</span><span class="p">)):</span>
                         <span class="n">ftokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s">&#39;val&#39;</span><span class="p">:</span> <span class="n">ftokens</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s1">&#39;val&#39;</span><span class="p">:</span> <span class="n">ftokens</span><span class="p">})</span>
 
-<div class="viewcode-block" id="Split_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Split_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+<div class="viewcode-block" id="SplitTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SplitTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform text features by splitting them and creating a list of feature as result</span>
 
@@ -301,11 +323,13 @@
 <span class="sd">        Transformed pandas dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_split</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
-<span class="c">#############</span>
-</div></div>
-<div class="viewcode-block" id="Exist_features_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform">[docs]</a><span class="k">class</span> <span class="nc">Exist_features_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="n">Split_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">SplitTransform</span><span class="p">)</span>
+
+<span class="c1">#############</span>
+
+<div class="viewcode-block" id="ExistFeaturesTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExistFeaturesTransform">[docs]</a><span class="k">class</span> <span class="nc">ExistFeaturesTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter rows based on whether a specified set of features exists</span>
 
 <span class="sd">    Parameters</span>
@@ -314,13 +338,13 @@
 <span class="sd">       list of features that need to exist</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Exist_features_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExistFeaturesTransform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="o">=</span> <span class="n">included</span>
 
-<div class="viewcode-block" id="Exist_features_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">objs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Exist_features_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Exist_features_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+<div class="viewcode-block" id="ExistFeaturesTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExistFeaturesTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">objs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="ExistFeaturesTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.ExistFeaturesTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform by returning input feature set if required features exist in it</span>
 
@@ -335,11 +359,13 @@
 <span class="sd">        Transformed pandas dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
-<span class="c">#############</span>
-</div></div>
-<div class="viewcode-block" id="Svmlight_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform">[docs]</a><span class="k">class</span> <span class="nc">Svmlight_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="n">Exist_features_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">ExistFeaturesTransform</span><span class="p">)</span>
+
+<span class="c1">#############</span>
+
+<div class="viewcode-block" id="SvmlightTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SvmlightTransform">[docs]</a><span class="k">class</span> <span class="nc">SvmlightTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Take a set of features and transform into a sorted dictionary of numeric id:value features</span>
 
@@ -354,7 +380,7 @@
 <span class="sd">       set of features to exclude</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">included</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">zero_based</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">excluded</span><span class="o">=</span><span class="p">[],</span><span class="n">id_map</span><span class="o">=</span><span class="p">{},</span><span class="n">output_feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">id_map_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Svmlight_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SvmlightTransform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="o">=</span> <span class="n">included</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span> <span class="o">=</span> <span class="n">excluded</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span> <span class="o">=</span> <span class="n">id_map</span>
@@ -372,16 +398,16 @@
 
     <span class="k">def</span> <span class="nf">_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">lval</span> <span class="k">for</span> <span class="n">lval</span> <span class="ow">in</span> <span class="n">v</span><span class="p">])</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">lval</span> <span class="k">for</span> <span class="n">lval</span> <span class="ow">in</span> <span class="n">v</span><span class="p">])</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
-                <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">v</span><span class="p">])</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">v</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)])</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">_set_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row</span><span class="p">):</span>
         <span class="n">lvals</span> <span class="o">=</span> <span class="p">[]</span>
@@ -389,18 +415,20 @@
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="ow">or</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">):</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
-                    <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">lval</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">lval</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
+                    <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">lval</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">lval</span> <span class="ow">in</span> <span class="n">v</span><span class="p">]</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
-                    <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="p">],</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)],</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+                    <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="p">],</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)],</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                             <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">v</span><span class="p">)]</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">v</span><span class="p">],</span><span class="mi">1</span><span class="p">)]</span>
+                        <span class="n">var_name</span> <span class="o">=</span> <span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">v</span>
+                        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">:</span>
+                            <span class="n">lvals</span> <span class="o">+=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">var_name</span><span class="p">],</span><span class="mi">1</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;processed </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;processed </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">progress</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="nb">sorted</span><span class="p">(</span><span class="n">lvals</span><span class="p">)])</span>
 
 
@@ -412,13 +440,13 @@
 
     <span class="k">def</span> <span class="nf">_save_id_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">import</span> <span class="nn">unicodecsv</span>
-        <span class="n">writer</span> <span class="o">=</span> <span class="n">unicodecsv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map_file</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">))</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">unicodecsv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_map_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">])</span>
 
 
 
-<div class="viewcode-block" id="Svmlight_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+<div class="viewcode-block" id="SvmlightTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SvmlightTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        create ids for each feature to be included</span>
 
@@ -431,19 +459,19 @@
 <span class="sd">        -------</span>
 <span class="sd">        self: object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;int16&#39;</span><span class="p">,</span> <span class="s">&#39;int32&#39;</span><span class="p">,</span> <span class="s">&#39;int64&#39;</span><span class="p">,</span> <span class="s">&#39;float16&#39;</span><span class="p">,</span> <span class="s">&#39;float32&#39;</span><span class="p">,</span> <span class="s">&#39;float64&#39;</span><span class="p">]</span>
+        <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;int16&#39;</span><span class="p">,</span> <span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="s1">&#39;float16&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">]</span>
         <span class="n">features</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">df_numeric</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span>
         <span class="n">df_categorical</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_categorical</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="ow">or</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;SVM transform - Fitting categorical feature </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;SVM transform - Fitting categorical feature </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">col</span><span class="p">)</span>
                 <span class="n">res</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="s">&quot;all&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_union</span><span class="p">)</span>
-                <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s">&quot;all&quot;</span><span class="p">])</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_union</span><span class="p">)</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_numeric</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span> <span class="ow">or</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;SVM transform - Fitting numerical feature </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;SVM transform - Fitting numerical feature </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">col</span><span class="p">)</span>
                 <span class="n">features</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
         <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span><span class="p">:</span>
@@ -451,9 +479,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">v</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="n">inc</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">features</span><span class="p">)])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_map_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_id_map</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Svmlight_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Svmlight_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="SvmlightTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.SvmlightTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform features by getting id and numeric value</span>
 
@@ -470,12 +498,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_id</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="nb">reduce</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
-<span class="c">#############</span>
+<span class="n">Svmlight_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">SvmlightTransform</span><span class="p">)</span>
 
-</div></div>
-<div class="viewcode-block" id="Feature_id_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform">[docs]</a><span class="k">class</span> <span class="nc">Feature_id_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="c1">#############</span>
+
+
+<div class="viewcode-block" id="FeatureIdTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.FeatureIdTransform">[docs]</a><span class="k">class</span> <span class="nc">FeatureIdTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;create a numeric feature id</span>
 
 <span class="sd">    Parameters</span>
@@ -499,7 +529,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">zero_based</span> <span class="o">=</span> <span class="n">zero_based</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_classes</span><span class="o">=</span><span class="n">max_classes</span>
 
-<div class="viewcode-block" id="Feature_id_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureIdTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.FeatureIdTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create map of ids for each feature value</span>
 
@@ -529,15 +559,15 @@
                     <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">break</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
     <span class="k">def</span> <span class="nf">_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
-<div class="viewcode-block" id="Feature_id_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.Feature_id_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureIdTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.basic_transforms.FeatureIdTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform features creating a new id and exluding rows if needed</span>
 
@@ -559,9 +589,14 @@
                 <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_feature</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
+<span class="n">Feature_id_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">FeatureIdTransform</span><span class="p">)</span>
+
+
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -571,12 +606,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
