@@ -21,6 +21,7 @@ The current built in runtime item recommendation algorithms are as follows:
 `mfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
 `recentMfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
 `itemSimilarityRecommender` | [item activity model](runtime-recommendation.html#similar-items)
+`globalClusterCountsRecommender` | [baseline models](runtime-recommendation.html#global-cluster)
 `recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
 `externalItemRecommendationAlgorithm` | [custom model](#custom)
 
@@ -116,6 +117,41 @@ Example config:
 }
 {% endhighlight %}
 
+## Global Cluster Counts<a name="global-cluster"></a>
+This recommender can be used to serve most popular recommendations. It counts which items are being read  with a exponentially decaying score to control how fast old article counts are forgotton.
+
+Example config:
+
+{% highlight json %}
+{
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                 "config": [
+                    {
+                        "name": "io.seldon.algorithm.clusters.decayratesecs",
+                        "value": "10800"
+                    },
+                    {
+                        "name": "io.seldon.algorithm.clusters.usebucketcluster",
+                        "value": "true"
+                    }
+                ],
+                "filters": [],
+                "includers": [],
+                "name": "globalClusterCountsRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner"
+    },
+    "recTagToStrategy": {}
+}
+{% endhighlight %}
+
+The above configuration ensures:
+
+ * the expoential decay is set to 10800 seconds. The time after which the item activity counts have a negligible effect.
+ * uses a bucket cluster to ensure every user's activity is caught. 
 
 
 ## Baseline Models<a name="baseline"></a>
