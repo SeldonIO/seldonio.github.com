@@ -10,14 +10,14 @@ This documentation will show you how to setup the Deep MNIST webapp on your Kube
 ## Prerequisites
 
  * You have [installed Seldon](install.html) on a Kubernetes cluster
- * You have setup the [Tensorflow Deep MNIST microservice](tensorflow-deep-mnist-example-docker.html) on your cluster, on a client called "deep-mnist-client".
+ * You have setup the [Tensorflow Deep MNIST microservice](tensorflow-deep-mnist-example-docker.html) on your cluster, on a client called "deep_mnist_client".
 
 ## Getting the client key and secret
 
 The webapp will communicate with the client via a REST API. It needs to authenticate using a client key and secret. We will use the seldon cli to obtain the key and secret.
 
 ```bash
-seldon-cli keys  --client-name deep-mnist-client
+seldon-cli keys  --client-name deep_mnist_client --scope all
 ```
 
 More detail on how to use the seldon cli can be found in our [seldon-cli documentation](seldon-cli.html).
@@ -37,7 +37,7 @@ You will need to give this IP address to your webapp in the next step so that it
 The webapp is available prepackaged in a docker container ```seldonio/deep_mnist_webapp``` on dockerhub. The source code can be found [here](https://github.com/SeldonIO/deep-mnist-webapp). We are going to start the webapp from  the docker image using the following command:
 
 ```bash
-kubectl run deep-mnist-webapp --image=seldonio/deep-mnist-webapp:latest --port=80 "/run_webapp.sh <seldon-server-ip> <key> <secret>"
+kubectl run deep-mnist-webapp --image=seldonio/deep-mnist-webapp:latest --port=80 --command -- "/run_webapp.sh" "<seldon-server-ip>" "<key>" "<secret>"
 ```
 
 Now we need to expose port 80 so that the webapp can be accessed outside your cluster:
