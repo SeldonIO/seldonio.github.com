@@ -209,10 +209,10 @@ seldonio is the name of our docker hub (more about this in the next part) and 1.
 ## Pushing the image to your docker hub<a name="docker-hub"></a>
 
 In order for your kubernetes cluster on google cloud (or any cloud service) to find your docker image it needs to be pushed to a docker hub. You can create a docker hub very easily [here](https://docs.docker.com/v1.8/userguide/dockerrepos/).
-Once you have a docker hub you can use the following command to log into it and push your image:
+Once you have a docker hub user id you can use the following command to log into it and push your image:
 
 {% highlight bash %}
-docker login -u <your_dockerhub_name> && docker push seldonio/deep_mnist:1.0
+docker login -u <your_userid> && docker push <your_userid>/deep_mnist:1.0
 {% endhighlight %}
 
 
@@ -235,7 +235,7 @@ This requires an existing datasource. ClientDB is a datasource that is created b
 Finally, you can launch your microservice using kubernetes/bin/run_prediction_microservice.sh.
 
 {% highlight bash %}
-run_prediction_microservice.sh deep_mnist_service <your_dockerhub_name>/deep_mnist 1.0 deep_mnist_client
+run_prediction_microservice.sh deep_mnist_service <your_userid>/deep_mnist 1.0 deep_mnist_client
 {% endhighlight %}
 
 
