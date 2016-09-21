@@ -212,7 +212,7 @@ In order for your kubernetes cluster on google cloud (or any cloud service) to f
 Once you have a docker hub you can use the following command to log into it and push your image:
 
 {% highlight bash %}
-docker login -u seldonio && docker push seldonio/deep_mnist:1.0
+docker login -u <your_dockerhub_name> && docker push seldonio/deep_mnist:1.0
 {% endhighlight %}
 
 
@@ -235,7 +235,7 @@ This requires an existing datasource. ClientDB is a datasource that is created b
 Finally, you can launch your microservice using kubernetes/bin/run_prediction_microservice.sh.
 
 {% highlight bash %}
-run_prediction_microservice.sh deep_mnist_service seldonio/deep_mnist 1.0 deep_mnist_client
+run_prediction_microservice.sh deep_mnist_service <your_dockerhub_name>/deep_mnist 1.0 deep_mnist_client
 {% endhighlight %}
 
 
