@@ -28,10 +28,10 @@ The model training can be accomplished by running the Kubernetes job in ```kuber
 
 Create the kubernetes job to train the model:
 
-```bash
+{% highlight bash %}
 cd kubernetes/conf/examples/tensorflow_deep_mnist
 kubectl create -f train-tensorflow-deep-mnist.json
-```
+{% endhighlight %}
 
 This job will:
  * Run the docker image containing the tensorflow model in your cluster;
@@ -43,18 +43,18 @@ This job can take several hours to complete on a machine without a CUDA enabled 
 
 Create the kubernetes job to load the model:
 
-```bash
+{% highlight bash %}
 cd kubernetes/conf/examples/tensorflow_deep_mnist
 kubectl create -f load-model-tensorflow-deep-mnist.json
-```
+{% endhighlight %}
 
 ## Create Client
 
 You will need to create a Seldon Client to serve as an entry point for your microservices. You can create a client in one line using the seldon cli as below. For more details on how to use the seldon cli please refer to our [seldon-cli documentation](seldon-cli.html).
 
-```bash
+{% highlight bash %}
 seldon-cli client --action setup --db-name ClientDB --client-name deep_mnist_client
-```
+{% endhighlight %}
 
 Here we setup a new client called deep_mnist_client that uses the database ClientDB (created when you installed seldon on your cluster).
 
@@ -62,9 +62,9 @@ Here we setup a new client called deep_mnist_client that uses the database Clien
 
 To serve predictions we will load the saved pipeline into a microservice. This can be accomplished by using the script ```run_prediction_pipeline_microservice.sh``` in ```seldon-server/kubernetes/bin```.
 
-```bash
+{% highlight bash %}
 run_prediction_pipeline_microservice.sh tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ deep_mnist_client 1
-```
+{% endhighlight %}
 
 This will load the pipeline saved in ```/seldon-data/seldon-models/tensorflow_deep_mnist/1/``` and create a single replica microservice called tensorflow-deep-mnist. It will activate this for the "deep-mnist-service" created in the previous step.
 

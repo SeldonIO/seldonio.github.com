@@ -16,9 +16,9 @@ This documentation will show you how to setup the Deep MNIST webapp on your Kube
 
 The webapp will communicate with the client via a REST API. It needs to authenticate using a client key and secret. We will use the seldon cli to obtain the key and secret.
 
-```bash
+{% highlight bash %}
 seldon-cli keys  --client-name deep_mnist_client --scope all
-```
+{% endhighlight %}
 
 More detail on how to use the seldon cli can be found in our [seldon-cli documentation](seldon-cli.html).
 
@@ -26,9 +26,9 @@ More detail on how to use the seldon cli can be found in our [seldon-cli documen
 
 To find out the internal IP address of the seldon-server container in your cluster use the following command:
 
-```bash
+{% highlight bash %}
 kubectl get services seldon-server
-```
+{% endhighlight %}
 
 You will need to give this IP address to your webapp in the next step so that it knows where to query for predictions.
 
@@ -36,23 +36,23 @@ You will need to give this IP address to your webapp in the next step so that it
 
 The webapp is available prepackaged in a docker container ```seldonio/deep_mnist_webapp``` on dockerhub. The source code can be found [here](https://github.com/SeldonIO/deep-mnist-webapp). We are going to start the webapp from  the docker image using the following command:
 
-```bash
+{% highlight bash %}
 kubectl run deep-mnist-webapp --image=seldonio/deep-mnist-webapp:latest --port=80 --command -- "/run_webapp.sh" "<seldon-server-ip>" "<key>" "<secret>"
-```
+{% endhighlight %}
 
 Now we need to expose port 80 so that the webapp can be accessed outside your cluster:
 
-```bash
+{% highlight bash %}
 kubectl expose deployment/deep-mnist-webapp --type="LoadBalancer"
-```
+{% endhighlight %}
 
 ## Try it out!
 
 This is it, you should now be able to access the webapp on your browser. First, find out the external IP address of the webapp by running:
 
-```bash
+{% highlight bash %}
 kubectl get services deep-mnist-webapp
-```
+{% endhighlight %}
 
 Now you can just go to ```http://<external-ip>:80``` in your favorite browser.
 

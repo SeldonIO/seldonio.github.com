@@ -5,22 +5,24 @@ title: Tensorflow Deep MNIST Tutorial
 
 # Tensorflow Deep MNIST Tutorial
 
-Contents:
- * Create Model
- * Save as a pipeline
- * Create script to start microservice
- * Create the docker image
- * Pushing the image to your docker hub
- * Creating a seldon kubernetes cluster
- * Launching the microservice on your cluster
+This example will take you through creating a microservice that recognizes numbers between 0 and 9, based on the CNN model from the [tensorflow deep MNIST demo](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html). 
+In this example we will go through every single step for packaging your model into a fully functional seldon microservice operating in the cloud. If you are just interested in testing the prepackaged docker image check out [this tutorial](tensorflow-deep-mnist-example-docker.html).
+
+ * [Create Model](#model)
+ * [Save as a pipeline](#pipeline)
+ * [Create script to start microservice](#microservice)
+ * [Create the docker image](#docker-image)
+ * [Pushing the image to your docker hub](#docker-hub)
+ * [Creating a seldon kubernetes cluster](#cluster)
+ * [Launching the microservice on your cluster](#starting)
+ * [Testing your service](#test)
 
 
-## Create Model
+## Create Model<a name="model"></a>
 
-Let's start by creating a model using tensorflow. We are going to impoement the digit recognition model that can be found in [tensorflow advanced tutorial](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html).
+Let's start by creating a model using tensorflow. We are going to implement the digit recognition model that can be found in the [tensorflow advanced tutorial](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html), using the python implementation of tensorflow and seldon.
 
-```python
-
+{% highlight python %}
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot = True)
 import tensorflow as tf
@@ -96,19 +98,16 @@ if __name__ == '__main__':
 	    sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys, keep_prob: 0.5})
 
 	print("test accuracy %g"%accuracy.eval(session=sess,feed_dict={x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+{% endhighlight %}
+
+Here we define a convolutional neural network and train it over the MNIST dataset shipped with tensorflow.
 
 
-```
-
-Here we define a convolutional neural netwrok and train it over the MNIST dataset shipped with tensorflow.
-
-
-## Save as a pipeline
+## Save as a pipeline<a name="pipeline"></a>
 
 Now that we have a fully functional machine learning model, we are going to turn it into a pipeline and package it as a microservice using Seldon tools. We can do all of this easily in python:
 
-```python
-
+{% highlight python %}
 	from seldon.tensorflow_wrapper import TensorFlowWrapper
 	from sklearn.pipeline import Pipeline
 	from seldon.pipeline.util import Pipeline_wrapper
@@ -121,155 +120,128 @@ Now that we have a fully functional machine learning model, we are going to turn
 	pw = Pipeline_wrapper()
 
 	pw.save_pipeline(p,'deep_mnist_pipeline')
-
-```
+{% endhighlight %}
 
 Let's look in more detail at each one of these steps
 
-```python
-
+{% highlight python %}
 tfc = TensorFlowWrapper(sess,x,y,target="y",target_readable="class",excluded=['class'])
-
-```
+{% endhighlight %}
 
 Here we use the TensorFlowWrapper class to standardise our model so that it can be integrated in a generic machine learning pipeline (next step). We need to pass as arguments:
+
  * the tensorflow session (sess)
  * the input variable (x)
  * the output variable (y)
  * a list of the variables that need to take a constant value at prediction time (keep_prob must be set as 1.0)
 
-```python
-
+{% highlight python %}
 p = Pipeline([('deep_classifier',tfw)])
-
-```
+{% endhighlight %}
 
 Here we create a scikit learn pipeline comprising a single step which corresponds to our tensorflow model. More information on predictive pipelines can be found [here](prediction-guide.html).
 
-```python
-
+{% highlight python %}
 	pw = Pipeline_wrapper()
 	pw.save_pipeline(p,'deep_mnist_pipeline')
-
-```
+{% endhighlight %}
 
 Finally we use seldon's pipeline wrapper to save the pipeline to the disk. The microservice will be generated from this save file.
 
-## Create script to start microservice
+## Create script to start microservice<a name="microservice"></a>
 
 We are going to write a simple bash script to launch the microservice and save it in a file called run_microservice.sh
 
-```bash
-
+{% highlight bash %}
 #!/bin/bash
 
 set -o nounset
 set -o errexit
 
 python /home/seldon/scripts/start_prediction_microservice.py --pipeline /home/seldon/deep_mnist_pipeline --model_name deep_mnist_tensorflow
-
-```
+{% endhighlight %}
 
 This uses seldon's script to launch a microservice from the saved pipeline.
 You can try to run it but be aware that it needs for your pipeline to be saved in /home/seldon.
 
-## Creating the docker image
+## Creating the docker image<a name="docker-image"></a>
 
 We are going to create a docker image from our microservice. Here is the content of the dockerfile:
 
-```Dockerfile
-
-FROM seldonio/pyseldon:2.0.5
+{% highlight Dockerfile %}
+FROM seldonio/pyseldon:2.0.6
 
 COPY deep_mnist_pipeline /home/seldon/deep_mnist_pipeline
 COPY run_microservice.sh /run_microservice.sh
 
-RUN conda install -y -c conda-forge tensorflow
-
 CMD ["/run_microservice.sh"]
-
-```
+{% endhighlight %}
 
 Let's look at it line by line:
 
-```Dockerfile
+{% highlight Dockerfile %}
+FROM seldonio/pyseldon:2.0.6
+{% endhighlight %}
 
-FROM seldonio/pyseldon:2.0.5
+We are going to base our image on pyseldon's image that has seldon installed as well as python and a number of libraries like tensorflow.
 
-```
-
-We are going to base our image on pyseldon's image that has seldon installed as well as python and a number of libraries.
-
-```Dockerfile
-
+{% highlight Dockerfile %}
 COPY deep_mnist_pipeline /home/seldon/deep_mnist_pipeline
 COPY run_microservice.sh /run_microservice.sh
-
-```
+{% endhighlight %}
 
 We copy the pipeline and the script that starts the microservice
 
-```Dockerfile
-
-RUN conda install -y -c conda-forge tensorflow
-
-```
-
-We install tensorflow.
-
-```Dockerfile
-
+{% highlight Dockerfile %}
 CMD ["/run_microservice.sh"]
-
-```
+{% endhighlight %}
 
 And finally, we call our script to launch the microservice!
 
 Now you can choose a name for your image (we went for deep_mnist) and ask docker to build it using the following command line:
 
-```bash
+{% highlight bash %}
 docker build -t seldonio/deep_mnist:1.0 .
-``` 
+{% endhighlight %}
 
 seldonio is the name of our docker hub (more about this in the next part) and 1.0 is the version of the image.
 
-## Pushing the image to your docker hub
+## Pushing the image to your docker hub<a name="docker-hub"></a>
 
 In order for your kubernetes cluster on google cloud (or any cloud service) to find your docker image it needs to be pushed to a docker hub. You can create a docker hub very easily [here](https://docs.docker.com/v1.8/userguide/dockerrepos/).
 Once you have a docker hub you can use the following command to log into it and push your image:
 
-```bash
+{% highlight bash %}
 docker login -u seldonio && docker push seldonio/deep_mnist:1.0
-```
+{% endhighlight %}
 
 
-## Creating a seldon kubernetes cluster
+## Creating a seldon kubernetes cluster<a name="cluster"></a>
 
 The full documentation for this step can be found [here](install.html)
 
 
-## Launching the microservice on your cluster
+## Launching the microservice on your cluster<a name="starting"></a>
 
 The first step is to create a client for your microservice. More information on seldon clients can be found [here](seldon-cli.html#client).
 This can be done using seldon-cli as follows:
 
-```bash
-
+{% highlight bash %}
 seldon-cli client --action setup --db-name ClientDB --client-name deep_mnist_client
-
-```
+{% endhighlight %}
 
 This requires an existing datasource. ClientDB is a datasource that is created by seldon on start-up but you can use another one that you create using [seldon-cli db](seldon-cli.html#db).
 
 Finally, you can launch your microservice using kubernetes/bin/run_prediction_microservice.sh.
 
-```bash
+{% highlight bash %}
 run_prediction_microservice.sh deep_mnist_service seldonio/deep_mnist 1.0 deep_mnist_client
-```
+{% endhighlight %}
 
 
+## Testing your service<a name="test"></a>
 
-
+The microservice takes as input a vector of 784 floats corresponding to the pixels of a 28x28 image and returns a list of probabilities for each number between 0 and 9. In order to test it you can use the [flask webapp](tensorflow-deep-mnist-webapp.html) we have created for this purpose.
 
 
 
