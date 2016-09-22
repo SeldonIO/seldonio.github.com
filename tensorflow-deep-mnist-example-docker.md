@@ -1,11 +1,17 @@
 ---
 layout: default
-title: Tensorflow Deep MNIST Demo
+title: TensorFlow Deep MNIST Demo
 ---
 
-# Tensorflow Deep MNIST from the docker image
+# TensorFlow Deep MNIST Demo
 
-This example will take you through creating a microservice that recognizes numbers between 0 and 9, based on the CNN model from the [tensorflow deep MNIST demo](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html). In this example you will learn how to deploy the microservice from the prepackage docker image available in seldon-server. If you want to learn how to build this image from your model, check out this [more detailed tutorial](tensorflow-deep-mnist-example.html).
+This example will take you through creating a microservice that recognizes numbers between 0 and 9, based on the CNN model from the [tensorflow deep MNIST demo](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html). In this example you will learn how to deploy the microservice from the prepackage docker image available in seldon-server. 
+
+If you want to learn how to build this image from your model, check out our [TensorFlow Digit Classifier Advanced Tutorial](tensorflow-deep-mnist-example.html).
+
+<p style="margin:auto; width:50%;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T4Y5mS75z9I" frameborder="0" allowfullscreen></iframe>
+</p>
 
 ## Prerequisites
 

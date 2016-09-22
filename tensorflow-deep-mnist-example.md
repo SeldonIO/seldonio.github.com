@@ -3,7 +3,7 @@ layout: default
 title: Tensorflow Deep MNIST Tutorial
 ---
 
-# Tensorflow Deep MNIST Tutorial
+# Tensorflow Deep MNIST Advanced Tutorial
 
 This example will take you through creating a microservice that recognizes numbers between 0 and 9, based on the CNN model from the [tensorflow deep MNIST demo](https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html). 
 In this example we will go through every single step for packaging your model into a fully functional seldon microservice operating in the cloud. If you are just interested in testing the prepackaged docker image check out [this tutorial](tensorflow-deep-mnist-example-docker.html).
