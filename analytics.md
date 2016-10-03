@@ -16,13 +16,16 @@ The dashboards currently show:
    * Impressions and Clicks by rectag and variation. 
    * CTR by rectag and variation. You would use this to monitor running A/B tests.
  * Prediction Stats
+   * Counts for each prediction variation running
+   * Counts for each prediction model running  
    * Counts for each predicted class
+
 
 An example dashboard is show below:
 
 ![Seldon Analytics Dashboard](/img/grafana.png)
 
-An example dashboard showing prediction stats for the Iris demo running is show below:
+An example dashboard showing prediction stats for the Iris demo with two variations being tested is shown below.
 
 ![Predictive Stats](/img/grafana-prediction.png)
 

@@ -36,7 +36,6 @@ At runtime Seldon requires you expose your model scoring engine as a microservic
 
   * A name for the microservice
   * An image to pull that can be run to start the microservice
-  * A version for the image
   * A client to connect the microservice to
 
 The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
@@ -44,7 +43,7 @@ The script create a Kubernetes deployment for the microservice in ```kubernetes/
 For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
 
 {% highlight bash %}
-run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost 2.0.0 test
+run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 test
 {% endhighlight %}
 
 The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=iris-xgboost-example``` that the pod running the mircroservice is running.  
@@ -140,7 +139,10 @@ if __name__ == "__main__":
 
     m = Microservices(aws_key=args.aws_key,aws_secret=args.aws_secret)
     app = m.create_prediction_microservice(args.pipeline,args.model_name)
-    app.run(host="0.0.0.0", debug=True)
+
+    from gevent.wsgi import WSGIServer
+    http_server = WSGIServer(('', 5000), app)
+    http_server.serve_forever()
 {% endhighlight %}
 
 The full source code to create a docker image for model and runtime scorer for the three variants can be found in:

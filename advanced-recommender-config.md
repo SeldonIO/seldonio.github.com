@@ -43,7 +43,7 @@ Another scenario is that you may wish to combine the results of several recommen
  * rankSumCombiner : combine multiple recommendations using the rank of each item returned in each recommenders list of recommendations. The number of algorithms combined defaults to two but can be configured with the config option combiner.maxResultSets
  * scoreOrderCombiner : combine multipe recommendations using the scores returned from each item in each individual recommender.
 
-You can apply the A/B test configuration to a client using the [seldon-cli](seldon-cli.html#rec_alg).
+You can apply the configuration to a client using the [seldon-cli](seldon-cli.html#rec_alg).
 
 ## Multi Variant Tests<a name="multivariate-tests"></a>
 It is common practice when testing algorithms in live environments to run A/B tests to evaluate the success of different strategies. 

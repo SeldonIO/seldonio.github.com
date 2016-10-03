@@ -215,11 +215,11 @@ A worked step-by-step example using the [Movielens 100K](ml100k.html) dataset is
 ##  Run A/B Tests
 When running multiple recommendation models in production you will want to A/B new models to check they perform better than existing models with live clients before you place them fully into production for all users.
 
-The ability to run A/B and multivariant tests is available within Seldon but not yet exposed via the Seldon CLI. Internally everything is controlled via Zookeeper settings. For those with an understanding of Zookeeper who wish to activiate this functionality can find the details [here](advanced-recommender-config.html#multivariate-tests)
+The ability to run A/B and multivariant tests is available within Seldon. You can find the details [here](advanced-recommender-config.html#multivariate-tests)
 
 ## Combine Multiple Algorithms
 
-In some setting you may wish to combine multipe algorithms together to get a combined result. Currently this is not available in the seldon CLI but those with an understanding of Zookeeper can find the details [here](advanced-recommender-config.html#cascading-algorithms)
+In some setting you may wish to combine multipe algorithms together to get a combined result. You can find the details [here](advanced-recommender-config.html#cascading-algorithms)
 
 ## API Controlled Variants
 

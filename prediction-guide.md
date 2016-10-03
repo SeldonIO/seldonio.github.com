@@ -11,7 +11,7 @@ This gudie takes you through the steps to serve general predictive models throug
  * [Collect data](#data)
  * [Create a prediction model](#model)
  * [Serve predictions](#predict)
-
+ * [Advanced Settings](#advanced)
 
 # **Overview**<a name="overview"></a>
 
@@ -55,10 +55,77 @@ The script creates a Kubernetes deployment for the microservice in ```kubernetes
 For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
 
 {% highlight bash %}
-run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost 1.0 test
+run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 test
 {% endhighlight %}
 
 The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. You can now get predictions via the Seldon API.
 
+# **Advanced Settings**<a name="advanced"></a>
 
- 
+##  Run A/B Tests
+To test differenet prediction algorithms in a live setting you will want to run A/B tests.
+
+If you have two microservices you want to test in an A/B test you can use the script 
+
+{% highlight bash %}
+run_prediction_ab_test.sh <microservice_name_1> <microservice_image_1> <microservice_name_2> <microservice_image_2> <client>
+{% endhighlight %}
+
+This will allow you to start two microservices which each will get 50% of the traffic. An example to start two variantions of the example Iris predictors using Xgboost and Vowpal Wabbit variants is shown below:
+
+{% highlight bash %}
+run_prediction_ab_test.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 iris-vw-example seldonio/iris_vw:2.0.7 test
+{% endhighlight %}
+
+The script will start both microservices and provide the correct configuration via the seldon CLI. The configuration used for the above example is shown below:
+
+{% highlight json %}
+{
+    "variations": [
+        {
+            "config": {
+                "algorithms": [
+                    {
+                        "config": [
+                            {
+                                "name": "io.seldon.algorithm.external.url",
+                                "value": "http://iris-xgboost-example:5000/predict"
+                            },
+                            {
+                                "name": "io.seldon.algorithm.external.name",
+                                "value": "iris-xgboost-example"
+                            }
+                        ],
+                        "name": "externalPredictionServer"
+                    }
+                ]
+            },
+            "label": "iris-xgboost-example",
+            "ratio": 0.5
+        },
+        {
+            "config": {
+                "algorithms": [
+                    {
+                        "config": [
+                            {
+                                "name": "io.seldon.algorithm.external.url",
+                                "value": "http://iris-vw-example:5000/predict"
+                            },
+                            {
+                                "name": "io.seldon.algorithm.external.name",
+                                "value": "iris-vw-example"
+                            }
+                        ],
+                        "name": "externalPredictionServer"
+                    }
+                ]
+            },
+            "label": "iris-vw-example",
+            "ratio": 0.5
+        }
+    ]
+}
+{% endhighlight %}
+
+See [here](seldon-cli.html#predict_alg) on how to use the Seldon CLI to set a custom prediction algorithm configuration.

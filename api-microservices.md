@@ -110,6 +110,7 @@ Any Pipeline built using this package can easily be deployed as a microservice a
 from seldon.microservice import Microservices
 m = Microservices()
 app = m.create_prediction_microservice("./pipeline","test_model")
-app.run(host="0.0.0.0", debug=True)
-
+from gevent.wsgi import WSGIServer
+http_server = WSGIServer(('', 5000), app)
+http_server.serve_forever()
 {% endhighlight %}

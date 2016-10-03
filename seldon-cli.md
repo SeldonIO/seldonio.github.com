@@ -542,13 +542,70 @@ seldon-cli predict_alg  --action ACTION --client-name CLIENT --predictor-name PR
 seldon-cli predict_alg  --action add --client-name iris --predictor-name externalPredictionServer --config io.seldon.algorithm.external.url=http://iris-example:5000/predict --config io.seldon.algorithm.external.name=iris-demo
 {% endhighlight %}
 
+
+{% highlight bash %}
+# custom configuration using -f
+
+   cat <<EOF | seldon-cli predict_alg --action create --client-name test -f -
+{
+    "variations": [
+        {
+            "config": {
+                "algorithms": [
+                    {
+                        "config": [
+                            {
+                                "name": "io.seldon.algorithm.external.url",
+                                "value": "http://iris-xgboost-example:5000/predict"
+                            },
+                            {
+                                "name": "io.seldon.algorithm.external.name",
+                                "value": "iris-xgboost-example"
+                            }
+                        ],
+                        "name": "externalPredictionServer"
+                    }
+                ]
+            },
+            "label": "xgb_model",
+            "ratio": 0.5
+        },
+        {
+            "config": {
+                "algorithms": [
+                    {
+                        "config": [
+                            {
+                                "name": "io.seldon.algorithm.external.url",
+                                "value": "http://iris-vw-example:5000/predict"
+                            },
+                            {
+                                "name": "io.seldon.algorithm.external.name",
+                                "value": "iris-vw-example"
+                            }
+                        ],
+                        "name": "externalPredictionServer"
+                    }
+                ]
+            },
+            "label": "vw_model",
+            "ratio": 0.5
+        }
+    ]
+}
+EOF
+
+{% endhighlight %}
+
+
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli predict_alg [-h] --action {list,show,add,delete,commit}
+usage: seldon-cli predict_alg [-h] --action
+                              {list,show,add,delete,commit,create}
                               [--client-name CLIENT_NAME]
                               [--predictor-name PREDICTOR_NAME]
-                              [--config CONFIG]
+                              [--config CONFIG] [-f JSON_FILE]
                               ...
 
 Seldon CLI
@@ -558,13 +615,16 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list,show,add,delete,commit}
+  --action {list,show,add,delete,commit,create}
                         the action to use
   --client-name CLIENT_NAME
                         the name of the client
   --predictor-name PREDICTOR_NAME
                         the name of predictor
   --config CONFIG       algorithm specific config in the form x=y
+  -f JSON_FILE, --json-file JSON_FILE
+                        the json file to use for creating algs or '-' for
+                        stdin
 {% endhighlight %}
 
 # <a name="api"></a>**seldon-cli api**

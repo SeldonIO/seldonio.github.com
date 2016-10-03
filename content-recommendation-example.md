@@ -55,7 +55,6 @@ To serve predictions from our model we need to run the prepackaged docker image 
 
   * A name for the microservice
   * An image to pull that can be run to start the microservice
-  * A version for the image
   * A client to connect the microservice to
 
 The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
@@ -63,7 +62,7 @@ The script create a Kubernetes deployment for the microservice in ```kubernetes/
 To start the Reuters gensim model serving run:
 
 {% highlight bash %}
-run_recommendation_microservice.sh reuters-example seldonio/reuters-example 1.0 reuters
+run_recommendation_microservice.sh reuters-example seldonio/reuters-example:2.0.7 reuters
 {% endhighlight %}
 
 The script will create the Kubernetes Deployment and use the seldon-cli to update the "reuters" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=reuters-example``` that the pod running the mircroservice is running.  
