@@ -196,13 +196,14 @@ optional arguments:
 {% endhighlight %}
 
 # <a name="keys"></a>**seldon-cli keys**
-Display Oauth or JS authenetication keys for a client.
+Display/Update Oauth or JS authenetication keys for a client.
 
 ## Synopsis
-Show the keys for a client, either every key or just js or oauth keys.
+Show the keys for a client, either every key or just js or oauth keys.  
+Also update the keys for a particular client.
 
 {% highlight bash %}
-seldon-cli keys --action list --client-name CLIENT --scope SCOPE {js|all}
+seldon-cli keys --action ACTION {list|update} --client-name CLIENT --scope SCOPE {js|all} --key SOMEKEY --secret SOMESECRET
 {% endhighlight %}
 
 ## Examples
@@ -218,13 +219,22 @@ seldon-cli keys --client-name test
 seldon-cli --quiet keys --client-name test --scope js
 {% endhighlight %}
 
+{% highlight bash %}
+# Update scope js, key for client
+seldon-cli keys --action update --client-name test --scope js --key "MYKEY123"
+{% endhighlight %}
 
+{% highlight bash %}
+# Update scope all, key and secret for client
+seldon-cli keys --action update --client-name test2 --scope all --key "MYKEY123" --secret "MYSECRET123"
+{% endhighlight %}
 
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli keys [-h] [--action {list}] [--client-name CLIENT_NAME]
-                       [--scope {js,all}]
+usage: seldon-cli keys [-h] [--action {list,update}]
+                       [--client-name CLIENT_NAME] [--scope {js,all}]
+                       [--key KEY] [--secret SECRET]
                        ...
 
 Seldon CLI
@@ -234,10 +244,13 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list}       the action to use
+  --action {list,update}
+                        the action to use
   --client-name CLIENT_NAME
                         the name of the client
   --scope {js,all}      the key scope
+  --key KEY             the key for the update
+  --secret SECRET       the secret for the update
 {% endhighlight %}
 
 
