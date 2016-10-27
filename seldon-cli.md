@@ -221,12 +221,12 @@ seldon-cli --quiet keys --client-name test --scope js
 
 {% highlight bash %}
 # Update scope js, key for client
-seldon-cli keys --action update --client-name test --scope js --key "MYKEY123"
+seldon-cli keys --action update --client-name test --scope js --key "SOMEKEY123"
 {% endhighlight %}
 
 {% highlight bash %}
 # Update scope all, key and secret for client
-seldon-cli keys --action update --client-name test2 --scope all --key "MYKEY123" --secret "MYSECRET123"
+seldon-cli keys --action update --client-name test2 --scope all --key "SOMEKEY123" --secret "SOMESECRET123"
 {% endhighlight %}
 
 ## Options
