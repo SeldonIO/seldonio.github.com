@@ -139,7 +139,8 @@ Clients in the Seldon Platform can be considered as particular datasets that you
 The client command can be used to setup these datasets.
 
 {% highlight bash %}
-seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME --input-date-string INPUT_DATE
+seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME --input-date-string INPUT_DATE --set-js-key JS_KEY --set-all-key ALL_KEY --set-all-secret ALL_SECRET
+
 {% endhighlight %}
 
 ## Examples
@@ -152,6 +153,10 @@ seldon-cli client --action list
 {% highlight bash %}
 # To create a new client use the following command. It requires an existing datasource that would have been created with the db command.
 seldon-cli client --action setup --db-name ClientDB --client-name testclient
+
+# When creating a new client, the consumer key and secret can also be set to custom values if necessary.  
+# This is optional, and if any of "--set-js-key, --set-all-key or --set-all-secret" are missing, a random string is used in its place.
+seldon-cli client --action setup --db-name ClientDB --client-name testclient --set-js-key "SOMEJSKEY" --set-all-key "SOMEALLKEY" --set-all-secret "SOMEALLSECRET"
 {% endhighlight %}
 
 {% highlight bash %}
@@ -174,9 +179,11 @@ seldon-cli client --action processevents --input-date-string 20160216
 
 {% highlight bash %}
 usage: seldon-cli client [-h]
-                         [--action {list,setup,processactions,processevents}]
+                         [--action {list,setup,processactions,processevents,zk_push,zk_pull}]
                          [--db-name DB_NAME] [--client-name CLIENT_NAME]
                          [--input-date-string INPUT_DATE_STRING]
+                         [--set-js-key SET_JS_KEY] [--set-all-key SET_ALL_KEY]
+                         [--set-all-secret SET_ALL_SECRET]
                          ...
 
 Seldon Cli
@@ -186,13 +193,19 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list,setup,processactions,processevents}
+  --action {list,setup,processactions,processevents,zk_push,zk_pull}
                         the action to use
   --db-name DB_NAME     the name of the db
   --client-name CLIENT_NAME
                         the name of the client
   --input-date-string INPUT_DATE_STRING
                         The date to process in YYYYMMDD format
+  --set-js-key SET_JS_KEY
+                        the key to use for the js scope
+  --set-all-key SET_ALL_KEY
+                        the key to use for the all scope
+  --set-all-secret SET_ALL_SECRET
+                        the secret to use for the all scope
 {% endhighlight %}
 
 # <a name="keys"></a>**seldon-cli keys**
