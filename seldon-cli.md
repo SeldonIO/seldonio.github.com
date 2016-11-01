@@ -12,6 +12,7 @@ title: Seldon CLI
 * [**seldon-cli import**](#import)
 * [**seldon-cli model**](#model)
 * [**seldon-cli rec_alg**](#rec_alg)
+* [**seldon-cli rec_exp**](#rec_exp)
 * [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#api)
 * [Manual install outside Kubernetes](#manual)
@@ -549,6 +550,61 @@ optional arguments:
                         stdin
 {% endhighlight %}
 
+
+# <a name="rec_exp"></a>**seldon-cli rec_exp**
+
+## Synopsis
+Configure and show recommendation explanation settings for a client.
+
+{% highlight bash %}
+seldon-cli rec_exp --action ACTION --client-name CLIENT_NAME --cache-enabled={true|false} --default-locale=DEFAULT_LOCALE --explanations-enabled={true|false}
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# To enable recommendation explanations for a client use the following command.
+# Also the default locale can be set and whether caching should be used.
+seldon-cli rec_exp --action configure --client-name testclient --cache-enabled=true --default-locale="us-en" --explanations-enabled=true
+{% endhighlight %}
+
+{% highlight bash %}
+# To disable recommendation explanations for a client use the following command.
+seldon-cli rec_exp --action configure --client-name testclient --explanations-enabled=false
+{% endhighlight %}
+
+{% highlight bash %}
+# To check current settings for a client
+seldon-cli rec_exp --action show --client-name testclient
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli rec_alg [-h] --action {show,configure} --client-name
+                          CLIENT_NAME [--cache-enabled {true,false}]
+                          [--default-locale DEFAULT_LOCALE]
+                          [--explanations-enabled {true,false}]
+                          ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {show,configure}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --cache-enabled {true,false}
+                        enable cache or not
+  --default-locale DEFAULT_LOCALE
+                        set the deafult locale to use eg 'us-en'
+  --explanations-enabled {true,false}
+                        enable the explanaions or not
+{% endhighlight %}
 
 
 # <a name="predict_alg"></a>**seldon-cli predict_alg**
