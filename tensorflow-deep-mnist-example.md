@@ -169,7 +169,7 @@ You can try to run it but be aware that it needs for your pipeline to be saved i
 We are going to create a docker image from our microservice. Here is the content of the dockerfile:
 
 {% highlight Dockerfile %}
-FROM seldonio/pyseldon:2.0.6
+FROM seldonio/pyseldon:2.1
 
 COPY deep_mnist_pipeline /home/seldon/deep_mnist_pipeline
 COPY run_microservice.sh /run_microservice.sh
@@ -180,7 +180,7 @@ CMD ["/run_microservice.sh"]
 Let's look at it line by line:
 
 {% highlight Dockerfile %}
-FROM seldonio/pyseldon:2.0.6
+FROM seldonio/pyseldon:2.1
 {% endhighlight %}
 
 We are going to base our image on pyseldon's image that has seldon installed as well as python and a number of libraries like tensorflow.
@@ -201,7 +201,7 @@ And finally, we call our script to launch the microservice!
 Now you can choose a name for your image (we went for deep_mnist) and ask docker to build it using the following command line:
 
 {% highlight bash %}
-docker build -t seldonio/deep_mnist:1.0 .
+docker build -t <your_userid>/deep_mnist:1.0 .
 {% endhighlight %}
 
 seldonio is the name of our docker hub (more about this in the next part) and 1.0 is the version of the image.

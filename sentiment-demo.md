@@ -43,10 +43,10 @@ This job will:
 
 # **Serve Predictions**<a name="predictions"></a>
 
-To serve predictions we will load the saved pipeline into a microservice. This can be accomplished by using the script ```run_prediction_pipeline_microservice.sh``` in ```seldon-server/kubernetes/bin```.
+To serve predictions we will load the saved pipeline into a microservice. This can be accomplished by using the script ```start-microservice``` in ```seldon-server/kubernetes/bin```.
 
 {% highlight bash %}
-run_prediction_pipeline_microservice.sh finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ test 1
+start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ 1.0
 {% endhighlight %}
 
 This will load the pipeline saved in /seldon-data/seldon-models/finefoods/1/ and create a single replica microservice called finefoods-xgboost. It will activate this for the "test" client as a prediction algorithm.
@@ -54,7 +54,7 @@ This will load the pipeline saved in /seldon-data/seldon-models/finefoods/1/ and
 You can then test the predictions, e.g.:
 
 {% highlight bash %}
-seldon-cli api --client-name test --endpoint /js/predict --json '{"review":"The candy is just red.   No flavor. Just  plan and chewy.  I would never buy them again."}'
+seldon-cli api --client-name test --endpoint /js/predict --json '{"data":{"review":"The candy is just red.   No flavor. Just  plan and chewy.  I would never buy them again."}}'
 {% endhighlight %}
 
 Which should produce a result like below indication a "negative" sentiment:
@@ -81,7 +81,7 @@ Which should produce a result like below indication a "negative" sentiment:
 While the following:
 
 {% highlight bash %}
-seldon-cli api --client-name test --endpoint /js/predict --json '{"review":"My daughter loves twizzlers and this shipment of six pounds really hit the spot"}'
+seldon-cli api --client-name test --endpoint /js/predict --json '{"data":{"review":"My daughter loves twizzlers and this shipment of six pounds really hit the spot"}}'
 {% endhighlight %}
 
 Should produce a "positive" sentiment:
