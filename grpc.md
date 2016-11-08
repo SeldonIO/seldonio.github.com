@@ -173,7 +173,7 @@ For the first step you can follow the protocol buffer docs and package the resul
 Assuming you have placed the iris.proto above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
 
 {% highlight bash %}
-create-proto-jar.sh /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
+create-proto-jar /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
 {% endhighlight %}
 
 The second step to inform Seldon of this can be carried out via the seldon-cli with the following command where we pass the jar location and the class name.
