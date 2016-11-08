@@ -168,9 +168,9 @@ The front end server for Seldon is a Java server. In order to process the gRPC c
  1. Create Java versions of your proto buffers
  1. Tell Seldon of a jar file containing the Java classes and the names of those classes
 
-For the first step you can follow the protocol buffer docs and package the result. We provide a simple script to do this for you [create-proto-jar](scripts.html#create-proto-jar)
+For the first step you can follow the protocol buffer docs and package the result. However, we also provide a simple script to do this for you [create-proto-jar](scripts.html#create-proto-jar)
 
-Assuming you have placed the iris.proto above on Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
+Assuming you have placed the iris.proto above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
 
 {% highlight bash %}
 create-proto-jar.sh /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
@@ -189,10 +189,13 @@ We can now launch our microservice using the script [start-microservice](scripts
 start-microservice --type prediction --client test -i xgboostrpc seldonio/iris_xgboost_rpc:2.1 rpc 1.0
 {% endhighlight %}
 
-This will deploy our microservice and inform Seldon of where it is running so requests can be sent to it.
+This will deploy our RPC microservice and inform Seldon of where it is running so requests can be sent to it.
 
 ## Test via REST or gRPC clients
-We can test our microservice via either the REST or gRPC endpoints of Seldon. To test the REST endpoint we can use the seldon-cli
+We can test our microservice via either the REST or gRPC endpoints of Seldon. 
+
+### Test via JS REST API
+To test the REST endpoint we can use the seldon-cli
 
 {% highlight bash %}
 seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"data":{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}}'
@@ -228,84 +231,18 @@ This should produce a result like:
 }
 {% endhighlight %}
 
-To test the external gRPC endpoint we will need to create a gRPC client. To authenticate we will need to get an Oauth token using the Seldon REST endpoint.
+### Test via gRPC client
 
-There is an example client for the Iris prediction in [docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py) shown below. You will need to have installed the pyseldon package to get the seldon rpc compiled code.
+To test the external gRPC endpoint we will need to create a gRPC client. To authenticate we will need to get an Oauth token using the Seldon REST endpoint. It needs to be passed in the header of the gRPC call with key "oauth_token".
 
-{% highlight python %}
-import os
-import sys, getopt, argparse
-import logging
-import json
-import grpc
-import iris_pb2
-import seldon.rpc.seldon_pb2 as seldon_pb2
-from google.protobuf import any_pb2
-import requests
+There is an example client for the Iris prediction in [docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py).
 
-class IrisRpcClient(object):
+The script:
 
-    def __init__(self,host,http_transport,http_port,rpc_port):
-        self.host = host
-        self.http_transport = http_transport
-        self.http_port = http_port
-        self.rpc_port = rpc_port
+  1. Gets an Oauth token
+  2. Calls the grpc endpoint
 
-
-    def getToken(self,key,secret):
-        params = {}
-        params["consumer_key"] = key
-        params["consumer_secret"] = secret
-        url = self.http_transport+"://"+self.host+":"+str(self.http_port)+"/token"
-        r = requests.get(url,params=params)
-        if r.status_code == requests.codes.ok:
-            j = json.loads(r.text)
-            return j["access_token"]
-        else:
-            print "failed call to get token"
-            return None
-
-    def callRpc(self,token):
-        channel = grpc.insecure_channel(self.host+':'+str(self.rpc_port))
-        stub = seldon_pb2.ClassifierStub(channel)
-
-        data = iris_pb2.IrisPredictRequest(f1=1.0,f2=0.2,f3=2.1,f4=1.2)
-        dataAny = any_pb2.Any()
-        dataAny.Pack(data)
-        meta = seldon_pb2.ClassificationRequestMeta(puid="12345")
-        request = seldon_pb2.ClassificationRequest(meta=meta,data=dataAny)
-        metadata = [(b'oauth_token', token)]
-        reply = stub.Predict(request,999,metadata=metadata)
-        print reply
-
-if __name__ == '__main__':
-    import logging
-    logger = logging.getLogger()
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(name)s : %(message)s', level=logging.DEBUG)
-    logger.setLevel(logging.INFO)
-
-    parser = argparse.ArgumentParser(prog='create_replay')
-    parser.add_argument('--host', help='rpc server host', default="localhost")
-    parser.add_argument('--http-transport', help='http or https', default="http")
-    parser.add_argument('--http-port', help='http server port', type=int, default=30015)
-    parser.add_argument('--rpc-port', help='rpc server port', type=int, default=30017)
-    parser.add_argument('--key', help='oauth consumer key')
-    parser.add_argument('--secret', help='oauth consumer secret')
-
-    args = parser.parse_args()
-    opts = vars(args)
-    rpc = IrisRpcClient(host=args.host,http_transport=args.http_transport,http_port=args.http_port,rpc_port=args.rpc_port)
-    token = rpc.getToken(args.key,args.secret)
-    if not token is None:
-        print token
-        rpc.callRpc(token)
-    else:
-        print "failed to get token"
-{% endhighlight %}
-
-The code will
-  1. get an Oauth token
-  2. call the grpc endpoint
+It uses compiled python versions of the custom proto buffer and seldon gRPC files located in the same folder.
 
 You will need the seldon host and ports for the http and grpc endpoints and the key and secret for your client.
 To get the key and secret for client "test" run:
@@ -317,7 +254,7 @@ seldon-cli keys --action list --client-name test
 An example call for this client might be:
 
 {% highlight bash %}
-python iris_rpc_client.py --host localhost --http-port 30015 --key B3ZH3AFANDMX65VX6YPS --secret LGD1K4D7TN07H0OLQT4B
+python iris_rpc_client.py --host localhost --http-port 30015 --rpc-port 30017 --key B3ZH3AFANDMX65VX6YPS --secret LGD1K4D7TN07H0OLQT4B --features-json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
 {% endhighlight %}
 
 which should produce a similar result to the REST call above.
@@ -328,19 +265,19 @@ meta {
   variation: "xgboostrpc"
 }
 predictions {
-  prediction: 0.992686629295
+  prediction: 0.00252303667367
   predictedClass: "Iris-setosa"
-  confidence: 0.992686629295
+  confidence: 0.00252303667367
 }
 predictions {
-  prediction: 0.00392687413841
+  prediction: 0.00350009487011
   predictedClass: "Iris-versicolor"
-  confidence: 0.00392687413841
+  confidence: 0.00350009487011
 }
 predictions {
-  prediction: 0.00338655733503
+  prediction: 0.993976831436
   predictedClass: "Iris-virginica"
-  confidence: 0.00338655733503
+  confidence: 0.993976831436
 }
 custom {
 }

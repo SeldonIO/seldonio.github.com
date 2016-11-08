@@ -6,7 +6,13 @@ title: Seldon Prediction APIs
 # Seldon Prediction APIs
 
 ## Introduction
-This document provides an overview of how to use the Seldon OAuth [REST API](api-oauth-prediction.html) and [JavaScript API](api-javascript-prediction.html), including the available methods, the inputs required for injesting raw data and the output specifications for predictions on that data. Seldon provides a REST API with JSON for data representation and OAuth 2.0 for authorisation. For further clarification on any section please contact support at seldon dot io.
+Seldon provides three variants prediction API:
+
+ * OAUTH REST
+ * Javascript
+ * gRPC
+
+Authorization for the gRPC API is via an OAUTH token.
 
 ## OAuth Authorisation
 
@@ -27,6 +33,7 @@ A service will be provided with a consumer_key which should be passed with each 
 
 # Prediction API Details
 
-* [JS API](api-javascript-prediction.html)
 * [REST API](api-oauth-prediction.html)
+* [JS API](api-javascript-prediction.html)
+* [gRPC API](grpc.html)
 
