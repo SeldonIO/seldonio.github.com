@@ -37,7 +37,7 @@ You will need to give this IP address to your webapp in the next step so that it
 The webapp is available prepackaged in a docker container ```seldonio/deep_mnist_webapp``` on dockerhub. The source code can be found [here](https://github.com/SeldonIO/deep-mnist-webapp). We are going to start the webapp from  the docker image using the following command:
 
 {% highlight bash %}
-kubectl run deep-mnist-webapp --image=seldonio/deep_mnist_webapp:latest --port=80 --command -- "/run_webapp.sh" "<seldon-server-ip>" "<key>" "<secret>"
+kubectl run deep-mnist-webapp --image=seldonio/deep_mnist_webapp:1.0 --port=80 --command -- "/run_webapp.sh" "<seldon-server-ip>" "<key>" "<secret>"
 {% endhighlight %}
 
 Now we need to expose port 80 so that the webapp can be accessed outside your cluster:
