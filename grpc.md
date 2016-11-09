@@ -170,7 +170,7 @@ The front end server for Seldon is a Java server. In order to process the gRPC c
 
 For the first step you can follow the protocol buffer docs and package the result. However, we also provide a simple script to do this for you [create-proto-jar](scripts.html#create-proto-jar)
 
-Assuming you have placed the iris.proto above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
+Assuming you have placed the [iris.proto](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost_rpc/proto/iris.proto) above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
 
 {% highlight bash %}
 create-proto-jar /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
