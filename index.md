@@ -12,3 +12,7 @@ Seldon is an Open Predictive Platform that provides content recommendations and 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/G1dM12tCilE" frameborder="0" allowfullscreen></iframe>
 </center>
+
+##  Next Steps
+
+ *  [Install Seldon](install.html)
