@@ -34,8 +34,8 @@ option java_outer_classname = "PredictionAPI";
 
 package io.seldon.api.rpc;
 
-service Classifier {
-  rpc Predict (ClassificationRequest) returns (ClassificationReply) {}
+service Seldon {
+  rpc Classify (ClassificationRequest) returns (ClassificationReply) {}
 }
 
 //Classification Request
@@ -163,23 +163,10 @@ if __name__ == "__main__":
 The above model and resulting microservice has been packaged as a Docker container seldonio/iris_xgboost_rpc.
 
 ## Inform Seldon of Java custom protocol buffers
-The front end server for Seldon is a Java server. In order to process the gRPC calls for a client prediction endpoint correctly it needs to know the custom request and optional reply proto buffer implementations. To do this you need to do two things:
- 
- 1. Create Java versions of your proto buffers
- 1. Tell Seldon of a jar file containing the Java classes and the names of those classes
-
-For the first step you can follow the protocol buffer docs and package the result. However, we also provide a simple script to do this for you [create-proto-jar](scripts.html#create-proto-jar)
-
-Assuming you have placed the [iris.proto](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost_rpc/proto/iris.proto) above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto and want to output the jar at /seldon-data/rpc/jar/iris.jar you can run:
+In order to process the gRPC calls for a client prediction endpoint correctly it needs to know the custom request and optional reply proto buffer implementations. Assuming you have placed the [iris.proto](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost_rpc/proto/iris.proto) above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto you can run:
 
 {% highlight bash %}
-create-proto-jar /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
-{% endhighlight %}
-
-The second step to inform Seldon of this can be carried out via the seldon-cli with the following command where we pass the jar location and the class name.
-
-{% highlight bash %}
-seldon-cli rpc --action set --client-name test --jar /seldon-data/rpc/jar/iris.jar --request-class io.seldon.microservice.iris.IrisPredictRequest
+seldon-cli rpc --action set --client-name test --proto /seldon-data/rpc/proto/iris.proto --request-class io.seldon.microservice.iris.IrisPredictRequest
 {% endhighlight %}
 
 
@@ -254,7 +241,7 @@ seldon-cli keys --action list --client-name test
 An example call for this client might be:
 
 {% highlight bash %}
-python iris_rpc_client.py --host localhost --http-port 30015 --rpc-port 30017 --key B3ZH3AFANDMX65VX6YPS --secret LGD1K4D7TN07H0OLQT4B --features-json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
+python iris_rpc_client.py --host localhost --http-port 30015 --rpc-port 30017 --key oauthkey --secret oauthsecret --features-json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
 {% endhighlight %}
 
 which should produce a similar result to the REST call above.

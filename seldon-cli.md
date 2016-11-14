@@ -15,6 +15,7 @@ title: Seldon CLI
 * [**seldon-cli rec_exp**](#rec_exp)
 * [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#api)
+* [**seldon-cli rpc**](#rpc)
 * [Manual install outside Kubernetes](#manual)
 
 # <a name="intro"></a>**Introduction**
@@ -796,6 +797,76 @@ optional arguments:
 {% endhighlight %}
 
 
+
+
+
+# <a name="rpc"></a>**seldon-cli rpc**
+
+## Synopsis
+Configure gRPC for a client
+
+{% highlight bash %}
+seldon-cli rpc [--action {show,set,remove}] --client-name CLIENT_NAME [--proto PROTO] [--request-class REQUEST_CLASS] [--reply-class REPLY_CLASS]
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# Set rpc configuration from proto file with a request class name
+seldon-cli rpc --action set --client-name test --proto /seldon-data/rpc/proto/iris.proto --request-class io.seldon.microservice.iris.IrisPredictRequest
+{% endhighlight %}
+
+{% highlight bash %}
+# Show setttings for client test
+seldon-cli rpc --action show --client-name test
+{% endhighlight %}
+
+{% highlight bash %}
+# Remove setttings for client test
+seldon-cli rpc --action remove --client-name test
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli rpc [-h] [--action {show,set,remove}] --client-name
+                      CLIENT_NAME [--proto PROTO]
+                      [--request-class REQUEST_CLASS]
+                      [--reply-class REPLY_CLASS]
+                      ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {show,set,remove}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --proto PROTO         the proto buffer file with request and optional reply
+                        class
+  --request-class REQUEST_CLASS
+                        the request class
+  --reply-class REPLY_CLASS
+                        the reply class
+
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 # <a name="manual"></a>**Manual install outside Kubernetes**
 
 You can ignore this section if you are running Seldon inside Kubernetes.
@@ -832,5 +903,23 @@ Another way is to use a commandline line override using the --zk-hosts option. T
 {% highlight bash %}
 seldon-cli --zk-hosts 127.0.0.1
 {% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
