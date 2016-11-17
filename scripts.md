@@ -10,7 +10,7 @@ Seldon provides several scripts to aid starting Seldon, provisioning services an
 * [**seldon-down**](#seldon-down)
 * [**seldon-cli**](#seldon-cli)
 * [**start-microservice**](#start-microservice)
-* [**create-proto-jar**](#create-proto-jar)
+
 
 # <a name="seldon-up"></a>**seldon-up**
 
@@ -98,22 +98,6 @@ Start and AB test with two microservices.
 start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 0.5 -i iris-scikit seldonio/iris_scikit:2.1 rest 0.5
 {% endhighlight %}
 
-
-# <a name="create-proto-jar"></a>**create-proto-jar**
-
-## Synopsis
-Create a Java protocol buffer jar file from a proto buffer file. A utility script to ease creating jar files that can be sent to Seldon server for gRPC microservices.
-
-{% highlight bash %}
-create-proto-jar <input proto file> <output har file>
-{% endhighlight %}
-
-
-## Examples 
-
-{% highlight bash %}
-create-proto-jar /seldon-data/rpc/proto/iris.proto /seldon-data/rpc/jar/iris.jar
-{% endhighlight %}
 
 
 
