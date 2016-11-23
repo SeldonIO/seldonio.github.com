@@ -12,7 +12,7 @@ The proto file for the Seldon gRPC services is shown below. It contains a single
 A *ClassificationRequest* has two parts
   
  * *meta* : metadata associated with the request, presently an optional prediction-id the client wishes to associate with the request.
- * *data* : A custom entry to hold the features needs for the prediction request defined by the user. 
+ * *data* : A custom entry to hold the features needs for the prediction request defined by the user. This is optionally defined by the user. If not defined then a variable array of floats will be assumed as defined in DefaultCustomPredictRequest.
 
 A *ClassificationReply* has three parts
 
@@ -21,7 +21,7 @@ A *ClassificationReply* has three parts
    * *modelName* : the name of the model that satisfied the request
    * *variation* : the AB test variation used in satisfying the request (will be "default" if a single variation).
  * *predictions* : the predictions for each class
- * *custom* : optional custom additonal data that is defined the user
+ * *custom* : optional custom additonal data that is defined by the user
 
 {% highlight proto %}
 syntax = "proto3";
@@ -68,6 +68,11 @@ message ClassificationResult {
   string predictedClass = 2;
   double confidence = 3;
 }
+
+
+message DefaultCustomPredictRequest {
+  repeated float values = 1;
+}
 {% endhighlight %}
 
 
@@ -76,7 +81,7 @@ The stages to deploy a gRPC service are shown below.
 
  1. Create custom proto buffer file
  1. Build model and package microservice using gRPC
- 1. Inform Seldon of Java custom protocol buffers
+ 1. (Optional) Inform Seldon of Java custom protocol buffers
  1. Launch gRPC microservice
  1. Test via REST or gRPC clients
 
@@ -162,13 +167,14 @@ if __name__ == "__main__":
 
 The above model and resulting microservice has been packaged as a Docker container seldonio/iris_xgboost_rpc.
 
-## Inform Seldon of Java custom protocol buffers
-In order to process the gRPC calls for a client prediction endpoint correctly it needs to know the custom request and optional reply proto buffer implementations. Assuming you have placed the [iris.proto](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost_rpc/proto/iris.proto) above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto you can run:
+## (Optional) Inform Seldon of Java custom protocol buffers
+In this example case we have create a custom request protocol buffer. In order to process the gRPC calls for a client prediction endpoint correctly Seldon needs to know the custom request implementations. Assuming you have placed the [iris.proto](https://github.com/SeldonIO/seldon-server/blob/master/docker/examples/iris/xgboost_rpc/proto/iris.proto) above on the Seldon shared volume at /seldon-data/rpc/proto/iris.proto you can run:
 
 {% highlight bash %}
 seldon-cli rpc --action set --client-name test --proto /seldon-data/rpc/proto/iris.proto --request-class io.seldon.microservice.iris.IrisPredictRequest
 {% endhighlight %}
 
+If you want to pass just a variable array of floats as the request data then this step is not required as this is the default.
 
 ## Launch gRPC microservice
 We can now launch our microservice using the script [start-microservice](scripts.html#start-microservice)

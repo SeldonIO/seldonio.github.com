@@ -72,7 +72,13 @@ http://<HOST>/js/predict?consumer_key=XYZ&user=1&num_rooms=4&postcode=sw1&jsonpC
 A response maybe like the following where the "price" field is predicted:
 
 {% highlight json %}
-{"size":1,"list":
+{
+  "meta": {
+    "puid": "f91b158ba046d438cfea82aff4c382f996f5bf51",
+    "modelName": "model_prices",
+    "variation": "default"
+  },
+"predictions":
 	[
 	{"prediction":400000,"predictedClass":"1","confidence":1.0}
 	]

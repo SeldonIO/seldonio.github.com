@@ -60,7 +60,7 @@ The script allows you to start microservices of two types:
 
 {% highlight bash %}
 usage: create_replay [-h] [-i name image microservice API ratio]
-                     [-p name folder ratio] --client CLIENT
+                     [-p name folder microservice API ratio] --client CLIENT
                      [--replicas REPLICAS] --type {recommendation,prediction}
 
 optional arguments:
@@ -68,8 +68,9 @@ optional arguments:
   -i name image microservice API ratio
                         microservice image defn: <name> <image> <API type
                         (rest or rpc)> <ratio>
-  -p name folder ratio  microservice from pipeline defn: <name> <folder>
-                        <ratio>
+  -p name folder microservice API ratio
+                        microservice from pipeline defn: <name> <folder> <API
+                        type (rest or rpc) <ratio>
   --client CLIENT       client name
   --replicas REPLICAS   number of replicas
   --type {recommendation,prediction}
@@ -78,14 +79,14 @@ optional arguments:
 
 ## Examples
 
-Start a recommendation microserice from a built Dcoker image exposed as  REST endpoint for the client "reuters". See the worked [Reuters content recommendation example](content-recommendation-example.html).
+Start a recommendation microserice from a built Docker image exposed as  REST endpoint for the client "reuters". See the worked [Reuters content recommendation example](content-recommendation-example.html).
 {% highlight bash %}
 start-microservice --type recommendation --client reuters -i reuters-example seldonio/reuters-example:2.0.7 rest 1.0
 {% endhighlight %}
 
-Start a prediction microservice from a saved pipeline previoiusly saved to /seldon-data/seldon-models/finefoods/1 for client "test". See the worked [sentiment analysis demo](sentiment-demo.html).
+Start a prediction REST microservice from a saved pipeline previoiusly saved to /seldon-data/seldon-models/finefoods/1 for client "test". See the worked [sentiment analysis demo](sentiment-demo.html).
 {% highlight bash %}
-start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ 1.0
+start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ rest 1.0
 {% endhighlight %}
 
 Start a prediction microservice from an xgboost mode exposed as a REST service and packaged in  docker image. See worked example in the [Iris prediction demo](prediction-example.html).
@@ -97,6 +98,12 @@ Start and AB test with two microservices.
 {% highlight bash %}
 start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 0.5 -i iris-scikit seldonio/iris_scikit:2.1 rest 0.5
 {% endhighlight %}
+
+Start gRPC microservice for Iris demo
+{% highlight bash %}
+start-microservice --type prediction --client test -i xgboostrpc seldonio/iris_xgboost_rpc:2.1 rpc 1.0
+{% endhighlight %}
+
 
 
 

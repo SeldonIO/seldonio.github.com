@@ -232,10 +232,10 @@ seldon-cli client --action setup --db-name ClientDB --client-name deep_mnist_cli
 
 This requires an existing datasource. ClientDB is a datasource that is created by seldon on start-up but you can use another one that you create using [seldon-cli db](seldon-cli.html#db).
 
-Finally, you can launch your microservice using kubernetes/bin/run_prediction_microservice.sh.
+Finally, you can launch your microservice using kubernetes/bin/start-microservice.
 
 {% highlight bash %}
-run_prediction_microservice.sh deep_mnist_service <your_userid>/deep_mnist:1.0 deep_mnist_client
+start-microservice --type prediction --client deep_mnist_client -p tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ rest 2.1
 {% endhighlight %}
 
 
