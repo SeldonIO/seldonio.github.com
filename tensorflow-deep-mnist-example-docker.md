@@ -70,10 +70,10 @@ Here we setup a new client called deep_mnist_client that uses the database Clien
 To serve predictions we will load the saved pipeline into a microservice. This can be accomplished by using the script [start-microservice](scripts.html/#start-microservice).
 
 {% highlight bash %}
-start-microservice --type prediction --client deep_mnist_client -p tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ 2.1
+start-microservice --type prediction --client deep_mnist_client -p tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ rest 1.0
 {% endhighlight %}
 
-This will load the pipeline saved in ```/seldon-data/seldon-models/tensorflow_deep_mnist/1/``` and create a single replica microservice called tensorflow-deep-mnist. It will activate this for the "deep-mnist-service" created in the previous step.
+This will load the pipeline saved in ```/seldon-data/seldon-models/tensorflow_deep_mnist/1/``` and create a single replica REST microservice called tensorflow-deep-mnist. It will activate this for the "deep-mnist-client" created in the previous step.
 
 ## Testing your service
 

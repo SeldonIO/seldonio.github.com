@@ -10,7 +10,7 @@ Seldon provides several scripts to aid starting Seldon, provisioning services an
 * [**seldon-down**](#seldon-down)
 * [**seldon-cli**](#seldon-cli)
 * [**start-microservice**](#start-microservice)
-
+* [**launch-locust-load-test**](#launch-locust-loadtest)
 
 # <a name="seldon-up"></a>**seldon-up**
 
@@ -105,7 +105,49 @@ start-microservice --type prediction --client test -i xgboostrpc seldonio/iris_x
 {% endhighlight %}
 
 
+# <a name="launch-locust-loadtest"></a>**launch-locust-loadtest**
 
+## Synopsis
+Create a locust loadtest. Presently for prediction services only. Handles REST and gRPC
+
+{% highlight bash %}
+usage: launch-locust-load-test [-h] --seldon-client SELDON_CLIENT
+                               [--locust-slaves LOCUST_SLAVES]
+                               [--locust-hatch-rate LOCUST_HATCH_RATE]
+                               [--locust-clients LOCUST_CLIENTS] 
+			       --test-type {js-predict,rpc-predict}
+                               [--seldon-grpc-endpoint SELDON_GRPC_ENDPOINT]
+                               [--seldon-oauth-endpoint SELDON_OAUTH_ENDPOINT]
+                               [--seldon-predict-default-data-size SELDON_PREDICT_DEFAULT_DATA_SIZE]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --seldon-client SELDON_CLIENT
+                        client name
+  --locust-slaves LOCUST_SLAVES
+                        number of slaves to run
+  --locust-hatch-rate LOCUST_HATCH_RATE
+                        locust hatch rate
+  --locust-clients LOCUST_CLIENTS
+                        number of locust clients
+  --test-type {js-predict,grpc-predict}
+                        type of test to run
+  --seldon-grpc-endpoint SELDON_GRPC_ENDPOINT
+                        seldon grpc endpoint
+  --seldon-oauth-endpoint SELDON_OAUTH_ENDPOINT
+                        seldon oauth endpoint
+  --seldon-predict-default-data-size SELDON_PREDICT_DEFAULT_DATA_SIZE
+                        the size of the default list of random floats to send
+                        to predict endpoint
+
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# launch grpc prediction load test
+launch-locust-load-test --seldon-client deep_mnist_client --test-type grpc-predict
+{% endhighlight %}
 
 
 

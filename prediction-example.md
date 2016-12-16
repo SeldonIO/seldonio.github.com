@@ -37,7 +37,7 @@ At runtime Seldon requires you expose your model scoring engine as a microservic
 
 The script creates a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
-For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
+For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up on startup):
 
 {% highlight bash %}
 start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 1.0

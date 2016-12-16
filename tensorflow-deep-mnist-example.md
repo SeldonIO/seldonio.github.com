@@ -235,7 +235,7 @@ This requires an existing datasource. ClientDB is a datasource that is created b
 Finally, you can launch your microservice using kubernetes/bin/start-microservice.
 
 {% highlight bash %}
-start-microservice --type prediction --client deep_mnist_client -p tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ rest 2.1
+start-microservice --type prediction --client deep_mnist_client -p tensorflow-deep-mnist /seldon-data/seldon-models/tensorflow_deep_mnist/1/ rest 1.0
 {% endhighlight %}
 
 
