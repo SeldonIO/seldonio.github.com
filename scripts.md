@@ -59,9 +59,10 @@ The script allows you to start microservices of two types:
  * Microservices started from a saved python scikit-learn pipeline using [pyseldon](prediction-pipeline.html)
 
 {% highlight bash %}
-usage: create_replay [-h] [-i name image microservice API ratio]
-                     [-p name folder microservice API ratio] --client CLIENT
-                     [--replicas REPLICAS] --type {recommendation,prediction}
+usage: start-microservice [-h] [-i name image microservice API ratio]
+                          [-p name folder microservice API ratio] --client
+                          CLIENT [--replicas REPLICAS] --type
+                          {recommendation,prediction}
 
 optional arguments:
   -h, --help            show this help message and exit

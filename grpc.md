@@ -238,10 +238,10 @@ The script:
 It uses compiled python versions of the custom proto buffer and seldon gRPC files located in the same folder.
 
 You will need the seldon host and ports for the http and grpc endpoints and the key and secret for your client.
-To get the key and secret for client "test" run:
+To get the oauth key and secret for client "test" run:
 
 {% highlight bash %}
-seldon-cli keys --action list --client-name test
+seldon-cli keys  --client-name test --scope all
 {% endhighlight %}
 
 An example call for this client might be:

@@ -50,15 +50,29 @@ POST     /predict
 
 The endpoint should be passed JSON containing features from which a prediction is to be made.
 
+A request can have two parts
+
+ * meta : optional meta data associated with the prediction request
+ * data : features for the prediction request
+
+The meta data can at present just contain a provided optional prediction id "puid".
+
 Example
 
 A housing price predictor based on features:
 
 {% highlight json %}
 {
-"num_bedrooms"    :        2,
-"detached" 	  : true,
-"postcode"    :        "SW1"
+"meta" :
+       {
+		"puid" : 1
+       },
+"data":
+	{
+		"num_bedrooms"    :        2,
+		"detached" 	  : true,
+		"postcode"    :        "SW1"
+	}
 }
 {% endhighlight %}
 
@@ -67,7 +81,7 @@ Output
 {% highlight json %}
 {
   "meta": {
-    "puid": "f91b158ba046d438cfea82aff4c382f996f5bf51",
+    "puid": "1",
     "modelName": "model_prices",
     "variation": "default"
   },

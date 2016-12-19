@@ -224,7 +224,7 @@ Example config:
 }
 {% endhighlight %}
 
-Seldon running inside Kubernetes provides a utility script ```kubernetes/bin/run_recommendation_microservice.sh``` to start a recommendation microservice packaged as a Docker container.
+Seldon running inside Kubernetes provides a utility script [start-microservice](scripts.html#start-microservice) to start a recommendation microservice packaged as a Docker container.
 
 
 
