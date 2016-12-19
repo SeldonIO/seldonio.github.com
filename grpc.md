@@ -4,10 +4,10 @@ title: gRPC
 ---
 
 # RPC based services
-Seldon provides an RPC (Remote Procedure Call) interface using [gRPC](http://www.grpc.io/) with [protocol buffers](https://developers.google.com/protocol-buffers/). The following docs require a knowkedge of gRPC. 
+Seldon provides an RPC (Remote Procedure Call) interface using [gRPC](http://www.grpc.io/) with [protocol buffers](https://developers.google.com/protocol-buffers/). The following docs require a knowledge of gRPC. 
 
 # Seldon gRPC
-The proto file for the Seldon gRPC services is shown below. It contains a single service Classifier for classification prediction calls that takes a Classificationrequest and returns a Classification Reply.
+The proto file for the Seldon gRPC services is shown below. It contains a single service Classifier for classification prediction calls that takes a ClassificationRequest and returns a ClassificationReply.
 
 A *ClassificationRequest* has two parts
   
@@ -21,7 +21,7 @@ A *ClassificationReply* has three parts
    * *modelName* : the name of the model that satisfied the request
    * *variation* : the AB test variation used in satisfying the request (will be "default" if a single variation).
  * *predictions* : the predictions for each class
- * *custom* : optional custom additonal data that is defined by the user
+ * *custom* : optional custom additional data that is defined by the user
 
 {% highlight proto %}
 syntax = "proto3";
@@ -107,7 +107,7 @@ message IrisPredictRequest {
 {% endhighlight %}
 
 ## Build model and package as microservice
-To build the model we will use XGBoost and its wrapper provided in the pyseldon python library. The model is the same as shown in the [Iris demo](prediction-example.html) so won't be discussed further here. We create python implementations of our protocol buffer and create a microservice wrapper to our built python pipeline model using the Microservice package as shown below. For this we need to create a custom data handler which will be call to extract a Pandas Dataframe from the RPC call data. The data will contain out custom IrisPredictRequest class which we need to unpack and translate into a Dataframe. The created Dataframe must match what is expected as input to your pipeline model.
+To build the model we will use XGBoost and its wrapper provided in the pyseldon python library. The model is the same as shown in the [Iris demo](prediction-example.html) so won't be discussed further here. We create python implementations of our protocol buffer and create a microservice wrapper to our built python pipeline model using the Microservice package as shown below. For this we need to create a custom data handler which will be called to extract a Pandas Dataframe from the RPC call data. The data will contain out custom IrisPredictRequest class which we need to unpack and translate into a Dataframe. The created Dataframe must match what is expected as input to your pipeline model.
 
 {% highlight python %}
 from concurrent import futures
@@ -226,18 +226,18 @@ This should produce a result like:
 
 ### Test via gRPC client
 
-To test the external gRPC endpoint we will need to create a gRPC client. To authenticate we will need to get an Oauth token using the Seldon REST endpoint. It needs to be passed in the header of the gRPC call with key "oauth_token".
+To test the external gRPC endpoint we will need to create a gRPC client. To authenticate we will need to get an OAuth token using the Seldon REST endpoint. It needs to be passed in the header of the gRPC call with key "oauth_token".
 
 There is an example client for the Iris prediction in [docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/xgboost_rpc/python/iris_rpc_client.py).
 
 The script:
 
   1. Gets an Oauth token
-  2. Calls the grpc endpoint
+  2. Calls the gRPC endpoint
 
-It uses compiled python versions of the custom proto buffer and seldon gRPC files located in the same folder.
+It uses compiled python versions of the custom proto buffer and Seldon gRPC files located in the same folder.
 
-You will need the seldon host and ports for the http and grpc endpoints and the key and secret for your client.
+You will need the Seldon host and ports for the HTTP and gRPC endpoints and the key and secret for your client.
 To get the oauth key and secret for client "test" run:
 
 {% highlight bash %}
