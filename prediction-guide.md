@@ -43,19 +43,14 @@ You can create your machine learning model using the toolkit of your choice. How
 # **Serve Predictions**<a name="predict"></a>
 To serve predictions for your model you need to provide a runtime microservice that conforms to the [microserice prediction API](/api-prediction.html) packaged as a Docker container. If your model is built using our python predictive pipelines you can easily package it as a [microservice](prediction-pipeline.html#microservice).
 
-Once packaged as a Docker container the microservice can be started and connected to your client using ```kubernetes/bin/run_prediction_microservice.sh```. This script takes 4 arguments
-
-  * A name for the microservice
-  * An image to pull that can be run to start the microservice
-  * A version for the image
-  * A client to connect the microservice to
+Once packaged as a Docker container the microservice can be started using the command line script [start-microservice](scripts.html/#start-microservice).
 
 The script creates a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
-For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
+For example to start the XGBoost Iris microservice on the client  "test":
 
 {% highlight bash %}
-run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 test
+start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 1.0
 {% endhighlight %}
 
 The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. You can now get predictions via the Seldon API.
@@ -65,16 +60,12 @@ The script will use the seldon-cli to update the "test" client to add the micros
 ##  Run A/B Tests
 To test differenet prediction algorithms in a live setting you will want to run A/B tests.
 
-If you have two microservices you want to test in an A/B test you can use the script 
+If you have two microservices you want to test in an A/B test you can use the script [start-microservice](scripts.html/#start-microservice).
+
+An example to start two variantions of the example Iris predictors using Xgboost and Scikit-learn variants and sending 50% of the traffic to each is shown below:
 
 {% highlight bash %}
-run_prediction_ab_test.sh <microservice_name_1> <microservice_image_1> <microservice_name_2> <microservice_image_2> <client>
-{% endhighlight %}
-
-This will allow you to start two microservices which each will get 50% of the traffic. An example to start two variantions of the example Iris predictors using Xgboost and Vowpal Wabbit variants is shown below:
-
-{% highlight bash %}
-run_prediction_ab_test.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 iris-vw-example seldonio/iris_vw:2.0.7 test
+start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 0.5 -i iris-scikit seldonio/iris_scikit:2.1 rest 0.5
 {% endhighlight %}
 
 The script will start both microservices and provide the correct configuration via the seldon CLI. The configuration used for the above example is shown below:
@@ -89,18 +80,18 @@ The script will start both microservices and provide the correct configuration v
                         "config": [
                             {
                                 "name": "io.seldon.algorithm.external.url",
-                                "value": "http://iris-xgboost-example:5000/predict"
+                                "value": "http://iris-xgboost:5000/predict"
                             },
                             {
                                 "name": "io.seldon.algorithm.external.name",
-                                "value": "iris-xgboost-example"
+                                "value": "iris-xgboost"
                             }
                         ],
                         "name": "externalPredictionServer"
                     }
                 ]
             },
-            "label": "iris-xgboost-example",
+            "label": "iris-xgboost",
             "ratio": 0.5
         },
         {
@@ -110,18 +101,18 @@ The script will start both microservices and provide the correct configuration v
                         "config": [
                             {
                                 "name": "io.seldon.algorithm.external.url",
-                                "value": "http://iris-vw-example:5000/predict"
+                                "value": "http://iris-scikit:5000/predict"
                             },
                             {
                                 "name": "io.seldon.algorithm.external.name",
-                                "value": "iris-vw-example"
+                                "value": "iris-scikit"
                             }
                         ],
                         "name": "externalPredictionServer"
                     }
                 ]
             },
-            "label": "iris-vw-example",
+            "label": "iris-scikit",
             "ratio": 0.5
         }
     ]

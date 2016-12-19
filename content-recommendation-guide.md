@@ -191,12 +191,7 @@ Once a model is built the final step is to provide a runtime scorer for the mode
 
 ## Microservices
 
-If your runtime scrorer will be exposed as an internal microservice you need to package it as a Docker container that exposes the [microservice recommendation API](api-microservices.html). Once done you can start it using ```kubernetes/bin/run_recommendation_microservice.sh``` which takes 4 arguments:
-
-  * A name for the microservice
-  * An image to pull that can be run to start the microservice
-  * A version for the image
-  * A client to connect the microservice to
+If your runtime scrorer will be exposed as an internal microservice you need to package it as a Docker container that exposes the [microservice recommendation API](api-microservices.html). Once done you can start it using the command line script [start-microservice](scripts.html/#start-microservice).
 
 The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 

@@ -37,7 +37,7 @@ cd kubernetes/conf/examples/reuters/
 kubectl create -f import-data-job.json
 {% endhighlight %}
 
-Check for successful completion using ```kubectl get jobs``` which should show:
+Check for successful completion using ```kubectl get jobs -l job-name=reuters-import-data``` which should show:
 {% highlight bash %}
 NAME                  DESIRED   SUCCESSFUL   AGE
 reuters-import-data   1         1            1m
@@ -51,18 +51,14 @@ For this simple example we will build a document similarity model to provide rec
 In general, Seldon provides several content recommendation models in Spark as well as python based modules.
 
 # Create Microservice<a name="microservice"></a>
-To serve predictions from our model we need to run the prepackaged docker image which exposes a miroservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/run_recommendation_microservice.sh``` which takes 4 arguments:
-
-  * A name for the microservice
-  * An image to pull that can be run to start the microservice
-  * A client to connect the microservice to
+To serve predictions from our model we need to run the prepackaged docker image which exposes a miroservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/start-microservice```.
 
 The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
 To start the Reuters gensim model serving run:
 
 {% highlight bash %}
-run_recommendation_microservice.sh reuters-example seldonio/reuters-example:2.0.7 reuters
+start-microservice --type recommendation --client reuters -i reuters-example seldonio/reuters-example:2.0.7 rest 1.0
 {% endhighlight %}
 
 The script will create the Kubernetes Deployment and use the seldon-cli to update the "reuters" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=reuters-example``` that the pod running the mircroservice is running.  

@@ -20,48 +20,48 @@ This example will take you through creating a simple prediction service to serve
  * You haved added ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
 
 # **Create a Predictive Model**<a name="model"></a>
-The first step is to create a predictive model based on some training data. In this case we have prepacked into 3 Docker images the process of creating a model for the Iris dataset using three popular machine learning toolkits [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) and [Keras](http://keras.io/). Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easy. However, you can build your model using any machine learning library. 
+The first step is to create a predictive model based on some training data. In this case we have prepacked into 4 Docker images the process of creating a model for the Iris dataset using popular machine learning toolkits [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki), [Keras](http://keras.io/) and [Scikit-learn](http://scikit-learn.org/stable/). Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easy. However, you can build your model using any machine learning library. 
 
-The three images are:
+The four example images are:
 
  * seldonio/iris_xgboost : an XGBoost model for the iris dataset
  * seldonio/iris_vw : a VW model for the iris dataset
  * seldonio/iris_keras : a keras model for the iris dataset
+ * seldonio/iris_scikit : a scikit-learn model for the iris dataset
 
 For details on building models using our python library see [here](prediction-pipeline.html).
 
 # **Start a microservice**<a name="microservice"></a>
 
-At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example case the same image to create the models also exposes it for runtime scoring when run. We can start our chosen microservice using ```kubernetes/bin/run_prediction_microservice.sh```. This script takes 4 arguments
+At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example case the same image to create the models also exposes it for runtime scoring when run. We can start our chosen microservice using the command line script [start-microservice](scripts.html#start-microservice)
 
-  * A name for the microservice
-  * An image to pull that can be run to start the microservice
-  * A client to connect the microservice to
+The script creates a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
-The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
-
-For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up.sh on startup):
+For example to start the XGBoost Iris microservice on the client  "test" (created by seldon-up on startup):
 
 {% highlight bash %}
-run_prediction_microservice.sh iris-xgboost-example seldonio/iris_xgboost:2.0.7 test
+start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 1.0
 {% endhighlight %}
 
-The script will use the seldon-cli to update the "test" client to add the microservice as a runtime algorithm. Check with ```kubectl get pods -l name=iris-xgboost-example``` that the pod running the mircroservice is running.  
+Check with ```kubectl get pods -l name=iris-xgboost``` that the pod running the mircroservice is running.  
 
 # **Serve Predictions**<a name="predictions"></a>
 
 You can now call the seldon server using the seldon CLI to test:
 
 {% highlight bash %}
-seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}'
+seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"data":{"f1":1,"f2":2.7,"f3":5.3,"f4":1.9}}'
 {% endhighlight %}
 
 The respone should be like:
 {% highlight json %}
 {
-  "size": 3,
-  "requested": 0,
-  "list": [
+  "meta": {
+    "puid": "242fef28a255cd67d9c56ce6c15f6f0ff65d68e8",
+    "modelName": "model_xgb",
+    "variation": "iris-xgboost"
+  },
+  "predictions": [
     {
       "prediction": 0.00252304,
       "predictedClass": "Iris-setosa",
@@ -77,7 +77,8 @@ The respone should be like:
       "predictedClass": "Iris-virginica",
       "confidence": 0.993977
     }
-  ]
+  ],
+  "custom": null
 }
 {% endhighlight %}
 
@@ -128,6 +129,12 @@ import sys, getopt, argparse
 from seldon.microservice import Microservices
 
 if __name__ == "__main__":
+    import logging
+    logger = logging.getLogger()
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(name)s : %(message)s', level=logging.DEBUG)
+    logger.setLevel(logging.INFO)
+
+
     parser = argparse.ArgumentParser(prog='microservice')
     parser.add_argument('--model_name', help='name of model', required=True)
     parser.add_argument('--pipeline', help='location of prediction pipeline', required=True)
@@ -140,16 +147,15 @@ if __name__ == "__main__":
     m = Microservices(aws_key=args.aws_key,aws_secret=args.aws_secret)
     app = m.create_prediction_microservice(args.pipeline,args.model_name)
 
-    from gevent.wsgi import WSGIServer
-    http_server = WSGIServer(('', 5000), app)
-    http_server.serve_forever()
+    app.run(host="0.0.0.0", debug=False)
 {% endhighlight %}
 
 The full source code to create a docker image for model and runtime scorer for the three variants can be found in:
 
- * ``docker/examples/iris/xgboost``` : an XGBoost model for the iris dataset
- * ```docker/examples/iris/vw``` : a VW model for the iris dataset
- * ```docker/examples/iris/keras``` : a keras model for the iris dataset
+ * [docker/examples/iris/xgboost](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/xgboost) : an XGBoost model for the iris dataset
+ * [docker/examples/iris/vw](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/vw) : a VW model for the iris dataset
+ * [docker/examples/iris/keras](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/keras) : a keras model for the iris dataset
+ * [docker/examples/iris/scikit](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/scikit) : a scikit-learn model for the iris dataset
 
 
 

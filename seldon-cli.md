@@ -12,8 +12,10 @@ title: Seldon CLI
 * [**seldon-cli import**](#import)
 * [**seldon-cli model**](#model)
 * [**seldon-cli rec_alg**](#rec_alg)
+* [**seldon-cli rec_exp**](#rec_exp)
 * [**seldon-cli predict_alg**](#predict_alg)
 * [**seldon-cli api**](#api)
+* [**seldon-cli rpc**](#rpc)
 * [Manual install outside Kubernetes](#manual)
 
 # <a name="intro"></a>**Introduction**
@@ -139,7 +141,8 @@ Clients in the Seldon Platform can be considered as particular datasets that you
 The client command can be used to setup these datasets.
 
 {% highlight bash %}
-seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME --input-date-string INPUT_DATE
+seldon-cli client --action ACTION --db-name DB_NAME --client-name CLIENT_NAME --input-date-string INPUT_DATE --set-js-key JS_KEY --set-all-key ALL_KEY --set-all-secret ALL_SECRET
+
 {% endhighlight %}
 
 ## Examples
@@ -152,6 +155,10 @@ seldon-cli client --action list
 {% highlight bash %}
 # To create a new client use the following command. It requires an existing datasource that would have been created with the db command.
 seldon-cli client --action setup --db-name ClientDB --client-name testclient
+
+# When creating a new client, the consumer key and secret can also be set to custom values if necessary.  
+# This is optional, and if any of "--set-js-key, --set-all-key or --set-all-secret" are missing, a random string is used in its place.
+seldon-cli client --action setup --db-name ClientDB --client-name testclient --set-js-key "SOMEJSKEY" --set-all-key "SOMEALLKEY" --set-all-secret "SOMEALLSECRET"
 {% endhighlight %}
 
 {% highlight bash %}
@@ -174,9 +181,11 @@ seldon-cli client --action processevents --input-date-string 20160216
 
 {% highlight bash %}
 usage: seldon-cli client [-h]
-                         [--action {list,setup,processactions,processevents}]
+                         [--action {list,setup,processactions,processevents,zk_push,zk_pull}]
                          [--db-name DB_NAME] [--client-name CLIENT_NAME]
                          [--input-date-string INPUT_DATE_STRING]
+                         [--set-js-key SET_JS_KEY] [--set-all-key SET_ALL_KEY]
+                         [--set-all-secret SET_ALL_SECRET]
                          ...
 
 Seldon Cli
@@ -186,23 +195,30 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list,setup,processactions,processevents}
+  --action {list,setup,processactions,processevents,zk_push,zk_pull}
                         the action to use
   --db-name DB_NAME     the name of the db
   --client-name CLIENT_NAME
                         the name of the client
   --input-date-string INPUT_DATE_STRING
                         The date to process in YYYYMMDD format
+  --set-js-key SET_JS_KEY
+                        the key to use for the js scope
+  --set-all-key SET_ALL_KEY
+                        the key to use for the all scope
+  --set-all-secret SET_ALL_SECRET
+                        the secret to use for the all scope
 {% endhighlight %}
 
 # <a name="keys"></a>**seldon-cli keys**
-Display Oauth or JS authenetication keys for a client.
+Display/Update Oauth or JS authenetication keys for a client.
 
 ## Synopsis
-Show the keys for a client, either every key or just js or oauth keys.
+Show the keys for a client, either every key or just js or oauth keys.  
+Also update the keys for a particular client.
 
 {% highlight bash %}
-seldon-cli keys --action list --client-name CLIENT --scope SCOPE {js|all}
+seldon-cli keys --action ACTION {list|update} --client-name CLIENT --scope SCOPE {js|all} --key SOMEKEY --secret SOMESECRET
 {% endhighlight %}
 
 ## Examples
@@ -218,13 +234,22 @@ seldon-cli keys --client-name test
 seldon-cli --quiet keys --client-name test --scope js
 {% endhighlight %}
 
+{% highlight bash %}
+# Update scope js, key for client
+seldon-cli keys --action update --client-name test --scope js --key "SOMEKEY123"
+{% endhighlight %}
 
+{% highlight bash %}
+# Update scope all, key and secret for client
+seldon-cli keys --action update --client-name test2 --scope all --key "SOMEKEY123" --secret "SOMESECRET123"
+{% endhighlight %}
 
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli keys [-h] [--action {list}] [--client-name CLIENT_NAME]
-                       [--scope {js,all}]
+usage: seldon-cli keys [-h] [--action {list,update}]
+                       [--client-name CLIENT_NAME] [--scope {js,all}]
+                       [--key KEY] [--secret SECRET]
                        ...
 
 Seldon CLI
@@ -234,10 +259,13 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list}       the action to use
+  --action {list,update}
+                        the action to use
   --client-name CLIENT_NAME
                         the name of the client
   --scope {js,all}      the key scope
+  --key KEY             the key for the update
+  --secret SECRET       the secret for the update
 {% endhighlight %}
 
 
@@ -524,6 +552,61 @@ optional arguments:
 {% endhighlight %}
 
 
+# <a name="rec_exp"></a>**seldon-cli rec_exp**
+
+## Synopsis
+Configure and show recommendation explanation settings for a client.
+
+{% highlight bash %}
+seldon-cli rec_exp --action ACTION --client-name CLIENT_NAME --cache-enabled={true|false} --default-locale=DEFAULT_LOCALE --explanations-enabled={true|false}
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# To enable recommendation explanations for a client use the following command.
+# Also the default locale can be set and whether caching should be used.
+seldon-cli rec_exp --action configure --client-name testclient --cache-enabled=true --default-locale="us-en" --explanations-enabled=true
+{% endhighlight %}
+
+{% highlight bash %}
+# To disable recommendation explanations for a client use the following command.
+seldon-cli rec_exp --action configure --client-name testclient --explanations-enabled=false
+{% endhighlight %}
+
+{% highlight bash %}
+# To check current settings for a client
+seldon-cli rec_exp --action show --client-name testclient
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli rec_alg [-h] --action {show,configure} --client-name
+                          CLIENT_NAME [--cache-enabled {true,false}]
+                          [--default-locale DEFAULT_LOCALE]
+                          [--explanations-enabled {true,false}]
+                          ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {show,configure}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --cache-enabled {true,false}
+                        enable cache or not
+  --default-locale DEFAULT_LOCALE
+                        set the deafult locale to use eg 'us-en'
+  --explanations-enabled {true,false}
+                        enable the explanaions or not
+{% endhighlight %}
+
 
 # <a name="predict_alg"></a>**seldon-cli predict_alg**
 Configure the Seldon server runtime scoring algorithms for prediction. 
@@ -714,6 +797,76 @@ optional arguments:
 {% endhighlight %}
 
 
+
+
+
+# <a name="rpc"></a>**seldon-cli rpc**
+
+## Synopsis
+Configure gRPC for a client
+
+{% highlight bash %}
+seldon-cli rpc [--action {show,set,remove}] --client-name CLIENT_NAME [--proto PROTO] [--request-class REQUEST_CLASS] [--reply-class REPLY_CLASS]
+{% endhighlight %}
+
+## Examples
+
+{% highlight bash %}
+# Set rpc configuration from proto file with a request class name
+seldon-cli rpc --action set --client-name test --proto /seldon-data/rpc/proto/iris.proto --request-class io.seldon.microservice.iris.IrisPredictRequest
+{% endhighlight %}
+
+{% highlight bash %}
+# Show setttings for client test
+seldon-cli rpc --action show --client-name test
+{% endhighlight %}
+
+{% highlight bash %}
+# Remove setttings for client test
+seldon-cli rpc --action remove --client-name test
+{% endhighlight %}
+
+## Options
+
+{% highlight bash %}
+usage: seldon-cli rpc [-h] [--action {show,set,remove}] --client-name
+                      CLIENT_NAME [--proto PROTO]
+                      [--request-class REQUEST_CLASS]
+                      [--reply-class REPLY_CLASS]
+                      ...
+
+Seldon Cli
+
+positional arguments:
+  args
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --action {show,set,remove}
+                        the action to use
+  --client-name CLIENT_NAME
+                        the name of the client
+  --proto PROTO         the proto buffer file with request and optional reply
+                        class
+  --request-class REQUEST_CLASS
+                        the request class
+  --reply-class REPLY_CLASS
+                        the reply class
+
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 # <a name="manual"></a>**Manual install outside Kubernetes**
 
 You can ignore this section if you are running Seldon inside Kubernetes.
@@ -750,5 +903,23 @@ Another way is to use a commandline line override using the --zk-hosts option. T
 {% highlight bash %}
 seldon-cli --zk-hosts 127.0.0.1
 {% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

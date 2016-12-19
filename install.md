@@ -17,7 +17,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.3.11
+git clone https://github.com/seldonio/seldon-server -b v1.4
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -71,24 +71,24 @@ By default the Seldon API server endpoint is set to a Kubernetes NodePort at por
 
 
 # Launch Seldon<a name="launch"></a>
-Scripts ```seldon-up.sh``` and ```seldon-down.sh``` in ```kubernetes/bin``` start and stop Seldon and should be in your PATH.
+Scripts [seldon-up](scripts.html#seldon-up) and [seldon-down](scripts.html/#seldon-down) in ```kubernetes/bin``` start and stop Seldon and should be in your PATH.
 
 To launch seldon with all components run
 {% highlight bash %}
-seldon-up.sh
+seldon-up
 {% endhighlight %}
 
 To start with GlusterFS run 
 {% highlight bash %}
-SELDON_WITH_GLUSTERFS=true seldon-up.sh
+SELDON_WITH_GLUSTERFS=true seldon-up
 {% endhighlight %}
 
 To shutdown seldon run
 {% highlight bash %}
-seldon-down.sh
+seldon-down
 {% endhighlight %}
 
-The first time you run ```seldon-up.sh``` it may take some time to complete as it will need to download all the images from DockerHub.
+The first time you run [seldon-up](scripts.html#seldon-up) it may take some time to complete as it will need to download all the images from DockerHub.
 
 On successful completion you will have a standard Seldon installation with mysql, memcache and zookeeper running within the cluster as well as a single Seldon API server and Spark cluster. The appropriate seldon-cli commands would have be run to set up the default settings and a "test" client.
 
@@ -99,7 +99,7 @@ On successful completion you will have a standard Seldon installation with mysql
 
 # Troubleshooting<a name="troubleshooting"></a>
 
- * ***When running ```seldon-up.sh``` the script waits for ever for all pods to be in running state.***
+ * ***When running [seldon-up](scripts.html#seldon-up) the script waits for ever for all pods to be in running state.***
 
 Check the reason its not finishing using: ```kubectl get all``` and ```kubectl get events```
 
@@ -123,8 +123,8 @@ If you are using a Vagrant VM to run your kubernetes cluster ensure it has 6G of
 
 Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
 
- * ***Its taking a long time to start after running seldon-up.sh for the first time***
+ * ***Its taking a long time to start after running [seldon-up](scripts.html#seldon-up) for the first time***
 
-The first time you run seldon-up.sh it will need to pull all the container images from Docker Hub. This may take some time on a slow internet connection.
+The first time you run seldon-up it will need to pull all the container images from Docker Hub. This may take some time on a slow internet connection.
 
 

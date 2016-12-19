@@ -17,9 +17,11 @@ Assumes you wish to create your glusterfs cluster in a separate VPC from Kuberne
  1. Create a Kubernetes Cluster
  1. [Add glusterfs software for client to each minion](https://www.howtoforge.com/high-availability-storage-with-glusterfs-3.2.x-on-debian-wheezy-automatic-file-replication-mirror-across-two-storage-servers#-setting-up-the-glusterfs-client) and also master if you wish
  1. [Create a VPC Peering connection in glusterFS VPC to Kubernetes VPC](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/working-with-vpc-peering.html)
-    1. Create Peering connection
-    1. Edit Routing Table to add glusterfs traffic to kubernetes
-    1. Edit Routing Table to add kubernetes traffic to glusterfs
+    1. Create Peering connection and accept request.
+    1. Edit glusterfs routing table to allow traffic to kubernetes
+       1. There will be two routing tables. Choose the routing table with the subnet. Add the ip range for kubernetes (usually 172.20.0.0/16). Choose the Peering connection as destination.
+    1. Edit kubernetes routing table to allow traffic to glusterfs
+       1. There will be two routing tables. Choose the routing table with the subnet. Add the ip range for glusterfs (for example 192.168.0.0/16). Choose the Peering connection as destination.
     1. Update security group for glusterfs inbound to allow kubernetes traffic
     1. Update security group for kubernetes inbound to allow glusterfs traffic
  1. Test mount glusterfs volume on master or minion node, e.g. 
