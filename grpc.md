@@ -79,7 +79,7 @@ message DefaultCustomPredictRequest {
 # Deploying a gRPC Prediction Service 
 The stages to deploy a gRPC service are shown below.
 
- 1. Create custom proto buffer file
+ 1. (Optional) Create custom proto buffer file
  1. Build model and package microservice using gRPC
  1. (Optional) Inform Seldon of Java custom protocol buffers
  1. Launch gRPC microservice
