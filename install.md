@@ -127,4 +127,4 @@ Check you have enough memory. At least 6G is needed to run everything locally on
 
 The first time you run seldon-up it will need to pull all the container images from Docker Hub. This may take some time on a slow internet connection.
 
-
+If you are using minikube, first remove old nodes using the ```minikube delete``` command.
