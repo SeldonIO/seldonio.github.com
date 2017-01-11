@@ -116,6 +116,17 @@ ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAcco
 
 Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
 
+In addition, the following may help:
+
+1. Reduce the memory allocation for ***mysql*** and ***seldon-server*** pods before running [seldon-up](scripts.html#seldon-up) using the following commands. The default is 3GB for the ***mysql*** and ***seldon-server*** pods. This command specified 2GB each for ***mysql*** and ***seldon-server*** pods. In general, you can try different values: for example, if you just need to run the Reuters and Iris examples, even 1 GB for ***mysql*** will work.
+{% highlight bash %}
+ cd kubernetes/conf
+ make clean conf MYSQL_RESOURCES='"requests":{ "memory" : "2Gi" }' SELDON_SERVER_RESOURCES='"requests":{ "memory" : "2Gi" }'
+{% endhighlight %}
+2. Disable Spark, in case you do not intend to use it. To do so, invoke [seldon-up](scripts.html#seldon-up) like this:
+{% highlight bash %}
+SELDON_WITH_SPARK=false seldon-up
+{% endhighlight %}
 
 If you are using a Vagrant VM to run your kubernetes cluster ensure it has 6G of memory available from the host machine.
 
