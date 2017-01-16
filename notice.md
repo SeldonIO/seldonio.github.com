@@ -34,28 +34,33 @@ This project includes sub-components with separate copyright notices and license
 * [Apache Kafka](http://kafka.apache.org/) - Copyright © 2010 LinkedIn
 * [Docker](https://www.docker.com/) - Copyright © 2013-2016 Docker, Inc.
 * [Luigi](https://github.com/spotify/luigi) - Copyright © 2012-2016 Spotify AB
-* [Apache Flink](https://flink.apache.org/) 
 * [TensorFlow](https://www.tensorflow.org/) - Copyright © 2015, The TensorFlow Authors.
 * [Apache Giraph](http://giraph.apache.org/)  
+* [XGBoost](https://github.com/dmlc/xgboost)
+
 
 **[The BSD 3-Clause License](http://opensource.org/licenses/BSD-3-Clause)**
 
 * [semantic vectors](https://code.google.com/p/semanticvectors/) - Copyright (c) 2008, The SemanticVectors Authors
+* [scikit-learn](https://github.com/scikit-learn/scikit-learn)
+* [Pandas](http://pandas.pydata.org/)
 
 **[GNU General Public License, version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)**
 
 * [MySQL Commmunity Server](http://www.mysql.com) - Copyright © 2015 Oracle Corporation
 
+**[GNU Lesser General Public License, version 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html)**
+
+ * [Gensim](https://radimrehurek.com/gensim/)
+
 **[The MIT License (MIT)](http://opensource.org/licenses/MIT)**
 
 * [InfluxDB](http://influxdb.com/) - Copyright © 2013-2015 Errplane Inc.
 * [scopt](https://github.com/scopt/scopt) - Copyright © 2010 Google
-* [Vagrant](https://www.vagrantup.com/) - Copyright (c) 2010-2015 Mitchell Hashimoto
-
-**Mozilla Public License, version 2.0**
-
-* [Consul](http://consul.io) - Copyright © 2015 HashiCorp
+* [Keras](https://keras.io/)
 
 **Other Copyright Notices**
 
 * [MovieLens 10M dataset](http://www.movielens.org) - © 2015 GroupLens Research Project at the University of Minnesota
+* [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) - Copyright © Microsoft Corp 2012-2014, Yahoo! Inc. 2007-2012, and many
+individual contributors.
