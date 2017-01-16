@@ -35,7 +35,6 @@ This project includes sub-components with separate copyright notices and license
 * [Docker](https://www.docker.com/) - Copyright © 2013-2016 Docker, Inc.
 * [Luigi](https://github.com/spotify/luigi) - Copyright © 2012-2016 Spotify AB
 * [TensorFlow](https://www.tensorflow.org/) - Copyright © 2015, The TensorFlow Authors.
-* [Apache Giraph](http://giraph.apache.org/)  
 * [XGBoost](https://github.com/dmlc/xgboost)
 
 
