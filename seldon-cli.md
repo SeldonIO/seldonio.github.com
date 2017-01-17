@@ -622,14 +622,32 @@ seldon-cli predict_alg  --action ACTION --client-name CLIENT --predictor-name PR
 
 {% highlight bash %}
 # add a microserice endpoint for the client iris running at given url and having given name
-seldon-cli predict_alg  --action add --client-name iris --predictor-name externalPredictionServer --config io.seldon.algorithm.external.url=http://iris-example:5000/predict --config io.seldon.algorithm.external.name=iris-demo
+cat <<EOF | seldon-cli predict_alg --action create --client-name iris -f -
+{
+    "algorithms": [
+        {
+            "config": [
+                {
+                    "name": "io.seldon.algorithm.external.url",
+                    "value": "http://iris-example:5000/predict"
+                },
+                {
+                    "name": "io.seldon.algorithm.external.name",
+                    "value": "iris-demo"
+                }
+            ],
+            "name": "externalPredictionServer"
+        }
+    ]
+}
+EOF
+
 {% endhighlight %}
 
 
 {% highlight bash %}
-# custom configuration using -f
-
-   cat <<EOF | seldon-cli predict_alg --action create --client-name test -f -
+# a configuration using using variations
+cat <<EOF | seldon-cli predict_alg --action create --client-name test -f -
 {
     "variations": [
         {
@@ -684,8 +702,7 @@ EOF
 ## Options
 
 {% highlight bash %}
-usage: seldon-cli predict_alg [-h] --action
-                              {list,show,add,delete,commit,create}
+usage: seldon-cli predict_alg [-h] --action {list,show,commit,create}
                               [--client-name CLIENT_NAME]
                               [--predictor-name PREDICTOR_NAME]
                               [--config CONFIG] [-f JSON_FILE]
@@ -698,7 +715,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --action {list,show,add,delete,commit,create}
+  --action {list,show,commit,create}
                         the action to use
   --client-name CLIENT_NAME
                         the name of the client
