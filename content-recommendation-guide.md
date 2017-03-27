@@ -53,7 +53,7 @@ Next you will need to define the item meta-data schema. Here is an example schem
 
 Let's go though these fields one by one
 
- 1. type_id: Distinguishes between different types of items for example movies and music. For now, Seldon only allows one item type so this must always be 1
+ 1. type_id: Distinguishes between different types of items for example movies and music.
  1. type_name: unique name for this type of item
  1. type_attrs: a list of attributes that can be associated with this item type
  1. type_attrs -> name: the name of the attribute in question
@@ -156,31 +156,9 @@ The luigi Task definition can be found in our [pyseldon](python-package.html) li
 
 You can provide your own custom configuration either by changing the luigi.cfg or supplying further parameters to the call to luigi.
 
-## Built-in Spark models
-We provide several Spark based models. At present only a few are fully exposed via the Seldon CLI and luigi.
+## Built-in Models
 
- * **Matrix Factorization** : An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
-
-You can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
-
-{% highlight bash %}
-cd kubernetes/conf/models
-make matrix-factorization DAY=16907 CLIENT=test
-{% endhighlight %}
-
- * **Item Similarity** : Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
-
-You can create an item similarity modelling job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
-
-{% highlight bash %}
-cd kubernetes/conf/models
-make item-similarity DAY=16907 CLIENT=test
-{% endhighlight %}
-
-
-## Python based models
-
-Models can also be built and packaged via our python library. At present we provide an wrapper for gensim document similarity models. An example using this is described [here](content-recommendation-example.html) which has an associated [Jupyter notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/doc_similarity_reuters.ipynb). The docsim class used is detailed [here](python/seldon.text.html#module-seldon.text.docsim).
+We provide several recommendation algorithms as part of Seldon out of the box. See [here](content-recommendation-models.html) for a full description.
 
 # **Configure runtime recommendation scoring**<a name="runtime"></a>
 

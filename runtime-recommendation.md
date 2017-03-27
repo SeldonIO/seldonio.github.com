@@ -3,27 +3,21 @@ layout: default
 title: Runtime Item Recommendation Algorithms 
 ---
 
-# Runtime Item Recommendation Algorithms
+# Runtime Recommendation Scorers
 
-At runtime the Seldon server can utilize a set of item recommendation algorithms to provide recommendations. These runtime algorithms are usually based on some offline model.  The list of default algorithms and their associated models are described below.
+At runtime the Seldon server can utilize a set of item recommendation scorers to provide recommendations. These runtime scorers are usually based on some offline model.  
 
-Many of the content recommendation algorithms use two general ways to provide recommendations :
+The current built in runtime scorers are as follows:
 
- 1. Use the entire built model to score new items for a user
- 1. Use the user's recent item interactions as a basis to score new items for a user. This method is using the users recent interests as a basis for item recommendation. For example, use the last three pages a user has read on a news site as a basis to provide recommendations
-
-As Seldon allows combining algorithms both can be used together to produce a final recommendation result.
-
-The current built in runtime item recommendation algorithms are as follows:
-
-**Runtime Item Recommendation Algorithm** | **Offline Model**
+**Runtime Scorer** | **Offline Model**
 --|--
-`mfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
-`recentMfRecommender` | [matrix factorization model](runtime-recommendation.html#matrix-factorization)
-`itemSimilarityRecommender` | [item activity model](runtime-recommendation.html#similar-items)
-`globalClusterCountsRecommender` | [baseline models](runtime-recommendation.html#global-cluster)
-`recentItemsRecommender` | [baseline models](runtime-recommendation.html#baseline)
-`externalItemRecommendationAlgorithm` | [custom model](#custom)
+[Static Matrix Factorization Scorer](runtime-recommendation.html#matrix-factorization-static) | matrix factorization model
+[Recent Activity Matrix Factorization Scorer](runtime-recommendation.html#matrix-factorization-recent) | matrix factorization model
+[User Clusters Matrix Factorization Scorer](runtime-recommendation.html#matrix-factorization-clusters) | user clusters matrix factorization model
+[Item Similarity Scorer](runtime-recommendation.html#similar-items) | item activity model
+[Recent Most Popular](runtime-recommendation.html#most-popular) | 
+[Recent Activity](runtime-recommendation.html#recent-activity) | 
+[Custom Scorer](#custom) | 
 
 
 
@@ -31,21 +25,23 @@ The current built in runtime item recommendation algorithms are as follows:
 
 Use the [seldon-cli](seldon-cli.html#rec_alg) to apply a configuation to a client.
 
-## Matrix Factorization Models<a name="matrix-factorization"></a>
+## Static Matrix Factorization Scorer<a name="matrix-factorization-static"></a>
+Utilizes the derived offline latent factors to provide a set of recommendations for a user.   
 
-Algorithms that utilize a matrix factorization based model.
+Example activation of a runtime scorer for a client ml100k::
 
- **Algorithm** : `mfRecommender`  
- **Description** : Utilizes the derived offline latent factors to provide a set of recommendations for a user.   
-
-Example config:
-
-{% highlight json %}
- {
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
+{
     "defaultStrategy": {
         "algorithms": [
             {
-                "config": [],
+                "config": [
+                    {
+                        "name": "io.seldon.algorithm.general.numrecentactionstouse",
+                        "value": "1"
+                    }
+                ],
                 "filters": [],
                 "includers": [],
                 "name": "mfRecommender"
@@ -55,20 +51,24 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
 
- **Algorithm** :  `recentMfRecommender`  
- **Description** :  Uses the recent item interactions to create a snapshot latent representation of the user from the item factors and use that to recommend new content.  
+## Recent Activity  Matrix Factorization Scorer<a name="matrix-factorization-recent"></a>
+Uses the recent item interactions to create a snapshot latent representation of the user from the item factors and use that to recommend new content.  
 
 Optional config setting for this algorithm are:
 
  * `io.seldon.algorithm.general.numrecentactionstouse` : integer - number of recent item interactions to use to score against
 
-Example config:
+Example activation of a runtime scorer for a client ml100k:
 
-{% highlight json %}
- {
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
+{
     "defaultStrategy": {
         "algorithms": [
             {
@@ -87,25 +87,62 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
 
+## User Clusters Matrix Factorization Scorer<a name="matrix-factorization-clusters"></a>
+Utilizes the derived offline latent factors to provide a set of recommendations for a user in a cluster.   
 
-## Item Activity Models<a name="similar-items"></a>
+Example activation of a runtime scorer for a client ml100k::
 
-Algorithms that utilize activity based item similarity.
-
- **Algorithm** : `itemSimilarityRecommender`   
- **Description** :  Uses the recent item interactions to find a set of top scoring similar items to recommend
-
-Example config:
-
-{% highlight json %}
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
 {
     "defaultStrategy": {
         "algorithms": [
             {
-                "config": [],
+                "config": [
+                    {
+                        "name": "io.seldon.algorithm.general.numrecentactionstouse",
+                        "value": "1"
+                    }
+                ],
+                "filters": [],
+                "includers": [],
+                "name": "mfUserClustersRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner"
+    },
+    "recTagToStrategy": {}
+}
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
+{% endhighlight %}
+
+
+
+## Item Similarity<a name="similar-items"></a>
+Uses the recent item interactions to find a set of top scoring similar items to recommend
+
+Example activation of a runtime scorer for a client ml100k:
+
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
+{
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                "config": [
+                    {
+                        "name": "io.seldon.algorithm.general.numrecentactionstouse",
+                        "value": "1"
+                    }
+                ],
                 "filters": [],
                 "includers": [],
                 "name": "itemSimilarityRecommender"
@@ -115,14 +152,19 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
-## Global Cluster Counts<a name="global-cluster"></a>
+
+## Recent Most Popular<a name="most-popular"></a>
 This recommender can be used to serve most popular recommendations. It counts which items are being read  with a exponentially decaying score to control how fast old article counts are forgotton.
 
 Example config:
 
-{% highlight json %}
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
 {
     "defaultStrategy": {
         "algorithms": [
@@ -146,6 +188,9 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
 The above configuration ensures:
@@ -154,16 +199,13 @@ The above configuration ensures:
  * uses a bucket cluster to ensure every user's activity is caught. 
 
 
-## Baseline Models<a name="baseline"></a>
-
-A set of baseline algorithms used for testing and as final algorithms to use if all other algorithms fail to provide recommendations for a user.
-
-**Algorithm** : `recentItemsRecommender`  
-**Description** : Return the most recently added items, e.g., in a news setting the most recent published articles.
+## Recent Activity<a name="recent-activity"></a>
+Return the most recently added items, e.g., in a news setting the most recent published articles.
 
 Example config:
 
-{% highlight json %}
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
 {
     "defaultStrategy": {
         "algorithms": [
@@ -178,10 +220,12 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
-## Custom Model<a name="custom"></a>
-
+## Custom Scorer<a name="custom"></a>
 Seldon allows you to deploy your own recommendation runtime scorer using its microservices as described [here](api-microservices.html#content-recommendation)
 
 Configuration parameters:
@@ -192,7 +236,8 @@ Configuration parameters:
 
 Example config:
 
-{% highlight json %}
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
 {
     "defaultStrategy": {
         "algorithms": [
@@ -222,6 +267,9 @@ Example config:
     },
     "recTagToStrategy": {}
 }
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
 {% endhighlight %}
 
 Seldon running inside Kubernetes provides a utility script [start-microservice](scripts.html#start-microservice) to start a recommendation microservice packaged as a Docker container.

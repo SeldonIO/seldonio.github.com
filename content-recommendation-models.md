@@ -4,220 +4,105 @@ title: Content Recommendation Models
 ---
 
 # Content Recommendation Models
-The Seldon VM/AMI provides various content recommendation models you can train from your data. We will describe here each type of model, its pros and cons, how its trained and how to deploy it to the Seldon API server.
+Seldon contains several built in content recommendations models.
 
-For the Seldon VM We assume you will be using one of the pre-configured Seldon clients, test1 to test5. In the examples that follow replace ${CLIENT} with the desired client.
+We provide several batch and streaming built-in models. 
 
-Each type of model has configuration parameters that need to be chosen to create a good model. In future releases of Seldon we will provide both offline and online optimization methods to find the best parameters for your data and live activity but for the time being you will need to test various models to find the best settings for your use case.
+ * [Matrix Factorization](content-recommendation-models.html#matrix-factorization)
+ * [User Clustered Matrix Factorization](content-recommendation-models.html#clustered-matrix-factorization)
+ * [Batch Item Similarity](content-recommendation-models.html#batch-item-similarity)
+ * [Streaming item Similarity](content-recommendation-models.html#streaming-item-similarity)
+ * [Content Similarity](content-recommendation-models.html#content-similarity)
+ * [Recent Most Popular](content-recommendation-models.html#recent-most-popular)
 
-# Quick Start
+## Matrix Factorization<a name="matrix-factorization"></a>
+An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use a wrapper around the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.  Note, however, for this release we only provide implicit matrix factorization.
 
- * Go into the "your_data" folder
-
-{% highlight bash %}
-cd dist/your_data
-{% endhighlight %}
- * Load your data into Seldon as described [here](data.html)
- * Run create_models for the models you want to create
-
-{% highlight bash %}
-./create_models.sh ${CLIENT} ${MODEL}
-{% endhighlight %}
-
-e.g.,
+#### Model creation
+You can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
 
 {% highlight bash %}
-./create_models.sh test1 matrix_factorization
+cd kubernetes/conf/models
+make matrix-factorization DAY=16907 CLIENT=test
 {% endhighlight %}
 
+#### Runtime Scoring
 
- * Go to the API Explorer to test
+[A matrix factorization scorer can be utilized](runtime-recommendation.html).
 
-{% highlight http %}
-http://127.0.0.1:8080/swagger/
+## User Clustered Matrix Factorization (experimental)<a name="clustered-matrix-factorization"></a>
+In situations where the number of user if very high, in the millions or more, then standard matrix factorization above can become computationally expensive when calculating the recommendatons for all users. An alternative is to cluster users inside the latent factor space created by the factorization of the user-item activity matrix. In this way recommendations can be created just for each cluster. This is viable if many users have very similar tastes and can be served identical recommendations.
+
+#### Model creation
+We provide a Spark job which builds on the ideas presented [here](https://spark-summit.org/2015-east/wp-content/uploads/2015/03/SSE15-18-Neumann-Alla.pdf). You can create a user clusters matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
+
+{% highlight bash %}
+cd kubernetes/conf/models
+make matrix-factorization-clusters DAY=16907 CLIENT=test
 {% endhighlight %}
 
-The API Explorer will require a consumer key and secret for the OAuth API and a consumer key for the js API. These are client specific and are given below for the five test clients in the VM:
+#### Runtime Scoring
 
- * Client: **test1**, JS consumer key: **test1js**, Oauth consumer_key: **test1consumer**, Oauth secret **test1secret**
- * Client: **test2**, JS consumer key: **test2js**, Oauth consumer_key: **test2consumer**, Oauth secret **test2secret**
- * Client: **test3**, JS consumer key: **test3js**, Oauth consumer_key: **test3consumer**, Oauth secret **test3secret**
- * Client: **test4**, JS consumer key: **test4js**, Oauth consumer_key: **test4consumer**, Oauth secret **test4secret**
- * Client: **test4**, JS consumer key: **test5js**, Oauth consumer_key: **test5consumer**, Oauth secret **test5secret**
+[A dedicated user clusters matrix factorization scorer can be utilized](runtime-recommendation.html#matrix-factorization-clusters).
 
 
-# In Depth Discussion
 
-In the following sections we discuss each model and its particular parameters.
 
-# Matrix Factorization
-An algorithm made popular due to its sucess in the Netflix competition. It tries to find a small set of latent user and item factors that explain the user-item interaction data. We use the [Apache Spark ALS](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html) implementation.
 
-## Configuration options
+## Batch Item Similarity<a name="batch-item-similarity"></a>
+Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum).
 
-The configuration options follow those in the [Spark documentation](https://spark.apache.org/docs/latest/mllib-collaborative-filtering.html). Note, however, for this release we only provide implicit matrix factorization.
-
-{% highlight json %}
-{
- "rank":30, 
- "lambda":0.1, 
- "alpha":1, 
- "iterations":5,
-}
-{% endhighlight %}	
-
- * Set the configuration options in consul, e,g,
- {% highlight bash %}
-docker exec consul curl -s -X PUT -d \
- '{"rank":30, "lambda":0.1, "alpha":1, "iterations":5}' \ 
- "http://localhost:8500/v1/kv/seldon/${CLIENT}/algs/matrix_factorization"
-{% endhighlight %}
-  
- * Run the model creation process
+#### Model creation
+You can create an item similarity modelling job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
 
 {% highlight bash %}
-docker exec -it spark_offline_server_container \
-  bash -c "/spark-jobs/matrix-factorization.sh ${CLIENT}"
-{% endhighlight %}	
-
-# Item Similarity
-Item similarity models find correlations in the user-item interactions to find pairs of items that have consistently been viewed together. The underlying algorithm is the [DIMSUM algorithm in Apache Spark 1.2](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum). 
-
-The key settings are:
-
- * sample : limit the actions processed to a random subset of all actions. Value 0.0 to 1.0. Default 1.0 (all actions)
- * limit : return only the top N similarities for each item
- * dimsum_threshold : A value >= 0 and usually < 1.0. Higher the setting the greater the efficiency but less accurate the result. See the [DIMSUM algorithm](https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum) for further details.
-
-Example settings:
-
- {% highlight json %}
- {
- "sample":0.25,
- "limit":100,
- "dimsum_threshold":0.5
- }
-  {% endhighlight %}	
-
- * Set the configuration in Consul
-
-{% highlight bash %}
-docker exec consul curl -s -X PUT -d \
- '{"sample":0.25, "limit":100, "dimsum_threshold":0.5}' \
- "http://localhost:8500/v1/kv/seldon/${CLIENT}/algs/item_similarity"
-{% endhighlight %}	
-
- * Create the model using spark and upload to database
-
-{% highlight bash %}
-  docker exec -it spark_offline_server_container bash -c "/spark-jobs/item-similarity.sh ${CLIENT}"
-  docker run --name="upload_item_similarity_model" -it --rm \
-     --volumes-from seldon-models \
-	 --link mysql_server_container:mysql_server \
-	 --link consul:consul seldon-tools \
-	 bash -c "/seldon-tools/scripts/models/item-similarity/create_sql_and_upload.sh ${CLIENT}"
- {% endhighlight %}
- 
-Recommendations are provided at run-time by using the recent history of a user to find items they have not interacted with that of are of high similarity.
-
-# Tag Similarity (Semantic Vectors)
-Tag similarity works purely on the meta data for the items, e.g. tags, to find items with similar meta data. It can be useful for cold-start situations where there is little or no user actions history. We use the [Semantic Vectors](https://code.google.com/p/semanticvectors/) project that provides fast scalable vector space representations.
-
-The key setting is to specify which attribute or attributes in the database contain the textual meta data to be modelled:
-
- {% highlight json %}
- {
- "attr_names":"top_tags"
- }
-  {% endhighlight %}	
-
- * Set the configuration in Consul
-
-{% highlight bash %}
-docker exec consul curl -X PUT -d \
- '{"attr_names":"top_tags"}' \
- "http://localhost:8500/v1/kv/seldon/${CLIENT}/algs/semantic_vectors"
-{% endhighlight %}	
-
- * Create the models using Semantic Vectors loading the item meta data from the database
-
-{% highlight bash %}
-docker run --name="create_semantic_vectors" --rm \
- --volumes-from seldon-models \
- --link mysql_server_container:mysql_server \
- --link consul:consul semantic_vectors_image \
- bash -c "/scripts/run-training-consul.sh ${CLIENT}"
+cd kubernetes/conf/models
+make item-similarity DAY=16907 CLIENT=test
 {% endhighlight %}
 
-# Word2Vec
-Word2vec is a deep learning inspired language technique. See [here](https://code.google.com/p/word2vec/) for background and original code. We utilize the [Apache Spark version](https://spark.apache.org/docs/latest/mllib-feature-extraction.html#word2vec). Traditionally, word2vec models are trained on textual corpus data but here we utilize it on the session action data of users, for example the ordered play lists of movies for users on a movie viewing site. We are therefore treating each item (e.g., movie) as a "word" and the "sentences" are the ordered actions (e.g., viewing history of movies).
+#### Runtime Scoring
 
-Word2vec has two settings:
+[The item similarity scorer can be utilized](runtime-recommendation.html#similar-items).
 
- * min_word_count : the minimum number of times an item must be seen in the actions to be included.
- * vector_size : the dimension of the created vectors
 
-For example:
 
-{% highlight json %}
-{
- "min_word_count":50,
- "vector_size":30 }
-}
-{% endhighlight %}	
+## Streaming Item Similarity<a name="streaming-item-similarity"></a>
+Batch item similarity is not applicable for domains such as news recommendation where new items that need to be recommended are published in short time frames. In these circumstances we can use an online streaming item similarity techniques that finds similar items through user activity in short time windows (for example every hour). For this we use a technique described in [Estimating Rarity and Similarity over Data Stream Windows, Mayur Datar, S. Muthukrishnan](https://www.cs.rutgers.edu/%7Emuthu/rare.ps) which uses a streaming adaption of min-hashing to provide efficient item similarity over variable time windows.
 
- * Set the configuration in Consul
+#### Model creation
+The online algorithm is implemented in two jobs.
+
+ * A kafka streams processor which calculates windowed item similarities
+ * A database upload processor which inserts the similarities into the seldon client MySQL database.
+
+The jobs can be created for a client test as follows:
 
 {% highlight bash %}
- docker exec consul curl -s -X PUT -d \
-   '{ "min_word_count":50, "vector_size":30 }' \
-   "http://localhost:8500/v1/kv/seldon/${CLIENT}/algs/word2vec"
-{% endhighlight %}	
+cd kubernetes/conf/models
+make streaming-itemsim CLIENT=test
+{% endhighlight %}
 
- * Create the model by creating a training file of the user sessions, training a word2vec model and converting it to a Semantic Vectors file format for loading in the Seldon API server.
+You should start these two jobs on the cluster, for example:
 
 {% highlight bash %}
-  docker exec -it spark_offline_server_container bash -c "/spark-jobs/session-items.sh ${CLIENT}"
-  docker exec -it spark_offline_server_container bash -c "/spark-jobs/word2vec.sh ${CLIENT}"
-  docker run --name="translate_word2vec_model" -it --rm \
-    --volumes-from seldon-models  \
-	--link mysql_server_container:mysql_server \
-	--link consul:consul seldon-tools \
-	bash -c "/seldon-tools/scripts/models/word2vec/transformToSV.sh ${CLIENT}"
-{% endhighlight %}	
+kubectl create -f jobs/stream-itemsim-create-test.json
+kubectl create -f jobs/stream-itemsim-dbupload-test.json
+{% endhighlight %}
+
+#### Runtime Scoring
+
+[The item similarity scorer can be utilized](runtime-recommendation.html#similar-items).
 
 
+## Content Similarity<a name="content-similarity"></a>
+Rather using collaborative filtering technques which try to find similarities in user's activity and alternative technqiue is to use the actual content to find other content of a similar nature. We have python libraries which wrap several technique provided by the [gensim](https://radimrehurek.com/gensim/) document similarity toolkit to provide these. An example demo can be found [here](content-recommendation-example.html)
 
+## Recent Most Popular <a name="realtime-most-popular"></a>
+A string baseline model especially for high churn scenarios such as news sites is to provide recent popular content. We provide a model that counts items in real time as they are interacted with by users and exponentially decays those counts to provide a continually updated view of popular content. The amount of decay can be controlled to reflect the amount of churn and traffic on a site. This model has only a runtime scoring configuration.
 
+#### Runtime Scoring
 
-## Advanced Configuration Options
-The Seldon models are stored in a directory structure that allows easy integration into a production environment where models are created periodically, usually each day. The directory structure is of the form
- {% highlight bash %}
-    seldon-models/${CLIENT}/${MODEL}/${DAY}
- {% endhighlight %}
-	
-e.g. for a matrix_factorization model created for client client1 on 27 Jan 2014 (unix epoch day 16461) would be 
+[The most popular scorer can be utilized](runtime-recommendation.html#most-popular).
 
- {% highlight bash %}
-    seldon-models/client1/matrix_factorization/16461
- {% endhighlight %}
-
- The configuration for a model captures this information with
- 
- * start_day : the start day to use as input and the day which will be used as output of any model created.
- * num_days : the number of days of data to use back in time starting from start_day (inclusive).
- * base_input_folder : the input folder to find the data. It will be expanded as above with client, model and day values.
- * base_output_folder : the output folder to write the model. It will be expanded as above with client, model and day values.
-
-An example:
-
- {% highlight json %}
-   {
-   "start_day":1, 
-   "num_days":1, 
-   "base_input_folder":"/seldon-models", 
-   "base_output_folder":"/seldon-models"
-   }
-  {% endhighlight %}	
 
 
