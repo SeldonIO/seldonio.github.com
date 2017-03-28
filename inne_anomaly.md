@@ -5,9 +5,9 @@ title: INNe anomaly detection  Demo
 
 # INNe anomaly detection Demo
 
-This example will take you through creating a microservice that detect anomalies using [iNNE](inneurl) technique. In this example you will learn how to deploy the microservice from the prepackage docker image available in seldon-server. 
+This example will take you through creating a microservice that detect anomalies using [iNNE](http://www.vincentlemaire-labs.fr/ICDM2014/slides/Ting.pdf) technique. In this example you will learn how to deploy the microservice from the prepackage docker image available in seldon-server. 
 
-If you are interested on theory behind iNNE technique, find out more about [iNNE anomaly detection](inne_anomaly_detector.html).
+If you are interested on theory behind iNNE technique, find out more about [iNNE anomaly detection](http://www.vincentlemaire-labs.fr/ICDM2014/slides/Ting.pdf).
 
 
 ## Prerequisites
@@ -38,7 +38,7 @@ This will load the pipeline saved in ```/seldon-data/seldon-models/inne/1/``` an
 To obtain the anomaly score for any 4-dimesional vector
 
 {% highlight bash %}
-seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"data":{"f1":2.1,"f2":2.2,"f3":1.9,"f4":2.0}}'
+seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"data":{"f1":2.1,"f2":2.05,"f3":1.95,"f4":2.01}}'
 {% endhighlight %}
 
 The response should be 
@@ -52,14 +52,14 @@ The response should be
   },
   "predictions": [
     {
-      "prediction": 0.213911490796,
+      "prediction": 0.266023195939,
       "predictedClass": "Anomaly_score",
-      "confidence": 0.213911490796
+      "confidence": 0.266023195939
     },
     {
-      "prediction": 0.786088509204,
+      "prediction": 0.733976804061,
       "predictedClass": "Complementary_score",
-      "confidence": 0.786088509204
+      "confidence": 0.733976804061
     }
   ],
   "custom": null
