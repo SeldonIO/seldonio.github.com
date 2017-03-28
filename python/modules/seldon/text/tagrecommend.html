@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.text.tagrecommend &mdash; seldon 1.0 documentation</title>
+  <title>seldon.text.tagrecommend &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,23 +119,27 @@
     <li>seldon.text.tagrecommend</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.text.tagrecommend</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">seldon.pipeline.pandas_pipelines</span> <span class="kn">import</span> <span class="n">BasePandasEstimator</span> 
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">ClassifierMixin</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">from</span> <span class="nn">seldon.util</span> <span class="kn">import</span> <span class="n">DeprecationHelper</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Tag_Recommender"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender">[docs]</a><span class="k">class</span> <span class="nc">Tag_Recommender</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="TagRecommender"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender">[docs]</a><span class="k">class</span> <span class="nc">TagRecommender</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">max_s2_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">min_s2_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">min_score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -140,7 +157,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">min_s2_size</span><span class="o">=</span><span class="n">min_s2_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_score</span><span class="o">=</span><span class="n">min_score</span>
         
-<div class="viewcode-block" id="Tag_Recommender.fit"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">corpus</span><span class="p">,</span><span class="n">split_char</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="TagRecommender.fit"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">corpus</span><span class="p">,</span><span class="n">split_char</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process a corpus and fir data.</span>
 
@@ -155,21 +172,21 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        </span>
-<span class="sd">        trained Tag_Recommender object</span>
+<span class="sd">        trained TagRecommender object</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">processed</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">corpus</span><span class="o">.</span><span class="n">get_meta</span><span class="p">():</span>
             <span class="n">processed</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">processed</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Processed </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">processed</span><span class="p">)</span>
-            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">split_char</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processed </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">processed</span><span class="p">)</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">split_char</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">tag_map</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">long</span><span class="p">(</span><span class="n">doc_id</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tag_map_size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_map</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Tag_Recommender.jaccard"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender.jaccard">[docs]</a>    <span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">max_s2_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="TagRecommender.jaccard"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender.jaccard">[docs]</a>    <span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">max_s2_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return jaccard distance between two sets (of documents)</span>
 
@@ -191,9 +208,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-</div>
-<div class="viewcode-block" id="Tag_Recommender.asymmetric_occur"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender.asymmetric_occur">[docs]</a>    <span class="k">def</span> <span class="nf">asymmetric_occur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">min_s2_size</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="TagRecommender.asymmetric_occur"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender.asymmetric_occur">[docs]</a>    <span class="k">def</span> <span class="nf">asymmetric_occur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">min_s2_size</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return asymmetric occurrence of set s1 against s2</span>
 
@@ -211,9 +228,9 @@
         <span class="k">if</span> <span class="n">s2_size</span> <span class="o">&gt;=</span> <span class="n">min_s2_size</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-</div>
-<div class="viewcode-block" id="Tag_Recommender.knn"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender.knn">[docs]</a>    <span class="k">def</span> <span class="nf">knn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s">&#39;jaccard&#39;</span><span class="p">,</span><span class="n">exclusions</span><span class="o">=</span><span class="p">[]):</span>
+            <span class="k">return</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="TagRecommender.knn"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender.knn">[docs]</a>    <span class="k">def</span> <span class="nf">knn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s1">&#39;jaccard&#39;</span><span class="p">,</span><span class="n">exclusions</span><span class="o">=</span><span class="p">[]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get k nearest neighbours of a tag</span>
 
@@ -239,9 +256,9 @@
         <span class="k">for</span> <span class="n">tag_candidate</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_map</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">tag</span> <span class="o">==</span> <span class="n">tag_candidate</span> <span class="ow">or</span> <span class="n">tag_candidate</span> <span class="ow">in</span> <span class="n">exclusions</span><span class="p">):</span>
                 <span class="n">score</span> <span class="o">=</span> <span class="mf">0.0</span>
-                <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;jaccard&#39;</span> <span class="ow">or</span> <span class="n">metric</span><span class="o">==</span> <span class="s">&#39;both&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;jaccard&#39;</span> <span class="ow">or</span> <span class="n">metric</span><span class="o">==</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
                     <span class="n">score</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jaccard</span><span class="p">(</span><span class="n">tag_sig</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_map</span><span class="p">[</span><span class="n">tag_candidate</span><span class="p">],</span><span class="n">max_s2_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_s2_size</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;asym&#39;</span> <span class="ow">or</span> <span class="n">metric</span><span class="o">==</span> <span class="s">&#39;both&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;asym&#39;</span> <span class="ow">or</span> <span class="n">metric</span><span class="o">==</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
                     <span class="n">score</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asymmetric_occur</span><span class="p">(</span><span class="n">tag_sig</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_map</span><span class="p">[</span><span class="n">tag_candidate</span><span class="p">],</span><span class="n">min_s2_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_s2_size</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">scores</span><span class="p">[</span><span class="n">tag_candidate</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
@@ -253,9 +270,9 @@
                 <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">f_scores</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tag</span><span class="p">,</span><span class="n">score</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">f_scores</span>
-</div>
-<div class="viewcode-block" id="Tag_Recommender.recommend"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.Tag_Recommender.recommend">[docs]</a>    <span class="k">def</span> <span class="nf">recommend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tags</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">knn_k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">f_scores</span></div>
+
+<div class="viewcode-block" id="TagRecommender.recommend"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.tagrecommend.TagRecommender.recommend">[docs]</a>    <span class="k">def</span> <span class="nf">recommend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tags</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">knn_k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        recommend tags for a given set of tags</span>
 
@@ -283,8 +300,11 @@
                 <span class="n">scores</span><span class="p">[</span><span class="n">tag_recommended</span><span class="p">]</span> <span class="o">+=</span> <span class="n">score</span>
         <span class="n">sorted_scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sorted_scores</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span></div></div>
+
+<span class="n">Tag_Recommender</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">TagRecommender</span><span class="p">)</span>
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -294,12 +314,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -314,7 +335,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

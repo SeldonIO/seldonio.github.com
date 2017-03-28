@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>seldon.anomaly package &mdash; seldon 2.2.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="seldon 2.2.1 documentation" href="index.html"/>
+        <link rel="up" title="seldon package" href="seldon.html"/>
+        <link rel="next" title="seldon.cli package" href="seldon.cli.html"/>
+        <link rel="prev" title="seldon package" href="seldon.html"/> 
+
+  
+  <script src="static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="seldon.html">seldon package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="seldon.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">seldon.anomaly package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.anomaly.AnomalyDetection">seldon.anomaly.AnomalyDetection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-seldon.anomaly">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.cli.html">seldon.cli package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.luigi.html">seldon.luigi package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.microservice.html">seldon.microservice package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.misc.html">seldon.misc package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.pipeline.html">seldon.pipeline package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seldon.text.html">seldon.text package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.keras">seldon.keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.util">seldon.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.vw">seldon.vw module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon.tensorflow_wrapper">seldon.tensorflow_wrapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seldon.html#module-seldon">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">seldon</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="seldon.html">seldon package</a> &raquo;</li>
+      
+    <li>seldon.anomaly package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="sources/seldon.anomaly.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seldon-anomaly-package">
+<h1>seldon.anomaly package<a class="headerlink" href="#seldon-anomaly-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-seldon.anomaly.AnomalyDetection">
+<span id="seldon-anomaly-anomalydetection"></span><h2>seldon.anomaly.AnomalyDetection<a class="headerlink" href="#module-seldon.anomaly.AnomalyDetection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector">
+<em class="property">class </em><code class="descclassname">seldon.anomaly.AnomalyDetection.</code><code class="descname">iNNEDetector</code><span class="sig-paren">(</span><em>ensemble_size=100</em>, <em>sample_size=32</em>, <em>metric='euclid'</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Create an ensemble classifier for anomaly detection based on iNNE method (cite iNNE paper)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ensemble_size</strong> (<em>int</em>) &#8211; Number of ensembles for the classifier</li>
+<li><strong>sample_size</strong> (<em>int</em>) &#8211; Number of samples on each ensemble</li>
+<li><strong>metric</strong> (<em>str</em>) &#8211; Metric used by iNNE. Default &#8216;euclid&#8217;</li>
+<li><strong>verbose</strong> (<em>bool</em>) &#8211; default True</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates sets of hyper-spheres for anomaly scores</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>numpy array (nb_samples, nb_features)</em>) &#8211; data set</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.fit_score">
+<code class="descname">fit_score</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.fit_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.fit_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate set of hyper-sphere and return anomaly score for all points in dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>numpy array</em>) &#8211; data set</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scores</strong> &#8211;
+1-d vector with the anomaly scores for all data points</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>X</em>, <em>y=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates sets of hyper-spheres for anomaly scores</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<em>numpy array (nb_samples, nb_features)</em>) &#8211; data set</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.get_all_scores">
+<code class="descname">get_all_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.get_all_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.get_all_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the dataset with the anomaly scores stored in the last column</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>X_scored</strong> &#8211;
+the dataset with anomaly scores stored in the last column</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.get_anomalies">
+<code class="descname">get_anomalies</code><span class="sig-paren">(</span><em>decision_threshold=1</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.get_anomalies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.get_anomalies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data points whose anomaly score is above the decision_threshold</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>decition_threshold</strong> (<em>float</em>) &#8211; anomaly decision threshold. Default 0.5</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>X_anom</strong> &#8211;
+anomalous data points with anomaly scores stored in the last column</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy array (nb_anomalies, nb_features + 1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seldon.anomaly.AnomalyDetection.iNNEDetector.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="modules/seldon/anomaly/AnomalyDetection.html#iNNEDetector.get_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seldon.anomaly.AnomalyDetection.iNNEDetector.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the anomaly score for a new data point X</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>numpy array</em>) &#8211; 1-d vector to score</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>score</strong> &#8211;
+tuple where first element is the anomaly score and the second element is True if the point is lab            elled as anomalous and False if is labelled as non-anomalous based on the decision threshold</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-seldon.anomaly">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seldon.anomaly" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seldon.cli.html" class="btn btn-neutral float-right" title="seldon.cli package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="seldon.html" class="btn btn-neutral" title="seldon package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Seldon.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.2.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="static/jquery.js"></script>
+      <script type="text/javascript" src="static/underscore.js"></script>
+      <script type="text/javascript" src="static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

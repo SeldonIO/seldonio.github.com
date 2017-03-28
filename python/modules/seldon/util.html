@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.util &mdash; seldon 1.0 documentation</title>
+  <title>seldon.util &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../index.html"/>
         <link rel="up" title="seldon" href="../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.util</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.util</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">seldon.fileutil</span> <span class="kn">as</span> <span class="nn">fu</span>
+<span></span><span class="kn">import</span> <span class="nn">seldon.fileutil</span> <span class="kn">as</span> <span class="nn">fu</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">shutil</span> 
@@ -123,6 +139,23 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DeprecationHelper"><a class="viewcode-back" href="../../seldon.html#seldon.util.DeprecationHelper">[docs]</a><span class="k">class</span> <span class="nc">DeprecationHelper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_target</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_target</span> <span class="o">=</span> <span class="n">new_target</span>
+
+    <span class="k">def</span> <span class="nf">_warn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+        <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;This class is deprecated. Please use {} instead&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_target</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_target</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">attr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_target</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Recommender"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender">[docs]</a><span class="k">class</span> <span class="nc">Recommender</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
@@ -153,8 +186,8 @@
 <span class="sd">        -------</span>
 <span class="sd">        list of pairs of (item_id,score)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[]</span>
-</div>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
 <div class="viewcode-block" id="Recommender.save"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the recommender model. Allows more fine grained control over model state saving than pickling would allow. The method should save objects that only can&#39;t be pickled.</span>
@@ -165,8 +198,8 @@
 <span class="sd">        folder : str</span>
 <span class="sd">           local folder to save model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</div>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="Recommender.load"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the model into the recommender. Allows more complex models than can easily handled via pickling.</span>
@@ -177,26 +210,26 @@
 <span class="sd">        folder : str</span>
 <span class="sd">           local folder to load model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div></div>
-<div class="viewcode-block" id="Recommender_wrapper"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender_wrapper">[docs]</a><span class="k">class</span> <span class="nc">Recommender_wrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+<div class="viewcode-block" id="RecommenderWrapper"><a class="viewcode-back" href="../../seldon.html#seldon.util.RecommenderWrapper">[docs]</a><span class="k">class</span> <span class="nc">RecommenderWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper to allow recommenders to be easily saved and loaded</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">=</span><span class="n">work_folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="o">=</span><span class="n">aws_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="o">=</span><span class="n">aws_secret</span>
 
-<div class="viewcode-block" id="Recommender_wrapper.get_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender_wrapper.get_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span>
-</div>
-<div class="viewcode-block" id="Recommender_wrapper.create_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender_wrapper.create_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RecommenderWrapper.get_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.RecommenderWrapper.get_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span></div>
+
+<div class="viewcode-block" id="RecommenderWrapper.create_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.RecommenderWrapper.create_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Recommender_wrapper.save_recommender"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender_wrapper.save_recommender">[docs]</a>    <span class="k">def</span> <span class="nf">save_recommender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">recommender</span><span class="p">,</span><span class="n">location</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RecommenderWrapper.save_recommender"><a class="viewcode-back" href="../../seldon.html#seldon.util.RecommenderWrapper.save_recommender">[docs]</a>    <span class="k">def</span> <span class="nf">save_recommender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">recommender</span><span class="p">,</span><span class="n">location</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save recommender to external location</span>
 
@@ -210,18 +243,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_work_folder</span><span class="p">()</span>
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">recommender_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/recommender_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
+        <span class="n">recommender_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/recommender_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating folder </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">recommender_folder</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating folder </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">recommender_folder</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">)</span>
-        <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">recommender_folder</span><span class="o">+</span><span class="s">&quot;/rec&quot;</span>
+        <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">recommender_folder</span><span class="o">+</span><span class="s2">&quot;/rec&quot;</span>
         <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">recommender</span><span class="p">,</span><span class="n">tmp_file</span><span class="p">)</span>
         <span class="n">recommender</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">)</span>
         <span class="n">futil</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">FileUtil</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
-        <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">,</span><span class="n">location</span><span class="p">)</span>
+        <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">,</span><span class="n">location</span><span class="p">)</span></div>
 
-</div>
-<div class="viewcode-block" id="Recommender_wrapper.load_recommender"><a class="viewcode-back" href="../../seldon.html#seldon.util.Recommender_wrapper.load_recommender">[docs]</a>    <span class="k">def</span> <span class="nf">load_recommender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">recommender_folder</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RecommenderWrapper.load_recommender"><a class="viewcode-back" href="../../seldon.html#seldon.util.RecommenderWrapper.load_recommender">[docs]</a>    <span class="k">def</span> <span class="nf">load_recommender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">recommender_folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load scikit learn recommender from external folder</span>
 <span class="sd">        </span>
@@ -233,26 +266,27 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_work_folder</span><span class="p">()</span>
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">local_recommender_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/recommender_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
+        <span class="n">local_recommender_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/recommender_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_recommender_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating folder </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">local_recommender_folder</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating folder </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">local_recommender_folder</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">local_recommender_folder</span><span class="p">)</span>
         <span class="n">futil</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">FileUtil</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
         <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">,</span><span class="n">local_recommender_folder</span><span class="p">)</span>
-        <span class="n">recommender</span> <span class="o">=</span>  <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_recommender_folder</span><span class="o">+</span><span class="s">&quot;/rec&quot;</span><span class="p">)</span>
+        <span class="n">recommender</span> <span class="o">=</span>  <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_recommender_folder</span><span class="o">+</span><span class="s2">&quot;/rec&quot;</span><span class="p">)</span>
         <span class="n">recommender</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_recommender_folder</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">recommender</span>
+        <span class="k">return</span> <span class="n">recommender</span></div></div>
 
-</div></div>
+<span class="n">Recommender_wrapper</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">RecommenderWrapper</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Extension"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension">[docs]</a><span class="k">class</span> <span class="nc">Extension</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic function that takes dict input and return JSON</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="Extension.predict"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">input</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="p">{}</span></div>
 
-</div>
+
 <div class="viewcode-block" id="Extension.save"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the extension model. Allows more fine grained control over model state saving than pickling would allow. The method should save objects that only can&#39;t be pickled.</span>
@@ -263,8 +297,8 @@
 <span class="sd">        folder : str</span>
 <span class="sd">           local folder to save model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</div>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="Extension.load"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the model into the extension. Allows more complex models than can easily handled via pickling.</span>
@@ -275,51 +309,54 @@
 <span class="sd">        folder : str</span>
 <span class="sd">           local folder to load model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
 
-</div></div>
-<div class="viewcode-block" id="Extension_wrapper"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension_wrapper">[docs]</a><span class="k">class</span> <span class="nc">Extension_wrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ExtensionWrapper"><a class="viewcode-back" href="../../seldon.html#seldon.util.ExtensionWrapper">[docs]</a><span class="k">class</span> <span class="nc">ExtensionWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">=</span><span class="n">work_folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="o">=</span><span class="n">aws_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="o">=</span><span class="n">aws_secret</span>
 
-<div class="viewcode-block" id="Extension_wrapper.get_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension_wrapper.get_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span>
-</div>
-<div class="viewcode-block" id="Extension_wrapper.create_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension_wrapper.create_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ExtensionWrapper.get_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.ExtensionWrapper.get_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span></div>
+
+<div class="viewcode-block" id="ExtensionWrapper.create_work_folder"><a class="viewcode-back" href="../../seldon.html#seldon.util.ExtensionWrapper.create_work_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_work_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Extension_wrapper.load_extension"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension_wrapper.load_extension">[docs]</a>    <span class="k">def</span> <span class="nf">load_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ExtensionWrapper.load_extension"><a class="viewcode-back" href="../../seldon.html#seldon.util.ExtensionWrapper.load_extension">[docs]</a>    <span class="k">def</span> <span class="nf">load_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_work_folder</span><span class="p">()</span>
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">local_extension_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/extension_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
+        <span class="n">local_extension_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/extension_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_extension_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating folder </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">local_extension_folder</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating folder </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">local_extension_folder</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">local_extension_folder</span><span class="p">)</span>
         <span class="n">futil</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">FileUtil</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
         <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">,</span><span class="n">local_extension_folder</span><span class="p">)</span>
-        <span class="n">extension</span> <span class="o">=</span>  <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_extension_folder</span><span class="o">+</span><span class="s">&quot;/ext&quot;</span><span class="p">)</span>
+        <span class="n">extension</span> <span class="o">=</span>  <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_extension_folder</span><span class="o">+</span><span class="s2">&quot;/ext&quot;</span><span class="p">)</span>
         <span class="n">extension</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">local_extension_folder</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">extension</span>
-</div>
-<div class="viewcode-block" id="Extension_wrapper.save_extension"><a class="viewcode-back" href="../../seldon.html#seldon.util.Extension_wrapper.save_extension">[docs]</a>    <span class="k">def</span> <span class="nf">save_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">location</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">extension</span></div>
+
+<div class="viewcode-block" id="ExtensionWrapper.save_extension"><a class="viewcode-back" href="../../seldon.html#seldon.util.ExtensionWrapper.save_extension">[docs]</a>    <span class="k">def</span> <span class="nf">save_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension</span><span class="p">,</span><span class="n">location</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_work_folder</span><span class="p">()</span>
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">extension_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/extension_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
+        <span class="n">extension_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/extension_tmp&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating folder </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating folder </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">)</span>
-        <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">extension_folder</span><span class="o">+</span><span class="s">&quot;/ext&quot;</span>
+        <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">extension_folder</span><span class="o">+</span><span class="s2">&quot;/ext&quot;</span>
         <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span><span class="n">tmp_file</span><span class="p">)</span>
         <span class="n">extension</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">)</span>
         <span class="n">futil</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">FileUtil</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
-        <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">,</span><span class="n">location</span><span class="p">)</span>
-</pre></div></div></div>
+        <span class="n">futil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">,</span><span class="n">location</span><span class="p">)</span></div></div>
 
+<span class="n">Extension_wrapper</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">ExtensionWrapper</span><span class="p">)</span>
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -329,12 +366,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -349,7 +387,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

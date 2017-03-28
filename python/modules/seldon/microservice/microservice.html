@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.microservice.microservice &mdash; seldon 1.0 documentation</title>
+  <title>seldon.microservice.microservice &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,22 +119,33 @@
     <li>seldon.microservice.microservice</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.microservice.microservice</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">concurrent</span> <span class="kn">import</span> <span class="n">futures</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">seldon.microservice.predict</span> <span class="kn">import</span> <span class="n">predict_blueprint</span>
 <span class="kn">from</span> <span class="nn">seldon.microservice.recommend</span> <span class="kn">import</span> <span class="n">recommend_blueprint</span>
 <span class="kn">from</span> <span class="nn">seldon.microservice.extension</span> <span class="kn">import</span> <span class="n">extension_blueprint</span>
+<span class="kn">from</span> <span class="nn">seldon.microservice.rpc</span> <span class="kn">import</span> <span class="n">RpcClassifier</span>
+<span class="kn">from</span> <span class="nn">seldon.microservice.rpc</span> <span class="kn">import</span> <span class="n">DefaultCustomDataHandler</span>
 <span class="kn">import</span> <span class="nn">seldon</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">import</span> <span class="nn">seldon.pipeline.util</span> <span class="kn">as</span> <span class="nn">sutl</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">pylibmc</span>
+<span class="kn">from</span> <span class="nn">seldon.rpc</span> <span class="kn">import</span> <span class="n">seldon_pb2</span>
+<span class="kn">import</span> <span class="nn">grpc</span>
+
+<span class="n">_ONE_DAY_IN_SECONDS</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span>
 
 <div class="viewcode-block" id="Microservices"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.microservice.Microservices">[docs]</a><span class="k">class</span> <span class="nc">Microservices</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -151,18 +175,34 @@
         <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
                    
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">pw</span> <span class="o">=</span> <span class="n">sutl</span><span class="o">.</span><span class="n">Pipeline_wrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="n">pw</span> <span class="o">=</span> <span class="n">sutl</span><span class="o">.</span><span class="n">PipelineWrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s1">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
         <span class="n">pipeline</span> <span class="o">=</span> <span class="n">pw</span><span class="o">.</span><span class="n">load_pipeline</span><span class="p">(</span><span class="n">pipeline_folder</span><span class="p">)</span>
         
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_pipeline_wrapper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pw</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_pipeline&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pipeline</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_model_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_name</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_pipeline_wrapper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pw</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_pipeline&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pipeline</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_model_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_name</span>
  
         <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">predict_blueprint</span><span class="p">)</span>
 
-        <span class="c"># other setup tasks</span>
-        <span class="k">return</span> <span class="n">app</span>
-</div>
+        <span class="c1"># other setup tasks</span>
+        <span class="k">return</span> <span class="n">app</span></div>
+
+<div class="viewcode-block" id="Microservices.create_prediction_rpc_microservice"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.microservice.Microservices.create_prediction_rpc_microservice">[docs]</a>    <span class="k">def</span> <span class="nf">create_prediction_rpc_microservice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pipeline_folder</span><span class="p">,</span><span class="n">model_name</span><span class="p">,</span><span class="n">custom_data_handler</span><span class="o">=</span><span class="n">DefaultCustomDataHandler</span><span class="p">()):</span>
+        <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
+        <span class="n">pw</span> <span class="o">=</span> <span class="n">sutl</span><span class="o">.</span><span class="n">PipelineWrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s1">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">pw</span><span class="o">.</span><span class="n">load_pipeline</span><span class="p">(</span><span class="n">pipeline_folder</span><span class="p">)</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">server</span><span class="p">(</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">seldon_pb2</span><span class="o">.</span><span class="n">add_SeldonServicer_to_server</span><span class="p">(</span><span class="n">RpcClassifier</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span><span class="n">model_name</span><span class="p">,</span><span class="n">custom_data_handler</span><span class="p">),</span> <span class="n">server</span><span class="p">)</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">add_insecure_port</span><span class="p">(</span><span class="s1">&#39;[::]:5000&#39;</span><span class="p">)</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">_ONE_DAY_IN_SECONDS</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
 <div class="viewcode-block" id="Microservices.create_recommendation_microservice"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.microservice.Microservices.create_recommendation_microservice">[docs]</a>    <span class="k">def</span> <span class="nf">create_recommendation_microservice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">recommender_folder</span><span class="p">,</span><span class="n">memcache_servers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">memcache_pool_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        create recommedation Flask microservice app</span>
@@ -182,21 +222,21 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">memcache_servers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">mc</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">memcache_servers</span><span class="p">)</span>
             <span class="n">_mc_pool</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">ClientPool</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">memcache_pool_size</span><span class="p">)</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_memcache&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mc_pool</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_memcache&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mc_pool</span>
             
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">:</span>
-            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Recommender_wrapper</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">RecommenderWrapper</span><span class="p">(</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Recommender_wrapper</span><span class="p">()</span>
+            <span class="n">rw</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">RecommenderWrapper</span><span class="p">()</span>
         <span class="n">recommender</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">load_recommender</span><span class="p">(</span><span class="n">recommender_folder</span><span class="p">)</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_recommender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recommender</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_recommender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recommender</span>
  
         <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">recommend_blueprint</span><span class="p">)</span>
 
-        <span class="c"># other setup tasks</span>
-        <span class="k">return</span> <span class="n">app</span>
+        <span class="c1"># other setup tasks</span>
+        <span class="k">return</span> <span class="n">app</span></div>
 
-</div>
+
 <div class="viewcode-block" id="Microservices.create_extension_microservice"><a class="viewcode-back" href="../../../seldon.microservice.html#seldon.microservice.microservice.Microservices.create_extension_microservice">[docs]</a>    <span class="k">def</span> <span class="nf">create_extension_microservice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extension_folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a prediction Flask microservice app</span>
@@ -210,18 +250,21 @@
         <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
                    
         <span class="n">rint</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">999999</span><span class="p">)</span>
-        <span class="n">ew</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">Extension_wrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
+        <span class="n">ew</span> <span class="o">=</span> <span class="n">seldon</span><span class="o">.</span><span class="n">ExtensionWrapper</span><span class="p">(</span><span class="n">work_folder</span><span class="o">=</span><span class="s1">&#39;/tmp/pl_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rint</span><span class="p">),</span><span class="n">aws_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_key</span><span class="p">,</span><span class="n">aws_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aws_secret</span><span class="p">)</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">ew</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">extension_folder</span><span class="p">)</span>
 
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_extension_wrapper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ew</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&quot;seldon_extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_extension_wrapper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ew</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seldon_extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span>
  
         <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">extension_blueprint</span><span class="p">)</span>
 
-        <span class="c"># other setup tasks</span>
-        <span class="k">return</span> <span class="n">app</span>
-</pre></div></div></div>
+        <span class="c1"># other setup tasks</span>
+        <span class="k">return</span> <span class="n">app</span></div></div>
 
+
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -231,12 +274,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -251,7 +295,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>luigi.parameter &mdash; seldon 1.0 documentation</title>
+  <title>luigi.parameter &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
@@ -104,29 +117,32 @@
     <li>luigi.parameter</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for luigi.parameter</h1><div class="highlight"><pre>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Copyright 2012-2015 Spotify AB</span>
-<span class="c">#</span>
-<span class="c"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="c"># you may not use this file except in compliance with the License.</span>
-<span class="c"># You may obtain a copy of the License at</span>
-<span class="c">#</span>
-<span class="c"># http://www.apache.org/licenses/LICENSE-2.0</span>
-<span class="c">#</span>
-<span class="c"># Unless required by applicable law or agreed to in writing, software</span>
-<span class="c"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="c"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="c"># See the License for the specific language governing permissions and</span>
-<span class="c"># limitations under the License.</span>
-<span class="c">#</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012-2015 Spotify AB</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
 
 <span class="sd">&#39;&#39;&#39; Parameters are one of the core concepts of Luigi.</span>
 <span class="sd">All Parameters sit on :class:`~luigi.task.Task` classes.</span>
@@ -220,7 +236,7 @@
 
 <span class="sd">    Parameter objects may be reused, but you must then set the ``positional=False`` flag.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_counter</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># non-atomically increasing counter used for ordering parameters.</span>
+    <span class="n">_counter</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># non-atomically increasing counter used for ordering parameters.</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_no_value</span><span class="p">,</span> <span class="n">is_global</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">significant</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">config_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">positional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">always_in_help</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -250,21 +266,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default</span> <span class="o">=</span> <span class="n">default</span>
         <span class="k">if</span> <span class="n">is_global</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;is_global support is removed. Assuming positional=False&quot;</span><span class="p">,</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;is_global support is removed. Assuming positional=False&quot;</span><span class="p">,</span>
                           <span class="ne">DeprecationWarning</span><span class="p">,</span>
                           <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">positional</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">significant</span> <span class="o">=</span> <span class="n">significant</span>  <span class="c"># Whether different values for this parameter will differentiate otherwise equal tasks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">significant</span> <span class="o">=</span> <span class="n">significant</span>  <span class="c1"># Whether different values for this parameter will differentiate otherwise equal tasks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positional</span> <span class="o">=</span> <span class="n">positional</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">always_in_help</span> <span class="o">=</span> <span class="n">always_in_help</span>
 
-        <span class="k">if</span> <span class="n">config_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&#39;section&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config_path</span> <span class="ow">or</span> <span class="s">&#39;name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config_path</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ParameterException</span><span class="p">(</span><span class="s">&#39;config_path must be a hash containing entries for section and name&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">config_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;section&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config_path</span> <span class="ow">or</span> <span class="s1">&#39;name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ParameterException</span><span class="p">(</span><span class="s1">&#39;config_path must be a hash containing entries for section and name&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__config</span> <span class="o">=</span> <span class="n">config_path</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="o">=</span> <span class="n">Parameter</span><span class="o">.</span><span class="n">_counter</span>  <span class="c"># We need to keep track of this to get the order right (see Task class)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="o">=</span> <span class="n">Parameter</span><span class="o">.</span><span class="n">_counter</span>  <span class="c1"># We need to keep track of this to get the order right (see Task class)</span>
         <span class="n">Parameter</span><span class="o">.</span><span class="n">_counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_get_value_from_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -299,13 +315,13 @@
             <span class="n">found</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cp_parser</span><span class="o">.</span><span class="n">known_args</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
             <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_no_value</span><span class="p">(</span><span class="n">found</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_value_from_config</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_value_from_config</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">)),</span>
-               <span class="s">&#39;Configuration [{}] {} (with dashes) should be avoided. Please use underscores.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_value_from_config</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)),</span>
+               <span class="s1">&#39;Configuration [{}] {} (with dashes) should be avoided. Please use underscores.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                <span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_value_from_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s">&#39;section&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]),</span>
-                   <span class="s">&#39;The use of the configuration [{}] {} is deprecated. Please use [{}] {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                   <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s">&#39;section&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">))</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_value_from_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s1">&#39;section&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]),</span>
+                   <span class="s1">&#39;The use of the configuration [{}] {} is deprecated. Please use [{}] {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s1">&#39;section&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">))</span>
         <span class="k">yield</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_default</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">has_task_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
@@ -314,7 +330,7 @@
     <span class="k">def</span> <span class="nf">task_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_value</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">_no_value</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingParameterException</span><span class="p">(</span><span class="s">&quot;No default specified&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MissingParameterException</span><span class="p">(</span><span class="s2">&quot;No default specified&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">value</span>
 
@@ -328,7 +344,7 @@
 <span class="sd">        :param str x: the value to parse.</span>
 <span class="sd">        :return: the parsed value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">x</span>  <span class="c"># default impl</span>
+        <span class="k">return</span> <span class="n">x</span>  <span class="c1"># default impl</span>
 
     <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -362,11 +378,11 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parser_global_dest</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">task_name</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">task_name</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="n">param_name</span>
+        <span class="k">return</span> <span class="n">task_name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">param_name</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parser_action</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s">&quot;store&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;store&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">_DateParameterBase</span><span class="p">(</span><span class="n">Parameter</span><span class="p">):</span>
@@ -410,7 +426,7 @@
 <span class="sd">    July 10, 2013.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">date_format</span> <span class="o">=</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span>
+    <span class="n">date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span>
     <span class="n">_timedelta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
@@ -429,7 +445,7 @@
 <span class="sd">    July of 2013.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">date_format</span> <span class="o">=</span> <span class="s">&#39;%Y-%m&#39;</span>
+    <span class="n">date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m&#39;</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">next_in_enumeration</span><span class="p">(</span><span class="n">_value</span><span class="p">):</span>
@@ -444,7 +460,7 @@
 <span class="sd">    A YearParameter is a Date string formatted ``YYYY``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">date_format</span> <span class="o">=</span> <span class="s">&#39;%Y&#39;</span>
+    <span class="n">date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y&#39;</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">next_in_enumeration</span><span class="p">(</span><span class="n">_value</span><span class="p">):</span>
@@ -460,7 +476,7 @@
 <span class="sd">    19:00.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">date_format</span> <span class="o">=</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">T%H&#39;</span>  <span class="c"># ISO 8601 is to use &#39;T&#39;</span>
+    <span class="n">date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H&#39;</span>  <span class="c1"># ISO 8601 is to use &#39;T&#39;</span>
     <span class="n">_timedelta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
@@ -479,15 +495,15 @@
 <span class="sd">    19:07.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">date_format</span> <span class="o">=</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">T%H%M&#39;</span>
+    <span class="n">date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H%M&#39;</span>
     <span class="n">_timedelta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">deprecated_date_format</span> <span class="o">=</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">T%HH%M&#39;</span>
+    <span class="n">deprecated_date_format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%HH%M&#39;</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deprecated_date_format</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s">&#39;Using &quot;H&quot; between hours and minutes is deprecated, omit it instead.&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Using &quot;H&quot; between hours and minutes is deprecated, omit it instead.&#39;</span><span class="p">,</span>
                 <span class="ne">DeprecationWarning</span><span class="p">,</span>
                 <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
             <span class="p">)</span>
@@ -539,11 +555,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses a ``bool`` from the string, matching &#39;true&#39; or &#39;false&#39; ignoring case.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;true&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;false&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parser_action</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s">&#39;store_true&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;store_true&#39;</span>
 
 
 <span class="k">class</span> <span class="nc">BooleanParameter</span><span class="p">(</span><span class="n">BoolParameter</span><span class="p">):</span>
@@ -553,7 +569,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s">&#39;BooleanParameter is deprecated, use BoolParameter instead&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BooleanParameter is deprecated, use BoolParameter instead&#39;</span><span class="p">,</span>
             <span class="ne">DeprecationWarning</span><span class="p">,</span>
             <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>
@@ -576,7 +592,7 @@
 <span class="sd">        see :py:mod:`luigi.date_interval`</span>
 <span class="sd">          for details on the parsing of DateIntervals.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># TODO: can we use xml.utils.iso8601 or something similar?</span>
+        <span class="c1"># TODO: can we use xml.utils.iso8601 or something similar?</span>
 
         <span class="kn">from</span> <span class="nn">luigi</span> <span class="kn">import</span> <span class="n">date_interval</span> <span class="k">as</span> <span class="n">d</span>
 
@@ -585,7 +601,7 @@
             <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">i</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid date interval - could not be parsed&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid date interval - could not be parsed&#39;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">TimeDeltaParameter</span><span class="p">(</span><span class="n">Parameter</span><span class="p">):</span>
@@ -606,7 +622,7 @@
         <span class="k">if</span> <span class="n">re_match</span><span class="p">:</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">has_val</span> <span class="o">=</span> <span class="bp">False</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">re_match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">re_match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)):</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
                 <span class="n">has_val</span> <span class="o">=</span> <span class="n">has_val</span> <span class="ow">or</span> <span class="n">val</span> <span class="o">!=</span> <span class="mi">0</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
@@ -615,19 +631,19 @@
 
     <span class="k">def</span> <span class="nf">_parseIso8601</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">field</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s">&quot;(?P&lt;</span><span class="si">%s</span><span class="s">&gt;\d+)</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="k">return</span> <span class="s2">&quot;(?P&lt;</span><span class="si">%s</span><span class="s2">&gt;\d+)</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
 
         <span class="k">def</span> <span class="nf">optional_field</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s">&quot;(</span><span class="si">%s</span><span class="s">)?&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="c"># A little loose: ISO 8601 does not allow weeks in combination with other fields, but this regex does (as does python timedelta)</span>
-        <span class="n">regex</span> <span class="o">=</span> <span class="s">&quot;P(</span><span class="si">%s</span><span class="s">|</span><span class="si">%s</span><span class="s">(T</span><span class="si">%s</span><span class="s">)?)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">field</span><span class="p">(</span><span class="s">&quot;weeks&quot;</span><span class="p">),</span> <span class="n">optional_field</span><span class="p">(</span><span class="s">&quot;days&quot;</span><span class="p">),</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">optional_field</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;hours&quot;</span><span class="p">,</span> <span class="s">&quot;minutes&quot;</span><span class="p">,</span> <span class="s">&quot;seconds&quot;</span><span class="p">]]))</span>
+            <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)?&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="c1"># A little loose: ISO 8601 does not allow weeks in combination with other fields, but this regex does (as does python timedelta)</span>
+        <span class="n">regex</span> <span class="o">=</span> <span class="s2">&quot;P(</span><span class="si">%s</span><span class="s2">|</span><span class="si">%s</span><span class="s2">(T</span><span class="si">%s</span><span class="s2">)?)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">field</span><span class="p">(</span><span class="s2">&quot;weeks&quot;</span><span class="p">),</span> <span class="n">optional_field</span><span class="p">(</span><span class="s2">&quot;days&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">optional_field</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;hours&quot;</span><span class="p">,</span> <span class="s2">&quot;minutes&quot;</span><span class="p">,</span> <span class="s2">&quot;seconds&quot;</span><span class="p">]]))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_regex</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_parseSimple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;weeks&quot;</span><span class="p">,</span> <span class="s">&quot;days&quot;</span><span class="p">,</span> <span class="s">&quot;hours&quot;</span><span class="p">,</span> <span class="s">&quot;minutes&quot;</span><span class="p">,</span> <span class="s">&quot;seconds&quot;</span><span class="p">]</span>
-        <span class="c"># Give the digits a regex group name from the keys, then look for text with the first letter of the key,</span>
-        <span class="c"># optionally followed by the rest of the word, with final char (the &quot;s&quot;) optional</span>
-        <span class="n">regex</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;((?P&lt;</span><span class="si">%s</span><span class="s">&gt;\d+) ?</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)?(</span><span class="si">%s</span><span class="s">)? ?)?&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;weeks&quot;</span><span class="p">,</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="s2">&quot;hours&quot;</span><span class="p">,</span> <span class="s2">&quot;minutes&quot;</span><span class="p">,</span> <span class="s2">&quot;seconds&quot;</span><span class="p">]</span>
+        <span class="c1"># Give the digits a regex group name from the keys, then look for text with the first letter of the key,</span>
+        <span class="c1"># optionally followed by the rest of the word, with final char (the &quot;s&quot;) optional</span>
+        <span class="n">regex</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;((?P&lt;</span><span class="si">%s</span><span class="s2">&gt;\d+) ?</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)?(</span><span class="si">%s</span><span class="s2">)? ?)?&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_regex</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
@@ -642,7 +658,7 @@
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ParameterException</span><span class="p">(</span><span class="s">&quot;Invalid time delta - could not parse </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">input</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParameterException</span><span class="p">(</span><span class="s2">&quot;Invalid time delta - could not parse </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">input</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">TaskParameter</span><span class="p">(</span><span class="n">Parameter</span><span class="p">):</span>
@@ -677,6 +693,7 @@
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">task_family</span>
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -686,12 +703,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -706,7 +724,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
