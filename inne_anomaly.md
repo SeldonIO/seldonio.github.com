@@ -72,4 +72,8 @@ Since the anomaly detector uses the seldon prediction format for the response, t
 *  if "PredictedClass" : "Anomaly_score", the keys "prediction" and "confidence" store the anomaly score for the vector, where 0 is not anomalous and 1 is the maximally anomalous 
 *  if "PredictedClass" : "Complementary_score", the keys "prediction" and "confidence" store the non-anomaly score, which is 1 - anomaly_score
 
-Since many samples (about one third) in the dataset are drawn from a gaussian centered in 2.0, the anomaly score for the sample is low. A vector such as '{"data":{"f1":0.1,"f2":0.2,"f3":0.9,"f4":0.0}}' should get an high anomaly score
+Since many samples (about one third) in the dataset are drawn from a gaussian centered in 2.0, the anomaly score for the sample is low. A vector such as 
+{% highlight bash %}
+'{"data":{"f1":0.1,"f2":0.2,"f3":0.9,"f4":0.0}}' 
+{% endhighlight %} 
+should get an high anomaly score
