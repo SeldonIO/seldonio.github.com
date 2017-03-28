@@ -28,7 +28,7 @@ The script creates a Kubernetes deployment for the microservice in kubernetes/co
 To start the iNNE detector microservice on the client “test” (created by seldon-up on startup):
 
 {% highlight bash %}
-start-microservice --type prediction --client test -i inne seldonio/simulation_inne:2.0.7 rest 1.0
+start-microservice --type prediction --client test -i inne seldonio/simulation_inne:1.0 rest 1.0
 {% endhighlight %}
 
 This will load the pipeline saved in ```/seldon-data/seldon-models/inne/1/``` and create a single replica REST microservice called inne. It will activate this for the "inne-client" created in the previous step.
