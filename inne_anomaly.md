@@ -21,7 +21,7 @@ The iNNE anomaly detector is trained on a dataset of generated samples. We have 
 
 ## Create Microservice
 
-At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example case the same image to create the models also exposes it for runtime scoring when run. We can start our chosen microservice using the command line script start-microservice
+At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example the same image creating and training the model also exposes it for runtime scoring when run. We can start our chosen microservice using the command line script start-microservice
 
 The script creates a Kubernetes deployment for the microservice in kubernetes/conf/microservices. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
