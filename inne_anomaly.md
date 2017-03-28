@@ -21,9 +21,9 @@ The iNNE anomaly detector is trained on a dataset of generated samples. We have 
 
 ## Create Microservice
 
-At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example the same image creating and training the model also exposes it for runtime scoring when run. We can start our chosen microservice using the command line script start-microservice
+At runtime Seldon requires you expose your model scoring engine as a microservice API. In this example the same image creating and training the model also exposes it for runtime scoring when run. We can start the microservice using the command line script start-microservice
 
-The script creates a Kubernetes deployment for the microservice in kubernetes/conf/microservices. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
+The script creates a Kubernetes deployment for the microservice in kubernetes/conf/microservices. If the microservice is already running Kubernetes will roll-down the previous version and roll-up the new version.
 
 To start the iNNE detector microservice on the client “test” (created by seldon-up on startup):
 
@@ -31,11 +31,10 @@ To start the iNNE detector microservice on the client “test” (created by sel
 start-microservice --type prediction --client test -i inne seldonio/simulation_inne:1.0.1 rest 1.0
 {% endhighlight %}
 
-This will load the pipeline saved in ```/seldon-data/seldon-models/inne/1/``` and create a single replica REST microservice called inne. It will activate this for the "inne-client" created in the previous step.
 
 ## Serve anomaly detection
 
-To obtain the anomaly score for any 4-dimesional vector
+To obtain the anomaly score for any 4-dimensional vector
 
 {% highlight bash %}
 seldon-cli --quiet api --client-name test --endpoint /js/predict --json '{"data":{"f1":2.1,"f2":2.05,"f3":1.95,"f4":2.01}}'
