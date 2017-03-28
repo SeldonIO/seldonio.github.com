@@ -17,7 +17,7 @@ If you are interested on theory behind iNNE technique, find out more about [iNNE
 
 ## Train the model
 
-The iNNE anomaly detector is trained on a dataset of generated samples. We have prepacked a docker image that generate the train dataset, fit the model and save the pipeline. To train the detector, we generate data by sampling 1000 random 4-dimesional vectors from 3 gaussian distributions centered at 2.0, 4.0 and 6.0 and with standard deviation of 0.1. Moreover we include 5 anomaly points by sampling 5 random 4-dimensional vectors from a gaussian centered at 0.0 and with standard deviation 0.1. This procedure results on a train dataset of 3005 samples.
+The iNNE anomaly detector is trained on a dataset of generated samples. We have prepacked a docker image that generate the train dataset, fit the model and save the pipeline. To train the detector, we generate data by sampling 1000 random 4-dimensional vectors from 3 gaussian distributions centered at 2.0, 4.0 and 6.0 and with standard deviation of 0.1. Moreover we include 5 anomaly points by sampling 5 random 4-dimensional vectors from a gaussian centered at 0.0 and with standard deviation 0.1. This procedure results on a train dataset of 3005 samples.
 
 ## Create Microservice
 
