@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.text.docsim &mdash; seldon 1.0 documentation</title>
+  <title>seldon.text.docsim &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.text.docsim</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.text.docsim</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">gensim.models.doc2vec</span> <span class="kn">import</span> <span class="n">LabeledSentence</span>
+<span></span><span class="kn">from</span> <span class="nn">gensim.models.doc2vec</span> <span class="kn">import</span> <span class="n">LabeledSentence</span>
 <span class="kn">import</span> <span class="nn">gensim</span>
 <span class="kn">from</span> <span class="nn">seldon</span> <span class="kn">import</span> <span class="n">Recommender</span>
 <span class="kn">from</span> <span class="nn">gensim.corpora.textcorpus</span> <span class="kn">import</span> <span class="n">TextCorpus</span>
@@ -137,8 +153,8 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="jaccard"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.jaccard">[docs]</a><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">s2</span><span class="p">)))</span>
-</div>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">s2</span><span class="p">)))</span></div>
+
 <span class="n">current_milli_time</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
 
 <div class="viewcode-block" id="DefaultJsonCorpus"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DefaultJsonCorpus">[docs]</a><span class="k">class</span> <span class="nc">DefaultJsonCorpus</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -161,11 +177,11 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">allow_update</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DefaultJsonCorpus.getstream"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.getstream">[docs]</a>    <span class="k">def</span> <span class="nf">getstream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">file_or_filename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">file_or_filename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">):</span>
-            <span class="c"># cache the corpus length</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;length&#39;</span><span class="p">):</span>
+            <span class="c1"># cache the corpus length</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_texts</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
 
@@ -178,19 +194,19 @@
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
                     <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
                     <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                    <span class="k">yield</span> <span class="n">j</span>
-</div>
+                    <span class="k">yield</span> <span class="n">j</span></div>
+
 <div class="viewcode-block" id="DefaultJsonCorpus.get_texts"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_texts">[docs]</a>    <span class="k">def</span> <span class="nf">get_texts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">raw</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        yield raw text or tokenized text</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_json</span><span class="p">():</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">]</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">text</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">deacc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</div>
+                <span class="k">yield</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">deacc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="DefaultJsonCorpus.get_meta"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_meta">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return a json object with meta data for the documents. It must return:</span>
@@ -200,16 +216,16 @@
         <span class="n">doc_id</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_json</span><span class="p">():</span>
             <span class="n">m</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-            <span class="n">m</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
-            <span class="n">m</span><span class="p">[</span><span class="s">&#39;corpus_seq_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_id</span>
+            <span class="n">m</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">m</span><span class="p">[</span><span class="s1">&#39;corpus_seq_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_id</span>
             <span class="n">doc_id</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">yield</span> <span class="n">m</span>
-</div>
+            <span class="k">yield</span> <span class="n">m</span></div>
+
 <div class="viewcode-block" id="DefaultJsonCorpus.get_dictionary"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DefaultJsonCorpus.get_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">get_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span></div></div>
 
 
-</div></div>
+
 <div class="viewcode-block" id="DocumentSimilarity"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity">[docs]</a><span class="k">class</span> <span class="nc">DocumentSimilarity</span><span class="p">(</span><span class="n">Recommender</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -230,15 +246,15 @@
 <span class="sd">    sklear_nmf_args : dict, optional</span>
 <span class="sd">       args to pass to sklearn NMF model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_type</span><span class="o">=</span><span class="s">&#39;gensim_lsi&#39;</span><span class="p">,</span><span class="n">vec_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">annoy_trees</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">sklearn_tfidf_args</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;stop_words&#39;</span><span class="p">:</span><span class="s">&quot;english&quot;</span><span class="p">},</span><span class="n">sklearn_nmf_args</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;random_state&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;alpha&quot;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;l1_ratio&quot;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">}):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">model_type</span> <span class="o">==</span> <span class="s">&#39;gensim_lsi&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s">&#39;gensim_lda&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s">&#39;gensim_rp&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s">&#39;sklearn_nmf&#39;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unknown model type&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gensim_lsi&#39;</span><span class="p">,</span><span class="n">vec_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">annoy_trees</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">work_folder</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span><span class="n">sklearn_tfidf_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;stop_words&#39;</span><span class="p">:</span><span class="s2">&quot;english&quot;</span><span class="p">},</span><span class="n">sklearn_nmf_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;random_state&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;l1_ratio&quot;</span><span class="p">:</span><span class="o">.</span><span class="mi">5</span><span class="p">}):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;gensim_lsi&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;gensim_lda&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;gensim_rp&#39;</span> <span class="ow">or</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;sklearn_nmf&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown model type&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="o">=</span><span class="n">vec_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annoy_trees</span><span class="o">=</span><span class="n">annoy_trees</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span> <span class="o">=</span> <span class="s">&quot;gensim_index&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span> <span class="o">=</span> <span class="s">&quot;annoy_index&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span> <span class="o">=</span> <span class="s">&quot;meta&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;gensim_index&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;annoy_index&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;meta&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_tfidf_args</span> <span class="o">=</span> <span class="n">sklearn_tfidf_args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_nmf_args</span> <span class="o">=</span> <span class="n">sklearn_nmf_args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">=</span><span class="n">work_folder</span>
@@ -248,12 +264,12 @@
 <span class="sd">        Remove things that should not be pickled as they are handled in save/load</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;index_annoy&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;seq2meta&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;id2meta&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">result</span>
-</div>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;index_annoy&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;seq2meta&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;id2meta&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
     <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="nb">dict</span>
         
@@ -276,17 +292,17 @@
         <span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpus</span><span class="o">.</span><span class="n">get_dictionary</span><span class="p">()</span>
         <span class="n">tfidf</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TfidfModel</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
         <span class="n">corpus_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">corpus</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="o">==</span><span class="s">&#39;gensim_lsi&#39;</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Building gensim lsi model&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="o">==</span><span class="s1">&#39;gensim_lsi&#39;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building gensim lsi model&quot;</span><span class="p">)</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">LsiModel</span><span class="p">(</span><span class="n">corpus_tfidf</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="o">==</span><span class="s">&#39;gensim_lda&#39;</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Building gensim lda model&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="o">==</span><span class="s1">&#39;gensim_lda&#39;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building gensim lda model&quot;</span><span class="p">)</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">LdaModel</span><span class="p">(</span><span class="n">corpus_tfidf</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">,</span><span class="n">passes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Building gensim random projection model&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building gensim random projection model&quot;</span><span class="p">)</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">RpModel</span><span class="p">(</span><span class="n">corpus_tfidf</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">model</span><span class="p">[</span><span class="n">corpus_tfidf</span><span class="p">]</span>
-</div>
+        <span class="k">return</span> <span class="n">model</span><span class="p">[</span><span class="n">corpus_tfidf</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="DocumentSimilarity.create_sklearn_model"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.create_sklearn_model">[docs]</a>    <span class="k">def</span> <span class="nf">create_sklearn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">corpus</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a sklearn model</span>
@@ -304,14 +320,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span><span class="p">,</span><span class="n">CountVectorizer</span>
         <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">NMF</span>
-        <span class="c">#make tfidf and NMF args configurable</span>
+        <span class="c1">#make tfidf and NMF args configurable</span>
         <span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_tfidf_args</span><span class="p">)</span>
         <span class="n">tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="o">.</span><span class="n">get_texts</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Building sklearn NMF model&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building sklearn NMF model&quot;</span><span class="p">)</span>
         <span class="n">W</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_nmf_args</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">gensim</span><span class="o">.</span><span class="n">matutils</span><span class="o">.</span><span class="n">Dense2Corpus</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gensim</span><span class="o">.</span><span class="n">matutils</span><span class="o">.</span><span class="n">Dense2Corpus</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="DocumentSimilarity.fit"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">corpus</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fit a document similarity model</span>
@@ -327,23 +343,23 @@
 <span class="sd">        </span>
 <span class="sd">        trained DocumentSimilarity object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s">&#39;sklearn_nmf&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;sklearn_nmf&#39;</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sklearn_model</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_gensim_model</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">similarities</span><span class="o">.</span><span class="n">Similarity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/gensim_index&quot;</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span> <span class="o">=</span> <span class="n">annoy</span><span class="o">.</span><span class="n">AnnoyIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s">&#39;angular&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">similarities</span><span class="o">.</span><span class="n">Similarity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/gensim_index&quot;</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span> <span class="o">=</span> <span class="n">annoy</span><span class="o">.</span><span class="n">AnnoyIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;angular&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">gensim</span><span class="o">.</span><span class="n">matutils</span><span class="o">.</span><span class="n">sparse2full</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_trees</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">corpus</span><span class="o">.</span><span class="n">get_meta</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;corpus_seq_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s1">&#39;corpus_seq_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
 <div class="viewcode-block" id="DocumentSimilarity.save"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        save models to folder</span>
@@ -355,18 +371,18 @@
 <span class="sd">           saved location folder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">close_shard</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s">&quot;/gensim_index*&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_folder</span><span class="o">+</span><span class="s2">&quot;/gensim_index*&quot;</span><span class="p">):</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">output_prefix</span><span class="o">=</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/gensim_index&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">output_prefix</span><span class="o">=</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/gensim_index&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">check_moved</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span><span class="p">)</span>
-        <span class="n">fout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span><span class="p">)</span>
+        <span class="n">fout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">:</span>
             <span class="n">jStr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-            <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jStr</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-        <span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
+            <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jStr</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="DocumentSimilarity.load"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        load models from folder</span>
@@ -377,20 +393,20 @@
 <span class="sd">        folder : str</span>
 <span class="sd">           location of models</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span>  <span class="n">similarities</span><span class="o">.</span><span class="n">Similarity</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">output_prefix</span><span class="o">=</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/gensim_index&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span>  <span class="n">similarities</span><span class="o">.</span><span class="n">Similarity</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gensim_output_prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">output_prefix</span><span class="o">=</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/gensim_index&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">check_moved</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span> <span class="o">=</span> <span class="n">annoy</span><span class="o">.</span><span class="n">AnnoyIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vec_size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_annoy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">annoy_output_prefix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_output_prefix</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
                 <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;corpus_seq_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
-</div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s1">&#39;corpus_seq_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">j</span></div>
+
     <span class="k">def</span> <span class="nf">_remove_query_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">query_id</span><span class="p">,</span><span class="n">results</span><span class="p">):</span>
         <span class="n">transformed</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">doc_id</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
@@ -409,8 +425,8 @@
             <span class="n">sorted_x</span> <span class="o">=</span> <span class="n">sorted_x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">sorted_x</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>
-</div>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
 <div class="viewcode-block" id="DocumentSimilarity.nn"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.nn">[docs]</a>    <span class="k">def</span> <span class="nf">nn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">doc_id</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">translate_id</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">approx</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        nearest neighbour query</span>
@@ -433,7 +449,7 @@
 <span class="sd">        list of pairs of document id (internal or external) and similarity metric in range (0,1)</span>
 <span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">if</span> <span class="n">translate_id</span><span class="p">:</span>
-            <span class="n">doc_id_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">][</span><span class="s">&#39;corpus_seq_id&#39;</span><span class="p">]</span>
+            <span class="n">doc_id_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">][</span><span class="s1">&#39;corpus_seq_id&#39;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">doc_id_internal</span> <span class="o">=</span> <span class="n">doc_id</span>
         <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -454,15 +470,15 @@
             <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">sim_id</span><span class="p">,</span><span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sims</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">sim_id</span> <span class="o">==</span> <span class="n">doc_id_internal</span><span class="p">:</span>
-                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">sim_id</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">],</span><span class="n">score</span><span class="p">))</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">sim_id</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">],</span><span class="n">score</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">res</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_query_doc</span><span class="p">(</span><span class="n">doc_id_internal</span><span class="p">,</span><span class="n">sims</span><span class="p">)</span>
-            </div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_query_doc</span><span class="p">(</span><span class="n">doc_id_internal</span><span class="p">,</span><span class="n">sims</span><span class="p">)</span></div>
+            
 <div class="viewcode-block" id="DocumentSimilarity.get_meta"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.get_meta">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">doc_id</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span></div>
 
-</div>
+
 <div class="viewcode-block" id="DocumentSimilarity.score"><a class="viewcode-back" href="../../../seldon.text.html#seldon.text.docsim.DocumentSimilarity.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">approx</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        score a model</span>
@@ -485,16 +501,16 @@
         <span class="n">num_docs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">query_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">num_docs</span><span class="p">):</span>
             <span class="n">meta_correct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">query_id</span><span class="p">]</span>
-            <span class="n">meta_correct_tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_correct</span><span class="p">[</span><span class="s">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">))</span>
+            <span class="n">meta_correct_tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_correct</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
             <span class="n">sims</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">nn</span><span class="p">(</span><span class="n">query_id</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">approx</span><span class="o">=</span><span class="n">approx</span><span class="p">)</span>
             <span class="n">doc_score_sum</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">doc_scored</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">doc_id</span><span class="p">,</span><span class="n">sim</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sims</span><span class="p">:</span>
                 <span class="n">meta_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq2meta</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span>
-                <span class="n">meta_doc_tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_doc</span><span class="p">[</span><span class="s">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">))</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">meta_correct_tags</span><span class="p">,</span><span class="n">meta_doc_tags</span><span class="p">)</span>
+                <span class="n">meta_doc_tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_doc</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">meta_correct_tags</span><span class="p">,</span><span class="n">meta_doc_tags</span><span class="p">)</span>
                 <span class="n">score</span> <span class="o">=</span> <span class="n">jaccard</span><span class="p">(</span><span class="n">meta_correct_tags</span><span class="p">,</span><span class="n">meta_doc_tags</span><span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;score </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">meta_doc</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">],</span><span class="n">score</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;score </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">meta_doc</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span><span class="n">score</span><span class="p">)</span>
                 <span class="n">doc_scored</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">doc_score_sum</span> <span class="o">+=</span> <span class="n">score</span>
             <span class="k">if</span> <span class="n">doc_scored</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -503,10 +519,13 @@
         <span class="n">duration_secs</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span>
         <span class="n">duration_per_call</span> <span class="o">=</span> <span class="n">duration_secs</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">num_docs</span><span class="p">)</span>
         <span class="n">accuracy</span> <span class="o">=</span> <span class="n">score_sum</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">num_docs</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;accuracy: </span><span class="si">%f</span><span class="s"> time: </span><span class="si">%d</span><span class="s"> secs avg_call_time: </span><span class="si">%f</span><span class="s">&quot;</span><span class="p">,</span><span class="n">accuracy</span><span class="p">,</span><span class="n">duration_secs</span><span class="p">,</span><span class="n">duration_per_call</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">accuracy</span>
-</pre></div></div></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;accuracy: </span><span class="si">%f</span><span class="s2"> time: </span><span class="si">%d</span><span class="s2"> secs avg_call_time: </span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">accuracy</span><span class="p">,</span><span class="n">duration_secs</span><span class="p">,</span><span class="n">duration_per_call</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">accuracy</span></div></div>
 
+
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -516,12 +535,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -536,7 +556,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

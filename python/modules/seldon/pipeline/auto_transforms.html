@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.pipeline.auto_transforms &mdash; seldon 1.0 documentation</title>
+  <title>seldon.pipeline.auto_transforms &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon" href="../../seldon.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -106,14 +119,17 @@
     <li>seldon.pipeline.auto_transforms</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.pipeline.auto_transforms</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
 <span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
@@ -123,10 +139,11 @@
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">seldon.util</span> <span class="kn">import</span> <span class="n">DeprecationHelper</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Auto_transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform">[docs]</a><span class="k">class</span> <span class="nc">Auto_transform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoTransform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.AutoTransform">[docs]</a><span class="k">class</span> <span class="nc">AutoTransform</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Automatically transform a set of features into normalzied numeric or categorical features or dates</span>
 
@@ -159,9 +176,15 @@
 <span class="sd">       whether to create differences between all date variables</span>
 <span class="sd">    nan_threshold : float, optional</span>
 <span class="sd">       featurs to drop if too many nan, threshold is between 0-1 as percent</span>
+<span class="sd">    drop_constant_features : bool, optional</span>
+<span class="sd">       drop a column if its value is constant</span>
+<span class="sd">    drop duplicate columns : bool, optional</span>
+<span class="sd">       drop duplicate columns</span>
+<span class="sd">    min_max_limit : bool, optional</span>
+<span class="sd">       limit numeric cols to min and max seen in fit</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">exclude</span><span class="o">=</span><span class="p">[],</span><span class="n">include</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">max_values_numeric_categorical</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">date_cols</span><span class="o">=</span><span class="p">[],</span><span class="n">custom_date_formats</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">ignore_vals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">force_categorical</span><span class="o">=</span><span class="p">[],</span><span class="n">min_cat_percent</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">max_cat_percent</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bool_map</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;true&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;false&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;1&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;0&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;yes&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;no&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;1.0&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;0.0&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="n">cat_missing_val</span><span class="o">=</span><span class="s">&quot;UKN&quot;</span><span class="p">,</span><span class="n">date_transforms</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">],</span><span class="n">create_date_differences</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">nan_threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Auto_transform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">exclude</span><span class="o">=</span><span class="p">[],</span><span class="n">include</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">max_values_numeric_categorical</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">date_cols</span><span class="o">=</span><span class="p">[],</span><span class="n">custom_date_formats</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">ignore_vals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">force_categorical</span><span class="o">=</span><span class="p">[],</span><span class="n">min_cat_percent</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">max_cat_percent</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bool_map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;true&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;false&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;0&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;yes&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;no&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;1.0&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;0.0&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="n">cat_missing_val</span><span class="o">=</span><span class="s2">&quot;UKN&quot;</span><span class="p">,</span><span class="n">date_transforms</span><span class="o">=</span><span class="p">[</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">],</span><span class="n">create_date_differences</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">nan_threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">drop_constant_features</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">drop_duplicate_cols</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">min_max_limit</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AutoTransform</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span> <span class="o">=</span> <span class="n">exclude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">include</span> <span class="o">=</span> <span class="n">include</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_values_numeric_categorical</span> <span class="o">=</span> <span class="n">max_values_numeric_categorical</span>
@@ -184,7 +207,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">create_date_differences</span> <span class="o">=</span> <span class="n">create_date_differences</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nan_threshold</span><span class="o">=</span><span class="n">nan_threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span> <span class="o">=</span> <span class="p">[]</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_constant_features</span><span class="o">=</span><span class="n">drop_constant_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_duplicate_cols</span><span class="o">=</span><span class="n">drop_duplicate_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_max_limit</span><span class="o">=</span><span class="n">min_max_limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
@@ -212,11 +238,11 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_missing_val</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_cat_percent</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_cat_percent</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_number</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
                 <span class="k">return</span> <span class="n">val</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
@@ -225,42 +251,62 @@
         <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">hour</span><span class="o">/</span><span class="mf">24.0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
         <span class="n">v1</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="n">v2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_hour&quot;</span><span class="p">:</span><span class="s">&quot;h&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">hour</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;h1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;h2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_hour&quot;</span><span class="p">:</span><span class="s2">&quot;h&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">hour</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;h1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;h2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">_create_month_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
         <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">month</span><span class="o">/</span><span class="mf">12.0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
         <span class="n">v1</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="n">v2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_month&quot;</span><span class="p">:</span><span class="s">&quot;m&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">month</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;m1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;m2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_month&quot;</span><span class="p">:</span><span class="s2">&quot;m&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">month</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;m1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;m2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">_create_dayofweek_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
         <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">/</span><span class="mf">7.0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
         <span class="n">v1</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="n">v2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_w&quot;</span><span class="p">:</span><span class="s">&quot;w&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dayofweek</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;w1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="s">&#39;w2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_w&quot;</span><span class="p">:</span><span class="s2">&quot;w&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dayofweek</span><span class="p">),</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;w1&#39;</span><span class="p">:</span><span class="n">v1</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="s1">&#39;w2&#39;</span><span class="p">:</span><span class="n">v2</span><span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">_create_year_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s">&quot;_year&quot;</span><span class="p">:</span><span class="s">&quot;y&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">year</span><span class="p">)})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_year&quot;</span><span class="p">:</span><span class="s2">&quot;y&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">year</span><span class="p">)})</span>
 
 
     <span class="k">def</span> <span class="nf">_convert_to_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;failed default conversion &quot;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;failed default conversion &quot;</span><span class="p">)</span>
                 <span class="k">pass</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_date_formats</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">format</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;failed custom conversion </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;failed custom conversion </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
                     <span class="k">pass</span>
             <span class="k">return</span> <span class="bp">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Auto_transform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_duplicate_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">frame</span><span class="p">):</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+        <span class="n">dups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">dcols</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
+
+            <span class="n">vs</span> <span class="o">=</span> <span class="n">dcols</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="n">ks</span> <span class="o">=</span> <span class="n">dcols</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="n">lvs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lvs</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">lvs</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">vs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">vs</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span> 
+                        <span class="n">dups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">dups</span>       
+
+
+
+<div class="viewcode-block" id="AutoTransform.fit"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.AutoTransform.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fit models against an input pandas dataframe</span>
 
@@ -276,23 +322,34 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nan_threshold</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">max_nan</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nan_threshold</span>
-        <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;int16&#39;</span><span class="p">,</span> <span class="s">&#39;int32&#39;</span><span class="p">,</span> <span class="s">&#39;int64&#39;</span><span class="p">,</span> <span class="s">&#39;float16&#39;</span><span class="p">,</span> <span class="s">&#39;float32&#39;</span><span class="p">,</span> <span class="s">&#39;float64&#39;</span><span class="p">]</span>
+        <span class="n">numerics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;int16&#39;</span><span class="p">,</span> <span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="s1">&#39;float16&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">]</span>
         <span class="n">numeric_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="n">categorical_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="n">numerics</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_duplicate_cols</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_duplicate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Adding duplicate cols to be dropped </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span><span class="p">:</span>
-                <span class="k">pass</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">:</span>
+                <span class="k">continue</span>
             <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">include</span> <span class="ow">or</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">include</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nan_threshold</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">num_nan</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">num_nan</span> <span class="o">&gt;</span> <span class="n">max_nan</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;adding </span><span class="si">%s</span><span class="s"> to drop columns </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">num_nan</span><span class="p">,</span><span class="n">max_nan</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-                        <span class="k">continue</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;adding </span><span class="si">%s</span><span class="s2"> to drop columns </span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">num_nan</span><span class="p">,</span><span class="n">max_nan</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+                            <span class="k">continue</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
                 <span class="n">cat_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">dropna</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cat_counts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_constant_features</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;adding </span><span class="si">%s</span><span class="s2"> to drop columns as is constant&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+                        <span class="k">continue</span>
                 <span class="n">is_bool</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cat_counts</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bool_map</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -302,16 +359,17 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">convert_bool</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="n">numerics</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cat_counts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_values_numeric_categorical</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_categorical</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;fitting scaler for col </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;fitting scaler for col </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
                         <span class="n">dfs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
                         <span class="k">if</span> <span class="n">dfs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="n">arr</span> <span class="o">=</span> <span class="n">dfs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">scalers</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">(</span><span class="n">with_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">with_std</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dfs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">dfs</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">convert_categorical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">cat_percent</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">cat_counts</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">convert_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_cols</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">convert_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
@@ -326,19 +384,19 @@
                     <span class="n">dates_converted</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_converted</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates_converted</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
                 <span class="k">for</span> <span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">dates_converted</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;training date diff scaler for </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;training date diff scaler for </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span>
                     <span class="n">d_diff</span> <span class="o">=</span> <span class="n">dates_converted</span><span class="p">[</span><span class="n">col1</span><span class="p">]</span> <span class="o">-</span> <span class="n">dates_converted</span><span class="p">[</span><span class="n">col2</span><span class="p">]</span>
-                    <span class="n">d_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">d_diff</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">date_diff_scalers</span><span class="p">[</span><span class="n">col1</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">col2</span><span class="p">]</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">(</span><span class="n">with_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">with_std</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num columns to drop </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num scalers </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalers</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num categorical </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_categorical</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num dates </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_date</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num date diffs </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date_diff_scalers</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;num bool </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_bool</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-</div>
-<div class="viewcode-block" id="Auto_transform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.Auto_transform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
+                    <span class="n">d_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">d_diff</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">date_diff_scalers</span><span class="p">[</span><span class="n">col1</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">col2</span><span class="p">]</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">(</span><span class="n">with_mean</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">with_std</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num columns to drop </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num scalers </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalers</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num categorical </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_categorical</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num dates </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_date</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num date diffs </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date_diff_scalers</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;num bool </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_bool</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="AutoTransform.transform"><a class="viewcode-back" href="../../../seldon.pipeline.html#seldon.pipeline.auto_transforms.AutoTransform.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        transform a datframe with fitted models</span>
 
@@ -353,12 +411,12 @@
 <span class="sd">        Transformed pandas dataframe</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_cols</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">num_bools</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_bool</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_bool</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;convert bool </span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_bools</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;convert bool </span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_bools</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bool_map</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
@@ -366,33 +424,33 @@
         <span class="n">dates_converted</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_date</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;convert date </span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_dates</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;convert date </span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_dates</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
             <span class="n">date_converted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_date</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">date_converted</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;successfully converted </span><span class="si">%s</span><span class="s"> to date&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;successfully converted </span><span class="si">%s</span><span class="s2"> to date&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_converted</span>
                 <span class="n">dates_converted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime64[ns]&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_transforms</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating hour features&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating hour features&quot;</span><span class="p">)</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_hour_features</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_transforms</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating month features&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating month features&quot;</span><span class="p">)</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_month_features</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_transforms</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>                    
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating day of week features&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating day of week features&quot;</span><span class="p">)</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_dayofweek_features</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_transforms</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>                    
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating year features&quot;</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating year features&quot;</span><span class="p">)</span>
                     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_year_features</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;warning - failed to convert to date col </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;warning - failed to convert to date col </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_date_differences</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates_converted</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">dates_converted</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;diff scaler for </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span>
-                <span class="n">col_name</span> <span class="o">=</span> <span class="n">col1</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">col2</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;diff scaler for </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col1</span><span class="p">,</span><span class="n">col2</span><span class="p">)</span>
+                <span class="n">col_name</span> <span class="o">=</span> <span class="n">col1</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">col2</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col1</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col2</span><span class="p">]</span>
-                <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scale_date_diff</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col_name</span><span class="p">)</span>
@@ -402,19 +460,25 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;convert categorical </span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s"> &quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_cats</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;convert categorical </span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2"> &quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_cats</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_make_cat</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
         <span class="n">num_scalers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scalers</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalers</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignore_vals</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_max_limit</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_max</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
             <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;scaling col </span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_scalers</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;scaling col </span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">num_scalers</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scale</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="n">df</span></div></div>
 
+<span class="n">Auto_transform</span> <span class="o">=</span> <span class="n">DeprecationHelper</span><span class="p">(</span><span class="n">AutoTransform</span><span class="p">)</span>
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -424,12 +488,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -444,7 +509,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

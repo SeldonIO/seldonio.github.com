@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.cli.db_utils &mdash; seldon 1.0 documentation</title>
+  <title>seldon.cli.db_utils &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon.cli" href="../cli.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -108,14 +121,17 @@
     <li>seldon.cli.db_utils</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.cli.db_utils</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">pprint</span>
+<span></span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -124,15 +140,15 @@
 <span class="kn">import</span> <span class="nn">MySQLdb</span>
 
 
-<span class="n">KEYS_SQL_CLIENT</span> <span class="o">=</span> <span class="s">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where short_name=</span><span class="si">%(client_name)s</span><span class="s">&quot;</span>
-<span class="n">KEYS_SQL_CLIENT_SCOPE</span> <span class="o">=</span> <span class="s">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where short_name=</span><span class="si">%(client_name)s</span><span class="s"> and scope=</span><span class="si">%(scope)s</span><span class="s">&quot;</span>
-<span class="n">KEYS_SQL_SCOPE</span> <span class="o">=</span> <span class="s">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where scope=</span><span class="si">%(scope)s</span><span class="s">&quot;</span>
-<span class="n">KEYS_SQL</span> <span class="o">=</span> <span class="s">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer&quot;</span>
+<span class="n">KEYS_SQL_CLIENT</span> <span class="o">=</span> <span class="s2">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where short_name=</span><span class="si">%(client_name)s</span><span class="s2">&quot;</span>
+<span class="n">KEYS_SQL_CLIENT_SCOPE</span> <span class="o">=</span> <span class="s2">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where short_name=</span><span class="si">%(client_name)s</span><span class="s2"> and scope=</span><span class="si">%(scope)s</span><span class="s2">&quot;</span>
+<span class="n">KEYS_SQL_SCOPE</span> <span class="o">=</span> <span class="s2">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer where scope=</span><span class="si">%(scope)s</span><span class="s2">&quot;</span>
+<span class="n">KEYS_SQL</span> <span class="o">=</span> <span class="s2">&quot;select short_name,consumer_key,consumer_secret,scope from api.consumer&quot;</span>
 
 <div class="viewcode-block" id="get_keys"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.db_utils.get_keys">[docs]</a><span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="n">dbSettings</span><span class="p">,</span><span class="n">client_name</span><span class="p">,</span><span class="n">scope</span><span class="p">):</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">],</span>
-                         <span class="n">user</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">],</span>
-                         <span class="n">passwd</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;password&quot;</span><span class="p">])</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span>
+                         <span class="n">user</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span>
+                         <span class="n">passwd</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">])</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">client_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">scope</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">sql</span> <span class="o">=</span> <span class="n">KEYS_SQL</span>
@@ -142,15 +158,33 @@
         <span class="n">sql</span> <span class="o">=</span> <span class="n">KEYS_SQL_CLIENT</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sql</span> <span class="o">=</span> <span class="n">KEYS_SQL_CLIENT_SCOPE</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,{</span><span class="s">&quot;client_name&quot;</span><span class="p">:</span><span class="n">client_name</span><span class="p">,</span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="n">scope</span><span class="p">})</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,{</span><span class="s2">&quot;client_name&quot;</span><span class="p">:</span><span class="n">client_name</span><span class="p">,</span><span class="s2">&quot;scope&quot;</span><span class="p">:</span><span class="n">scope</span><span class="p">})</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&quot;db&quot;</span><span class="p">:</span><span class="n">dbSettings</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">],</span><span class="s">&quot;client&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s">&quot;key&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s">&quot;secret&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>    
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;db&quot;</span><span class="p">:</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span><span class="s2">&quot;client&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;key&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;secret&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s2">&quot;scope&quot;</span><span class="p">:</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="set_keys"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.db_utils.set_keys">[docs]</a><span class="k">def</span> <span class="nf">set_keys</span><span class="p">(</span><span class="n">dbSettings</span><span class="p">,</span><span class="n">client_name</span><span class="p">,</span><span class="n">scope</span><span class="p">,</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span>
+                         <span class="n">user</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span>
+                         <span class="n">passwd</span><span class="o">=</span><span class="n">dbSettings</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">])</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">UPDATE_KEYS_SQL_SCOPE_ALL</span><span class="o">=</span><span class="s2">&quot;update api.consumer set consumer_key=</span><span class="si">%(consumer_key)s</span><span class="s2">,consumer_secret=</span><span class="si">%(consumer_secret)s</span><span class="s2"> where short_name=</span><span class="si">%(client_name)s</span><span class="s2"> and scope=</span><span class="si">%(scope)s</span><span class="s2">&quot;</span>
+    <span class="n">UPDATE_KEYS_SQL_SCOPE_JS</span><span class="o">=</span><span class="s2">&quot;update api.consumer set consumer_key=</span><span class="si">%(consumer_key)s</span><span class="s2"> where short_name=</span><span class="si">%(client_name)s</span><span class="s2"> and scope=</span><span class="si">%(scope)s</span><span class="s2">&quot;</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="n">UPDATE_KEYS_SQL_SCOPE_JS</span> <span class="k">if</span> <span class="n">scope</span> <span class="o">==</span> <span class="s1">&#39;js&#39;</span> <span class="k">else</span> <span class="n">UPDATE_KEYS_SQL_SCOPE_ALL</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,{</span>
+        <span class="s2">&quot;client_name&quot;</span><span class="p">:</span><span class="n">client_name</span><span class="p">,</span>
+        <span class="s2">&quot;scope&quot;</span><span class="p">:</span><span class="n">scope</span><span class="p">,</span>
+        <span class="s2">&quot;consumer_key&quot;</span><span class="p">:</span><span class="n">consumer_key</span><span class="p">,</span>
+        <span class="s2">&quot;consumer_secret&quot;</span><span class="p">:</span><span class="n">consumer_secret</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span></div>
+
 </pre></div>
 
+           </div>
           </div>
           <footer>
   
@@ -160,12 +194,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -180,7 +215,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

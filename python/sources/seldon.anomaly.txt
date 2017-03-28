@@ -1,0 +1,23 @@
+seldon.anomaly package
+======================
+
+Submodules
+----------
+
+seldon.anomaly.AnomalyDetection
+-------------------------------
+
+.. automodule:: seldon.anomaly.AnomalyDetection
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+
+Module contents
+---------------
+
+.. automodule:: seldon.anomaly
+    :members:
+    :undoc-members:
+    :show-inheritance:

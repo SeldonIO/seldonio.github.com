@@ -5,16 +5,16 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>seldon.cli.cmd_model &mdash; seldon 1.0 documentation</title>
+  <title>seldon.cli.cmd_model &mdash; seldon 2.2.1 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -30,11 +30,11 @@
   
 
   
-    <link rel="top" title="seldon 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="seldon 2.2.1 documentation" href="../../../index.html"/>
         <link rel="up" title="seldon.cli" href="../cli.html"/> 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../../../static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -44,11 +44,27 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../../../index.html" class="fa fa-home"> seldon</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> seldon
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.1
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -56,31 +72,22 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-          
-          
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.fileutil">seldon.fileutil module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.keras">seldon.keras module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.sklearn_estimator">seldon.sklearn_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.util">seldon.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.vw">seldon.vw module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon.xgb">seldon.xgb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../seldon.html#module-seldon">Module contents</a></li>
-</ul>
-</li>
-</ul>
 
           
-        
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../seldon.html">seldon package</a></li>
+</ul>
+
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -95,7 +102,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
@@ -108,14 +121,17 @@
     <li>seldon.cli.cmd_model</li>
       <li class="wy-breadcrumbs-aside">
         
+          
+        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for seldon.cli.cmd_model</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">pprint</span>
+<span></span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -126,64 +142,64 @@
 <span class="kn">import</span> <span class="nn">seldon_utils</span>
 
 <span class="n">gdata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;all_clients_node_path&#39;</span><span class="p">:</span> <span class="s">&quot;/all_clients&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;all_clients_node_path&#39;</span><span class="p">:</span> <span class="s2">&quot;/all_clients&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="pp"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.pp">[docs]</a><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-</div>
+    <span class="n">p</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="getOpts"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.getOpts">[docs]</a><span class="k">def</span> <span class="nf">getOpts</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">&#39;seldon-cli model&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s">&#39;Seldon Cli&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;list&#39;</span><span class="p">,</span><span class="s">&#39;add&#39;</span><span class="p">,</span><span class="s">&#39;show&#39;</span><span class="p">,</span><span class="s">&#39;edit&#39;</span><span class="p">,</span><span class="s">&#39;train&#39;</span><span class="p">])</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--client-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--model-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;seldon-cli model&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Seldon Cli&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--action&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the action to use&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">,</span><span class="s1">&#39;add&#39;</span><span class="p">,</span><span class="s1">&#39;show&#39;</span><span class="p">,</span><span class="s1">&#39;edit&#39;</span><span class="p">,</span><span class="s1">&#39;train&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--client-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model-name&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the name of the client&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">opts</span>
-</div>
+    <span class="k">return</span> <span class="n">opts</span></div>
+
 <div class="viewcode-block" id="is_existing_client"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.is_existing_client">[docs]</a><span class="k">def</span> <span class="nf">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-    <span class="n">client_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">])</span>
+    <span class="n">client_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">zkroot</span> <span class="o">+</span> <span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">client_name</span> <span class="ow">in</span> <span class="n">client_names</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">True</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">False</span>
-</div>
+        <span class="k">return</span> <span class="bp">False</span></div>
+
 <div class="viewcode-block" id="write_data_to_file"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.write_data_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="n">json</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">seldon_utils</span><span class="o">.</span><span class="n">mkdir_p</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">))</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+    <span class="k">print</span> <span class="s2">&quot;Writing data to file[{data_fpath}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="write_node_value_to_file"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.write_node_value_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_node_value_to_file</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">,</span> <span class="n">node_path</span><span class="p">):</span>
     <span class="n">node_value</span> <span class="o">=</span> <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_get</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">)</span>
     <span class="n">node_value</span> <span class="o">=</span> <span class="n">node_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">zk_utils</span><span class="o">.</span><span class="n">is_json_data</span><span class="p">(</span><span class="n">node_value</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">node_value</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node_value</span><span class="p">)</span>
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">node_path</span> <span class="o">+</span> <span class="s">&quot;/_data_&quot;</span>
-    <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</div>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="n">zkroot</span> <span class="o">+</span> <span class="n">node_path</span> <span class="o">+</span> <span class="s2">&quot;/_data_&quot;</span>
+    <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="run_spark_job"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.run_spark_job">[docs]</a><span class="k">def</span> <span class="nf">run_spark_job</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">job_info</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-    <span class="n">conf_data</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">]</span>
-    <span class="n">spark_home</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s">&quot;spark_home&quot;</span><span class="p">]</span>
-    <span class="n">seldon_spark_home</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s">&quot;seldon_spark_home&quot;</span><span class="p">]</span>
-    <span class="n">seldon_version</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s">&quot;seldon_version&quot;</span><span class="p">]</span>
-    <span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s">&quot;zk_hosts&quot;</span><span class="p">]</span>
+    <span class="n">conf_data</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">]</span>
+    <span class="n">spark_home</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s2">&quot;spark_home&quot;</span><span class="p">]</span>
+    <span class="n">seldon_spark_home</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s2">&quot;seldon_spark_home&quot;</span><span class="p">]</span>
+    <span class="n">seldon_version</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s2">&quot;seldon_version&quot;</span><span class="p">]</span>
+    <span class="n">zk_hosts</span> <span class="o">=</span> <span class="n">conf_data</span><span class="p">[</span><span class="s2">&quot;zk_hosts&quot;</span><span class="p">]</span>
 
-    <span class="n">cmd</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;%SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">spark_home</span><span class="p">)</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">spark_home</span><span class="p">)</span>
 
-    <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s">&quot;cmd_args&quot;</span><span class="p">]</span>
+    <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">job_info</span><span class="p">[</span><span class="s2">&quot;cmd_args&quot;</span><span class="p">]</span>
 
     <span class="n">replacements</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">(</span><span class="s">&quot;%CLIENT_NAME%&quot;</span><span class="p">,</span> <span class="n">client_name</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&quot;%SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">spark_home</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&quot;%SELDON_SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">seldon_spark_home</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&quot;%SELDON_VERSION%&quot;</span><span class="p">,</span> <span class="n">seldon_version</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&quot;%ZK_HOSTS%&quot;</span><span class="p">,</span> <span class="n">zk_hosts</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;%CLIENT_NAME%&quot;</span><span class="p">,</span> <span class="n">client_name</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;%SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">spark_home</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;%SELDON_SPARK_HOME%&quot;</span><span class="p">,</span> <span class="n">seldon_spark_home</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;%SELDON_VERSION%&quot;</span><span class="p">,</span> <span class="n">seldon_version</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;%ZK_HOSTS%&quot;</span><span class="p">,</span> <span class="n">zk_hosts</span><span class="p">),</span>
     <span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">appy_replacements</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
@@ -193,10 +209,10 @@
 
     <span class="n">cmd_args</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">appy_replacements</span><span class="p">,</span> <span class="n">cmd_args</span><span class="p">)</span>
 
-    <span class="n">call</span><span class="p">([</span><span class="n">cmd</span><span class="p">]</span><span class="o">+</span><span class="n">cmd_args</span><span class="p">)</span>
-</div>
+    <span class="n">call</span><span class="p">([</span><span class="n">cmd</span><span class="p">]</span><span class="o">+</span><span class="n">cmd_args</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="get_config_args"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.get_config_args">[docs]</a><span class="k">def</span> <span class="nf">get_config_args</span><span class="p">(</span><span class="n">extra_args</span><span class="p">):</span>
-    <span class="n">extra_args</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">extra_args</span><span class="p">]</span>
+    <span class="n">extra_args</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">extra_args</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">extra_args</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">extra_args</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]))</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -206,35 +222,35 @@
                 <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">d</span>
-</div>
+    <span class="k">return</span> <span class="n">d</span></div>
+
 <div class="viewcode-block" id="action_add"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.action_add">[docs]</a><span class="k">def</span> <span class="nf">action_add</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">):</span>
     <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
     <span class="k">if</span> <span class="n">client_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Need client name to add model for&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Need client name to add model for&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">model_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">model_name</span>
     <span class="k">if</span> <span class="n">model_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Need model name to use&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Need model name to use&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;default_models&quot;</span><span class="p">]</span>
+    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;default_models&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">model_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">default_models</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">print</span> <span class="s">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">config_args</span> <span class="o">=</span> <span class="n">get_config_args</span><span class="p">(</span><span class="n">extra_args</span><span class="p">)</span>
 
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="s">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline/{model_name}/_data_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="s2">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline/{model_name}/_data_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
 
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
-    <span class="n">node_path</span> <span class="o">=</span> <span class="s">&quot;{all_clients_node_path}/{client_name}/offline/{model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">node_path</span> <span class="o">=</span> <span class="s2">&quot;{all_clients_node_path}/{client_name}/offline/{model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">zk_client</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">node_path</span><span class="p">):</span>
             <span class="n">write_node_value_to_file</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">zkroot</span><span class="p">,</span> <span class="n">node_path</span><span class="p">)</span>
@@ -243,91 +259,91 @@
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">default_model_data</span> <span class="o">=</span> <span class="n">default_models</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="s">&quot;config&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">default_model_data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;inputPath&quot;</span><span class="p">):</span>
-                <span class="n">default_model_data</span><span class="p">[</span><span class="s">&quot;inputPath&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;seldon_models&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">default_model_data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;outputPath&quot;</span><span class="p">):</span>
-                <span class="n">default_model_data</span><span class="p">[</span><span class="s">&quot;outputPath&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;seldon_models&quot;</span><span class="p">]</span>
+            <span class="n">default_model_data</span> <span class="o">=</span> <span class="n">default_models</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="s2">&quot;config&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">default_model_data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;inputPath&quot;</span><span class="p">):</span>
+                <span class="n">default_model_data</span><span class="p">[</span><span class="s2">&quot;inputPath&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;seldon_models&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">default_model_data</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;outputPath&quot;</span><span class="p">):</span>
+                <span class="n">default_model_data</span><span class="p">[</span><span class="s2">&quot;outputPath&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;seldon_models&quot;</span><span class="p">]</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">default_model_data</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">)</span>
         <span class="n">json</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;Model [{model_name}] already added&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;Model [{model_name}] already added&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
 
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">config_args</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;adding config &quot;</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">config_args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s2">&quot;adding config &quot;</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="n">config_args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
         <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_args</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
     <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-    <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</div>
+    <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="action_list"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.action_list">[docs]</a><span class="k">def</span> <span class="nf">action_list</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">):</span>
-    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;default_models&quot;</span><span class="p">]</span>
+    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;default_models&quot;</span><span class="p">]</span>
     <span class="n">models</span> <span class="o">=</span> <span class="n">default_models</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&quot;models:&quot;</span>
+    <span class="k">print</span> <span class="s2">&quot;models:&quot;</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">models</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;    {model}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-</div>
+        <span class="k">print</span> <span class="s2">&quot;    {model}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="action_show"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.action_show">[docs]</a><span class="k">def</span> <span class="nf">action_show</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">get_valid_client</span><span class="p">():</span>
         <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
         <span class="k">if</span> <span class="n">client_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Need client name to show models for&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Need client name to show models for&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+        <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">client_name</span>
     <span class="k">def</span> <span class="nf">show_models</span><span class="p">(</span><span class="n">models_for_client_fpath</span><span class="p">):</span>
         <span class="n">models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">models_for_client_fpath</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">models</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;    {model}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;    {model}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
 
     <span class="n">client_name</span> <span class="o">=</span> <span class="n">get_valid_client</span><span class="p">()</span>
 
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
 
-    <span class="n">models_for_client_fpath</span> <span class="o">=</span> <span class="s">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">)</span>
+    <span class="n">models_for_client_fpath</span> <span class="o">=</span> <span class="s2">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">)</span>
 
-    <span class="n">show_models</span><span class="p">(</span><span class="n">models_for_client_fpath</span><span class="p">)</span>
-</div>
+    <span class="n">show_models</span><span class="p">(</span><span class="n">models_for_client_fpath</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="action_edit"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.action_edit">[docs]</a><span class="k">def</span> <span class="nf">action_edit</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">):</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
     <span class="k">def</span> <span class="nf">get_valid_client</span><span class="p">():</span>
         <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
         <span class="k">if</span> <span class="n">client_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Need client name to show models for&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Need client name to show models for&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">client_name</span>
 
     <span class="k">def</span> <span class="nf">get_valid_model</span><span class="p">():</span>
         <span class="n">model_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">model_name</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Need model name to use&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Need model name to use&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;default_models&quot;</span><span class="p">]</span>
+        <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;default_models&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">default_models</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">model_name</span>
 
     <span class="n">client_name</span> <span class="o">=</span> <span class="n">get_valid_client</span><span class="p">()</span>
     <span class="n">model_name</span> <span class="o">=</span> <span class="n">get_valid_model</span><span class="p">()</span>
 
-    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zk_client&quot;</span><span class="p">]</span>
+    <span class="n">zk_client</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zk_client&quot;</span><span class="p">]</span>
 
-    <span class="n">data_fpath</span> <span class="o">=</span> <span class="s">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline/{model_name}/_data_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">data_fpath</span> <span class="o">=</span> <span class="s2">&quot;{zkroot}{all_clients_node_path}/{client_name}/offline/{model_name}/_data_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zkroot</span><span class="o">=</span><span class="n">zkroot</span><span class="p">,</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
 
-    <span class="c">#do the edit</span>
+    <span class="c1">#do the edit</span>
     <span class="n">editor</span><span class="o">=</span><span class="n">seldon_utils</span><span class="o">.</span><span class="n">get_editor</span><span class="p">()</span>
     <span class="n">call</span><span class="p">([</span><span class="n">editor</span><span class="p">,</span> <span class="n">data_fpath</span><span class="p">])</span>
 
@@ -337,80 +353,82 @@
     <span class="n">data</span> <span class="o">=</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">json_to_dict</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Invalid model json!&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Invalid model json!&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">write_data_to_file</span><span class="p">(</span><span class="n">data_fpath</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-        <span class="n">node_path</span> <span class="o">=</span> <span class="s">&quot;{all_clients_node_path}/{client_name}/offline/{model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">node_path</span> <span class="o">=</span> <span class="s2">&quot;{all_clients_node_path}/{client_name}/offline/{model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">all_clients_node_path</span><span class="o">=</span><span class="n">gdata</span><span class="p">[</span><span class="s2">&quot;all_clients_node_path&quot;</span><span class="p">],</span><span class="n">client_name</span><span class="o">=</span><span class="n">client_name</span><span class="p">,</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
         <span class="n">pp</span><span class="p">(</span><span class="n">node_path</span><span class="p">)</span>
-        <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</div>
+        <span class="n">zk_utils</span><span class="o">.</span><span class="n">node_set</span><span class="p">(</span><span class="n">zk_client</span><span class="p">,</span> <span class="n">node_path</span><span class="p">,</span> <span class="n">seldon_utils</span><span class="o">.</span><span class="n">dict_to_json</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="action_train"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.action_train">[docs]</a><span class="k">def</span> <span class="nf">action_train</span><span class="p">(</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span><span class="n">extra_args</span><span class="p">):</span>
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
     <span class="k">def</span> <span class="nf">get_valid_client</span><span class="p">():</span>
         <span class="n">client_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">client_name</span>
         <span class="k">if</span> <span class="n">client_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Need client name to show models for&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Need client name to show models for&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_existing_client</span><span class="p">(</span><span class="n">zkroot</span><span class="p">,</span> <span class="n">client_name</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid client[{client_name}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">client_name</span>
 
     <span class="k">def</span> <span class="nf">get_valid_model</span><span class="p">():</span>
         <span class="n">model_name</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">model_name</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Need model name to use&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Need model name to use&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;default_models&quot;</span><span class="p">]</span>
+        <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;default_models&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">default_models</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid model name: {model_name}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">model_name</span>
 
     <span class="n">client_name</span> <span class="o">=</span> <span class="n">get_valid_client</span><span class="p">()</span>
     <span class="n">model_name</span> <span class="o">=</span> <span class="n">get_valid_model</span><span class="p">()</span>
 
-    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s">&quot;zkroot&quot;</span><span class="p">]</span>
+    <span class="n">zkroot</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;zkdetails&quot;</span><span class="p">][</span><span class="s2">&quot;zkroot&quot;</span><span class="p">]</span>
 
-    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s">&quot;conf_data&quot;</span><span class="p">][</span><span class="s">&quot;default_models&quot;</span><span class="p">]</span>
-    <span class="n">model_training</span> <span class="o">=</span> <span class="n">default_models</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="s">&quot;training&quot;</span><span class="p">]</span>
-    <span class="n">job_type</span> <span class="o">=</span> <span class="n">model_training</span><span class="p">[</span><span class="s">&quot;job_type&quot;</span><span class="p">]</span>
-    <span class="n">job_info</span> <span class="o">=</span> <span class="n">model_training</span><span class="p">[</span><span class="s">&quot;job_info&quot;</span><span class="p">]</span>
+    <span class="n">default_models</span> <span class="o">=</span> <span class="n">command_data</span><span class="p">[</span><span class="s2">&quot;conf_data&quot;</span><span class="p">][</span><span class="s2">&quot;default_models&quot;</span><span class="p">]</span>
+    <span class="n">model_training</span> <span class="o">=</span> <span class="n">default_models</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="s2">&quot;training&quot;</span><span class="p">]</span>
+    <span class="n">job_type</span> <span class="o">=</span> <span class="n">model_training</span><span class="p">[</span><span class="s2">&quot;job_type&quot;</span><span class="p">]</span>
+    <span class="n">job_info</span> <span class="o">=</span> <span class="n">model_training</span><span class="p">[</span><span class="s2">&quot;job_info&quot;</span><span class="p">]</span>
 
     <span class="n">job_handlers</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&#39;spark&#39;</span> <span class="p">:</span> <span class="n">run_spark_job</span>
+            <span class="s1">&#39;spark&#39;</span> <span class="p">:</span> <span class="n">run_spark_job</span>
     <span class="p">}</span>
 
     <span class="k">if</span> <span class="n">job_handlers</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">job_type</span><span class="p">):</span>
         <span class="n">job_handlers</span><span class="p">[</span><span class="n">job_type</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">job_info</span><span class="p">,</span> <span class="n">client_name</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;No handler found for job_type[{job_type}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">print</span> <span class="s2">&quot;No handler found for job_type[{job_type}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span></div>
 
-</div>
+
 <div class="viewcode-block" id="cmd_model"><a class="viewcode-back" href="../../../seldon.cli.html#seldon.cli.cmd_model.cmd_model">[docs]</a><span class="k">def</span> <span class="nf">cmd_model</span><span class="p">(</span><span class="n">gopts</span><span class="p">,</span><span class="n">command_data</span><span class="p">,</span> <span class="n">command_args</span><span class="p">):</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
-        <span class="s">&quot;list&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
-        <span class="s">&quot;add&quot;</span> <span class="p">:</span> <span class="n">action_add</span><span class="p">,</span>
-        <span class="s">&quot;show&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
-        <span class="s">&quot;edit&quot;</span> <span class="p">:</span> <span class="n">action_edit</span><span class="p">,</span>
-        <span class="s">&quot;train&quot;</span> <span class="p">:</span> <span class="n">action_train</span><span class="p">,</span>
+        <span class="s2">&quot;default&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
+        <span class="s2">&quot;list&quot;</span> <span class="p">:</span> <span class="n">action_list</span><span class="p">,</span>
+        <span class="s2">&quot;add&quot;</span> <span class="p">:</span> <span class="n">action_add</span><span class="p">,</span>
+        <span class="s2">&quot;show&quot;</span> <span class="p">:</span> <span class="n">action_show</span><span class="p">,</span>
+        <span class="s2">&quot;edit&quot;</span> <span class="p">:</span> <span class="n">action_edit</span><span class="p">,</span>
+        <span class="s2">&quot;train&quot;</span> <span class="p">:</span> <span class="n">action_train</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="p">(</span><span class="n">opts</span><span class="p">,</span><span class="n">extra_args</span><span class="p">)</span> <span class="o">=</span> <span class="n">getOpts</span><span class="p">(</span><span class="n">command_args</span><span class="p">)</span>
 
     <span class="n">action</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">action</span>
     <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">actions</span><span class="p">[</span><span class="s">&quot;default&quot;</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
+        <span class="n">actions</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">actions</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
             <span class="n">actions</span><span class="p">[</span><span class="n">action</span><span class="p">](</span><span class="n">command_data</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-</pre></div></div>
+            <span class="k">print</span> <span class="s2">&quot;Invalid action[{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
 
+</pre></div>
+
+           </div>
           </div>
           <footer>
   
@@ -420,12 +438,13 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2015, Seldon.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -440,7 +459,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
