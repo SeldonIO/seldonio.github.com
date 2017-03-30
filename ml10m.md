@@ -179,10 +179,11 @@ The steps to setup and import the data can be done via the Seldon CLI
 {% highlight bash %}
 
     seldon-cli client --action setup --client-name ml10m --db-name ClientDB
-    seldon-cli attr --action apply --client-name ml10m --json attr.json
-    seldon-cli import --action items --client-name ml10m --file-path items.csv
-    seldon-cli import --action users --client-name ml10m --file-path users.csv
-    seldon-cli import --action actions --client-name ml10m --file-path actions.csv
+    kubectl cp attr.json /seldon-control:/tmp/attr.json && seldon-cli attr --action apply --client-name ml10m --json /tmp/attr.json
+    kubectl cp items.csv /seldon-control:/tmp/items.csv && seldon-cli import --action items --client-name ml10m --file-path /tmp/items.csv
+    kubectl cp users.csv /seldon-control:/tmp/users.csv && seldon-cli import --action users --client-name ml10m --file-path /tmp/users.csv
+    kubectl cp actions.csv /seldon-control:/tmp/actions.csv && seldon-cli import --action actions --client-name ml10m --file-path /tmp/actions.csv
+
 {% endhighlight %}
 
 ## Build a Recommendation Model
