@@ -53,7 +53,13 @@ To create the default HostPath kubernetes conf files set for /seldon-data do the
    **Note** : HostPath only makes sense for demo/testing where you have a Kubernetes cluster with a single minion where all containers can share the location on the host. You will need to create the host path folder on your single kubernetes minion.
 
 ### GlusterFS
-GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. We provide some [notes](glusterfs.html) to help you. The Makefile assumes there is a volume called gs0. You will need to provide two ip addresses of two nodes in your GlusterFS cluster, e.g.:
+GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. We provide some [notes](glusterfs.html) to help you. Edit the Makefile and change the value of DATA_VOLUME:
+
+{% highlight bash %}
+DATA_VOLUME="glusterfs": {"endpoints": "glusterfs-cluster","path": "gv0","readOnly": false}
+{% endhighlight %}
+
+The Makefile assumes there is a volume called gs0. You will need to provide two ip addresses of two nodes in your GlusterFS cluster, e.g.:
 
 {% highlight bash %}
  cd kubernetes/conf
