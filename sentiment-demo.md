@@ -46,7 +46,7 @@ This job will:
 To serve predictions we will load the saved pipeline into a microservice. This can be accomplished by using the script ```start-microservice``` in ```seldon-server/kubernetes/bin```.
 
 {% highlight bash %}
-start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ 1.0
+start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ rest 1.0
 {% endhighlight %}
 
 This will load the pipeline saved in /seldon-data/seldon-models/finefoods/1/ and create a single replica microservice called finefoods-xgboost. It will activate this for the "test" client as a prediction algorithm.
