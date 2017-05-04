@@ -15,6 +15,8 @@ The current built in runtime scorers are as follows:
 [Recent Activity Matrix Factorization Scorer](runtime-recommendation.html#matrix-factorization-recent) | matrix factorization model
 [User Clusters Matrix Factorization Scorer](runtime-recommendation.html#matrix-factorization-clusters) | user clusters matrix factorization model
 [Item Similarity Scorer](runtime-recommendation.html#similar-items) | item activity model
+[Static Most Popular](runtime-recommendation.html#static-most-popular) | 
+[Static Most Popular by Dimension](runtime-recommendation.html#static-most-popular-dim) | 
 [Recent Most Popular](runtime-recommendation.html#most-popular) | 
 [Recent Activity](runtime-recommendation.html#recent-activity) | 
 [Custom Scorer](#custom) | 
@@ -146,6 +148,58 @@ cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
                 "filters": [],
                 "includers": [],
                 "name": "itemSimilarityRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner"
+    },
+    "recTagToStrategy": {}
+}
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
+{% endhighlight %}
+
+## Static Most Popular<a name="static-most-popular"></a>
+Return the most popular items.
+
+Example config:
+
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
+{
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                "config": [],
+                "filters": [],
+                "includers": [],
+                "name": "mostPopularRecommender"
+            }
+        ],
+        "combiner": "firstSuccessfulCombiner"
+    },
+    "recTagToStrategy": {}
+}
+EOF
+
+seldon-cli rec_alg --action commit --client-name ml100k
+{% endhighlight %}
+
+## Static Most Popular by Dimension<a name="static-most-popular-dim"></a>
+Return the most popular items given the dimensions of recently viewed items.
+
+Example config:
+
+{% highlight bash %}
+cat <<EOF | seldon-cli rec_alg --action create --client-name ml100k -f -
+{
+    "defaultStrategy": {
+        "algorithms": [
+            {
+                "config": [],
+                "filters": [],
+                "includers": [],
+                "name": "mostPopularInSessionRecommender"
             }
         ],
         "combiner": "firstSuccessfulCombiner"

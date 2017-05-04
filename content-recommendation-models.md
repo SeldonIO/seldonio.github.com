@@ -13,6 +13,7 @@ We provide several batch and streaming built-in models.
  * [Batch Item Similarity](content-recommendation-models.html#batch-item-similarity)
  * [Streaming item Similarity](content-recommendation-models.html#streaming-item-similarity)
  * [Content Similarity](content-recommendation-models.html#content-similarity)
+ * [Static Most Popular](content-recommendation-models.html#static-most-popular)
  * [Recent Most Popular](content-recommendation-models.html#recent-most-popular)
 
 ## Matrix Factorization<a name="matrix-factorization"></a>
@@ -97,8 +98,32 @@ kubectl create -f jobs/stream-itemsim-dbupload-test.json
 ## Content Similarity<a name="content-similarity"></a>
 Rather using collaborative filtering technques which try to find similarities in user's activity and alternative technqiue is to use the actual content to find other content of a similar nature. We have python libraries which wrap several technique provided by the [gensim](https://radimrehurek.com/gensim/) document similarity toolkit to provide these. An example demo can be found [here](content-recommendation-example.html)
 
+## Static Most Popular <a name="static-most-popular"></a>
+A baseline model is to provide most popular items. We provide a Spark job that will calculate the item popularity and place the results in the Seldon database for use. 
+
+#### Model creation
+There are twpo variants. Most Popular which provides the global most popualr items and Most Popualr by Dimension which creates popularity per dimension (e.g. most popular in Sport, most popular in business etc)
+
+To create the Most Popular job:
+
+{% highlight bash %}
+cd kubernetes/conf/models
+make most-popular DAY=16907 CLIENT=test
+{% endhighlight %}
+
+To create the Most Popular by Dimensio:
+
+{% highlight bash %}
+cd kubernetes/conf/models
+make most-popular-dim DAY=16907 CLIENT=test
+{% endhighlight %}
+
+#### Runtime Scoring
+
+There are run time scorers for [Most Popular](runtime-recommendation.html#static-most-popular) and [Most Popular by Dimension](runtime-recommendation.html#static-most-popular-dim).
+
 ## Recent Most Popular <a name="realtime-most-popular"></a>
-A string baseline model especially for high churn scenarios such as news sites is to provide recent popular content. We provide a model that counts items in real time as they are interacted with by users and exponentially decays those counts to provide a continually updated view of popular content. The amount of decay can be controlled to reflect the amount of churn and traffic on a site. This model has only a runtime scoring configuration.
+A strong baseline model especially for high churn scenarios such as news sites is to provide recent popular content. We provide a model that counts items in real time as they are interacted with by users and exponentially decays those counts to provide a continually updated view of popular content. The amount of decay can be controlled to reflect the amount of churn and traffic on a site. This model has only a runtime scoring configuration.
 
 #### Runtime Scoring
 

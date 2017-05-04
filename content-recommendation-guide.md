@@ -132,9 +132,15 @@ The Seldon CLI tool can then be used to process this data to separate it for eac
 # **Create a recommendation model**<a name="model"></a>
 Recommendation models can be built using any available technology that can be Dockerized and run inside Kubernetes. However, we provide some pre-packaged Spark based models and associated runtime scorers for those models. We also provide a python library which allows you to build and create models and runtime scorers exposed as microservices.
 
-We use [luigi](https://github.com/spotify/luigi) to package the offline model creation process. The luigi task can be run as a Kubernetes Job. In production you might run the modelling process each day to update your models with newly ingested data. We provide Make process to create Kubernetes Jobs in ```kubernetes/conf/models```. Call the Makefile with client and start day variables to create a Kubernetes job. Som examples are shown below.
+We use [luigi](https://github.com/spotify/luigi) to package the offline model creation process. The luigi task can be run as a Kubernetes Job. In production you might run the modelling process each day to update your models with newly ingested data. We provide Make process to create Kubernetes Jobs in ```kubernetes/conf/models```. Call the Makefile with client and start day variables to create a Kubernetes job. 
 
-You can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
+The Makefile provide easy access to some of the built-in models including:
+
+ * Matrix Factorization
+ * Item Similarity (static and streaming)
+ * Most Popular models
+
+For example you can create a matrix factorization Kubernetes job for client "test" starting at unix-day 16907 (17th April 2016) as follows:
 {% highlight bash %}
 cd kubernetes/conf/models
 make matrix-factorization DAY=16907 CLIENT=test
@@ -144,19 +150,85 @@ This will create a Kubernetes Job file in the ```jobs``` folder called matrix-fa
 
 {% highlight json %}
 {
-
-"name": "matrix-factorization",
-"image": "seldonio/seldon-control:1.3_v4",
-"command": ["luigi","--module","seldon.luigi.spark","SeldonMatrixFactorization","--local-schedule","--client","test","--startDay","16907"],
+    "apiVersion": "batch/v1",
+    "kind": "Job",
+    "metadata": {
+        "name": "matrix-factorization-clusters"
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "labels": {
+                    "name": "matrix-factorization-clusters",
+                    "service": "seldon"
+                },
+                "name": "matrix-factorization-clusters"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "command": [
+                            "luigi","--module","seldon.luigi.spark","SeldonMatrixFactorization","--local-schedule","--client","test","--startDay","16907"
+                        ],
+                        "env": [
+                            {
+                                "name": "LUIGI_CONFIG_PATH",
+                                "value": "/seldon-data/luigi/test.cfg"
+                            }
+                        ],
+                        "image": "seldonio/seldon-control:2.2.2_v1",
+                        "name": "matrix-factorization-clusters",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/seldon-data",
+                                "name": "data-volume"
+                            }
+                        ]
+                    }
+                ],
+                "restartPolicy": "Never",
+                "volumes": [
+                    {
+                        "name": "data-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "seldon-claim"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
 
 }
 {% endhighlight %}
 
 The luigi Task definition can be found in our [pyseldon](python-package.html) library in ```seldon.luigi.spark.SeldonMatrixFactorization```. In this case it simply calls the seldon-cli to run a matrix factorization job. Other cases might have more complex luigi jobs.
 
-You can provide your own custom configuration either by changing the luigi.cfg or supplying further parameters to the call to luigi.
+You can provide your own custom configuration by create a luigi configuration file and placing it in '''/seldon-data/luigi/<client>.cfg'''. An example such file might be as below which is setting custom database user and password setting and updating the days parameter for a couple of jobs:
 
-## Built-in Models
+{% highlight bash %}
+[SeldonItemSimilarity]
+db_user: proxyUser
+db_pass: proxy
+
+[ItemSimilaritySparkJob]
+days: 10
+
+[SeldonMostPopular]
+db_user: proxyUser
+db_pass: proxy
+
+[MostPopularJob]
+days: 10
+
+[SeldonMostPopularDim]
+db_user: proxyUser
+db_pass: proxy
+days: 10
+{% endhighlight %}
+
+## **Built-in Models**
 
 We provide several recommendation algorithms as part of Seldon out of the box. See [here](content-recommendation-models.html) for a full description.
 

@@ -10,6 +10,7 @@ title: Install
  * [Create Kubernetes Configuration](#configure)
      * [Persistent Storage](#storage)
      * [Seldon API Endpoint](#endpoint)
+     * [External MySQL](#mysql)
  * [Launch Seldon](#launch)
  * [Next Steps](#next-steps)
  * [Troubleshooting](#troubleshooting)
@@ -17,7 +18,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.4.3
+git clone https://github.com/seldonio/seldon-server -b v1.4.4
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -34,32 +35,44 @@ To create a Kubernetes cluster on Google Cloud you can follow our [guidelines](h
 
 # Create Kubernetes Configuration<a name="configure"></a>
 
-Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you have to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf``` You will need to configure:
+Once you have a Kubernetes cluster Seldon can be started as a series of containers which run within it. As a first step you have to create the required JSON Kubernetes files. A Makefile to create these can be found in ```kubernetes/conf```  You create the configuration by calling:
 
+{% highlight bash %}
+make clean conf
+{% endhighlight %}
+
+This will be sufficient for a single node configuration with default settings. To customize settings you will need to edit the Makefile or provide changes when calling make.
+
+You will need to optionally configure:
+
+ * Passwords for Grafana and Spark UI interfaces
  * Persistent Storage (Kubernetes HostPath by default)
  * Seldon API Endpoint (Kubernetes NodePort by default)
+ * External MySQL server
+
+## Grafana and Spark UI Passwords
+Seldon will start a Grafana dashboard for showing analytics about the runtime predictions and also provide access to the Spark UI for monitoring Spark jobs. These are password protected by default with the initial passwords set in the conguration Makefile:
+
+{% highlight bash %}
+GRAFANA_ADMIN_PASSWORD=admin
+SPARK_UI_USERNAME=spark
+SPARK_UI_PASSWORD=spark
+{% endhighlight %}
+
+Please change the above before creating the conf.
 
 ## Persistent Storage<a name="storage"></a>
-Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. The Makefile allows you to create the Kuberenetes configuration with [HostPath](http://kubernetes.io/docs/user-guide/volumes/#hostpath) or [GlusterFS](http://kubernetes.io/docs/user-guide/volumes/#glusterfs) persistent volumes. You can modify it to use other possible volumes, such as NFS, as allowed by Kubernetes.
+Seldon uses a Kubernetes [volume](http://kubernetes.io/docs/user-guide/volumes/) to store and share data between containers. A persistent volume claim is made to provide this storage. Out of the box we provide two types of external storage examples:
 
-### HostPath
-To create the default HostPath kubernetes conf files set for /seldon-data do the following:
+ * [HostPath](http://kubernetes.io/docs/user-guide/volumes/#hostpath) - for use mainly for testing when you have a single node Kubernetes cluster, e.g. with MiniKube. The configuration file is in ```kubernetes/conf/hostPath.json```
+ * [GlusterFS](http://kubernetes.io/docs/user-guide/volumes/#glusterfs) - for production clusters. The configuration template is in ```kubernetes/conf/glusterfs.json.in```
 
-{% highlight bash %}
- cd kubernetes/conf
- make clean conf
-{% endhighlight %}
-
-   **Note** : HostPath only makes sense for demo/testing where you have a Kubernetes cluster with a single minion where all containers can share the location on the host. You will need to create the host path folder on your single kubernetes minion.
+You are free to add your own Persistent Volumes including dynamic storage providers that will satisfy the persistent storage claims made by the pods we use.
 
 ### GlusterFS
-GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. We provide some [notes](glusterfs.html) to help you. Edit the Makefile and change the value of DATA_VOLUME:
+GlusterFS works well for a production setting. For this you will need to have setup your own GlusterFS cluster. We provide some [notes](glusterfs.html) to help you. Our glusterfs.json.in assumes your GlusterFS volume is call gv0.
 
-{% highlight bash %}
-DATA_VOLUME="glusterfs": {"endpoints": "glusterfs-cluster","path": "gv0","readOnly": false}
-{% endhighlight %}
-
-The Makefile assumes there is a volume called gs0. You will need to provide two ip addresses of two nodes in your GlusterFS cluster, e.g.:
+You will need to provide two ip addresses of two nodes in your GlusterFS cluster, e.g.:
 
 {% highlight bash %}
  cd kubernetes/conf
@@ -74,6 +87,13 @@ By default the Seldon API server endpoint is set to a Kubernetes NodePort at por
  make clean conf SELDON_SERVICE_TYPE=LoadBalancer
 {% endhighlight %}
 
+## External MySQL<a name="mysql"></a>
+By default Seldon starts a single MySQL server utilizing the persistent storage for its external store. It is probably advisable for production settings to use an external database outside of Docker to ensure full data integrity. We provide kubernetes conffiguration to replace the server running inside the cluster with a proxy to an external Google SQL server. You will need to follow the steps described [here](https://cloud.google.com/sql/docs/mysql/connect-container-engine) and then create conf with:
+
+{% highlight bash %}
+ cd kubernetes/conf
+ make clean conf GOOGLE_SQL_INSTANCE=<google sql instance connection name>
+{% endhighlight %}
 
 
 # Launch Seldon<a name="launch"></a>
@@ -87,6 +107,11 @@ seldon-up
 To start with GlusterFS run 
 {% highlight bash %}
 SELDON_WITH_GLUSTERFS=true seldon-up
+{% endhighlight %}
+
+To start with GlusterFS and an external google MySQL server run as follows, replacing your DB proxy user and password as required when you setup the connection to the external Google SQL server.
+{% highlight bash %}
+SELDON_WITH_GLUSTERFS=true  DB_USER=proxyUser DB_PASSWORD=proxy GOOGLE_CLOUDSQL=true seldon-up
 {% endhighlight %}
 
 To shutdown seldon run
