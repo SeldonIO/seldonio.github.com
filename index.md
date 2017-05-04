@@ -7,27 +7,29 @@ title: Introduction to Seldon
 
 Seldon Core is a machine learning platform that helps your data science team deploy models into production.
 
-It provides an open-source data science stack that runs within a [Kubernetes](http://kubernetes.io/) Cluster. You can use Seldon to deploy machine learning and deep learning models into production on-premise or in the cloud (e.g. [GCP](http://docs.seldon.io/kubernetes-google-cloud.html), AWS, Azure).
+It provides an open-source data science stack that runs within a [Kubernetes](http://kubernetes.io/) Cluster. You can use Seldon to deploy machine learning and deep learning models into production on-premise or in the cloud (e.g. [GCP](kubernetes-google-cloud.html), AWS, Azure).
 
 Seldon supports models built with TensorFlow, Keras, Vowpal Wabbit, XGBoost, Gensim and any other model-building tool  — it even supports models built with commercial tools and services where the model is exportable.
 
 It includes an API with two key endpoints:
 
-1.  **[Predict](http://docs.seldon.io/prediction-guide.html)** - Build and deploy supervised machine learning models created in any machine learning library or framework at scale using containers and [microservices](http://docs.seldon.io/api-microservices.html).
-2.  **[Recommend](http://docs.seldon.io/content-recommendation-guide.html)** - High-performance user activity and content based recommendation engine with various algorithms ready to run out of the box. 
+1.  **[Predict](prediction-guide.html)** - Build and deploy supervised machine learning models created in any machine learning library or framework at scale using containers and [microservices](api-microservices.html).
+2.  **[Recommend](content-recommendation-guide.html)** - High-performance user activity and content based recommendation engine with various algorithms ready to run out of the box. 
 
 Other features include:
 
-- Complex dynamic [algorithm configuration and combination](http://docs.seldon.io/advanced-recommender-config.html) with no downtime: run A/B and Multivariate tests, cascade algorithms and create ensembles.
-- Command Line Interface ([CLI](http://docs.seldon.io/seldon-cli.html)) for configuring and managing Seldon Core.
-- Secure OAuth 2.0 REST and [gRPC](http://docs.seldon.io/grpc.html) APIs to streamline integration with your data and application.
-- Grafana dashboard for [real-time analytics](http://docs.seldon.io/analytics.html) built with Kafka Streams, Fluentd and InfluxDB.
+- Complex dynamic [algorithm configuration and combination](advanced-recommender-config.html) with no downtime: run A/B and Multivariate tests, cascade algorithms and create ensembles.
+- Command Line Interface ([CLI](seldon-cli.html)) for configuring and managing Seldon Core.
+- Secure OAuth 2.0 REST and [gRPC](grpc.html) APIs to streamline integration with your data and application.
+- Grafana dashboard for [real-time analytics](analytics.html) built with Kafka Streams, Fluentd and InfluxDB.
 
 Seldon is used by some of the world's most innovative organisations — it's the perfect machine learning deployment platform for start-ups and can scale to meet the demands of large enterprises.
 
 ## Get Started
 
-It takes a few minutes to install Seldon on a Kubernertes cluster. Visit our [install guide](http://docs.seldon.io/install.html) and read our [tech docs](http://docs.seldon.io).
+It takes a few minutes to install Seldon on a Kubernertes cluster. 
+
+*Visit our [install guide](install.html).*
 
 ## Community & Support
 
