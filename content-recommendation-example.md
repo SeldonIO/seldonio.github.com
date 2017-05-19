@@ -143,4 +143,4 @@ Address: 10.0.0.25
 
 # Next Steps<a name="next-steps"></a>
 
- * [Detailed Guide for Content Recomemdation](content-recommendation-guide.html)
+ * [Detailed Guide for Content Recommendation](content-recommendation-guide.html)
