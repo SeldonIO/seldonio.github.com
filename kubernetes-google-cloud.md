@@ -44,6 +44,18 @@ gcloud container clusters get-credentials seldon-server-cluster
 At this point the process is identical to the [regular seldon installation](http://docs.seldon.io/install.html).
 kubectl is now linked to your cluster on google cloud so all commands can be used as usual.
 
+## External ingress for Seldon API
+To utilize https with either a static or ephemeral IP address you can use the ```server.ingress.json``` or ```server-ingress-static.json``` kubernetes configurations. 
+
+You will need to ensure the Seldon server is exposed as a NodePort. To do this ensure SELDON_SERVER_SERVICE_TYPE in the ```kubernetes/conf/Makefile```  is set to NodePort.
+
+You will need to set your tls certifcate chain and private key in a kubernetes secret called seldon-server-secret. Example gcloud commands for this are shown below:
+
+{% highlight bash %}
+kubectl create secret generic seldon-server-secret --from-file=tls.key=tls.key --from-file=tls.crt=tls.crt
+{% endhighlight %}
+
+See the [Google container engine](https://cloud.google.com/container-engine/docs/tutorials/http-balancer) docs for more information.
 
 # Deleting a cluster
 

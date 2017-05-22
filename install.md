@@ -18,7 +18,7 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.4.4
+git clone https://github.com/seldonio/seldon-server -b v1.4.5
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
@@ -31,7 +31,7 @@ Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to f
 
 If you are testing Seldon on a single machine you will need at least 6G of memory for your Kubernetes cluster. For single machine exploration we suggest using [minikube](https://github.com/kubernetes/minikube). 
 
-To create a Kubernetes cluster on Google Cloud you can follow our [guidelines](http://docs.seldon.io/kubernetes-google-cloud.html).
+To create a Kubernetes cluster on Google Cloud you can follow our [guidelines](kubernetes-google-cloud.html).
 
 # Create Kubernetes Configuration<a name="configure"></a>
 
