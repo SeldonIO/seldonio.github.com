@@ -52,7 +52,7 @@ See the detailed [seldon-cli](seldon-cli.html) documentation.
 # <a name="start-microservice"></a>**start-microservice**
 
 ## Synopsis
-Start one or more  microservices for a particualar client. The microservices can be REST or for predictions also gRPC based.
+Start one or more  microservices for a particular client. The microservices can be REST or for predictions also gRPC based.
 The script allows you to start microservices of two types:
 
  * Microservices already package as a Docker image
@@ -80,17 +80,17 @@ optional arguments:
 
 ## Examples
 
-Start a recommendation microserice from a built Docker image exposed as  REST endpoint for the client "reuters". See the worked [Reuters content recommendation example](content-recommendation-example.html).
+Start a recommendation microservice from a built Docker image exposed as REST endpoint for the client "reuters". See the worked [Reuters content recommendation example](content-recommendation-example.html).
 {% highlight bash %}
 start-microservice --type recommendation --client reuters -i reuters-example seldonio/reuters-example:2.0.7 rest 1.0
 {% endhighlight %}
 
-Start a prediction REST microservice from a saved pipeline previoiusly saved to /seldon-data/seldon-models/finefoods/1 for client "test". See the worked [sentiment analysis demo](sentiment-demo.html).
+Start a prediction REST microservice from a saved pipeline previously saved to /seldon-data/seldon-models/finefoods/1 for client "test". See the worked [sentiment analysis demo](sentiment-demo.html).
 {% highlight bash %}
 start-microservice --type prediction --client test -p finefoods-xgboost /seldon-data/seldon-models/finefoods/1/ rest 1.0
 {% endhighlight %}
 
-Start a prediction microservice from an xgboost mode exposed as a REST service and packaged in  docker image. See worked example in the [Iris prediction demo](prediction-example.html).
+Start a prediction microservice from an xgboost mode exposed as a REST service and packaged in a docker image. See worked example in the [Iris prediction demo](prediction-example.html).
 {% highlight bash %}
 start-microservice --type prediction --client test -i iris-xgboost seldonio/iris_xgboost:2.1 rest 1.0
 {% endhighlight %}
