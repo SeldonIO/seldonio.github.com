@@ -45,15 +45,15 @@ reuters-import-data   1         1            1m
 
 You can delete the job once its run with ```kubectl delete -f import-data-job.json```
 
-# Create Recommendaton Model<a name="model"></a>
+# Create Recommendation Model<a name="model"></a>
 For this simple example we will build a document similarity model to provide recommendations for newswire article given the current newswire article a user is reading. For this we will build a [gensim](https://radimrehurek.com/gensim/) document similarity model. The detailed steps to build the model can be followed in a [Jupyter notebook](https://github.com/SeldonIO/seldon-server/blob/master/python/examples/doc_similarity_reuters.ipynb). These have been packaged into a docker container ```seldonio/reuters-example```.
 
 In general, Seldon provides several content recommendation models in Spark as well as python based modules.
 
 # Create Microservice<a name="microservice"></a>
-To serve predictions from our model we need to run the prepackaged docker image which exposes a miroservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/start-microservice```.
+To serve predictions from our model we need to run the prepackaged docker image which exposes a microservice endpoint for the model scoring. To start any microservice and connect it to a client using the script ```kubernetes/bin/start-microservice```.
 
-The script create a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running Kubernetes will roll-down the previous version and roll-up the new version.
+The script creates a Kubernetes deployment for the microservice in ```kubernetes/conf/microservices```. If the microserice is already running, Kubernetes will roll-down the previous version and roll-up the new version.
 
 To start the Reuters gensim model serving run:
 
@@ -129,7 +129,7 @@ The response should be like:
 
  * No results are returned by the seldon-cli api call above
 
-Check your Kuberentes DNS is working correctly and the reuters-example hostname can be found. Open a bash terminal into the seldon-control container and check using nslookup.:
+Check your Kuberentes DNS is working correctly and the reuters-example hostname can be found. Open a bash terminal into the seldon-control container and check using nslookup:
 
 {% highlight bash %}
 kubectl exec -ti seldon-control -- /bin/bash
