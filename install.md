@@ -18,14 +18,14 @@ title: Install
 # Download Seldon<a name="clone"></a>
 
 {% highlight bash %}
-git clone https://github.com/seldonio/seldon-server -b v1.4.5
+git clone https://github.com/seldonio/seldon-server -b v1.4.6
 {% endhighlight %}
 
   * add ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
 
 # Create a Kubernetes Cluster<a name="install-kubernetes"></a>
 
-Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud. We support kubernetes >= 1.2.
+Seldon runs inside a [Kubernetes](http://kubernetes.io) cluster so you need to follow their [guides](http://kubernetes.io/docs) to create a cluster locally, on servers or in the cloud. We support kubernetes >= 1.6. Seldon should run on Kubernetes >= 1.2 except for the glusterfs persistent volume claim.
 
    * Add kubectl to your shell PATH environment variable.
 
@@ -45,10 +45,16 @@ This will be sufficient for a single node configuration with default settings. T
 
 You will need to optionally configure:
 
+ * Memory requests for kubernetes
  * Passwords for Grafana and Spark UI interfaces
  * Persistent Storage (Kubernetes HostPath by default)
  * Seldon API Endpoint (Kubernetes NodePort by default)
  * External MySQL server
+
+## Memory requests and limits for Kubernetes
+The default configuration has memory requests and limits. If you run seldon with Spark (2 workers) it will require 10G of memory. You can decrease the spark memory requests in the spark-worker.json.in and spark-master.json.in or you can run without Spark as discussed below.
+
+For a production system you should carefully set the memory requests and limits for your system based on your workload you expect to run.
 
 ## Grafana and Spark UI Passwords
 Seldon will start a Grafana dashboard for showing analytics about the runtime predictions and also provide access to the Spark UI for monitoring Spark jobs. These are password protected by default with the initial passwords set in the conguration Makefile:
@@ -145,7 +151,7 @@ ADMISSION_CONTROL=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAcco
 
  * ***Testing on a single node or laptop things are running very slowly.***
 
-Check you have enough memory. At least 6G is needed to run everything locally on a single node. If you are using minikube then you can start a minikube kubernetes with 6G of memory with ```minikube start --memory=6000```
+Check you have enough memory. At least 12G is needed to run everything locally on a single node with Spark running two workers. If you are using minikube then you can start a minikube kubernetes with 12G of memory with ```minikube start --memory=12000```
 
 In addition, the following may help:
 
@@ -163,7 +169,9 @@ This command reduces the memory allocation for the ***mysql*** and ***seldon-ser
 SELDON_WITH_SPARK=false seldon-up
 {% endhighlight %}
 
-If you are using a Vagrant VM to run your kubernetes cluster ensure it has 6G of memory available from the host machine.
+Removing Spark would allow you to run with 7G of memory.
+
+If you are using a Vagrant VM to run your kubernetes cluster ensure it has enough memory available from the host machine.
 
  * ***Pods are going into CrashLoopBackoff***
 

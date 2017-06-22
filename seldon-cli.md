@@ -413,12 +413,10 @@ seldon-cli model --action train --client-name testclient --model-name matrix-fac
 {% highlight bash %}
 usage: seldon-cli model [-h] [--action {list,add,show,edit,train}]
                         [--client-name CLIENT_NAME] [--model-name MODEL_NAME]
-                        ...
+                        [--spark-executor-memory SPARK_EXECUTOR_MEMORY]
+                        [--spark-driver-memory SPARK_DRIVER_MEMORY]
 
 Seldon Cli
-
-positional arguments:
-  args
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -428,6 +426,10 @@ optional arguments:
                         the name of the client
   --model-name MODEL_NAME
                         the name of the client
+  --spark-executor-memory SPARK_EXECUTOR_MEMORY
+                        spark executor memory
+  --spark-driver-memory SPARK_DRIVER_MEMORY
+                        spark driver memory
 {% endhighlight %}
 
 

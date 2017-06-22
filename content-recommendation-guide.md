@@ -205,12 +205,14 @@ This will create a Kubernetes Job file in the ```jobs``` folder called matrix-fa
 
 The luigi Task definition can be found in our [pyseldon](python-package.html) library in ```seldon.luigi.spark.SeldonMatrixFactorization```. In this case it simply calls the seldon-cli to run a matrix factorization job. Other cases might have more complex luigi jobs.
 
-You can provide your own custom configuration by create a luigi configuration file and placing it in '''/seldon-data/luigi/<client>.cfg'''. An example such file might be as below which is setting custom database user and password setting and updating the days parameter for a couple of jobs:
+You can provide your own custom configuration by create a luigi configuration file and placing it in '''/seldon-data/luigi/[client].cfg'''. An example such file might be as below which is setting custom database user and password setting and updating the days parameter for a couple of jobs:
 
 {% highlight bash %}
 [SeldonItemSimilarity]
 db_user: proxyUser
 db_pass: proxy
+sparkDriverMemory: 2g
+sparkExecutorMemory: 2g
 
 [ItemSimilaritySparkJob]
 days: 10
