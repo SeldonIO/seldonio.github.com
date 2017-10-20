@@ -20,13 +20,12 @@ This example will take you through creating a simple prediction service to serve
  * You haved added ```seldon-server/kubernetes/bin``` to you shell PATH environment variable.
 
 # **Create a Predictive Model**<a name="model"></a>
-The first step is to create a predictive model based on some training data. In this case we have prepacked into 4 Docker images the process of creating a model for the Iris dataset using popular machine learning toolkits [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki), [Keras](http://keras.io/) and [Scikit-learn](http://scikit-learn.org/stable/). Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easy. However, you can build your model using any machine learning library. 
+The first step is to create a predictive model based on some training data. In this case we have prepacked into 3 Docker images the process of creating a model for the Iris dataset using popular machine learning toolkits [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki) and [Scikit-learn](http://scikit-learn.org/stable/). Wrappers to call these libraries have been added to our python library to make integrating them as a microservice easy. However, you can build your model using any machine learning library. 
 
-The four example images are:
+The three example images are:
 
  * seldonio/iris_xgboost : an XGBoost model for the iris dataset
  * seldonio/iris_vw : a VW model for the iris dataset
- * seldonio/iris_keras : a keras model for the iris dataset
  * seldonio/iris_scikit : a scikit-learn model for the iris dataset
 
 For details on building models using our python library see [here](prediction-pipeline.html).
@@ -154,7 +153,6 @@ The full source code to create a docker image for model and runtime scorer for t
 
  * [docker/examples/iris/xgboost](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/xgboost) : an XGBoost model for the iris dataset
  * [docker/examples/iris/vw](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/vw) : a VW model for the iris dataset
- * [docker/examples/iris/keras](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/keras) : a keras model for the iris dataset
  * [docker/examples/iris/scikit](https://github.com/SeldonIO/seldon-server/tree/master/docker/examples/iris/scikit) : a scikit-learn model for the iris dataset
 
 

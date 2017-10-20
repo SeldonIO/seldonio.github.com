@@ -11,7 +11,7 @@ We provide a demo for creating a multi-class classification predictive endpoint 
 The steps are:
 
  1. [Download the static iris data and create JSON events](#events)
- 1. [Create predictive pipelines with XGBoost, Vowpal Wabbit, and keras](#pipelines)
+ 1. [Create predictive pipelines with XGBoost or Vowpal Wabbit](#pipelines)
  1. [Start runtime prediction microservices](#microservices)
  1. [Integrate into Seldon Server](#seldon-server)
 
@@ -39,7 +39,7 @@ For the iris dataset we create very simple pipelines that do the following tasks
 
  1. Create an id feature from the name feature
  1. Create an SVMLight feature from the four core predictive features (for use by XGBoost)
- 1. Build a model using [XGBoost](https://github.com/dmlc/xgboost), [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) or [Keras](https://github.com/fchollet/keras)
+ 1. Build a model using [XGBoost](https://github.com/dmlc/xgboost) or [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit).
 
 Example code for the XGBoost pipeline is shown below:
 
@@ -82,7 +82,6 @@ The various pipelines can run as follows
 
  * Create an XGBoost pipeline : ```make data/iris/xgb_models/1```
  * Create a VW pipeline : ```make data/iris/vw_models/1```
- * Create a Keras pipeline : ```make data/iris/keras_models/1```
 
 The models for the pipelines are stored in the locations above
 
@@ -93,13 +92,11 @@ The various services for each pipeline can be started as below
 
  * Run XGBoost microservice : ```make xgboost_runtime```
  * Run VW microservice : ```make vw_runtime```
- * Run Keras mixroservice : ```make keras_runtime```
 
 We can test test the pipelines with:
 
  * Send an example to XGBoost microservice : ```make test_xgboost_runtime```
  * Send an example to VW microservice : ```make test_vw_runtime```
- * Send an example to Keras microservice : ```make test_keras_runtime```
 
 Which uses curl to fire a JSON test set of feeatures to the microservice, for xgboost microservice running on port 5001 this would be
 
