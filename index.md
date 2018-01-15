@@ -3,9 +3,17 @@ layout: default
 title: Introduction to Seldon
 ---
 
-# Seldon Core
+# **Update January 2018**
 
-Seldon Core is a machine learning platform that helps your data science team deploy models into production.
+ * [Seldon Core open sourced](https://github.com/SeldonIO/seldon-core). 
+    * Seldon Core focuses purely on deploying a wide range of ML models on Kubernetes, allowing complex runtime serving graphs to be managed in production. Seldon Core is a progression of the goals of the Seldon-Server project but also a more restricted focus to solving the final step in a machine learning project which is serving models in production. Please have a look at the [project page](https://github.com/SeldonIO/seldon-core) which includes extensive documentation to investigate further.
+
+
+
+
+# Seldon Server
+
+Seldon Server is a machine learning platform that helps your data science team train and deploy models into production.
 
 It provides an open-source data science stack that runs within a [Kubernetes](http://kubernetes.io/) Cluster. You can use Seldon to deploy machine learning and deep learning models into production on-premise or in the cloud (e.g. [GCP](kubernetes-google-cloud.html), AWS, Azure).
 
@@ -19,7 +27,7 @@ It includes an API with two key endpoints:
 Other features include:
 
 - Complex dynamic [algorithm configuration and combination](advanced-recommender-config.html) with no downtime: run A/B and Multivariate tests, cascade algorithms and create ensembles.
-- Command Line Interface ([CLI](seldon-cli.html)) for configuring and managing Seldon Core.
+- Command Line Interface ([CLI](seldon-cli.html)) for configuring and managing Seldon Server.
 - Secure OAuth 2.0 REST and [gRPC](grpc.html) APIs to streamline integration with your data and application.
 - Grafana dashboard for [real-time analytics](analytics.html) built with Kafka Streams, Fluentd and InfluxDB.
 
